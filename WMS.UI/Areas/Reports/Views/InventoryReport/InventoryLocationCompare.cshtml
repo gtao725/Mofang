@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "WhClientId", "客户名", "", "")
+        <input type="text" name="ALtItemNumber" hint="SKU" />
+        <input type="text" left="100" name="LocationAreas" hint="区域模糊匹配" />
+        <input type="text" name="locationId" hint="库位" />
+        <input type="text" left="90" name="locationId1" hint="库位模糊匹配" />
+        <input type="text" left="100" name="so_like" hint="SO模糊匹配" />
+        <textarea name="so_number" left="60" hint="SO号"></textarea>
+        <textarea name="hu_id" left="60" hint="托盘号"></textarea>
+        <select left="90" name="flag" hint="是否有库存"><option></option><option value="Y">是</option><option value="N">否</option></select>
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/InventoryReport/InventoryLocationCompareList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+ 
+    });
+
+</script>

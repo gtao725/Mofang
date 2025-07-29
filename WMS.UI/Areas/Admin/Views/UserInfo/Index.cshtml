@@ -1,0 +1,596 @@
+﻿@model WMS.UI.Controllers.Model.AdminModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" name="user_code" hint="工号" />
+        <input type="text" name="user_nameCN" hint="姓名" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhPositionSelect"], "PositionName", "职位名", "", "")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhCodeNameSelect"], "WhCodeName", "仓库", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_userCode, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_usernameCN, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_password, new { @left = "140", @type = "password", @value = "123456" })
+</div>
+
+<div id='form33' style="display:none">
+    <input type="text" left="140" name="txt_CheckFlag" value="" hint="当前密码检测开关" readonly />
+
+    <label>密码检测开启后,近一个月未修改密码的用户将在登录时强制修改密码。</label>
+
+    <select class="easyui-vhuo'xia'alidatebox" hint="是否开启密码检测" left="140" name="edit_CheckFlag"><option value='0'>关</option><option value='1'>开</option></select>
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增用户", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增用户", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_username\" hint=\"工号\" /><br/>"
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_usernameCN\" hint=\"姓名\" /><br/>"
+                                 //+ "<input type=\"password\" left=\"140\" name=\"txt_password\" hint=\"密码\" /><br/>"
+                                 , 500, 170)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/UserInfo/AddUser", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_usernameCN]").val("");
+                                                         $("[name=txt_username]").val("");
+
+                                                         $("[name=txt_userCode]").val("");
+                                                         eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_userCode]").focus();
+                         }
+                     }
+                   ,
+                    {
+                        text: "批量添加仓库至员工", icon: "save", click:
+                           function () {
+                               if ($("[name=check_addWhInfo]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择员工信息!");
+                                   return;
+                               }
+                               R_WhUser_WhInfo_BatchEdit();
+
+                           }
+                    },
+                    {
+                        text: "是否开启密码检测", icon: "add", click:
+                        function () {
+                            var dlg = eip.dialog.create("是否开启密码检测", "<div id=layout3 ><div form='Y' id='form3' >" + $("#form33").html() + "</div></div>"
+
+                                , 500, 160)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout3'), [{
+                                obj: $('#form3'),
+                                buttons: [
+                                    {
+                                        text: "确认保存", icon: "save", click:
+                                            function () {
+                                                if (!$("#form3").form('validate')) {
+                                                    return false;
+                                                }
+
+                                                eip.get("/admin/UserInfo/EditUserCheckFlag", eip.para.create($("input,select", $("#layout3"))), function (jsonObj) {
+                                                    $.procAjaxData(jsonObj, function () {
+                                                        eip.dialog.close(dlg);
+                                                    }, function () { });
+                                                })
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+
+                            eip.post("/admin/UserInfo/GetUserCheckFlag", null, function (val) {
+                                if (val != "") {
+                                    $("[name=txt_CheckFlag]", $("#layout3")).val(val);
+                                }
+                            });
+
+
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 20,
+            hiddencolumns: ["公司ID"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                if (row["状态"] == "Active") {
+                    return "<input type=checkbox name=check_addWhInfo  value=\"" + row["操作"] + "\"   >";
+                }
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "Active") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑信息' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='PositionManager(this)' title='职位管理' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='WhInfoManager(this)' title='仓库管理' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='WhUserPositionManager(this)' title='复制权限' ></a>";
+                        }
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到用户ID
+                                var whCompanyId = row["公司ID"];
+                                eip.get("/admin/UserInfo/WhUserEdit?Id=" + Id + "&whCompanyId=" + eip.utf8(whCompanyId) + "&UserName=" + eip.utf8($("[name=edit_userName]").val()) + "&UserNameCN=" + eip.utf8($("[name=edit_userNameCN]").val()) + "&Status=" + $("[name=edit_userStatus]").val() + "&WhCodeId=" + eip.utf8($("[name=edit_whCode]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "密码": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-reload' plain=true onclick='UserPwdInit(this)' title='密码初始化123456' >密码初始化</a>";
+                        return retHtml;
+                    }
+                },
+                "工号": {
+                    editor: { type: "text", name: "edit_userName" }
+                },
+                "姓名": {
+                    editor: { type: "text", name: "edit_userNameCN" }
+                },
+                "状态": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "Active") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='UserEditUnActive(this)' title='点击禁用' >在职中</a>";
+                        } else {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-warning' plain=true onclick='UserEditActive(this)' title='重新启用' >离职中,重启</a>";
+                        }
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_userStatus'></select>"), [{ val: "Active" }, { val: "UnActive" }], true));
+                        }
+                    }
+                }
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=user_code]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    var dlg_Pos1;
+    //复制权限
+    function WhUserPositionManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var userNameCN = row["姓名"];
+        var userCode = row["工号"];
+        var id = row["操作"];
+
+        dlg_Pos1 = eip.dialog.create("复制权限-当前用户：" + userNameCN + "，工号:" + userCode,
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhPositionSelect"], "txt_searchPositionName", "职位名", "", "")"
+            +" @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhCodeNameSelect"], "txt_searchWhCodeName", "仓库", "", "")"
+            + "<input type=\"hidden\" name=\"Hid_UserId\" value=\"" + row["操作"] + "\">工号：<input type=\"text\" name=\"txt_searchUserCode\" value=\"\">姓名：<input type=\"text\" name=\"txt_searchUserName\" value=\"\"> "
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 20,
+            hiddencolumns: [""],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-redo' plain=true onclick=\"CopyWhUserPosition(this,'" + userNameCN + "','" + id + "')\" title='复制权限' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/admin/UserInfo/GetUserList", $("#grid_detail"), eip.para.create($("input,select", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos1);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/admin/UserInfo/GetUserList", $("#grid_detail"), eip.para.create($("input,select", $("#form_Detail"))));
+    }
+
+    //复制权限
+    function CopyWhUserPosition(obj, userName, userid) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到复制用户Id
+
+        var copyUserNameCN = row["姓名"];
+
+        $.eipMsg.confirm("确定要将  " + copyUserNameCN + " 的权限复制给 " + userName + " 吗?\r\n" + copyUserNameCN + " >>> 权限复制给 >>> " + userName + " ", function () {
+            eip.get("/admin/UserInfo/CopyWhUserPosition?Id=" + userid + "&CopyId=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                    eip.dialog.close(dlg_Pos1);
+
+                }, function () { });
+            }, null, true)
+        });
+    }
+
+    //职位管理
+    function PositionManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var username = row["工号"];
+        //alert(row["Id"])
+        var dlg_Pos = eip.dialog.create("用户对应职位管理———当前用户：" + row["姓名"], "<div id=layout_Pos>"
+                                + "<div region=\"north\" id=\"form_Pos\" ><input type=\"hidden\" name=\"Hid_UId\" value=\"" + row["操作"] + "\"><input type=\"hidden\" name=\"Hid_UserName\" value=\"" + row["工号"] + "\"></div>"
+                                + "<div region=\"west\" style=\"width:45%;overflow-x:hidden;\" title=\"职位列表\">"
+                                + "<table id=grid_Pos_set></table></div>"
+                                + " <div region=\"center\" style=\"width:55%;\" title=\"当前用户已有职位\">"
+                                + "<table id=grid_Pos_get></table></div>"
+                                + "</div>", 900, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pos value=" + row["Id"] + "-" + row["职位名"] + " >";   //得到职位ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pos_get"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"WhUserPositionDel(this,'" + username + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length == 0) {
+                               $.eipMsg.alert("请先选择职位!");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pos]:checked", $("#grid_Pos_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_UId", value: $("[name=Hid_UId]", $("#form_Pos")).val() }, { name: "Hid_UserName", value: $("[name=Hid_UserName]", $("#form_Pos")).val() }]);
+
+                           eip.post("/admin/UserInfo/WhUserPositionListAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   //查询未选择的所有职位
+                                   eip.datagrid.load("/admin/UserInfo/WhPositionUnselected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_set"), null);
+                                   //查询出用户对应职位
+                                   eip.datagrid.load("/admin/UserInfo/WhPositionSelected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_get"), null);
+
+                                   eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        //查询未选择的所有职位
+        eip.datagrid.load("/admin/UserInfo/WhPositionUnselected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_set"), null);
+        //查询出用户对应职位
+        eip.datagrid.load("/admin/UserInfo/WhPositionSelected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_get"), null);
+    }
+    //取消用户的某个职位
+    function WhUserPositionDel(obj, username) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Id"];     //得到用户职位关系ID
+
+        $.eipMsg.confirm("确定取消该职位吗？", function () {
+            eip.get("/admin/UserInfo/WhUserPositionDeleteById?Id=" + Id, eip.para.create($("input,select", $("#layout_Pos"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    //查询未选择的所有职位
+                    eip.datagrid.load("/admin/UserInfo/WhPositionUnselected?UserName=" + username, $("#grid_Pos_set"), null);
+                    //查询出用户对应职位
+                    eip.datagrid.load("/admin/UserInfo/WhPositionSelected?UserName=" + username, $("#grid_Pos_get"), null);
+
+                    eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+    //仓库管理
+    function WhInfoManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var username = row["工号"];
+        //alert(row["Id"])
+        var dlg_Pos = eip.dialog.create("用户对应仓库管理———当前用户：" + row["姓名"], "<div id=layout_Pos>"
+                               + "<div region=\"north\" id=\"form_Pos\" ><input type=\"hidden\" name=\"Hid_UId\" value=\"" + row["操作"] + "\"></div>"
+                               + "<div region=\"west\" style=\"width:45%;overflow-x:hidden;\" title=\"仓库列表\">"
+                               + "<table id=grid_Pos_set></table></div>"
+                               + " <div region=\"center\" style=\"width:55%;\" title=\"当前用户已有仓库\">"
+                               + "<table id=grid_Pos_get></table></div>"
+                               + "</div>", 900, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pos value=" + row["Id"] + " >";   //得到仓库ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pos_get"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"WhInfoWhUserDel(this,'" + username + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length == 0) {
+                               $.eipMsg.alert("请先选择仓库!");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pos]:checked", $("#grid_Pos_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_UId", value: $("[name=Hid_UId]", $("#form_Pos")).val() }]);
+
+                           eip.post("/admin/UserInfo/R_WhInfo_WhUserAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+
+                                   eip.datagrid.load("/admin/UserInfo/WhInfoUnselected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_set"), null);
+
+                                   eip.datagrid.load("/admin/UserInfo/WhInfoSelected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_get"), null);
+
+                                   eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        //查询未选择的所有仓库
+        eip.datagrid.load("/admin/UserInfo/WhInfoUnselected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_set"), null);
+        //查询出用户对应仓库
+        eip.datagrid.load("/admin/UserInfo/WhInfoSelected?UserName=" + eip.utf8(row["工号"]), $("#grid_Pos_get"), null);
+    }
+
+    //取消用户的某个仓库
+    function WhInfoWhUserDel(obj, username) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Id"];     //得到用户仓库关系ID
+
+        $.eipMsg.confirm("确定取消该仓库吗？", function () {
+            eip.get("/admin/UserInfo/WhInfoWhUserDel?Id=" + Id, eip.para.create($("input,select", $("#layout_Pos"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    //查询未选择的所有职位
+                    eip.datagrid.load("/admin/UserInfo/WhInfoUnselected?UserName=" + username, $("#grid_Pos_set"), null);
+                    //查询出用户对应职位
+                    eip.datagrid.load("/admin/UserInfo/WhInfoSelected?UserName=" + username, $("#grid_Pos_get"), null);
+
+                    eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        });
+    }
+
+    //密码初始化
+    function UserPwdInit(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到用户ID
+
+        $.eipMsg.confirm("当前用户：" + row["姓名"] + "，确定密码初始化吗？", function () {
+            eip.get("/admin/UserInfo/UserPwdInit?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                }, function () { });
+            })
+        });
+    }
+
+
+    //是否禁用
+    function UserEditUnActive(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到用户ID
+
+        $.eipMsg.confirm("当前用户：" + row["姓名"] + "在职中，确定失效该用户吗？", function () {
+            eip.get("/admin/UserInfo/UserEditUnActive?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+    //重新启用
+    function UserEditActive(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到用户ID
+
+        $.eipMsg.confirm("当前用户：" + row["姓名"] + "离职中，确定重新启用该用户吗？", function () {
+            eip.get("/admin/UserInfo/UserEditActive?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+
+    function R_WhUser_WhInfo_BatchEdit() {
+        var arr_list = [];
+        $("[name=check_addWhInfo]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'userId', value: $(this).val() });
+        })
+
+        var dlg = eip.dialog.create("批量添加仓库", "<div id=layout7 ><div form='Y' id='form7'>"
+
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhCodeSelect"], "edit_WhCodeSelect", "仓库", " ", " left='140' ",true)"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout7'), [{
+            obj: $('#form7'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            $.eipMsg.confirm("确定添加仓库吗？", function () {
+
+                                eip.post("/admin/UserInfo/R_WhUser_WhInfo_BatchEdit?whcodeName=" + eip.utf8($("[name=edit_WhCodeSelect]").val()), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/admin/UserInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () {
+
+                                    });
+                                })
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+</script>

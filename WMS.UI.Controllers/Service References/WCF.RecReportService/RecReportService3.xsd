@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WMS.BLLClass" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ReceiptReportSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ReceiptId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReceiptReportSearch" nillable="true" type="tns:ReceiptReportSearch" />
+  <xs:complexType name="BaseSearch">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderByColumn" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Sort" nillable="true" type="q2:ArrayOfboolean" />
+      <xs:element minOccurs="0" name="pageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="pageSize" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseSearch" nillable="true" type="tns:BaseSearch" />
+  <xs:complexType name="ArrayOfReceiptReportResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReceiptReportResult" nillable="true" type="tns:ReceiptReportResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReceiptReportResult" nillable="true" type="tns:ArrayOfReceiptReportResult" />
+  <xs:complexType name="ReceiptReportResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AltItemNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CBM" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientId" type="xs:int" />
+      <xs:element minOccurs="0" name="CustomerPoNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Height" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="HuId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="ItemNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Length" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LotDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LotNumber1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LotNumber2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PoNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Qty" type="xs:int" />
+      <xs:element minOccurs="0" name="ReceiptDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReceiptId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Style1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UnitId" type="xs:int" />
+      <xs:element minOccurs="0" name="UnitName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Width" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReceiptReportResult" nillable="true" type="tns:ReceiptReportResult" />
+</xs:schema>

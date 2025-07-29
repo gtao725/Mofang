@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="75de6788-b767-4c00-ad18-eedc9722993a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/GMSService/GMSService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="GMSService.disco" MetadataType="Disco" ID="4fbde1eb-d8c0-4305-843e-f450c27c91b8" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?disco" />
+    <MetadataFile FileName="GMSService.xsd" MetadataType="Schema" ID="3ea33929-95e4-4c15-9e47-3cc8803bde3d" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd0" />
+    <MetadataFile FileName="GMSService3.xsd" MetadataType="Schema" ID="006d35d7-a7b3-4212-839b-d50f94cdfd4e" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd3" />
+    <MetadataFile FileName="GMSService1.xsd" MetadataType="Schema" ID="ea3a91cf-8f91-4529-a94c-1b769e2ed4e2" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd2" />
+    <MetadataFile FileName="GMSService2.xsd" MetadataType="Schema" ID="dedfdd05-0ca2-4fbb-ad04-e0e71a5aa10f" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd1" />
+    <MetadataFile FileName="GMSService.wsdl" MetadataType="Wsdl" ID="885e4e3a-2ce7-4151-b843-b403a2ffb6ce" SourceId="1" SourceUrl="http://localhost:45936/GMSService/GMSService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

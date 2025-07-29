@@ -1,0 +1,235 @@
+﻿@model WMS.UI.Controllers.Model.AdminModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" name="objectName" hint="业务Name" />
+        <input type="text" name="objectDes" hint="业务中文名" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ObjType"], "ObjType", "业务类型", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_objectName, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_objectValue, new { @left = "140" })    
+    @Html.EipInputFor(model => model.txt_objectDes, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_objectType, new { @left = "140" })
+</div>
+
+<div id='form33' style="display:none">
+
+    @*@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ObjDes"], "ObjDes1", "所属业务对象", " ", " left='140'")*@
+
+    @Html.EipGetSelectFor(model => model.ObjDes1, (IEnumerable<SelectListItem>)ViewData["ObjDes1"], new { @left = "140" })
+    <input type="text" name="buteName" hint="字段Name" left="140" />
+    <input type="text" name="buteNameCN" hint="字段中文名" left="140" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ObjDes2"], "ObjDes2", "下层业务对象", " ", "left='140'")
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/WinCE/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增业务对象", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增业务对象", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                 , 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/WinCE/AddBusObject", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.datagrid.load("/admin/WinCE/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_objectName]").focus();
+                         }
+                     },
+                     {
+                         text: "新增业务对象明细", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增业务对象明细", "<div id=layout3 ><div form='Y' id='form3' >" + $("#form33").html() + "</div></div>"
+                                 , 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout3'), [{
+                                 obj: $('#form3'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+
+                                                 eip.get("/admin/WinCE/AddBusObjectItem", eip.para.create($("input,select", $("#layout3"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.datagrid.load("/admin/WinCE/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_objectName]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+             
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick=\"ObjectItemList(this)\" title='查看明细' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"BusObjectDel(this)\" title='删除' ></a>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+        $("[name=objectName]").focus();
+
+    });
+
+    //删除业务对象
+    function BusObjectDel(obj)
+    {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该业务对象吗？", function () {
+            eip.get("/admin/WinCE/BusObjectDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/WinCE/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+
+
+    }
+
+    //查看业务对象明细
+    function ObjectItemList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var objectId = row["操作"];
+
+        var dlg_Pos = eip.dialog.create("业务对象明细",
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"BusObjectItemDel(this,'" + objectId + "')\" title='取消' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+                            });
+                            return btn;
+                        }
+                    }
+
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                }
+            ]
+        }]);
+
+        eip.datagrid.load("/admin/WinCE/ObjectItemList?objId=" + objectId, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+    //业务对象明细删除
+    function BusObjectItemDel(obj, objectId) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该明细吗？", function () {
+            eip.get("/admin/WinCE/BusObjectItemDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/WinCE/ObjectItemList?objId=" + objectId, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+                }, function () { });
+            })
+        });
+    }
+
+
+</script>

@@ -1,0 +1,177 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", " left=\"90\"")
+        <input type="text" left="90" name="locationId" hint="退货上架库位" />
+        <input type="text" left="90" name="altItemNumber" hint="款号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="Status"><option></option><option value='Active'>启用</option><option value='UnActive'>未启用</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_ReturnGoodLocation/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    } , {
+                        text: "批量导入退货上架库位对应款号信息", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '/Warehouse/C_ReturnGoodLocation/ImportsR_Location_Item_RG', //若后台函数名为 imports，url就可以不传了
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+                                         eip.datagrid.load("/Warehouse/C_ReturnGoodLocation/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                     }, function () { })
+                                 },
+                                 columns: [
+                                     {
+                                         column: '客户名',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: '退货上架库位',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: '款号',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: 'lot1',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                       {
+                                           column: '上限数量',
+                                           type: "number",
+                                           width: 100,
+                                           empty: false, //允许空值
+                                           optional: false //该列是否可选
+                                       }
+                                 ]
+                             });
+                         }
+                    }
+                    ,
+                    {
+                        text: "批量删除退货上架库位对应款号信息", icon: 'cancel', click:
+                         function () {
+                             SupplementLocationDel();
+                         }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["状态"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["操作"] + " >";   //得到职位ID
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑修改' ></a>";
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/Warehouse/C_ReturnGoodLocation/EditAddR_Location_Item_RG?Id=" + Id + "&edit_MinQty=" + eip.utf8($("[name=edit_MinQty]").val()) + "&edit_MaxQty=" + eip.utf8($("[name=edit_MaxQty]").val()) + "&edit_Status=" + eip.utf8($("[name=edit_Status]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/Warehouse/C_ReturnGoodLocation/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "上限数量": {
+                    editor: { type: "text", name: "edit_MaxQty" }
+                },
+                "状态名": {
+                    editor: {
+                        type: 'select', field: "状态", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_Status'></select>"), [{ val: "Active", text: "启用" }, { val: "UnActive", text: "未启用" }], true));
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    function SupplementLocationDel() {
+        if ($("[name=chx_Pow]:checked", $("#grid")).length == 0) {
+            $.eipMsg.alert("请先勾选要删除的行!");
+            return;
+        }
+
+        var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid")));
+
+        $.eipMsg.confirm("确定批量删除勾选的信息吗？", function () {
+            eip.post("/Warehouse/C_ReturnGoodLocation/R_Location_Item_RGDel", para, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_ReturnGoodLocation/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            }, null, true)
+        });
+    }
+
+
+
+</script>

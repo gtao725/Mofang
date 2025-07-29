@@ -1,0 +1,349 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="receipt_id" left="100" hint="收货批次号" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <input type="hidden" name="userName" hint="" value="@ViewBag.userName" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            muledit: false,
+            //checkbox: function (row) {
+
+            //    return "<input type=checkbox name=get_id  value=\"" + row["操作"] + "\"   >";
+
+            //},
+            columns: {
+                "照片ID": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["照片ID"] != "0" && row["照片ID"] != null) {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick='picView(this)'>" + row["照片ID"] + "</span>";
+                        }
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-redo' plain=true onclick='pic_upload_in(this)' title='上传照片' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='UnReceiptList(this)' title='未收货物明细' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='ReceiptList(this)' title='已登记明细' ></a>";
+
+                        if (row["状态"] != "已登记") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='confirm(this)' title='确认' ></a>";
+                        }
+                        if (row["状态"] == "已登记") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='ReBack(this)' title='撤销确认' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            }
+
+        });
+
+    });
+
+    //格式化系统出库单号  显示未收货货物明细
+    function UnReceiptList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var status = row["状态"]
+
+        var dlg_Pos = eip.dialog.create("查看未收货货物明细，当前收货批次号：" + row["收货批次号"] + "，状态：" + status,
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "<input type=\"text\" left=\"100\" name=\"se_SoNumber\"  hint=\"SO号\" />"
+            + "<input type=\"text\" left=\"100\" name=\"se_customerPoNumber\"  hint=\"PO号\" />"
+            + "<input type=\"text\" left=\"100\" name=\"se_altCustomerPoNumber\"  hint=\"款号\" />"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 1200, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["ItemId"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["未收货数量"] > row["已登记数量"] && status != "已登记") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='AddDetail(this)' title='新增' ></a>";
+                        }
+                        return retHtml;
+                    }
+
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/ReceiptPartialRegister/UnReceiptList?receipt_id=" + row["收货批次号"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/ReceiptPartialRegister/UnReceiptList?receipt_id=" + row["收货批次号"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+    //格式化系统出库单号  显示未收货货物明细
+    function ReceiptList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var status = row["状态"]
+        var dlg_Pos = eip.dialog.create("查看已登记货物明细，当前收货批次号：" + row["收货批次号"] + "，状态：" + row["状态"],
+            "<div id=layout_Details><div form=\"Y\" id=\"form_Details\">"
+            + "<input type=\"text\" left=\"100\" name=\"se_SoNumber\"  hint=\"SO号\" />"
+            + "<input type=\"text\" left=\"100\" name=\"se_customerPoNumber\"  hint=\"PO号\" />"
+            + "<input type=\"text\" left=\"100\" name=\"se_altCustomerPoNumber\"  hint=\"款号\" />"
+            + "</div>"
+            + "<table id=\"grid_details\"></table></div>", 1200, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_details"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "ItemId"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (status != "已登记") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-no' plain=true onclick='DetailDetail(this)' title='删除' ></a>";
+                        }
+                        return retHtml;
+                    }
+
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Details'), [{
+            obj: $('#form_Details'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/ReceiptPartialRegister/RegisteredList?receipt_id=" + row["收货批次号"], $("#grid_details"), eip.para.create($("input,select", $("#layout_Details"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/ReceiptPartialRegister/RegisteredList?receipt_id=" + row["收货批次号"], $("#grid_details"), eip.para.create($("input,select", $("#layout_Details"))));
+    }
+
+    //新增登记
+    function AddDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var getClientCode = row["客户名"]
+
+        var dlg = eip.dialog.create("修改库存信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号：\">" + row["SO"] + "</span>"
+                                    + "<span left=\"140\" hint=\"PO号：\">" + row["PO"] + "</span>"
+                                    + "<span left=\"140\" hint=\"款号：\">" + row["款号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"未收货数量：\">" + row["未收货数量"] + "</span>"
+                                    + "<span left=\"140\" hint=\"已登记数量：\">" + row["已登记数量"] + "</span>"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"receiptId\" value=\"" + row["收货批次号"] + "\"  />"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"SoNumber\" value=\"" + row["SO"] + "\"  />"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"PoNumber\" value=\"" + row["PO"] + "\"  />"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"itemNumber\" value=\"" + row["款号"] + "\"  />"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"itemId\" value=\"" + row["ItemId"] + "\"  />"
+                                    + "<input type=\"hidden\" type=\"text\" left=\"140\" name=\"unQty\" value=\"" + row["未收货数量"] + "\"  />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_qty\" value=\"\" hint=\"数量：\" />"
+
+                                    + " <select class=\"easyui-vhuo'xia'alidatebox\"left=\"140\" hint=\"原因\" name=\"edit_Reason\"><option></option></select>"
+                                    + "</div></div>", 500, 308)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=edit_qty]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("请输入数量!");
+                                return;
+                            }
+                            if ($("[name=edit_Reason]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("请输入原因!");
+                                return;
+                            }
+
+                            eip.get("/Root/ReceiptPartialRegister/UnReceiptRegister", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Root/ReceiptPartialRegister/UnReceiptList?receipt_id=" + row["收货批次号"], $("#grid_detail"), eip.para.create($("input,select,textarea", $("#layout_Detail"))));
+                                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                    eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        eip.post("/Warehouse/ReceiptPartialRegister/GetHoldMasterListByReceiptPart?clientCode=" + eip.utf8(getClientCode), null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_Reason]", $("#layout1")), val, true);
+                //$("[name=edit_Reason]", $("#layout1")).val("");
+            }
+        });
+
+        $("[name=edit_qty]").focus();
+    }
+
+    //删除明细
+    function DetailDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+        var receiptId = row["收货批次号"];
+
+        $.eipMsg.confirm("确定删除预录入：<br/> 款号:" + row["款号"] + "吗？", function () {
+            eip.get("/Root/ReceiptPartialRegister/DeleteDetail?&Id=" + Id + "&receiptId=" + receiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/ReceiptPartialRegister/RegisteredList?receipt_id=" + row["收货批次号"], $("#grid_details"), eip.para.create($("input,select", $("#layout_Details"))));
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        })
+
+    }
+
+    //确认状态
+    function confirm(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var receiptId = row["收货批次号"];
+
+        $.eipMsg.confirm("确认：<br/> 收货批次号:" + row["收货批次号"] + "吗？", function () {
+            eip.get("/Root/ReceiptPartialRegister/ReceiptPartialComplete?&receiptId=" + receiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        })
+
+    }
+
+    //撤销确认
+    function ReBack(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+        var receiptId = row["收货批次号"];
+
+        $.eipMsg.confirm("撤销确认：<br/> 收货批次号:" + row["收货批次号"] + "吗？", function () {
+            eip.get("/Root/ReceiptPartialRegister/ReceiptPartialReBack?&receiptId=" + receiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        })
+
+    }
+
+    //照片查看
+    function picView(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["收货批次号"]
+
+        eip.picViewEip(phototId, number, '照片查看', '', '', '@ViewBag.PhotoServerAddress');
+    }
+
+    //上传关闭后方法
+    function picUploadEipReturn() {
+        var clientCode = $("[name=WhClientId]").find("option:selected").text();
+        eip.datagrid.load("/Root/ReceiptPartialRegister/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    }
+
+    //上传照片
+    function pic_upload_in(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["收货批次号"]
+        var clientCode = row["客户名"]
+
+        var Id = row["操作"];
+        if (phototId == 0) {
+            phototId = "";
+        }
+
+        eip.picUploadEip(phototId, '@ViewBag.PhotoSaveAddress', 'ElectronicDocument', "http://@Html.Raw(ViewBag.WMSUrl)/Root/ReceiptPartialRegister/ReceiptPartPhotoUpload?number=" + number + "&Id=" + Id, "拒收登记照片上传", '收货批次号：' + number + '客户名：' + clientCode, 'N', '@ViewBag.PhotoServerAddress')
+
+    }
+
+
+</script>

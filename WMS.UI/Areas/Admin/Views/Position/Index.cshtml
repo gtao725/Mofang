@@ -1,0 +1,285 @@
+﻿@model WMS.UI.Controllers.Model.AdminModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+
+<div id=layout>
+    <div form="Y" id="form1">
+
+        <input type="text" name="pos_name" left="100" hint="职位英文简称" />
+        <input type="text" name="pos_nameCN" left="100" hint="职位中文名" />
+
+        @*@Html.EipInputFor(model => model.AdministratorId)
+            @Html.EipInputFor(model => model.AdminName)
+            @Html.EipInputFor(model => model.PassWord)
+            @Html.EipInputFor(model => model.Name)*@
+
+        @*@Html.EipInputFor(model => model.AdministratorId)
+            @Html.EipInputFor(model => model.AdminName, new { @left = "90", @value = "023-12345678", @name = "AdminNameInput" })
+            @Html.EipInputFor(model => model.AdminName, new { @type = "checkbox", @checked = "checked", @left = "90",@value= "1", @name = "AdminNameCheckbox" })
+            @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["Select"],"test","测试菜单","16","left=90",false)
+            @Html.EipGetSelectFor(model => model.AdminName,(IEnumerable< SelectListItem>)ViewData["Select"], new {  @left = "90",@checked="18",@name="test11"})*@
+
+        @*<span 整数 color="blue" hint="供应商" field="VENDOR_ID" display="供应商"></span>*@
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_posname, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_posnameCN, new { @left = "140" })
+    <select class="easyui-vhuo'xia'alidatebox" hint="工作台特殊权限" left="140" name="txt_WorkPowerFlag"><option value='0'>无</option><option value='1'>特殊操作台显示</option><option value='2'>前打单工作台显示</option><option value='-1'>交接工作台隐藏</option><option value='3'>打印工作台显示</option><option value='99'>工作台登录仓库可选择</option></select>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        //eip.combox.create({
+        //    obj: $("span[hint=供应商]"),
+        //    name: "VENDOR_ID",
+        //    type: 'combox',
+        //    url: '/admin/Position/vendor'
+        //});
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+
+                            ////失效验证
+                            //$("[name=AdminName]").validatebox('disableValidation')
+
+                            //if (!$("#form1").form('validate')) {
+                            //    return false;
+                            //}
+                            ////启用验证
+                            //$("[name=AdminName]").validatebox('enableValidation')
+                            //eip.get("/Position/test", eip.para.create($("input,select", $("#form1"))), function (jsonObj) {
+                            //    //alert(jsonObj)
+                            //    $.procAjaxData(jsonObj, function () {
+
+                            //    });
+
+                            //})
+                            eip.datagrid.load("/admin/Position/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增职位", icon: "add", click:
+                         function (event) {
+                             var dlg = eip.dialog.create("新增职位", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_posname\" hint=\"职位英文简称\" /><br/>"
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_posnameCN\" hint=\"职位中文名\" /><br/>"
+                                 + "</div></div>", 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                         function () {
+                                             if (!$("#form2").form('validate')) {
+                                                 return false;
+                                             }
+                                             eip.get("/admin/Position/WhPositionAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                 $.procAjaxData(jsonObj, function () {
+                                                     $("[name=txt_posname]").val("");
+                                                     $("[name=txt_posnameCN]").val("");
+                                                     eip.datagrid.load("/admin/Position/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                 }, function () { });
+                                             })
+                                         }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             //窗体默认加载方法
+                             //eip.datagrid.load("EipModel/List", $("#grid_detail"), null);
+
+                             $("[name=txt_posname]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["公司ID", "修改人", "修改时间"],
+            //showOrderBtns: true,
+
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑信息' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='PositionPowerManager(this)' title='职位对应权限管理' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];
+                                eip.get("/admin/Position/WhPositionEdit?Id=" + Id + "&Status=" + $("[name=edit_positionStatus]").val() + "&WorkPowerFlag=" + $("[name=edit_WorkPowerFlag]").val(), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/admin/Position/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "状态": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_positionStatus'></select>"), [{ val: "Active" }, { val: "UnActive" }], true));
+                            // var select = eip.form.createOptions($('<select></select>'), page.select.ORG_ID);
+                            //请尽量把执行函数写在此处，而不是单独声明
+                            //  return select.change(function () {
+                            //      alert($(this).val());
+                            //   });
+                        }
+                    }
+                },
+                "工作台特殊权限": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_WorkPowerFlag'></select>"), [{ val: "0", txt: "无" }, { val: "1", txt: "特殊操作台显示" }, { val: "2", txt: "前打单工作台显示" }, { val: "-1", txt: "交接工作台隐藏" }, { val: "3", txt: "打印工作台显示" }, { val: "99", txt: "工作台登录仓库可选择" }], true));
+
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=pos_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+
+
+    });
+
+    //职位对应权限管理
+    function PositionPowerManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        //alert(row["Id"])
+        var dlg_Pos = eip.dialog.create("职位对应权限管理———当前职位：" + row["职位中文名"], "<div id=layout_Pow>"
+                                + "<div region=\"north\" id=\"form_Pow\" style=\"height:65px;padding:5px;\"><input type=\"hidden\" name=\"Hid_PId\" value=\"" + row["操作"] + "\"><input type=\"hidden\" name=\"Hid_PosName\" value=\"" + row["职位英文简称"] + "\">权限名：<input type=\"text\" name=\"txt_PowName\" value=\"\">权限类型：<input type=\"text\" name=\"txt_PowType\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"权限列表\">"
+                                + "<table id=grid_Pow_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前职位已有权限\">"
+                                + "<table id=grid_Pow_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pow_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["Id"] + "-" + row["权限名"] + " >";   //得到职位ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pow_get"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID", "职位英文简称", "职位中文名"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='WhPositionPowerDel(this)' title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pow'), [{
+            obj: $('#form_Pow'),
+            buttons: [
+                 {
+                     text: "查询", icon: "search", click: function () {
+                         eip.datagrid.load("/admin/Position/WhPowerUnselected?PosName=" + eip.utf8(row["职位英文简称"]) + "&PowType=" + eip.utf8($("[name=txt_PowType]").val()) + "&PowName=" + eip.utf8($("[name=txt_PowName]").val()), $("#grid_Pow_set"), eip.para.create($("input,select", $("#form_Pow"))));
+                     }
+                 },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length == 0) {
+                               $.eipMsg.alert("请先选择权限!");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid_Pow_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_PId", value: $("[name=Hid_PId]", $("#form_Pow")).val() }, { name: "Hid_PosName", value: $("[name=Hid_PosName]", $("#form_Pow")).val() }]);
+
+                           eip.post("/admin/Position/WhPositionPowerListAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   //查询未选择的所有权限
+                                   eip.datagrid.load("/admin/Position/WhPowerUnselected?PosName=" + eip.utf8(row["职位英文简称"]) + "&PowType=null&PowName=null", $("#grid_Pow_set"), null);
+                                   //查询出职位已有权限
+                                   eip.datagrid.load("/admin/Position/WhPowerSelected?PosName=" + eip.utf8(row["职位英文简称"]), $("#grid_Pow_get"), null);
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        $("[name=txt_PowName]").focus();
+        //查询未选择的所有权限
+        eip.datagrid.load("/admin/Position/WhPowerUnselected?PosName=" + eip.utf8(row["职位英文简称"]) + "&PowType=null&PowName=null", $("#grid_Pow_set"), null);
+        //查询出职位已有权限
+        eip.datagrid.load("/admin/Position/WhPowerSelected?PosName=" + eip.utf8(row["职位英文简称"]), $("#grid_Pow_get"), null);
+    }
+
+    //取消职位的某个权限
+    function WhPositionPowerDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Id"];     //得到职位权限关系的ID
+
+        $.eipMsg.confirm("确定取消该权限吗？", function () {
+            eip.get("/admin/Position/WhPositionPowerDelById?Id=" + Id, eip.para.create($("input,select", $("#layout_Pow"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    //查询未选择的所有权限
+                    eip.datagrid.load("/admin/Position/WhPowerUnselected?PosName=" + eip.utf8(row["职位英文简称"]) + "&PowType=null&PowName=null", $("#grid_Pow_set"), null);
+                    //查询出职位已有权限
+                    eip.datagrid.load("/admin/Position/WhPowerSelected?PosName=" + eip.utf8(row["职位英文简称"]), $("#grid_Pow_get"), null);
+                }, function () { });
+            })
+        });
+    }
+
+</script>

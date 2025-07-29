@@ -1,0 +1,217 @@
+﻿@model WMS.UI.Controllers.Model.SupplementTaskModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+
+        <input type="text" left="90" name="SupplementNumber" hint="补货任务号" />
+
+        <input type="text" left="90" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_Qty, new { @left = "140" })
+    <textarea name="AltItemNumber" hint="款号" left="140" ></textarea> 
+
+</div>
+
+<div id='form33' style="display:none">
+    @Html.EipInputFor(model => model.bosch_txt_Qty, new { @left = "140" })
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_SupplementTask/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    },
+                     {
+                         text: "生成补货任务", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("生成补货任务", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                , 400, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/Warehouse/C_SupplementTask/ReleaseSupplementTask", eip.para.create($("input,select,textarea", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Warehouse/C_SupplementTask/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+                             $("[name=txt_Qty]").focus();
+                         }
+                     },
+                     {
+                         text: "生成补货任务(博士定制)", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("生成补货任务(博士定制)", "<div id=layout3 ><div form='Y' id='form3' >" + $("#form33").html() + "</div></div>"
+                                , 400, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout3'), [{
+                                 obj: $('#form3'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form3").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/Warehouse/C_SupplementTask/BoschReleaseSupplementTask", eip.para.create($("input,select", $("#layout3"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Warehouse/C_SupplementTask/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+                             $("[name=bosch_txt_Qty]").focus();
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='SearchDetail(this)' title='查看明细' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='SupplementTaskDetailDel(this)' title='删除任务' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+        $("[name=AltItemNumber]").css("height", "25px").css("width", "135px");
+        $("[name=AltItemNumber]").parent().css("height", "30px").css("width", "270px");
+
+    });
+
+    //删除补货任务
+    function SupplementTaskDetailDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除补货任务：" + row["补货任务号"] + "吗？<br />只会删除未进行的任务！", function () {
+            eip.get("/Warehouse/C_SupplementTask/SupplementTaskDetailDel?SupplementNumber=" + row["补货任务号"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_SupplementTask/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+
+
+    //格式化系统出库单号  显示订单明细
+    function SearchDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看明细，当前补货任务号：" + row["补货任务号"],
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "<input type=\"text\" left=\"90\" name=\"detail_LocationId\"  hint=\"原始库位\" />"
+             + "<input type=\"text\" left=\"90\" name=\"detail_PutLocationId\"  hint=\"目标库位\" />"
+             + "<input type=\"text\" left=\"90\" name=\"detail_AltItemNumber\"  hint=\"款号\" />"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            hiddencolumns: ["操作"],
+            pagesize: 200
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click: function () {
+                        eip.datagrid.load("/Warehouse/C_SupplementTask/SupplementTaskDetailList?SupplementNumber=" + row["补货任务号"], $("#grid_detail"), eip.para.create($("input,select,textarea", $("#layout_Detail"))));
+                    }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Warehouse/C_SupplementTask/SupplementTaskDetailList?SupplementNumber=" + row["补货任务号"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+
+</script>

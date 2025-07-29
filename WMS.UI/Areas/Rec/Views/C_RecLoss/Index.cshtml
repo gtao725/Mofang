@@ -1,0 +1,168 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["RecLossTypeList"], "RecLossType", "收货耗材科目", "", " left=\"140\" ")
+        <input type="text" left="90" name="RecLossName" hint="收货耗材名称" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="Status"><option></option><option value='Active'>启用</option><option value='UnActive'>已失效</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["RecLossTypeList"], "txt_RecLossType", "收货耗材科目", "", "left=\"140\"")
+
+    <input type="text" left="140" name="txt_RecLossName" hint="收货耗材名称" />
+    <input type="text" left="140" name="txt_RecLossDescription" hint="耗材说明" />
+    <input type="text" left="140" name="txt_Price" hint="单价" />
+    <input type="text" left="140" name="txt_RecSort" hint="排序" value="0" />
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Rec/C_RecLoss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    },
+                     {
+                         text: "新增收货耗材", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("新增收货耗材", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                , 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=txt_RecLossType]", $("#form2")).val() == "") {
+                                                     $.eipMsg.alert("请先选择收货耗材科目！");
+                                                     return;
+                                                 }
+
+                                                 if ($("[name=txt_RecLossName]", $("#form2")).val() == "") {
+                                                     $.eipMsg.alert("请先填写收货耗材名称！");
+                                                     return;
+                                                 }
+
+                                                 if ($("[name=txt_Price]", $("#form2")).val() == "") {
+                                                     $.eipMsg.alert("请先填写单价！");
+                                                     return;
+                                                 }
+
+                                                 eip.get("/Rec/C_RecLoss/LossAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Rec/C_RecLoss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改耗材明细' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var status = row["状态"];
+        var dlg = eip.dialog.create("修改耗材信息", "<div id=layout3 ><div form='Y' id='form3'>"
+                                    + "<span left=\"140\" hint=\"收货耗材名称：\">" + row["收货耗材名称"] + "</span>"
+                                    + "<input type=\"hidden\" name=\"edit_Id\" value=\"" + row["操作"] + "\"  />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_lossDescription\" value=\"" + row["耗材说明"] + "\" hint=\"耗材说明\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_price\" value=\"" + row["单价"] + "\" hint=\"单价\" />"
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_recSort\" value=\"" + row["排序"] + "\" hint=\"排序\" />"
+                                    + "<select left=\"140\" name=\"edit_Status\" hint=\"状态\"><option value=\"Active\" >启用</option><option value=\"UnActive\" >已失效</option></select>"
+                                    + "</div></div>", 500, 300)
+
+        eip.layout.create($('#layout3'), [{
+            obj: $('#form3'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            eip.get("/Rec/C_RecLoss/EditDetail", eip.para.create($("input,select", $("#layout3"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Rec/C_RecLoss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_Status]", $("#layout3")).val(status);
+
+    }
+
+
+
+</script>

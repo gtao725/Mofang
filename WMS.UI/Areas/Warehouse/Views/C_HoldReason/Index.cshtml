@@ -1,0 +1,136 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form55' style="display:none">
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="异常类型" name="txt_holdReasonType"><option value='TCR' selected>TCR</option><option value='Return'>Return</option></select>
+    <input type="text" left="140" name="txt_holdReason" hint="异常原因" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_HoldReason/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增异常原因", icon: "add", click:
+                         function () {
+                             var dlg_hold = eip.dialog.create("新增异常原因", "<div id=layout5 ><div form='Y' id='form5'>"
+                                  + $("#form55").html()
+                                  + "</div></div>", 500, 150)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout5'), [{
+                                 obj: $('#form5'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 eip.post("/Warehouse/C_HoldReason/HoldMasterAdd", eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.datagrid.load("/Warehouse/C_HoldReason/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg_hold);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             $("[name=txt_holdReason]").focus();
+                         }
+                     }
+                    // },
+                    //{
+                    //    text: "打开新页面", icon: "add", click: function () {
+                    //        eip.tab.add("/test", "测试页面");
+
+                    //    }
+                    //}
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["仓库"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"HoldMasterDel(this)\" title='删除' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/Warehouse/C_HoldReason/HoldMasterEdit?id=" + Id + "&holdReason=" + eip.utf8($("[name=edit_holdReason]").val()) + "&sequence=" + eip.utf8($("[name=edit_sequence]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Warehouse/C_HoldReason/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "仓库异常原因": {
+                    editor: { type: "text", name: "edit_holdReason" }
+                },
+                "显示顺序": {
+                    editor: { type: "text", name: "edit_sequence" }
+                }
+            }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    //删除异常原因
+    function HoldMasterDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该异常原因吗？", function () {
+            eip.get("/Warehouse/C_HoldReason/HoldMasterDelById?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_HoldReason/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+</script>

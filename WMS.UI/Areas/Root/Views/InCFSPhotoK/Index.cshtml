@@ -1,0 +1,464 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户名", "", "")
+
+        <select left="100" class="easyui-vhuo'xia'alidatebox" hint="客服审核状态" name="checkStatus1"><option></option><option value='未审核'>未审核</option><option value='已审核'>已审核</option></select>
+        <select left="90" class="easyui-vhuo'xia'alidatebox" hint="TCR状态" name="TCRStatus"><option></option><option value='未处理'>未处理</option><option value='已处理'>已处理</option></select>
+
+        <select left="90" class="easyui-vhuo'xia'alidatebox" hint="是否部分收货" name="holdReason"><option></option><option value='否' selected>否</option><option value='部分收货'>是</option></select>
+
+        <input type="text" left="100" name="number" hint="收货批次号" />
+        <input type="text" name="number2" hint="SO号" />
+        <input type="text" name="huid" hint="托盘" />
+        <input type="text" name="holdreason1" hint="TCR原因" />
+        <select left="90" class="easyui-vhuo'xia'alidatebox" hint="TCR类别" name="HoldReasonType"><option></option><option value='标签'>标签</option><option value='非标签'>非标签</option></select>
+
+        <input type="text" left="100" name="BeginCreateDate" hint="TCR创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <select class="easyui-vhuo'xia'alidatebox" hint="客服备注" name="KRemark1"><option></option><option value='有'>有</option><option value='无'>无</option></select>
+
+        <input type="hidden" name="userName" hint="" value="@ViewBag.userName" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form55' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_ClientCode", "客户名", "", " left=\"140\", onchange = \"onChangeGetHoldMaster()\" ")
+    <input type="text" left="140" cle="y" name="txt_ReceiptId" hint="*收货批次号" />
+    <input type="text" left="140" cle="y" name="txt_SoNumber" hint="*SO号" />
+    <input type="text" left="140" cle="y" name="txt_CustomerPoNumber" hint="*PO" />
+    <input type="text" left="140" cle="y" name="txt_AltNumber" hint="SKU" />
+    <input type="text" left="140" cle="y" name="txt_Qty" hint="*实收数量" />
+    <input type="text" left="140" cle="y" name="txt_HuId" hint="托盘" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["HoldReasonList"], "txt_HoldReason", "*TCR类型", "", " left=\"140\" ")
+    <input type="text" left="140" cle="y" name="txt_Kremark1" hint="客服备注" />
+
+</div>
+
+<div id='form22' style="display:none">
+    <input type="text" left="120" name="add_TCRProcessMode" hint="TCR处理方式" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增TCR", icon: "add", click:
+                         function () {
+                             var dlg_hold = eip.dialog.create("新增TCR", "<div id=layout5 ><div form='Y' id='form5'>"
+                                  + $("#form55").html()
+                                  + "</div></div>", 500, 450)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout5'), [{
+                                 obj: $('#form5'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=txt_ReceiptId]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请输入收货批次号!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=txt_SoNumber]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请输入SO号!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=txt_CustomerPoNumber]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请输入PO号!");
+                                                     return;
+                                                 }
+
+                                                 if ($("[name=txt_Qty]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请输入实收数量!");
+                                                     return;
+                                                 }
+
+                                                 if ($("[name=txt_HoldReason]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请选择TCR类型!");
+                                                     return;
+                                                 }
+
+
+                                                 var clientCode = $("[name=txt_ClientCode]").find("option:selected").text();
+
+                                                 eip.post("/Root/InCFSPhotoK/PhotoMasterAdd", eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+
+                                                         $("input[cle=y]").val("");
+
+                                                         eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                                     }, function () { });
+                                                 })
+
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg_hold);
+                                           }
+                                    }
+                                 ]
+                             }])
+                         }
+                     },
+                      {
+                          text: "新增TCR处理方式", icon: "add", click:
+                          function () {
+                              TCRProcessModeAdd();
+                          }
+                      }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["属性2"],
+            //showOrderBtns: true,
+            lockcolumns: 1,
+            muledit: false,
+            columns: {
+                "照片ID": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["照片ID"] != "0" && row["照片ID"] != null) {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick='picView(this)'>" + row["照片ID"] + "</span>";
+                        }
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["TCR状态"] == "未处理") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditTCR(this)' title='处理TCR' ></a>";
+                        }
+
+                        if (row["TCR状态"] == "未处理" && row["来源"] == "新增") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelTCR(this)' title='删除TCR' ></a>";
+                        }
+                        if (row["TCR状态"] == "未处理") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='EditTCRStatus(this)' title='确认已处理' ></a>";
+                        }
+
+                        if (row["TCR类型"] != "部分收货") {
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintTCR(this)' title='打印TCR操作单' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintTCRPZ(this)' title='打印TCR凭证' ></a>";
+                        }                      
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=number]").focus();
+    });
+
+    //新增TCR处理方式
+    function TCRProcessModeAdd() {
+
+        var dlg_PosLoadHuId = eip.dialog.create("处理方式列表",
+             "<div id=layout_DetailLoadHuId><div form=\"Y\" id=\"form_DetailLoadHuId\">"
+             + "</div>"
+             + "<table id=\"grid_detailLoadHuId\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detailLoadHuId"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"TCRProcessModeDel(this)\" title='删除' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+
+        var btn = [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_PosLoadHuId);
+                        }
+                 }
+        ]
+
+
+        btn.push({
+            text: "新增TCR处理方式", icon: "add", click:
+               function () {
+                   var dlg = eip.dialog.create("新增TCR处理方式", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 200)
+
+
+                   //窗体工具栏按钮 begin
+                   eip.layout.create($('#layout1'), [{
+                       obj: $('#form2'),
+                       buttons: [
+                           {
+                               text: "保存", icon: "save", click:
+                                   function () {
+                                       if ($("[name=add_TCRProcessMode]", $("#form2")).val() == "") {
+                                           $.eipMsg.alert("处理方式必须填写!");
+                                           return;
+                                       }
+
+                                       eip.get("/Root/InCFSPhotoK/TCRProcessModeAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                           $.procAjaxData(jsonObj, function () {
+
+                                               $("[name=add_TCRProcessMode]", $("#form2")).val("");
+                                               eip.datagrid.load("/Root/InCFSPhotoK/TCRProcessModeSearch", $("#grid_detailLoadHuId"), eip.para.create($("input,select", $("#layout_DetailLoadHuId"))));
+
+                                           }, function () { });
+                                       }, null, true)
+                                   }
+                           },
+                          {
+                              text: "关闭窗口", icon: "no", click:
+                                 function () {
+                                     eip.dialog.close(dlg);
+                                 }
+                          }
+                       ]
+                   }])
+                   //end
+
+                   $("[name=add_TCRProcessMode]").focus();
+               }
+        });
+
+        eip.layout.create($('#layout_DetailLoadHuId'), [{
+            obj: $('#form_DetailLoadHuId'),
+            buttons: btn
+        }]);
+
+        eip.datagrid.load("/Root/InCFSPhotoK/TCRProcessModeSearch", $("#grid_detailLoadHuId"), eip.para.create($("input,select", $("#layout_DetailLoadHuId"))));
+    }
+
+    //通过选择的客户得到TCR类型
+    function onChangeGetHoldMaster() {
+
+        $("[name=txt_HoldReason]", $("#layout5")).html("<option value=\"\"></option>");
+
+        if ($("[name=txt_ClientCode]", $("#layout5")).val() != "") {
+            eip.post("/Root/InCFSPhotoK/GetHoldMaster", eip.para.create($("input,select,textarea", $("#layout5"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_HoldReason]"), val, true);
+                }
+            })
+        }
+
+    }
+
+    //删除TCR处理方式
+    function TCRProcessModeDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除TCR处理方式吗？\r\n删除后，处理TCR时将无法选择该方式！", function () {
+            eip.get("/Root/InCFSPhotoK/TCRProcessModeDel?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/InCFSPhotoK/TCRProcessModeSearch", $("#grid_detailLoadHuId"), eip.para.create($("input,select", $("#layout_DetailLoadHuId"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //处理TCR
+    function EditTCR(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var dlg = eip.dialog.create("处理TCR", "<div id=layout6 ><div form='Y' id='form6'>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"收货批次号\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号\">" + row["SO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"照片ID\">" + row["照片ID"] + "</span>"
+                                    + "<span left=\"140\" hint=\"实收数量\">" + row["实收数量"] + "</span>"
+                                    + "<span left=\"140\" hint=\"TCR类型\">" + row["TCR类型"] + "</span>"
+
+                                     + "<select left=\"140\" name=\"edit_TCRProcessMode\" hint=\"TCR处理方式\"><option value=\"\" ></option></select>"
+
+                                        + "<select left=\"140\" name=\"edit_SettlementMode\" hint=\"结算方式\"><option value=\"\" ></option><option value=\"现金\" >现金</option><option value=\"月结\" >月结</option></select>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_SumPrice\" value=\"" + row["金额"] + "\" hint=\"金额\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_KRemark1\" value=\"" + row["客服备注"] + "\"   hint=\"客服备注\" />"
+
+                                    + "</div></div>", 520, 450)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_TCRProcessMode]", $("#form6")).val() == "") {
+                                $.eipMsg.alert("TCR处理方式必须选择!");
+                                return;
+                            }
+
+                            eip.get("/Root/InCFSPhotoK/PhotoMasterEdit?id=" + id, eip.para.create($("input,select", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_TCRProcessMode]").focus();
+
+        eip.post("/Root/InCFSPhotoK/TCRProcessModeSelect", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_TCRProcessMode]"), val, true);
+            }
+        });
+    }
+
+    //删除TCR
+    function DelTCR(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除这条TCR吗？", function () {
+            eip.get("/Root/InCFSPhotoK/DelTCR?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //处理TCR
+    function EditTCRStatus(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定处理这条TCR吗？<br />处理后将不能再修改！", function () {
+            eip.get("/Root/InCFSPhotoK/EditTCRStatus?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //上传照片
+    function pic_upload_in(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["收货批次号"]
+        var number2 = row["SO号"]
+        var Id = row["操作"];
+        if (phototId == 0) {
+            phototId = "";
+        }
+
+        var username1 = $("[name=userName]").val();
+
+        eip.picUploadEip(phototId, '@ViewBag.PhotoSaveAddress', 'ElectronicDocument', "http://@Html.Raw(ViewBag.WMSUrl)/Root/InCFSPhotoK/InCFSPhotoKComplete?user=" +username1 +"&number=" + number + "&number2=" + number2 +"&Id=" + Id+ "&whCode=@Html.Raw(ViewBag.whCode)", "收货照片上传", '收货批次号：' + number + 'SO号：' + number2, 'N')
+    }
+
+    //上传关闭后方法
+    function picUploadEipReturn() {
+        eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    }
+
+    //照片查看
+    function picView(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["收货批次号"]
+        var number2 = row["SO号"]
+        var Id = row["操作"];
+
+        var username1 = $("[name=userName]").val();
+
+        var uploadHtml = "<a href='http://@Html.Raw(ViewBag.WMSUrl)/Root/InCFSPhotoK/InCFSPhotoKShenheComplete?user=" +username1 +"&number=" + number + "&number2=" + number2 + "&whCode=" + eip.utf8(@ViewBag.whCode) + "&photoid=" + phototId + "&Id=" + Id + "' >客服审核</a>";
+
+
+        eip.picViewEip(phototId, number, '照片查看', uploadHtml, '', '@ViewBag.PhotoServerAddress');
+    }
+
+    //审核后方法
+    function picViewEipReturn() {
+        eip.datagrid.load("/Root/InCFSPhotoK/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    }
+
+    //打印TCR操作单
+    function PrintTCR(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["收货批次号"];
+        window.open("https://@Html.Raw(ViewBag.CrSaveAddress)/WMS_TCR.aspx?id=" + Id + "&whCode=" + eip.utf8(@ViewBag.whCode));
+    }
+
+    //打印TCR凭证
+    function PrintTCRPZ(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["收货批次号"];
+        window.open("https://@Html.Raw(ViewBag.CrSaveAddress)/WMS_TCR_PZ.aspx?id=" + Id + "&whCode=" + eip.utf8(@ViewBag.whCode));
+    }
+
+    
+
+</script>

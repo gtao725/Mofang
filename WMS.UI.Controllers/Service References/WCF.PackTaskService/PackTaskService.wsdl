@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="PackTaskService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPackTaskService_WhClientListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_WhClientListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByLoad" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByLoad" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumSortTaskDetailListByLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumSortTaskDetailListByLoad" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumSortTaskDetailListByLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumSortTaskDetailListByLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByLoad" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskById" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackTaskStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackTaskStatus" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackTaskStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackTaskStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByLoadOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByLoadOrder" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByLoadOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByLoadOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByLoadOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByLoadOrder" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByLoadOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByLoadOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackHeadGroupId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackHeadGroupId" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackHeadGroupId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackHeadGroupIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetail" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackingType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackingType" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackingType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackingTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetScanningConsumables_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetScanningConsumables" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetScanningConsumables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetScanningConsumablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumSortTaskDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumSortTaskDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumSortTaskDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumSortTaskDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsert" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdatePackHead_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePackHead" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdatePackHead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePackHeadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdatePackTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePackTask" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdatePackTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePackTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResult" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_ScanNumberDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ScanNumberDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_ScanNumberDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ScanNumberDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_DeletePackHead_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePackHead" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_DeletePackHead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePackHeadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackDetailSearchResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackDetailSearchResult" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackDetailSearchResult_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackDetailSearchResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportPackTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportPackTask" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportPackTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportPackTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportExpressPackTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportExpressPackTask" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportExpressPackTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportExpressPackTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportYunPrintData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportYunPrintData" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportYunPrintData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportYunPrintDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdateExpressNumberByYunPrint_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExpressNumberByYunPrint" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdateExpressNumberByYunPrint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExpressNumberByYunPrintResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdateExpressNumberByWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExpressNumberByWork" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UpdateExpressNumberByWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateExpressNumberByWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetExpressNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpressNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetExpressNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExpressNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_checkLoss_InputMessage">
+    <wsdl:part name="parameters" element="tns:checkLoss" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_checkLoss_OutputMessage">
+    <wsdl:part name="parameters" element="tns:checkLossResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetLoadProcedureList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadProcedureList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetLoadProcedureList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadProcedureListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetBarCodeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBarCodeList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetBarCodeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBarCodeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackPrintDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackPrintDate" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_CheckPackPrintDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPackPrintDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_TranLogAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:TranLogAdd" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_TranLogAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TranLogAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetItemMasterByPackHeadId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemMasterByPackHeadId" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetItemMasterByPackHeadId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemMasterByPackHeadIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackHeadJsonByExpress_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackHeadJsonByExpress" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackHeadJsonByExpress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackHeadJsonByExpressResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_LossList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LossList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_LossList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LossListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_WorkPickLoadList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WorkPickLoadList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_WorkPickLoadList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WorkPickLoadListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumQtyPickTaskDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumQtyPickTaskDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumQtyPickTaskDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumQtyPickTaskDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumPickQtyPickTaskDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumPickQtyPickTaskDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumPickQtyPickTaskDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumPickQtyPickTaskDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPickTaskDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPickTaskDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPickTaskDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPickTaskDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PickingLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickingLoad" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PickingLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickingLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByCombinationAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByCombinationAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskListByCombinationAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskListByCombinationAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumListByCombinationAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumListByCombinationAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSumListByCombinationAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSumListByCombinationAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByCombinationAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByCombinationAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetSortTaskDetailByCombinationAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSortTaskDetailByCombinationAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UCFGetCryReportPackTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:UCFGetCryReportPackTask" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UCFGetCryReportPackTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UCFGetCryReportPackTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByCombinationAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByCombinationAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByCombinationAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByCombinationAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResultByCombinationAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResultByCombinationAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumberUCF_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResultByCombinationAltItemNumberUCF" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumberUCF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPackTaskSearchResultByCombinationAltItemNumberUCFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByCombinationAltItemNumberUCF_InputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByCombinationAltItemNumberUCF" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_PackTaskInsertByCombinationAltItemNumberUCF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PackTaskInsertByCombinationAltItemNumberUCFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UCFGetCryReportPackTask1_InputMessage">
+    <wsdl:part name="parameters" element="tns:UCFGetCryReportPackTask1" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_UCFGetCryReportPackTask1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UCFGetCryReportPackTask1Response" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportExpressPackTask1_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportExpressPackTask1" />
+  </wsdl:message>
+  <wsdl:message name="IPackTaskService_GetCryReportExpressPackTask1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCryReportExpressPackTask1Response" />
+  </wsdl:message>
+  <wsdl:portType name="IPackTaskService">
+    <wsdl:operation name="WhClientListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/WhClientListSelect" message="tns:IPackTaskService_WhClientListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/WhClientListSelectResponse" message="tns:IPackTaskService_WhClientListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByLoad" message="tns:IPackTaskService_GetPackTaskListByLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByLoadResponse" message="tns:IPackTaskService_GetPackTaskListByLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoad" message="tns:IPackTaskService_GetSortTaskDetailByLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoadResponse" message="tns:IPackTaskService_GetSortTaskDetailByLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumSortTaskDetailListByLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailListByLoad" message="tns:IPackTaskService_GetSumSortTaskDetailListByLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailListByLoadResponse" message="tns:IPackTaskService_GetSumSortTaskDetailListByLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByLoad" message="tns:IPackTaskService_PackTaskInsertByLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByLoadResponse" message="tns:IPackTaskService_PackTaskInsertByLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskById" message="tns:IPackTaskService_GetPackTaskById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskByIdResponse" message="tns:IPackTaskService_GetPackTaskById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackTaskStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackTaskStatus" message="tns:IPackTaskService_CheckPackTaskStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackTaskStatusResponse" message="tns:IPackTaskService_CheckPackTaskStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByLoadOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByLoadOrder" message="tns:IPackTaskService_GetPackTaskListByLoadOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByLoadOrderResponse" message="tns:IPackTaskService_GetPackTaskListByLoadOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByLoadOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoadOrder" message="tns:IPackTaskService_GetSortTaskDetailByLoadOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoadOrderResponse" message="tns:IPackTaskService_GetSortTaskDetailByLoadOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskList" message="tns:IPackTaskService_GetPackTaskList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListResponse" message="tns:IPackTaskService_GetPackTaskList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackHeadGroupId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackHeadGroupId" message="tns:IPackTaskService_GetPackHeadGroupId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackHeadGroupIdResponse" message="tns:IPackTaskService_GetPackHeadGroupId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetail" message="tns:IPackTaskService_GetSortTaskDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailResponse" message="tns:IPackTaskService_GetSortTaskDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackingType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackingType" message="tns:IPackTaskService_GetPackingType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackingTypeResponse" message="tns:IPackTaskService_GetPackingType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetScanningConsumables">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetScanningConsumables" message="tns:IPackTaskService_GetScanningConsumables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetScanningConsumablesResponse" message="tns:IPackTaskService_GetScanningConsumables_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumSortTaskDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailList" message="tns:IPackTaskService_GetSumSortTaskDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailListResponse" message="tns:IPackTaskService_GetSumSortTaskDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsert" message="tns:IPackTaskService_PackTaskInsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertResponse" message="tns:IPackTaskService_PackTaskInsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackHead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UpdatePackHead" message="tns:IPackTaskService_UpdatePackHead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UpdatePackHeadResponse" message="tns:IPackTaskService_UpdatePackHead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UpdatePackTask" message="tns:IPackTaskService_UpdatePackTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UpdatePackTaskResponse" message="tns:IPackTaskService_UpdatePackTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackNumber" message="tns:IPackTaskService_CheckPackNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackNumberResponse" message="tns:IPackTaskService_CheckPackNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResult" message="tns:IPackTaskService_GetPackTaskSearchResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultResponse" message="tns:IPackTaskService_GetPackTaskSearchResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ScanNumberDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/ScanNumberDetailList" message="tns:IPackTaskService_ScanNumberDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/ScanNumberDetailListResponse" message="tns:IPackTaskService_ScanNumberDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePackHead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/DeletePackHead" message="tns:IPackTaskService_DeletePackHead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/DeletePackHeadResponse" message="tns:IPackTaskService_DeletePackHead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackDetailSearchResult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackDetailSearchResult" message="tns:IPackTaskService_GetPackDetailSearchResult_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackDetailSearchResultResponse" message="tns:IPackTaskService_GetPackDetailSearchResult_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportPackTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportPackTask" message="tns:IPackTaskService_GetCryReportPackTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportPackTaskResponse" message="tns:IPackTaskService_GetCryReportPackTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportExpressPackTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTask" message="tns:IPackTaskService_GetCryReportExpressPackTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTaskResponse" message="tns:IPackTaskService_GetCryReportExpressPackTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportYunPrintData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportYunPrintData" message="tns:IPackTaskService_GetCryReportYunPrintData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportYunPrintDataResponse" message="tns:IPackTaskService_GetCryReportYunPrintData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExpressNumberByYunPrint">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UpdateExpressNumberByYunPrint" message="tns:IPackTaskService_UpdateExpressNumberByYunPrint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UpdateExpressNumberByYunPrintResponse" message="tns:IPackTaskService_UpdateExpressNumberByYunPrint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExpressNumberByWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UpdateExpressNumberByWork" message="tns:IPackTaskService_UpdateExpressNumberByWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UpdateExpressNumberByWorkResponse" message="tns:IPackTaskService_UpdateExpressNumberByWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExpressNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetExpressNumber" message="tns:IPackTaskService_GetExpressNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetExpressNumberResponse" message="tns:IPackTaskService_GetExpressNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="checkLoss">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/checkLoss" message="tns:IPackTaskService_checkLoss_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/checkLossResponse" message="tns:IPackTaskService_checkLoss_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadProcedureList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetLoadProcedureList" message="tns:IPackTaskService_GetLoadProcedureList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetLoadProcedureListResponse" message="tns:IPackTaskService_GetLoadProcedureList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBarCodeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetBarCodeList" message="tns:IPackTaskService_GetBarCodeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetBarCodeListResponse" message="tns:IPackTaskService_GetBarCodeList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackPrintDate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackPrintDate" message="tns:IPackTaskService_CheckPackPrintDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/CheckPackPrintDateResponse" message="tns:IPackTaskService_CheckPackPrintDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TranLogAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/TranLogAdd" message="tns:IPackTaskService_TranLogAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/TranLogAddResponse" message="tns:IPackTaskService_TranLogAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemMasterByPackHeadId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetItemMasterByPackHeadId" message="tns:IPackTaskService_GetItemMasterByPackHeadId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetItemMasterByPackHeadIdResponse" message="tns:IPackTaskService_GetItemMasterByPackHeadId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackHeadJsonByExpress">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackHeadJsonByExpress" message="tns:IPackTaskService_GetPackHeadJsonByExpress_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackHeadJsonByExpressResponse" message="tns:IPackTaskService_GetPackHeadJsonByExpress_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LossList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/LossList" message="tns:IPackTaskService_LossList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/LossListResponse" message="tns:IPackTaskService_LossList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WorkPickLoadList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/WorkPickLoadList" message="tns:IPackTaskService_WorkPickLoadList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/WorkPickLoadListResponse" message="tns:IPackTaskService_WorkPickLoadList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumQtyPickTaskDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSumQtyPickTaskDetailList" message="tns:IPackTaskService_GetSumQtyPickTaskDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSumQtyPickTaskDetailListResponse" message="tns:IPackTaskService_GetSumQtyPickTaskDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumPickQtyPickTaskDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSumPickQtyPickTaskDetailList" message="tns:IPackTaskService_GetSumPickQtyPickTaskDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSumPickQtyPickTaskDetailListResponse" message="tns:IPackTaskService_GetSumPickQtyPickTaskDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPickTaskDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPickTaskDetailList" message="tns:IPackTaskService_GetPickTaskDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPickTaskDetailListResponse" message="tns:IPackTaskService_GetPickTaskDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickingLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/PickingLoad" message="tns:IPackTaskService_PickingLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/PickingLoadResponse" message="tns:IPackTaskService_PickingLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByCombinationAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByCombinationAltItemNumber" message="tns:IPackTaskService_GetPackTaskListByCombinationAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskListByCombinationAltItemNumberResponse" message="tns:IPackTaskService_GetPackTaskListByCombinationAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSumListByCombinationAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSumListByCombinationAltItemNumber" message="tns:IPackTaskService_GetSumListByCombinationAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSumListByCombinationAltItemNumberResponse" message="tns:IPackTaskService_GetSumListByCombinationAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByCombinationAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByCombinationAltItemNumber" message="tns:IPackTaskService_GetSortTaskDetailByCombinationAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetSortTaskDetailByCombinationAltItemNumberResponse" message="tns:IPackTaskService_GetSortTaskDetailByCombinationAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UCFGetCryReportPackTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTask" message="tns:IPackTaskService_UCFGetCryReportPackTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTaskResponse" message="tns:IPackTaskService_UCFGetCryReportPackTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByCombinationAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumber" message="tns:IPackTaskService_PackTaskInsertByCombinationAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumberResponse" message="tns:IPackTaskService_PackTaskInsertByCombinationAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResultByCombinationAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumber" message="tns:IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumberResponse" message="tns:IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResultByCombinationAltItemNumberUCF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumberUCF" message="tns:IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumberUCF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumberUCFResponse" message="tns:IPackTaskService_GetPackTaskSearchResultByCombinationAltItemNumberUCF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByCombinationAltItemNumberUCF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumberUCF" message="tns:IPackTaskService_PackTaskInsertByCombinationAltItemNumberUCF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumberUCFResponse" message="tns:IPackTaskService_PackTaskInsertByCombinationAltItemNumberUCF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UCFGetCryReportPackTask1">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTask1" message="tns:IPackTaskService_UCFGetCryReportPackTask1_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTask1Response" message="tns:IPackTaskService_UCFGetCryReportPackTask1_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportExpressPackTask1">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTask1" message="tns:IPackTaskService_GetCryReportExpressPackTask1_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTask1Response" message="tns:IPackTaskService_GetCryReportExpressPackTask1_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPackTaskService" type="tns:IPackTaskService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="WhClientListSelect">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/WhClientListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByLoad">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskListByLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByLoad">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumSortTaskDetailListByLoad">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailListByLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByLoad">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/PackTaskInsertByLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskById">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackTaskStatus">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/CheckPackTaskStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByLoadOrder">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskListByLoadOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByLoadOrder">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSortTaskDetailByLoadOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackHeadGroupId">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackHeadGroupId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetail">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSortTaskDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackingType">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackingType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetScanningConsumables">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetScanningConsumables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumSortTaskDetailList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSumSortTaskDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsert">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/PackTaskInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackHead">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UpdatePackHead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePackTask">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UpdatePackTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/CheckPackNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResult">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskSearchResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ScanNumberDetailList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/ScanNumberDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePackHead">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/DeletePackHead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackDetailSearchResult">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackDetailSearchResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportPackTask">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetCryReportPackTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportExpressPackTask">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportYunPrintData">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetCryReportYunPrintData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExpressNumberByYunPrint">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UpdateExpressNumberByYunPrint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateExpressNumberByWork">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UpdateExpressNumberByWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExpressNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetExpressNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkLoss">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/checkLoss" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadProcedureList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetLoadProcedureList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBarCodeList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetBarCodeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPackPrintDate">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/CheckPackPrintDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TranLogAdd">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/TranLogAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemMasterByPackHeadId">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetItemMasterByPackHeadId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackHeadJsonByExpress">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackHeadJsonByExpress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LossList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/LossList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WorkPickLoadList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/WorkPickLoadList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumQtyPickTaskDetailList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSumQtyPickTaskDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumPickQtyPickTaskDetailList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSumPickQtyPickTaskDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPickTaskDetailList">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPickTaskDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickingLoad">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/PickingLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskListByCombinationAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskListByCombinationAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSumListByCombinationAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSumListByCombinationAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSortTaskDetailByCombinationAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetSortTaskDetailByCombinationAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UCFGetCryReportPackTask">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByCombinationAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResultByCombinationAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPackTaskSearchResultByCombinationAltItemNumberUCF">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetPackTaskSearchResultByCombinationAltItemNumberUCF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PackTaskInsertByCombinationAltItemNumberUCF">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/PackTaskInsertByCombinationAltItemNumberUCF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UCFGetCryReportPackTask1">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/UCFGetCryReportPackTask1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCryReportExpressPackTask1">
+      <soap:operation soapAction="http://tempuri.org/IPackTaskService/GetCryReportExpressPackTask1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PackTaskService">
+    <wsdl:port name="BasicHttpBinding_IPackTaskService" binding="tns:BasicHttpBinding_IPackTaskService">
+      <soap:address location="http://localhost:45936/PackTaskService/PackTaskService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+  <xs:import schemaLocation="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+  <xs:element name="WhClientListSelect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WhClientListSelectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="WhClientListSelectResult" nillable="true" type="q1:ArrayOfWhClient" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="C_ReceiveList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q2:ReceiptReportSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="C_ReceiveListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="C_ReceiveListResult" nillable="true" type="q3:ArrayOfReceiptReportResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

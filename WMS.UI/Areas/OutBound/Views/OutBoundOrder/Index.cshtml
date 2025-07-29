@@ -1,0 +1,475 @@
+﻿@model WMS.UI.Controllers.Model.OutBoundOrderModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", " left=\"90\" ")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["FlowRuleStatusSelect"], "FlowRuleStatus", "状态名", "", " left=\"90\" ")
+
+
+        <input type="text" left="90" name="CustomerOutPoNumber" hint="客户出库单号" />
+        <input type="text" left="90" name="AltCustomerOutPoNumber" hint="平台单号" />
+
+        <input type="text" name="OutPoNumber" hint="系统出库单号" left="90" />
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["OutOrderSourceList"], "txt_orderSource", "订单来源", "", "  ")
+
+        <input type="text" left="90" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140", @onchange = "onChangeGetFlowName()" })
+    @Html.EipInputFor(model => model.txt_CustomerOutPoNumber, new { @left = "140" })
+    <select left="140" name="txt_OutFlowName" hint="出库订单流程"><option value=""></option></select>
+
+    @Html.EipInputFor(model => model.txt_PlanOutTime, new { @left = "140", @value = DateTime.Now.ToString("yyyy-MM-dd") })
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "出库订单录入", icon: "add", click: function () {
+                            var dlg = eip.dialog.create("出库订单录入", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 200)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                if (!$("#form2").form('validate')) {
+                                                    return false;
+                                                }
+                                                var clientCode = $("[name=txt_WhClient]").find("option:selected").text();
+                                                eip.get("/OutBound/OutBoundOrder/OutBoundOrderAdd?clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                    $.procAjaxData(jsonObj, function () {
+                                                        if (jsonObj.Data) {
+                                                            eip.dialog.close(dlg);
+                                                            window.location = "/OutBound/OutBoundOrder/AddIndex?outBoundOrderId=" + jsonObj.Data["Id"] + "&customerOutPoNumber=" + jsonObj.Data["CustomerOutPoNumber"] + "&clientCode=" + eip.utf8(jsonObj.Data["ClientCode"]) + "&outPoNumber=" + jsonObj.Data["OutPoNumber"] + "&clientId=" + jsonObj.Data["ClientId"];
+                                                        } else {
+                                                            $.eipMsg.alert("保存出错了!");
+                                                        }
+
+                                                    }, function () { });
+                                                }, null, true)
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $("[name=txt_WhClient]").focus();
+
+                        }
+                    },
+                    {
+                        text: "批量导入出库订单", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '', //若后台函数名为 imports，url就可以不传了
+                                 close: false,
+                                 submit: function (jsonObj) {
+
+                                     SelectOutFlowRule();
+
+                                 },
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+
+
+                                     }, function () { })
+                                 },
+                                 columns: [
+                                     {
+                                         column: '客户名',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: '客户出库订单号',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: '入库SO',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                     {
+                                         column: '入库PO',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: '款号',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: 'LotNumber1',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                     {
+                                         column: 'LotNumber2',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                     {
+                                         column: '数量',
+                                         type: "number",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                 ]
+                             });
+                         }
+                    }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["ClientId", "ProcessId", "NowProcessId", "StatusId", "RollbackFlag"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "系统出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"OutBoundOrderDetailList('" + row["操作"] + "','" + row["客户出库单号"] + "','" + row["状态名"] + "')\" >" + row["系统出库单号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        ///-----------------------------------StatusId 为5 表示必须为草稿的 才能编辑继续添加
+                        if (row["状态名"] == "草稿" && row["订单类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"AddOutBoundOrderDetail(this)\" title='添加订单明细' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick=\"ConfirmOutBoundOrder(this)\" title='确认订单' ></a>";
+                        }
+
+                        if (row["状态名"] == "草稿" || row["状态名"] == "已确认订单" && row["订单类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='OutBoundOrderDel(this)' title='删除订单' ></a>";
+                        }
+
+                        if (row["状态名"] == "已确认订单" && row["RollbackFlag"] == 1) {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='RollbackOutBoundOrder(this)' title='回滚订单' ></a>";
+                        }
+
+                        if (row["StatusId"] >= "0" && row["状态名"] != "已发货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-error' plain=true onclick='InterceptOrder(this)' title='订单拦截' ></a>";
+                        }
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "代理名": {
+                    editor: { type: "text", name: "edit_AgentName" }
+                },
+                "代理Code": {
+                    editor: { type: "text", name: "edit_AgentCode" }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //选择出货流程
+    function SelectOutFlowRule() {
+
+        var eles = $(':input[name],select[name]', $('#imports-layout'));
+
+        var dlg_Pos_Rule = eip.dialog.create("选择出货流程",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"100\" name=\"sel_flowRuleName\" hint=\"出货流程：\"><option value=\"0\" ></option></select>"
+            + "</div>"
+            + "</div>", 450, 200)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=sel_flowRuleName]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("出货流程必须选择！\r\n出货流程为空代表客户流程不一致！");
+                                return;
+                            }
+
+                            eip.post("/OutBound/OutBoundOrder/ImportsOutBoundOrder?processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), eip.para.create(eles), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg_Pos_Rule);
+                                    eip.dialog.close($('#imports-layout').parent());
+
+                                    eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            }, null, true)
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        eip.post("/OutBound/OutBoundOrder/CheckImportsOutBoundOrder", eip.para.create(eles), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowRuleName]"), val, true);
+            }
+        });
+    }
+
+    //删除出库订单
+    function OutBoundOrderDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除出库订单：" + row["客户出库单号"] + "吗？", function () {
+            eip.get("/OutBound/OutBoundOrder/OutBoundOrderDel?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+
+    //添加出库单明细
+    function AddOutBoundOrderDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var outBoundOrderId = row["操作"];
+        var outPoNumber = row["系统出库单号"];
+        var customerOutPoNumber = row["客户出库单号"];
+        var clientCode = row["客户名"];
+        var clientId = row["ClientId"];
+        window.location = "/OutBound/OutBoundOrder/AddIndex?outBoundOrderId=" + outBoundOrderId + "&customerOutPoNumber=" + customerOutPoNumber + "&clientCode=" + eip.utf8(clientCode) + "&outPoNumber=" + outPoNumber + "&clientId=" + clientId;
+    }
+
+    //确认订单
+    function ConfirmOutBoundOrder(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定确认订单：" + row["客户出库单号"] + "吗？", function () {
+            eip.get("/OutBound/OutBoundOrder/ConfirmOutBoundOrder?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //回滚订单
+    function RollbackOutBoundOrder(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确认回滚订单：" + row["客户出库单号"] + "吗？", function () {
+            eip.get("/OutBound/OutBoundOrder/RollbackOutBoundOrder?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //格式化系统出库单号  显示订单明细
+    function OutBoundOrderDetailList(val, val1, val2) {
+
+        var dlg_Pos = eip.dialog.create("查看订单明细，当前客户出库单号：" + val1 + "，状态：" + val2,
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "<input type=\"text\" left=\"100\" name=\"se_customerPoNumber\"  hint=\"PO号\" />"
+            + "<input type=\"text\" left=\"100\" name=\"se_altCustomerPoNumber\"  hint=\"款号\" />"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (val2 == "草稿") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='detail_edit($(this).parent().parent())' title='编辑' ></a>";
+                        }
+                        if (val2 == "已确认订单" || val2 == "已生成Load") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='detail_edit1($(this).parent().parent())' title='编辑' ></a>";
+                        }
+
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/OutBound/OutBoundOrder/OutBoundOrderDetailEdit?Id=" + Id + "&Qty=" + $("[name=edit_Qty]").val() + "&Sequence=" + $("[name=edit_Sequence]").val(), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/OutBound/OutBoundOrder/Second_OutBoundOrderDetailList?OutBoundOrderId=" + val, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "数量": {
+                    editor: { type: "text", name: "edit_Qty" }
+                },
+                "顺序": {
+                    editor: { type: "text", name: "edit_Sequence" }
+                }
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/OutBoundOrder/Second_OutBoundOrderDetailList?OutBoundOrderId=" + val, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/OutBound/OutBoundOrder/Second_OutBoundOrderDetailList?OutBoundOrderId=" + val, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+    //通过选择的客户得到出货流程
+    function onChangeGetFlowName() {
+        if ($("[name=txt_WhClient]", $("#layout1")).val() != "") {
+            eip.post("/OutBound/OutBoundOrder/GetFlowNameList", eip.para.create($("input,select,textarea", $("#layout1"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_OutFlowName]"), val, true);
+                }
+            })
+        }
+
+    }
+
+    //订单拦截
+    function InterceptOrder(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确认拦截订单：" + row["客户出库单号"] + "吗？<br/>请注意，拦截操作不可逆！", function () {
+            eip.get("/OutBound/OutBoundOrder/InterceptOrder?customerOutPoNumber=" + row["客户出库单号"] + "&clientCode=" + eip.utf8(row["客户名"]), null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/OutBound/OutBoundOrder/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+    function detail_edit(tr) {
+
+        eip.datagrid.edit(tr, ["操作", "数量", "顺序"])
+
+    }
+
+    function detail_edit1(tr) {
+
+        eip.datagrid.edit(tr, ["操作", "顺序"])
+
+    }
+
+</script>

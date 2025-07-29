@@ -1,0 +1,108 @@
+﻿@model WMS.UI.Controllers.Model.R_Location_ItemModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="locationId" hint="捡货库位" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_SupplementLocation/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }, {
+                        text: "批量导入捡货库位", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '/Warehouse/C_SupplementLocation/ImportSupplementLocation', //若后台函数名为 imports，url就可以不传了
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+                                         eip.datagrid.load("/Warehouse/C_SupplementLocation/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                     }, function () { })
+                                 },
+                                 columns: [
+
+                                     {
+                                         column: '库位',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                 ]
+                             });
+                         }
+                    },
+                    {
+                        text: "批量删除捡货库位", icon: 'cancel', click:
+                         function () {
+                             SupplementLocationDel();
+                         }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["状态", "批量删除"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["批量删除"] + "-" + row["捡货库位"] + " >";   //得到职位ID
+            }
+            //columns: {
+            //    "批量删除": {
+            //        formatter: function (row) {
+            //            var retHtml = " ";
+
+            //            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='SupplementLocationDel()' title='批量删除' ></a>";
+
+            //            return retHtml;
+            //        }
+            //    }
+            //}
+
+        });
+
+
+    });
+
+
+    function SupplementLocationDel() {
+        if ($("[name=chx_Pow]:checked", $("#grid")).length == 0) {
+            $.eipMsg.alert("请先勾选要删除的行!");
+            return;
+        }
+
+        var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid")));
+
+        $.eipMsg.confirm("确定批量删除勾选的捡货库位吗？", function () {
+            eip.post("/Warehouse/C_SupplementLocation/SupplementLocationDel", para, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_SupplementLocation/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            }, null, true)
+        });
+    }
+
+</script>

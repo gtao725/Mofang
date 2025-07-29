@@ -1,0 +1,156 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="UserName" value="@ViewBag.UserName" />
+        <input type="hidden" name="CompanyId" value="@ViewBag.CompanyId" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["whInfoCode"], "whCode", "仓库名", "", "")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "ClientCode", "客户名", "", "")
+
+        <input type="text" name="load" hint="Load" />
+        <input type="text" left="90" name="CustomerOutPoNumber" hint="客户出库单号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="出库方式" name="shipMode"><option></option><option value='集装箱'>集装箱</option><option value='货厢'>货厢</option><option value='快递'>快递</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="释放状态" name="Status0"><option></option><option value='U'>未释放</option><option value='C'>已释放</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="备货状态" name="Status1"><option></option><option value='U'>未备货</option><option value='A'>正在备货</option><option value='C'>完成备货</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="装箱状态" name="Status3"><option></option><option value='U'>未装箱</option><option value='A'>正在装箱</option><option value='C'>完成装箱</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="封箱状态" name="ShipStatus"><option></option><option value='否'>否</option><option value='是'>是</option></select>
+        <input type="text" name="BeginShipDate" hint="封箱时间" date='Y' />
+        <input type="text" name="EndShipDate" left="20" hint="-" date='Y' />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <textarea name="ContainerNumber" left="60" hint="集装箱号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/WarehouseLoadList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            sorts: { "Load": "DESC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: ["操作"],
+            columns: {
+                "Load": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"OutBoundOrderList('" + row["Load"] + "','" + row["操作"] + "','" + row["释放状态"] + "')\" >" + row["Load"] + "</span>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=ContainerNumber]").css("height", "45px").css("width", "185px");
+        $("[name=ContainerNumber]").parent().css("height", "50px").css("width", "280px");
+
+    });
+
+
+    //查看Load  明细
+    function OutBoundOrderList(val, val1, val2) {
+        var dlg_Pos = eip.dialog.create("查看Load明细—Load：" + val + "，释放状态：" + val2,
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 1000, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["OutBoundOrderId"],
+            ajaxType: 'post',
+            columns: {
+                "系统出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"OutBoundOrderDetailList('" + row["OutBoundOrderId"] + "','" + row["客户出库单号"] + "')\" >" + row["系统出库单号"] + "</span>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/OutBoundOrderList?LoadMasterId=" + val1, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+
+    //格式化系统出库单号  显示订单明细
+    function OutBoundOrderDetailList(val, val1) {
+        var dlg_Pos = eip.dialog.create("查看订单明细，当前客户出库单号：" + val1,
+            "<div id=layout_Detail1><div form=\"Y\" id=\"form_Detail1\">"
+            + "</div>"
+            + "<table id=\"grid_detail1\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail1"),
+            ajaxType: 'post',
+            pagesize: 200
+        });
+
+        eip.layout.create($('#layout_Detail1'), [{
+            obj: $('#form_Detail1'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/OutBoundOrderDetailList?OutBoundOrderId=" + val, $("#grid_detail1"), eip.para.create($("input,select", $("#layout_Detail1"))));
+    }
+
+    //打印出货操作单
+    function PrintReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Load"];
+        window.open("http://10.88.88.31/WMS_pick_detail.aspx?load_id=" + Id);
+    }
+
+</script>

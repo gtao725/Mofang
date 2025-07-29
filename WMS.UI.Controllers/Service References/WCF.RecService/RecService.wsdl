@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RecService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRecService_C_RecQuestionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:C_RecQuestionList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_C_RecQuestionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:C_RecQuestionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_C_RecCompleteList_InputMessage">
+    <wsdl:part name="parameters" element="tns:C_RecCompleteList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_C_RecCompleteList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:C_RecCompleteListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_FrozenEditList_InputMessage">
+    <wsdl:part name="parameters" element="tns:FrozenEditList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_FrozenEditList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FrozenEditListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_FrozenDeleteList_InputMessage">
+    <wsdl:part name="parameters" element="tns:FrozenDeleteList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_FrozenDeleteList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FrozenDeleteListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_LotFlagEditList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LotFlagEditList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_LotFlagEditList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LotFlagEditListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEditRegTransportType_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEditRegTransportType" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEditRegTransportType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEditRegTransportTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEdit" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEditDetailCustom_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEditDetailCustom" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptEditDetailCustom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptEditDetailCustomResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_HoldMasterListByRec_InputMessage">
+    <wsdl:part name="parameters" element="tns:HoldMasterListByRec" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_HoldMasterListByRec_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HoldMasterListByRecResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptInsert_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptInsert" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_ReceiptInsert_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptInsertResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GetRecInfoEcl_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecInfoEcl" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GetRecInfoEcl_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRecInfoEclResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_CheckRecComplete1_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckRecComplete1" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_CheckRecComplete1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckRecComplete1Response" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_LotFlagListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:LotFlagListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_LotFlagListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LotFlagListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnHeadList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GrnHeadList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnHeadList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GrnHeadListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnSOList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GrnSOList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnSOList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GrnSOListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_UpdateGrnWmsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGrnWmsData" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_UpdateGrnWmsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGrnWmsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnAutoUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GrnAutoUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_GrnAutoUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GrnAutoUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_SendGRN_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendGRN" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_SendGRN_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendGRNResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_AutoSendGRN_InputMessage">
+    <wsdl:part name="parameters" element="tns:AutoSendGRN" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_AutoSendGRN_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AutoSendGRNResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_UpdateGrnDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGrnDetail" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_UpdateGrnDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGrnDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeAdd" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeEdit" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossList_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossList" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossAdd" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossEdit" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IRecService_RecLossTypeListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecLossTypeListSelectResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IRecService">
+    <wsdl:operation name="C_RecQuestionList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/C_RecQuestionList" message="tns:IRecService_C_RecQuestionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/C_RecQuestionListResponse" message="tns:IRecService_C_RecQuestionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="C_RecCompleteList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/C_RecCompleteList" message="tns:IRecService_C_RecCompleteList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/C_RecCompleteListResponse" message="tns:IRecService_C_RecCompleteList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FrozenEditList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/FrozenEditList" message="tns:IRecService_FrozenEditList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/FrozenEditListResponse" message="tns:IRecService_FrozenEditList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FrozenDeleteList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/FrozenDeleteList" message="tns:IRecService_FrozenDeleteList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/FrozenDeleteListResponse" message="tns:IRecService_FrozenDeleteList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LotFlagEditList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/LotFlagEditList" message="tns:IRecService_LotFlagEditList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/LotFlagEditListResponse" message="tns:IRecService_LotFlagEditList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEditRegTransportType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/ReceiptEditRegTransportType" message="tns:IRecService_ReceiptEditRegTransportType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/ReceiptEditRegTransportTypeResponse" message="tns:IRecService_ReceiptEditRegTransportType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/ReceiptEdit" message="tns:IRecService_ReceiptEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/ReceiptEditResponse" message="tns:IRecService_ReceiptEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEditDetailCustom">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/ReceiptEditDetailCustom" message="tns:IRecService_ReceiptEditDetailCustom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/ReceiptEditDetailCustomResponse" message="tns:IRecService_ReceiptEditDetailCustom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HoldMasterListByRec">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/HoldMasterListByRec" message="tns:IRecService_HoldMasterListByRec_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/HoldMasterListByRecResponse" message="tns:IRecService_HoldMasterListByRec_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptInsert">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/ReceiptInsert" message="tns:IRecService_ReceiptInsert_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/ReceiptInsertResponse" message="tns:IRecService_ReceiptInsert_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRecInfoEcl">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/GetRecInfoEcl" message="tns:IRecService_GetRecInfoEcl_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/GetRecInfoEclResponse" message="tns:IRecService_GetRecInfoEcl_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckRecComplete1">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/CheckRecComplete1" message="tns:IRecService_CheckRecComplete1_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/CheckRecComplete1Response" message="tns:IRecService_CheckRecComplete1_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LotFlagListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/LotFlagListSelect" message="tns:IRecService_LotFlagListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/LotFlagListSelectResponse" message="tns:IRecService_LotFlagListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GrnHeadList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/GrnHeadList" message="tns:IRecService_GrnHeadList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/GrnHeadListResponse" message="tns:IRecService_GrnHeadList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GrnSOList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/GrnSOList" message="tns:IRecService_GrnSOList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/GrnSOListResponse" message="tns:IRecService_GrnSOList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGrnWmsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/UpdateGrnWmsData" message="tns:IRecService_UpdateGrnWmsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/UpdateGrnWmsDataResponse" message="tns:IRecService_UpdateGrnWmsData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GrnAutoUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/GrnAutoUpdate" message="tns:IRecService_GrnAutoUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/GrnAutoUpdateResponse" message="tns:IRecService_GrnAutoUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendGRN">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/SendGRN" message="tns:IRecService_SendGRN_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/SendGRNResponse" message="tns:IRecService_SendGRN_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AutoSendGRN">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/AutoSendGRN" message="tns:IRecService_AutoSendGRN_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/AutoSendGRNResponse" message="tns:IRecService_AutoSendGRN_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGrnDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/UpdateGrnDetail" message="tns:IRecService_UpdateGrnDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/UpdateGrnDetailResponse" message="tns:IRecService_UpdateGrnDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossTypeList" message="tns:IRecService_RecLossTypeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossTypeListResponse" message="tns:IRecService_RecLossTypeList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossTypeAdd" message="tns:IRecService_RecLossTypeAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossTypeAddResponse" message="tns:IRecService_RecLossTypeAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossTypeEdit" message="tns:IRecService_RecLossTypeEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossTypeEditResponse" message="tns:IRecService_RecLossTypeEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossList" message="tns:IRecService_RecLossList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossListResponse" message="tns:IRecService_RecLossList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossAdd" message="tns:IRecService_RecLossAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossAddResponse" message="tns:IRecService_RecLossAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossEdit" message="tns:IRecService_RecLossEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossEditResponse" message="tns:IRecService_RecLossEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRecService/RecLossTypeListSelect" message="tns:IRecService_RecLossTypeListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRecService/RecLossTypeListSelectResponse" message="tns:IRecService_RecLossTypeListSelect_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IRecService" type="tns:IRecService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="C_RecQuestionList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/C_RecQuestionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="C_RecCompleteList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/C_RecCompleteList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FrozenEditList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/FrozenEditList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FrozenDeleteList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/FrozenDeleteList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LotFlagEditList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/LotFlagEditList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEditRegTransportType">
+      <soap:operation soapAction="http://tempuri.org/IRecService/ReceiptEditRegTransportType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEdit">
+      <soap:operation soapAction="http://tempuri.org/IRecService/ReceiptEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptEditDetailCustom">
+      <soap:operation soapAction="http://tempuri.org/IRecService/ReceiptEditDetailCustom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HoldMasterListByRec">
+      <soap:operation soapAction="http://tempuri.org/IRecService/HoldMasterListByRec" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptInsert">
+      <soap:operation soapAction="http://tempuri.org/IRecService/ReceiptInsert" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRecInfoEcl">
+      <soap:operation soapAction="http://tempuri.org/IRecService/GetRecInfoEcl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckRecComplete1">
+      <soap:operation soapAction="http://tempuri.org/IRecService/CheckRecComplete1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LotFlagListSelect">
+      <soap:operation soapAction="http://tempuri.org/IRecService/LotFlagListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrnHeadList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/GrnHeadList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrnSOList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/GrnSOList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGrnWmsData">
+      <soap:operation soapAction="http://tempuri.org/IRecService/UpdateGrnWmsData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrnAutoUpdate">
+      <soap:operation soapAction="http://tempuri.org/IRecService/GrnAutoUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendGRN">
+      <soap:operation soapAction="http://tempuri.org/IRecService/SendGRN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AutoSendGRN">
+      <soap:operation soapAction="http://tempuri.org/IRecService/AutoSendGRN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGrnDetail">
+      <soap:operation soapAction="http://tempuri.org/IRecService/UpdateGrnDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossTypeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeAdd">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossTypeAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeEdit">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossTypeEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossList">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossAdd">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossEdit">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecLossTypeListSelect">
+      <soap:operation soapAction="http://tempuri.org/IRecService/RecLossTypeListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RecService">
+    <wsdl:port name="BasicHttpBinding_IRecService" binding="tns:BasicHttpBinding_IRecService">
+      <soap:address location="http://localhost:45936/RecService/RecService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

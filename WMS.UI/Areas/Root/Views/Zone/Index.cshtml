@@ -1,0 +1,374 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="zone_name" hint="区域" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_zone, new { @left = "140" })
+    <input type="text" left="140" name="txt_warnCBM" hint="仓库立方" value="0" />
+    <input type="text" left="140" name="txt_description" hint="说明" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneParentSelect"], "txt_upId", "父级区域", "", "left='140' ")
+    <select name="sel_RegFlag" hint="道口登记显示" left="140"><option value="0" selected>否</option><option value="1">是</option></select>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "新增区域", icon: "add", click:
+                             function () {
+                                 var dlg = eip.dialog.create("新增区域", "<div id=layout1 ><div form='Y' id='form2'>"
+                                     + $("#form22").html()
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_zone\" hint=\"区域\" />"
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_description\" hint=\"说明\" />"
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_upId\" hint=\"父级区域\" />"
+                                     + "</div></div>", 500, 300)
+
+                                 //窗体工具栏按钮 begin
+                                 eip.layout.create($('#layout1'), [{
+                                     obj: $('#form2'),
+                                     buttons: [
+                                         {
+                                             text: "保存", icon: "save", click:
+                                                 function () {
+                                                     if (!$("#form2").form('validate')) {
+                                                         return false;
+                                                     }
+
+                                                     var patrn = /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$ /; //正浮点数
+                                                     var reg2 = /^[0-9]+$/;
+                                                     if ($("[name=txt_warnCBM]").val() != "") {
+                                                         if (!patrn.test($("[name=txt_warnCBM]").val()) && !reg2.test($("[name=txt_warnCBM]").val())) {
+                                                             alert("仓库立方必须为数值！");
+                                                             $("[name=txt_warnCBM]").focus();
+                                                             return;
+                                                         }
+                                                     }
+
+                                                     eip.get("/Root/Zone/AddZone", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                         $.procAjaxData(jsonObj, function () {
+                                                             $("[name=txt_zone]").val("");
+                                                             $("[name=txt_description]").val("");
+                                                             $("[name=txt_upId]").val("");
+                                                             eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                         }, function () { });
+                                                     })
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 //end
+
+                                 $("[name=txt_zone]").focus();
+                             }
+                    },
+                     {
+                         text: "批量导入区域", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/Zone/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          
+                                          eip.dialog.close($('#imports-layout').parent());
+
+                                          eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '区域',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '仓库立方',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '说明',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '父级区域',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '道口登记显示',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      }
+                                   
+                                  ]
+                              });
+                          }
+                     }
+                    , {
+                        text: "批量删除区域", icon: "cancel", click:
+                           function () {
+                               if ($("[name=get_id]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=get_id]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'idarr', value: $(this).val() });
+                               })
+
+                               eip.post("/Root/Zone/BatchDelZone", arr_list, function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                   }, function () {
+                                   });
+                               }, null, true)
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["父级区域ID", "道口登记Flag"],
+            muledit: false,
+            checkbox: function (row) {
+
+                return "<input type=checkbox name=get_id  value=\"" + row["操作"] + "\"   >";
+
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑信息' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='ZoneLocationManager(this)' title='区域对应库位管理' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelZone(this)' title='删除' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到用户ID
+
+                                var patrn = /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$ /; //正浮点数
+                                var reg2 = /^[0-9]+$/;
+
+                                if ($("[name=edit_warnCBM]").val() != "") {
+                                    if (!patrn.test($("[name=edit_warnCBM]").val()) && !reg2.test($("[name=edit_warnCBM]").val())) {
+                                        alert("仓库立方必须为数值！");
+                                        $("[name=edit_warnCBM]").focus();
+                                        return;
+                                    }
+                                }
+
+                                if ($("[name=edit_RegFlag]").val() == "") {
+                                    alert("道口登记显示不能为空！");
+                                }
+
+                                eip.get("/Root/Zone/WhZoneParentEdit?Id=" + Id + "&parent_id=" + $("[name=edit_parentId]").val() + "&edit_RegFlag=" + $("[name=edit_RegFlag]").val() + "&edit_warnCBM=" + $("[name=edit_warnCBM]").val(), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "父级区域": {
+                    editor: {
+                        type: 'select', field: "父级区域ID", html: function (row) {
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneParentSelect"], "edit_parentId")");
+                        }
+                    }
+                },
+                "道口登记显示": {
+                    editor: {
+                        type: 'select', field: "道口登记Flag", html: function (row) {
+      
+                            return $(eip.form.createOptions($("<select name='edit_RegFlag'></select>"), [{ val: 0, text: "否"}, { val: 1, text: "是" }], true));
+                        }
+                    }
+                },
+                "仓库立方": {
+                    editor: { type: "text", name: "edit_warnCBM" }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+
+    //区域对应库位管理
+    function ZoneLocationManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var ZoneId = row["操作"];
+        var dlg_Pos = eip.dialog.create("区域储位库区设置———当前区域：" + row["区域"] + " ，说明：" + row["说明"], "<div id=layout_Pow>"
+                                + "<div region=\"north\" id=\"form_Pow\" style=\"height:65px;padding:5px;\"><input type=\"hidden\" name=\"Hid_PId\" value=\"" + row["操作"] + "\">储位库区：<input type=\"text\" name=\"txt_location\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"储位库区列表\">"
+                                + "<table id=grid_Pow_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前区域已有储位库区\">"
+                                + "<table id=grid_Pow_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pow_set"),
+            hiddencolumns: ["仓库"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["储位库区"] + " >";
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pow_get"),
+            hiddencolumns: ["仓库"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"ZoneLocationById(this,'" + ZoneId + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pow'), [{
+            obj: $('#form_Pow'),
+            buttons: [
+                 {
+                     text: "查询", icon: "search", click: function () {
+                         eip.datagrid.load("/Root/Zone/LocationUnselected?ZoneId=" + ZoneId + "&Location=" + eip.utf8($("[name=txt_location]").val()), $("#grid_Pow_set"), eip.para.create($("input,select", $("#form_Pow"))));
+                     }
+                 },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length == 0) {
+                               $.eipMsg.alert("请先选择储位库区！");
+                               return;
+                           }
+                           //if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length > 1) {
+                           //    $.eipMsg.alert("一个区域只能对应一个库区名！");
+                           //    return;
+                           //}
+                           var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid_Pow_set")));
+                           para = eip.para.extend(para, [{ name: "ZoneId", value: ZoneId }]);
+
+                           eip.post("/Root/Zone/ZoneLocationAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   eip.datagrid.load("/Root/Zone/LocationUnselected?ZoneId=" + ZoneId + "&Location=null", $("#grid_Pow_set"), null);
+                                   //查询当前菜单已选择的权限
+                                   eip.datagrid.load("/Root/Zone/LocationSelected?ZoneId=" + ZoneId, $("#grid_Pow_get"), null);
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        //$("[name=txt_power_name]").focus();
+        //查询当前菜单未选择的权限
+        eip.datagrid.load("/Root/Zone/LocationUnselected?ZoneId=" + ZoneId + "&Location=null", $("#grid_Pow_set"), null);
+        //查询当前菜单已选择的权限
+        eip.datagrid.load("/Root/Zone/LocationSelected?ZoneId=" + ZoneId, $("#grid_Pow_get"), null);
+    }
+
+
+    function ZoneLocationById(obj, val1) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+
+        $.eipMsg.confirm("确定取消该库位吗？", function () {
+            eip.get("/Root/Zone/ZoneLocationById?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Root/Zone/LocationUnselected?ZoneId=" + val1 + "&Location=null", $("#grid_Pow_set"), null);
+                    //查询当前菜单已选择的权限
+                    eip.datagrid.load("/Root/Zone/LocationSelected?ZoneId=" + val1, $("#grid_Pow_get"), null);
+                }, function () { });
+            })
+        });
+    }
+
+    //删除
+    function DelZone(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除所选行的信息吗？", function () {
+            eip.get("/Root/Zone/DelZone?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/Zone/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+</script>

@@ -1,0 +1,190 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="load" hint="Load" />
+
+        <input type="text" left="100" name="containerNumberSix" hint="箱号后面数字" />
+        <input type="text" name="sealNumber" hint="封号" />
+
+        <textarea name="containerNumber" left="60" hint="集装箱号"></textarea>
+
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/OutBound/LoadContainerWarehouse/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["loadMasterId"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "Load": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"showFeeDetail(this)\" >" + row["Load"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        if (row["状态"] == "未确认") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick=\"FeeDetailList(this)\" title='处理箱单数量' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+        });
+
+
+        $("[name=containerNumber]").css("height", "45px").css("width", "185px");
+        $("[name=containerNumber]").parent().css("height", "50px").css("width", "280px");
+    });
+
+
+    //费用明细列表
+    function showFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+
+        var loadid = row["Load"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("出货箱单仓库录入列表，当前Load号：" + row["Load"] + "—箱号：" + row["箱号"] + "—客户名：" + row["客户名"],
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 700, 400)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/OutBound/LoadContainerWarehouse/FeeDetailList?LoadId=" + loadid, $("#grid_detail_detailSearch"), eip.para.create($("input,select,textarea", $("#form_Detail_detailSearch"))));
+    }
+
+    var dlg_Pos
+    //费用明细列表
+    function FeeDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var loadid = row["Load"];
+
+        dlg_Pos = eip.dialog.create("[1].出货箱单仓库录入列表，当前Load号：" + row["Load"] + "—箱号：" + row["箱号"] + "—客户名：" + row["客户名"],
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 700, 400)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["操作"],
+            columns: {
+                "数量或立方": {
+                    formatter: function (row) {
+                        return "<input type=\"text\" left=\"50\" name=\"edit_qtycbm\" value=\"" + row["数量或立方"] + "\" addid=\"" + row["操作"] + "\" hint=\"数量或立方\" />";
+                    }
+                }
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/LoadContainerWarehouse/FeeDetailList?LoadId=" + loadid, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "[2].数量已录入-确认完成", icon: "ok", click:
+                        function () {
+
+                            var arr_list = [];
+                            $("[name=edit_qtycbm]", $("#grid_detail")).each(function () {
+                                arr_list.push({ name: 'qtycbm', value: $(this).val() });
+                                arr_list.push({ name: 'addid', value: $(this).attr("addid") });
+                            })
+
+                            eip.post("/OutBound/LoadContainerWarehouse/LoadContainerWarehouseEdit?LoadId=" + loadid, arr_list, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+                                    eip.datagrid.load("/OutBound/LoadContainerWarehouse/FeeDetailList?LoadId=" + loadid, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                }, function () { });
+                            }, null, true)
+      
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+
+                            eip.dialog.close(dlg_Pos);
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/OutBound/LoadContainerWarehouse/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                 }
+            ]
+        }])
+
+        eip.datagrid.load("/OutBound/LoadContainerWarehouse/FeeDetailList?LoadId=" + loadid, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+    }
+
+
+</script>

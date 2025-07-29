@@ -1,0 +1,1573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS.UI.Controllers</RootNamespace>
+    <AssemblyName>WMS.UI.Controllers</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\WMS.UI\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\WhInfoController.cs" />
+    <Compile Include="Admin\MenuController.cs" />
+    <Compile Include="Admin\PositionController.cs" />
+    <Compile Include="Admin\PowerController.cs" />
+    <Compile Include="Admin\FlowRuleController.cs" />
+    <Compile Include="Admin\RFFlowRuleController.cs" />
+    <Compile Include="Admin\WinCEController.cs" />
+    <Compile Include="Admin\UserInfoController.cs" />
+    <Compile Include="Auth\AuthController.cs" />
+    <Compile Include="Common\AreaRegistration\KmartAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\OutBoundAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\GMSAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\PackAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\WarehouseAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\InVentoryAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\AdminAreaRegistration.cs" />
+    <Compile Include="Admin\CommonController.cs" />
+    <Compile Include="Admin\AdminController.cs" />
+    <Compile Include="Common\AreaRegistration\InBoundAreaRegistration.cs" />
+    <Compile Include="Common\AreaRegistration\RecReportAreaRegistration.cs" />
+    <Compile Include="Common\Attributes\AjaxRequestAttribute.cs" />
+    <Compile Include="Common\Attributes\CheckAttribute.cs" />
+    <Compile Include="Common\Helper\EipHtmlHelper.cs" />
+    <Compile Include="Common\Filters\ActionExcutedAttribute.cs" />
+    <Compile Include="Common\Helper\Helper.cs" />
+    <Compile Include="Common\Helper\SecurityHelper.cs" />
+    <Compile Include="Common\AreaRegistration\RootAreaRegistration.cs" />
+    <Compile Include="InBound\EditInBoundAltItemStyleByHuController.cs" />
+    <Compile Include="InBound\EditInBoundAltItemByHuController.cs" />
+    <Compile Include="InBound\EditInBoundAltItemNumberController.cs" />
+    <Compile Include="InBound\EditClientZoneController.cs" />
+    <Compile Include="InBound\EditInBoundSoNumberByHuController.cs" />
+    <Compile Include="InBound\EditInBoundCustPoByHuController.cs" />
+    <Compile Include="InBound\EditUnitNameController.cs" />
+    <Compile Include="InBound\EditInBoundCustomerPoController.cs" />
+    <Compile Include="InBound\EditInBoundSoNumberController.cs" />
+    <Compile Include="InBound\EditInBoundClientCodeController.cs" />
+    <Compile Include="InBound\ForecastOrderController.cs" />
+    <Compile Include="InBound\InBoundOrderExtendController.cs" />
+    <Compile Include="InVentory\C_InVentoryController.cs" />
+    <Compile Include="Kmart\HeavyPalletController.cs" />
+    <Compile Include="Kmart\ReceiptDelayController.cs" />
+    <Compile Include="Model\AdminModel\AdminModel.cs" />
+    <Compile Include="Model\EipModel\AjaxMsgModel.cs" />
+    <Compile Include="Model\EipModel\MenuTreeModel.cs" />
+    <Compile Include="Model\EipModel\SelectItems.cs" />
+    <Compile Include="Model\EipModel\Test.cs" />
+    <Compile Include="Model\OutBoundModel\OutBoundModel.cs" />
+    <Compile Include="Model\RecModel\RecModel.cs" />
+    <Compile Include="Model\RootModel\RootModel.cs" />
+    <Compile Include="OutBound\ForecastOutBoundController.cs" />
+    <Compile Include="OutBound\LoadContainerWarehouseController.cs" />
+    <Compile Include="OutBound\GrnController.cs" />
+    <Compile Include="OutBound\InterceptOrderController.cs" />
+    <Compile Include="OutBound\LoadContainerController.cs" />
+    <Compile Include="OutBound\LoadController.cs" />
+    <Compile Include="OutBound\LoadContainerExtendBySNController.cs" />
+    <Compile Include="OutBound\OutBoundOrderController.cs" />
+    <Compile Include="GMS\QueueListController.cs" />
+    <Compile Include="Pack\PackTaskController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\AreaRegistration\RecAreaRegistration.cs" />
+    <Compile Include="InBound\InBoundOrderController.cs" />
+    <Compile Include="InBound\InBoundOrderDCController.cs" />
+    <Compile Include="InBound\InBoundOrderCFSController.cs" />
+    <Compile Include="InBound\RegInBoundOrderController.cs" />
+    <Compile Include="RecReport\C_ReceiveSearchController.cs" />
+    <Compile Include="Rec\C_RecLossController.cs" />
+    <Compile Include="Rec\C_RecLossTypeController.cs" />
+    <Compile Include="Rec\HuAllWeightController.cs" />
+    <Compile Include="Rec\TruckQueryController.cs" />
+    <Compile Include="Rec\C_RecWebController.cs" />
+    <Compile Include="Root\AgentController.cs" />
+    <Compile Include="Root\ClientExtendController.cs" />
+    <Compile Include="Root\ContractFormOutController.cs" />
+    <Compile Include="Root\ContractFormController.cs" />
+    <Compile Include="Root\FeeMasterCKController.cs" />
+    <Compile Include="Root\BillMasterController.cs" />
+    <Compile Include="Root\FeeMasterDKController.cs" />
+    <Compile Include="Root\FeeHolidayController.cs" />
+    <Compile Include="Root\ContractFormExtendController.cs" />
+    <Compile Include="Root\HolidayController.cs" />
+    <Compile Include="Root\DamcoGrnRuleController.cs" />
+    <Compile Include="Root\ItemColorCodeController.cs" />
+    <Compile Include="Root\NightTimeController.cs" />
+    <Compile Include="Root\ClientTypeController.cs" />
+    <Compile Include="Root\FeeMasterController.cs" />
+    <Compile Include="Root\ReceiptPartialRegisterController.cs" />
+    <Compile Include="Root\UrlEdiController.cs" />
+    <Compile Include="Root\CrystalReportController.cs" />
+    <Compile Include="Root\OutCFSPhotoKController.cs" />
+    <Compile Include="Root\OutCFSPhotoCController.cs" />
+    <Compile Include="Root\InCFSPhotoKController.cs" />
+    <Compile Include="Root\LoadCreateRuleController.cs" />
+    <Compile Include="Root\ClientFlowRuleController.cs" />
+    <Compile Include="Root\ClientRFFlowController.cs" />
+    <Compile Include="Root\InCFSPhotoCController.cs" />
+    <Compile Include="Root\UnitController.cs" />
+    <Compile Include="Root\ZoneExtendController.cs" />
+    <Compile Include="Service References\WCF.AdminService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.GMSService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.OutBoundService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.PackTaskService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.RecService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse\C_CycleCountController.cs" />
+    <Compile Include="Warehouse\C_EditProcessNameController.cs" />
+    <Compile Include="Warehouse\C_InVentoryExtendController.cs" />
+    <Compile Include="Warehouse\C_LossController.cs" />
+    <Compile Include="Warehouse\C_RecCompleteController.cs" />
+    <Compile Include="Warehouse\C_SerialNumberInHeportController.cs" />
+    <Compile Include="Warehouse\C_SerialNumberOutController.cs" />
+    <Compile Include="Warehouse\C_ReturnGoodLocationController.cs" />
+    <Compile Include="Warehouse\C_WorkloadAccountController.cs" />
+    <Compile Include="Warehouse\C_SupplementLocationController.cs" />
+    <Compile Include="Warehouse\C_SupplementTaskController.cs" />
+    <Compile Include="Warehouse\C_SupplementController.cs" />
+    <Compile Include="Warehouse\C_SerialNumberInController.cs" />
+    <Compile Include="Warehouse\C_HoldReasonController.cs" />
+    <Compile Include="Root\ClientController.cs" />
+    <Compile Include="Root\ItemController.cs" />
+    <Compile Include="Root\LocationController.cs" />
+    <Compile Include="Root\PallateController.cs" />
+    <Compile Include="Root\ZoneController.cs" />
+    <Compile Include="Service References\WCF.InBoundService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.InVentoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.RecReportService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.RootService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WCF.UserService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse\C_AddInventoryController.cs" />
+    <Compile Include="Warehouse\C_InVentoryQuestionController.cs" />
+    <Compile Include="Warehouse\C_RecQuestionController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WMS.EIP\WMS.EIP.csproj">
+      <Project>{b6d49775-75bc-4bb8-b688-c292c07afd2e}</Project>
+      <Name>WMS.EIP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\AdminService.wsdl" />
+    <None Include="Service References\WCF.AdminService\AdminService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\AdminService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\AdminService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\AdminService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\AdminService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessFlowGroupResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessObject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessObjectItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessObjectItemListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessObjectListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.BusinessObjectResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.FlowRule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.FlowRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.FlowRuleResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.RFFlowRule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.RFFlowRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.RFFlowRuleResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhCompany.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhInfoWhUserResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhMenu.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhMenuListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhMenuResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhMenuSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhMenuUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPosition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionPowerMVCResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPositionWhPowerResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPoweMVCSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPower.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPowerListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPowerMVCUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPowerResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPowerSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhPowerUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhUserListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhUserResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.AdminService\WMS.UI.Controllers.WCF.AdminService.WhUserWhPositionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.GMSService\GMSService.wsdl" />
+    <None Include="Service References\WCF.GMSService\GMSService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.GMSService\GMSService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.GMSService\GMSService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.GMSService\GMSService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.GMSService\WMS.UI.Controllers.WCF.GMSService.LookUp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.GMSService\WMS.UI.Controllers.WCF.GMSService.WhZoneResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\InBoundService.wsdl" />
+    <None Include="Service References\WCF.InBoundService\InBoundService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InBoundService\InBoundService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InBoundService\InBoundService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InBoundService\InBoundService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InBoundService\InBoundService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.BusinessFlowGroupResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.CottonExcelImportInBoundListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.DSReceiptRegisterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundAltItemByHuListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundAltItemNumberListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundAltItemStyleByHuListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundClientCodeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundCustomerPoListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundCustPoByHuListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditInBoundResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.EditUnitNameListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ExcelImportInBound.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ExcelImportInBoundCom.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ExcelImportInBoundCotton.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ExcelImportInBoundListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.FlowHead.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.FlowHeadResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundListDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundOrderDetailListDCResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundOrderDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundOrderDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundOrderExtendListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.InBoundOrderResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.KmartHeavyPalletListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.KmartHeavyPalletResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.KmartReceiptDelay.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.KmartReceiptDelayListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.KmartWaitingReason.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.MosaicExcelImportInBoundListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegister1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterDetailListComResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterDetailPartListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterListResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptRegisterResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.ReceiptResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.RegInBoundOrderListCFSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.RegInBoundOrderListComResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.RegInBoundOrderListDCResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.SerialNumberInOutExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.TruckQueryListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.UnitDefault.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.UnitsResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.WhAgent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.WhClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InBoundService\WMS.UI.Controllers.WCF.InBoundService.WhZoneResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\InVentoryService.wsdl" />
+    <None Include="Service References\WCF.InVentoryService\InVentoryService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\InVentoryService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\InVentoryService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\InVentoryService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\InVentoryService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.C_InVentoryListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.C_InVentoryQuestionListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.InVentoryResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.InvMoveDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.ListInvMoveResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.InVentoryService\WMS.UI.Controllers.WCF.InVentoryService.WhClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\OutBoundService.wsdl" />
+    <None Include="Service References\WCF.OutBoundService\OutBoundService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\OutBoundService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\OutBoundService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\OutBoundService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\OutBoundService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.CheckLoadChangeErrorCountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.CottonExcelImportOutBoundListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.CreateUserResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.DSOutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.ExcelImportOutBound.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.FlowHead.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.FlowHeadResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.InterceptOutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeDaiDian.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeDetailSOListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeDetailWarehouseListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeRule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeRuleResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeRuleSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeRuleUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadChargeRuleWarehouseSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerHuDetailListByPOSKUResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerHuDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerHuDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerHuDetailResult2.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadContainerType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadHuIdExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadHuIdExtendSearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadMasterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadSecond_OutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LoadToOutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.Load_OutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.LookUp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrderDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrderDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrderListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrderResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.OutBoundOrderResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.PickTaskDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.PickTaskDetailResult2.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.ReleaseLoadDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.ReleaseLoadDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.SelectLoadContainerHuDetailBySoPoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.SelectLoadContainerHuDetailBySoPoSkuResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.SelectLoadContainerHuDetailBySoPoSkuStyleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.OutBoundService\WMS.UI.Controllers.WCF.OutBoundService.SelectLoadContainerHuDetailBySoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService.wsdl" />
+    <None Include="Service References\WCF.PackTaskService\PackTaskService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\PackTaskService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.FlowDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.GetLoadProcedureListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.GetPackDetailSearchResultResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.GetPackTaskSearchResultByCombinationAltItemNumberResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.GetPackTaskSearchResultByCombinationAltItemNumberUCFResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.GetPackTaskSearchResultResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.ItemMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.LoadMasterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.LoadProcedureResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.Loss.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.LossListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackDetailSearchResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackHead.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackHeadJson.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackPackScanNumberResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTask.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTaskCryReport.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTaskCryReportExpress.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTaskCryReportYunPrintData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTaskResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PackTaskSearchResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PickTaskDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.PickTaskDetailSumQtyResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.ScanNumberDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.SortTaskDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.SortTaskDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.WhClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.PackTaskService\WMS.UI.Controllers.WCF.PackTaskService.WorkPickLoadListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecReportService\RecReportService.wsdl" />
+    <None Include="Service References\WCF.RecReportService\RecReportService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecReportService\RecReportService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecReportService\RecReportService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecReportService\RecReportService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecReportService\RecReportService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecReportService\WMS.UI.Controllers.WCF.RecReportService.C_ReceiveListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecReportService\WMS.UI.Controllers.WCF.RecReportService.ReceiptReportResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecReportService\WMS.UI.Controllers.WCF.RecReportService.WhClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\RecService.wsdl" />
+    <None Include="Service References\WCF.RecService\RecService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecService\RecService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecService\RecService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecService\RecService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecService\RecService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.C_RecCompleteListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.C_RecQuestionListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.DamcoGRNDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.EclRecModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.GrnHeadListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.GrnHeadResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.GrnSOListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.HoldMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.HoldMasterListByRecResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.LookUp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.ReceiptDetailCompleteResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.ReceiptResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.RecLoss.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.RecLossListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.RecLossResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.RecLossType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RecService\WMS.UI.Controllers.WCF.RecService.RecLossTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService.wsdl" />
+    <None Include="Service References\WCF.RootService\RootService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\RootService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BillDetailRepostResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BillDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BillMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BillMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BusinessFlowGroup.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BusinessFlowGroupResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.BusinessFlowHeadResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ClientFlowNameSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ClientFlowNameUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ClientFlowRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ClientRFFlowListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractForm.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractFormExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractFormExtendListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractFormListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractFormOut.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ContractFormOutListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CRTemplate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CRTempResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountCheckListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountCheckResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.CycleCountMasterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.DamcoBillDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.DamcoBillDetailSOListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.DamcoGrnRule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.DamcoGrnRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeDetailHuDetailListResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeDetailResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeHoliday.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeHolidayListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeMaseterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FeeMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FieldOrderByResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowHead.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowHeadResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowNameSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowNameUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.FlowRuleDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetCRTemplateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetFlowHeadListByLoadResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetFlowHeadListByRecResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetLoadCreateRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetLoadMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.getOperationFeeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.GetOrderQtyListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HeportSerialNumberIn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HeportSerialNumberInListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HighchartClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.Highcharts.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HoldMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HoldMasterListByClientResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HoldMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.Holiday.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HolidayListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HuDetailListByPOSKUResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HuMasterHeavyPalletListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.HuMasterResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.InCFSPhotoMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.InWorkloadAccountListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ItemMasterColorCode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ItemMasterColorCodeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ItemMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ItemUnitListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ItemUnitResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadCreateFlowNameSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadCreateFlowNameUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadCreateRule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadCreateRuleInsert.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadCreateRuleResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LoadMasterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LocationSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LocationUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.Loss.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.LossListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.NightTime.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.NightTimeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.OutCFSPhotoMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.OutWorkloadAccountListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.PhotoMasterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptPartialRegisteredDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptPartialRegisterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptPartialRegisterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptPartialUnReceiptListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptPartialUnReceiptResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReceiptRegisterResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.RegisteredListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ReturnGoodLocationListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.RFFlowRuleDetailListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.R_Location_ItemListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.R_Location_ItemResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.R_Location_ItemRGListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberDetailListResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberDetailOut.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberInListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberInOut.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberOut.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SerialNumberOutListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SupplementLocationListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SupplementTaskDetailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SupplementTaskDetailResultListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SupplementTaskResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.SupplementTaskResultListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.TCRProcessModeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.TCRProcessResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.UnitsListResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.UnitsResult1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.UrlEdi.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.UrlEdiListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WarehouseHoldMasterListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhAgent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhAgentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhAgentResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhAgentSelectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhAgentUnselectedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClient.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientExtendListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientExtendResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientReleaseRuleListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhClientTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhItemResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhLocation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhLocationListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhLocationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhLocationTypeResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhPallateListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhPallateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhPallateTypeResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhZoneListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WhZoneResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.WorkloadAccountResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.Zone.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ZoneExtendResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ZoneLocationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ZonesExtend.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.RootService\WMS.UI.Controllers.WCF.RootService.ZonesExtendListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WCF.UserService\UserService.wsdl" />
+    <None Include="Service References\WCF.UserService\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.UserService\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WCF.UserService\UserService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WCF.AdminService\" />
+    <WCFMetadataStorage Include="Service References\WCF.GMSService\" />
+    <WCFMetadataStorage Include="Service References\WCF.InBoundService\" />
+    <WCFMetadataStorage Include="Service References\WCF.InVentoryService\" />
+    <WCFMetadataStorage Include="Service References\WCF.OutBoundService\" />
+    <WCFMetadataStorage Include="Service References\WCF.PackTaskService\" />
+    <WCFMetadataStorage Include="Service References\WCF.RecReportService\" />
+    <WCFMetadataStorage Include="Service References\WCF.RecService\" />
+    <WCFMetadataStorage Include="Service References\WCF.RootService\" />
+    <WCFMetadataStorage Include="Service References\WCF.UserService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.UserService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.UserService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RootService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RootService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RootService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InBoundService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InBoundService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InBoundService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.OutBoundService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecReportService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecReportService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecReportService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InVentoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InVentoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.InVentoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.OutBoundService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.OutBoundService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.PackTaskService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.PackTaskService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.PackTaskService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.AdminService\AdminService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.AdminService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.AdminService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.AdminService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.RecService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.GMSService\GMSService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.GMSService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.GMSService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF.GMSService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WMS\UI\Controllers\WCF\GMSService\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

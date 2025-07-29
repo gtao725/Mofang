@@ -1,0 +1,6 @@
+D:\work2022\wms\WMS.WCFServices\bin\MODEL_MSSQL.dll.config
+D:\work2022\wms\WMS.WCFServices\bin\MODEL_MSSQL.dll
+D:\work2022\wms\WMS.WCFServices\bin\MODEL_MSSQL.pdb
+D:\work2022\wms\MODEL_MSSQL\obj\Debug\MODEL_MSSQL.dll
+D:\work2022\wms\MODEL_MSSQL\obj\Debug\MODEL_MSSQL.pdb
+D:\work2022\WMS\MODEL_MSSQL\obj\Debug\MODEL_MSSQL.csprojResolveAssemblyReference.cache

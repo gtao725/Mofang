@@ -1,0 +1,1523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="InBoundService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+      <xsd:import schemaLocation="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IInBoundService_WhClientListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_WhClientListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ClientFlowNameSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientFlowNameSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ClientFlowNameSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientFlowNameSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAdd" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderEditClientCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderEditClientCode" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderEditClientCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderEditClientCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundListDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundListDetail" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundListDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundListDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailDel" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DeleteInBound_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteInBound" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DeleteInBound_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteInBoundResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelInBoundBySO_InputMessage">
+    <wsdl:part name="parameters" element="tns:DelInBoundBySO" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelInBoundBySO_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DelInBoundBySOResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailListDC_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailListDC" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderDetailListDC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderDetailListDCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddDC_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddDC" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddDC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddDCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddCommon_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddCommon" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddCommon_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddCommonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_GetUnitSelList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnitSelList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_GetUnitSelList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnitSelListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckUnitName_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUnitName" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckUnitName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUnitNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddEcl_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddEcl" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderListAddEcl_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderListAddEclResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RecZoneSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecZoneSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RecZoneSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecZoneSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegClientFlowNameSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegClientFlowNameSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegClientFlowNameSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegClientFlowNameSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListCFS_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListCFS" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListCFS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListCFSResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegister_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegister" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegister_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegister1_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegister1" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegister1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegister1Response" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegisterDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegisterDetail" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_AddReceiptRegisterDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptRegisterDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditReceiptRegisterDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditReceiptRegisterDetail" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditReceiptRegisterDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditReceiptRegisterDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegisterDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegisterDetail" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegisterDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegisterDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegister_InputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegister" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegister_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditReceiptRegister_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditReceiptRegister" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditReceiptRegister_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditReceiptRegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckReceiptProssName_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReceiptProssName" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckReceiptProssName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReceiptProssNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListDC_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListDC" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListDC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListDCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailPartList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailPartList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailPartList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailPartListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListCom_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListCom" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RegInBoundOrderListCom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegInBoundOrderListComResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailListCom_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailListCom" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReceiptRegisterDetailListCom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReceiptRegisterDetailListComResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReleaseReceipt_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseReceipt" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ReleaseReceipt_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseReceiptResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DSReceiptRegisterList_InputMessage">
+    <wsdl:part name="parameters" element="tns:DSReceiptRegisterList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DSReceiptRegisterList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DSReceiptRegisterListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RollbackReceiptId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackReceiptId" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_RollbackReceiptId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackReceiptIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_UpdateRegReceiptBillCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRegReceiptBillCount" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_UpdateRegReceiptBillCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRegReceiptBillCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckClientCodeRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckClientCodeRule" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CheckClientCodeRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckClientCodeRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ImportsInBoundOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsInBoundOrder" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ImportsInBoundOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsInBoundOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ImportsInBoundOrderExtend_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsInBoundOrderExtend" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ImportsInBoundOrderExtend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsInBoundOrderExtendResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundClientCodeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundClientCodeList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundClientCodeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundClientCodeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundCustomerPoList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundCustomerPoList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundCustomerPoList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundCustomerPoListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemNumberList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemNumberList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemNumberList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemNumberListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditUnitNameList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUnitNameList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditUnitNameList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUnitNameListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundCustPoByHuList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundCustPoByHuList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundCustPoByHuList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundCustPoByHuListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemByHuList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemByHuList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemByHuList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemByHuListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemStyleByHuList_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemStyleByHuList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditInBoundAltItemStyleByHuList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInBoundAltItemStyleByHuListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailClientCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailClientCode" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailClientCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailClientCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailSoNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailSoNumber" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailSoNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailSoNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailCustomerPoNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailCustomerPoNumber" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailCustomerPoNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailCustomerPoNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemNumber" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailUnitName_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailUnitName" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailUnitName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailUnitNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailSoNumberByHu_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailSoNumberByHu" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailSoNumberByHu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailSoNumberByHuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailCustomerPoNumberByHu_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailCustomerPoNumberByHu" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailCustomerPoNumberByHu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailCustomerPoNumberByHuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemByHu_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemByHu" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemByHu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemByHuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemStyleByHu_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemStyleByHu" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditDetailAltItemStyleByHu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditDetailAltItemStyleByHuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_WhAgentListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhAgentListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_WhAgentListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhAgentListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_TruckQueryList_InputMessage">
+    <wsdl:part name="parameters" element="tns:TruckQueryList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_TruckQueryList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TruckQueryListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditTruckStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditTruckStatus" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditTruckStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditTruckStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_QueueUpTruck_InputMessage">
+    <wsdl:part name="parameters" element="tns:QueueUpTruck" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_QueueUpTruck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QueueUpTruckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegisterByTruck_InputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegisterByTruck" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_DelReceiptRegisterByTruck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DelReceiptRegisterByTruckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderExtendList_InputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderExtendList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_InBoundOrderExtendList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InBoundOrderExtendListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_UnitDefaultListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnitDefaultListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_UnitDefaultListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnitDefaultListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_PrintInTempalte_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrintInTempalte" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_PrintInTempalte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrintInTempalteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_checkSONumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:checkSONumber" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_checkSONumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:checkSONumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_importForecast_InputMessage">
+    <wsdl:part name="parameters" element="tns:importForecast" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_importForecast_OutputMessage">
+    <wsdl:part name="parameters" element="tns:importForecastResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundDelete" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportInBoundDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportInBoundDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartReceiptDelayList_InputMessage">
+    <wsdl:part name="parameters" element="tns:KmartReceiptDelayList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartReceiptDelayList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KmartReceiptDelayListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartDelayReason_InputMessage">
+    <wsdl:part name="parameters" element="tns:KmartDelayReason" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartDelayReason_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KmartDelayReasonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartReasontSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:KmartReasontSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartReasontSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KmartReasontSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartHeavyPalletList_InputMessage">
+    <wsdl:part name="parameters" element="tns:KmartHeavyPalletList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartHeavyPalletList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KmartHeavyPalletListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartHeavyPalletEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:KmartHeavyPalletEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_KmartHeavyPalletEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KmartHeavyPalletEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CottonExcelImportInBoundList_InputMessage">
+    <wsdl:part name="parameters" element="tns:CottonExcelImportInBoundList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_CottonExcelImportInBoundList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CottonExcelImportInBoundListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportForecastCotton_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportForecastCotton" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportForecastCotton_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportForecastCottonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditForecastCotton_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditForecastCotton" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_EditForecastCotton_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditForecastCottonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_MosaicExcelImportInBoundList_InputMessage">
+    <wsdl:part name="parameters" element="tns:MosaicExcelImportInBoundList" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_MosaicExcelImportInBoundList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MosaicExcelImportInBoundListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportForecastCommon_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportForecastCommon" />
+  </wsdl:message>
+  <wsdl:message name="IInBoundService_ExcelImportForecastCommon_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportForecastCommonResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IInBoundService">
+    <wsdl:operation name="WhClientListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/WhClientListSelect" message="tns:IInBoundService_WhClientListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/WhClientListSelectResponse" message="tns:IInBoundService_WhClientListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClientFlowNameSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ClientFlowNameSelect" message="tns:IInBoundService_ClientFlowNameSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ClientFlowNameSelectResponse" message="tns:IInBoundService_ClientFlowNameSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAdd" message="tns:IInBoundService_InBoundOrderListAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddResponse" message="tns:IInBoundService_InBoundOrderListAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailList" message="tns:IInBoundService_InBoundOrderDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailListResponse" message="tns:IInBoundService_InBoundOrderDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailEdit" message="tns:IInBoundService_InBoundOrderDetailEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailEditResponse" message="tns:IInBoundService_InBoundOrderDetailEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderEditClientCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderEditClientCode" message="tns:IInBoundService_InBoundOrderEditClientCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderEditClientCodeResponse" message="tns:IInBoundService_InBoundOrderEditClientCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundListDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundListDetail" message="tns:IInBoundService_InBoundListDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundListDetailResponse" message="tns:IInBoundService_InBoundListDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailDel" message="tns:IInBoundService_InBoundOrderDetailDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailDelResponse" message="tns:IInBoundService_InBoundOrderDetailDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInBound">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DeleteInBound" message="tns:IInBoundService_DeleteInBound_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DeleteInBoundResponse" message="tns:IInBoundService_DeleteInBound_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DelInBoundBySO">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DelInBoundBySO" message="tns:IInBoundService_DelInBoundBySO_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DelInBoundBySOResponse" message="tns:IInBoundService_DelInBoundBySO_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailListDC">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailListDC" message="tns:IInBoundService_InBoundOrderDetailListDC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderDetailListDCResponse" message="tns:IInBoundService_InBoundOrderDetailListDC_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddDC">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddDC" message="tns:IInBoundService_InBoundOrderListAddDC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddDCResponse" message="tns:IInBoundService_InBoundOrderListAddDC_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddCommon">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddCommon" message="tns:IInBoundService_InBoundOrderListAddCommon_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddCommonResponse" message="tns:IInBoundService_InBoundOrderListAddCommon_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnitSelList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/GetUnitSelList" message="tns:IInBoundService_GetUnitSelList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/GetUnitSelListResponse" message="tns:IInBoundService_GetUnitSelList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUnitName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/CheckUnitName" message="tns:IInBoundService_CheckUnitName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/CheckUnitNameResponse" message="tns:IInBoundService_CheckUnitName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddEcl">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddEcl" message="tns:IInBoundService_InBoundOrderListAddEcl_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderListAddEclResponse" message="tns:IInBoundService_InBoundOrderListAddEcl_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecZoneSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RecZoneSelect" message="tns:IInBoundService_RecZoneSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RecZoneSelectResponse" message="tns:IInBoundService_RecZoneSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegClientFlowNameSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RegClientFlowNameSelect" message="tns:IInBoundService_RegClientFlowNameSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RegClientFlowNameSelectResponse" message="tns:IInBoundService_RegClientFlowNameSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterList" message="tns:IInBoundService_ReceiptRegisterList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterListResponse" message="tns:IInBoundService_ReceiptRegisterList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListCFS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListCFS" message="tns:IInBoundService_RegInBoundOrderListCFS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListCFSResponse" message="tns:IInBoundService_RegInBoundOrderListCFS_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegister" message="tns:IInBoundService_AddReceiptRegister_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegisterResponse" message="tns:IInBoundService_AddReceiptRegister_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegister1">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegister1" message="tns:IInBoundService_AddReceiptRegister1_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegister1Response" message="tns:IInBoundService_AddReceiptRegister1_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegisterDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegisterDetail" message="tns:IInBoundService_AddReceiptRegisterDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/AddReceiptRegisterDetailResponse" message="tns:IInBoundService_AddReceiptRegisterDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailList" message="tns:IInBoundService_ReceiptRegisterDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailListResponse" message="tns:IInBoundService_ReceiptRegisterDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditReceiptRegisterDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditReceiptRegisterDetail" message="tns:IInBoundService_EditReceiptRegisterDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditReceiptRegisterDetailResponse" message="tns:IInBoundService_EditReceiptRegisterDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegisterDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegisterDetail" message="tns:IInBoundService_DelReceiptRegisterDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegisterDetailResponse" message="tns:IInBoundService_DelReceiptRegisterDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegister" message="tns:IInBoundService_DelReceiptRegister_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegisterResponse" message="tns:IInBoundService_DelReceiptRegister_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditReceiptRegister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditReceiptRegister" message="tns:IInBoundService_EditReceiptRegister_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditReceiptRegisterResponse" message="tns:IInBoundService_EditReceiptRegister_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckReceiptProssName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/CheckReceiptProssName" message="tns:IInBoundService_CheckReceiptProssName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/CheckReceiptProssNameResponse" message="tns:IInBoundService_CheckReceiptProssName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListDC">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListDC" message="tns:IInBoundService_RegInBoundOrderListDC_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListDCResponse" message="tns:IInBoundService_RegInBoundOrderListDC_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailPartList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailPartList" message="tns:IInBoundService_ReceiptRegisterDetailPartList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailPartListResponse" message="tns:IInBoundService_ReceiptRegisterDetailPartList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListCom">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListCom" message="tns:IInBoundService_RegInBoundOrderListCom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RegInBoundOrderListComResponse" message="tns:IInBoundService_RegInBoundOrderListCom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailListCom">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailListCom" message="tns:IInBoundService_ReceiptRegisterDetailListCom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ReceiptRegisterDetailListComResponse" message="tns:IInBoundService_ReceiptRegisterDetailListCom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseReceipt">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ReleaseReceipt" message="tns:IInBoundService_ReleaseReceipt_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ReleaseReceiptResponse" message="tns:IInBoundService_ReleaseReceipt_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DSReceiptRegisterList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DSReceiptRegisterList" message="tns:IInBoundService_DSReceiptRegisterList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DSReceiptRegisterListResponse" message="tns:IInBoundService_DSReceiptRegisterList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RollbackReceiptId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/RollbackReceiptId" message="tns:IInBoundService_RollbackReceiptId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/RollbackReceiptIdResponse" message="tns:IInBoundService_RollbackReceiptId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegReceiptBillCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/UpdateRegReceiptBillCount" message="tns:IInBoundService_UpdateRegReceiptBillCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/UpdateRegReceiptBillCountResponse" message="tns:IInBoundService_UpdateRegReceiptBillCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckClientCodeRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/CheckClientCodeRule" message="tns:IInBoundService_CheckClientCodeRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/CheckClientCodeRuleResponse" message="tns:IInBoundService_CheckClientCodeRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsInBoundOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ImportsInBoundOrder" message="tns:IInBoundService_ImportsInBoundOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ImportsInBoundOrderResponse" message="tns:IInBoundService_ImportsInBoundOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsInBoundOrderExtend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ImportsInBoundOrderExtend" message="tns:IInBoundService_ImportsInBoundOrderExtend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ImportsInBoundOrderExtendResponse" message="tns:IInBoundService_ImportsInBoundOrderExtend_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundClientCodeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundClientCodeList" message="tns:IInBoundService_EditInBoundClientCodeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundClientCodeListResponse" message="tns:IInBoundService_EditInBoundClientCodeList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundCustomerPoList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundCustomerPoList" message="tns:IInBoundService_EditInBoundCustomerPoList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundCustomerPoListResponse" message="tns:IInBoundService_EditInBoundCustomerPoList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemNumberList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemNumberList" message="tns:IInBoundService_EditInBoundAltItemNumberList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemNumberListResponse" message="tns:IInBoundService_EditInBoundAltItemNumberList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUnitNameList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditUnitNameList" message="tns:IInBoundService_EditUnitNameList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditUnitNameListResponse" message="tns:IInBoundService_EditUnitNameList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundCustPoByHuList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundCustPoByHuList" message="tns:IInBoundService_EditInBoundCustPoByHuList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundCustPoByHuListResponse" message="tns:IInBoundService_EditInBoundCustPoByHuList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemByHuList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemByHuList" message="tns:IInBoundService_EditInBoundAltItemByHuList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemByHuListResponse" message="tns:IInBoundService_EditInBoundAltItemByHuList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemStyleByHuList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemStyleByHuList" message="tns:IInBoundService_EditInBoundAltItemStyleByHuList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditInBoundAltItemStyleByHuListResponse" message="tns:IInBoundService_EditInBoundAltItemStyleByHuList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailClientCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailClientCode" message="tns:IInBoundService_EditDetailClientCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailClientCodeResponse" message="tns:IInBoundService_EditDetailClientCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailSoNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailSoNumber" message="tns:IInBoundService_EditDetailSoNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailSoNumberResponse" message="tns:IInBoundService_EditDetailSoNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailCustomerPoNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumber" message="tns:IInBoundService_EditDetailCustomerPoNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumberResponse" message="tns:IInBoundService_EditDetailCustomerPoNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemNumber" message="tns:IInBoundService_EditDetailAltItemNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemNumberResponse" message="tns:IInBoundService_EditDetailAltItemNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailUnitName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailUnitName" message="tns:IInBoundService_EditDetailUnitName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailUnitNameResponse" message="tns:IInBoundService_EditDetailUnitName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailSoNumberByHu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailSoNumberByHu" message="tns:IInBoundService_EditDetailSoNumberByHu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailSoNumberByHuResponse" message="tns:IInBoundService_EditDetailSoNumberByHu_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailCustomerPoNumberByHu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumberByHu" message="tns:IInBoundService_EditDetailCustomerPoNumberByHu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumberByHuResponse" message="tns:IInBoundService_EditDetailCustomerPoNumberByHu_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemByHu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemByHu" message="tns:IInBoundService_EditDetailAltItemByHu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemByHuResponse" message="tns:IInBoundService_EditDetailAltItemByHu_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemStyleByHu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemStyleByHu" message="tns:IInBoundService_EditDetailAltItemStyleByHu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditDetailAltItemStyleByHuResponse" message="tns:IInBoundService_EditDetailAltItemStyleByHu_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhAgentListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/WhAgentListSelect" message="tns:IInBoundService_WhAgentListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/WhAgentListSelectResponse" message="tns:IInBoundService_WhAgentListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TruckQueryList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/TruckQueryList" message="tns:IInBoundService_TruckQueryList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/TruckQueryListResponse" message="tns:IInBoundService_TruckQueryList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditTruckStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditTruckStatus" message="tns:IInBoundService_EditTruckStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditTruckStatusResponse" message="tns:IInBoundService_EditTruckStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QueueUpTruck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/QueueUpTruck" message="tns:IInBoundService_QueueUpTruck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/QueueUpTruckResponse" message="tns:IInBoundService_QueueUpTruck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegisterByTruck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegisterByTruck" message="tns:IInBoundService_DelReceiptRegisterByTruck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/DelReceiptRegisterByTruckResponse" message="tns:IInBoundService_DelReceiptRegisterByTruck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderExtendList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderExtendList" message="tns:IInBoundService_InBoundOrderExtendList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/InBoundOrderExtendListResponse" message="tns:IInBoundService_InBoundOrderExtendList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnitDefaultListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/UnitDefaultListSelect" message="tns:IInBoundService_UnitDefaultListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/UnitDefaultListSelectResponse" message="tns:IInBoundService_UnitDefaultListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintInTempalte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/PrintInTempalte" message="tns:IInBoundService_PrintInTempalte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/PrintInTempalteResponse" message="tns:IInBoundService_PrintInTempalte_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundList" message="tns:IInBoundService_ExcelImportInBoundList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundListResponse" message="tns:IInBoundService_ExcelImportInBoundList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="checkSONumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/checkSONumber" message="tns:IInBoundService_checkSONumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/checkSONumberResponse" message="tns:IInBoundService_checkSONumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="importForecast">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/importForecast" message="tns:IInBoundService_importForecast_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/importForecastResponse" message="tns:IInBoundService_importForecast_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundEdit" message="tns:IInBoundService_ExcelImportInBoundEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundEditResponse" message="tns:IInBoundService_ExcelImportInBoundEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundDelete" message="tns:IInBoundService_ExcelImportInBoundDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportInBoundDeleteResponse" message="tns:IInBoundService_ExcelImportInBoundDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KmartReceiptDelayList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/KmartReceiptDelayList" message="tns:IInBoundService_KmartReceiptDelayList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/KmartReceiptDelayListResponse" message="tns:IInBoundService_KmartReceiptDelayList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KmartDelayReason">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/KmartDelayReason" message="tns:IInBoundService_KmartDelayReason_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/KmartDelayReasonResponse" message="tns:IInBoundService_KmartDelayReason_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KmartReasontSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/KmartReasontSelect" message="tns:IInBoundService_KmartReasontSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/KmartReasontSelectResponse" message="tns:IInBoundService_KmartReasontSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KmartHeavyPalletList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/KmartHeavyPalletList" message="tns:IInBoundService_KmartHeavyPalletList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/KmartHeavyPalletListResponse" message="tns:IInBoundService_KmartHeavyPalletList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KmartHeavyPalletEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/KmartHeavyPalletEdit" message="tns:IInBoundService_KmartHeavyPalletEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/KmartHeavyPalletEditResponse" message="tns:IInBoundService_KmartHeavyPalletEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CottonExcelImportInBoundList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/CottonExcelImportInBoundList" message="tns:IInBoundService_CottonExcelImportInBoundList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/CottonExcelImportInBoundListResponse" message="tns:IInBoundService_CottonExcelImportInBoundList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportForecastCotton">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportForecastCotton" message="tns:IInBoundService_ExcelImportForecastCotton_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportForecastCottonResponse" message="tns:IInBoundService_ExcelImportForecastCotton_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditForecastCotton">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/EditForecastCotton" message="tns:IInBoundService_EditForecastCotton_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/EditForecastCottonResponse" message="tns:IInBoundService_EditForecastCotton_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MosaicExcelImportInBoundList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/MosaicExcelImportInBoundList" message="tns:IInBoundService_MosaicExcelImportInBoundList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/MosaicExcelImportInBoundListResponse" message="tns:IInBoundService_MosaicExcelImportInBoundList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportForecastCommon">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportForecastCommon" message="tns:IInBoundService_ExcelImportForecastCommon_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInBoundService/ExcelImportForecastCommonResponse" message="tns:IInBoundService_ExcelImportForecastCommon_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IInBoundService" type="tns:IInBoundService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="WhClientListSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/WhClientListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClientFlowNameSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ClientFlowNameSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAdd">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderListAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailEdit">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderDetailEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderEditClientCode">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderEditClientCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundListDetail">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundListDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailDel">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderDetailDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInBound">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DeleteInBound" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelInBoundBySO">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DelInBoundBySO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderDetailListDC">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderDetailListDC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddDC">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderListAddDC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddCommon">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderListAddCommon" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnitSelList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/GetUnitSelList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUnitName">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/CheckUnitName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderListAddEcl">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderListAddEcl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecZoneSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RecZoneSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegClientFlowNameSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RegClientFlowNameSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ReceiptRegisterList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListCFS">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RegInBoundOrderListCFS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegister">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/AddReceiptRegister" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegister1">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/AddReceiptRegister1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptRegisterDetail">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/AddReceiptRegisterDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ReceiptRegisterDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditReceiptRegisterDetail">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditReceiptRegisterDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegisterDetail">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DelReceiptRegisterDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegister">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DelReceiptRegister" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditReceiptRegister">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditReceiptRegister" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckReceiptProssName">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/CheckReceiptProssName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListDC">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RegInBoundOrderListDC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailPartList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ReceiptRegisterDetailPartList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegInBoundOrderListCom">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RegInBoundOrderListCom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiptRegisterDetailListCom">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ReceiptRegisterDetailListCom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseReceipt">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ReleaseReceipt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DSReceiptRegisterList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DSReceiptRegisterList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RollbackReceiptId">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/RollbackReceiptId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRegReceiptBillCount">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/UpdateRegReceiptBillCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckClientCodeRule">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/CheckClientCodeRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsInBoundOrder">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ImportsInBoundOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsInBoundOrderExtend">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ImportsInBoundOrderExtend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundClientCodeList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundClientCodeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundCustomerPoList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundCustomerPoList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemNumberList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundAltItemNumberList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditUnitNameList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditUnitNameList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundCustPoByHuList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundCustPoByHuList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemByHuList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundAltItemByHuList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInBoundAltItemStyleByHuList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditInBoundAltItemStyleByHuList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailClientCode">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailClientCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailSoNumber">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailSoNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailCustomerPoNumber">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemNumber">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailAltItemNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailUnitName">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailUnitName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailSoNumberByHu">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailSoNumberByHu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailCustomerPoNumberByHu">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailCustomerPoNumberByHu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemByHu">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailAltItemByHu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditDetailAltItemStyleByHu">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditDetailAltItemStyleByHu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhAgentListSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/WhAgentListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TruckQueryList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/TruckQueryList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditTruckStatus">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditTruckStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueueUpTruck">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/QueueUpTruck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelReceiptRegisterByTruck">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/DelReceiptRegisterByTruck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InBoundOrderExtendList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/InBoundOrderExtendList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnitDefaultListSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/UnitDefaultListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintInTempalte">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/PrintInTempalte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ExcelImportInBoundList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkSONumber">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/checkSONumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="importForecast">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/importForecast" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundEdit">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ExcelImportInBoundEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportInBoundDelete">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ExcelImportInBoundDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmartReceiptDelayList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/KmartReceiptDelayList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmartDelayReason">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/KmartDelayReason" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmartReasontSelect">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/KmartReasontSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmartHeavyPalletList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/KmartHeavyPalletList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmartHeavyPalletEdit">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/KmartHeavyPalletEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CottonExcelImportInBoundList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/CottonExcelImportInBoundList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportForecastCotton">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ExcelImportForecastCotton" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditForecastCotton">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/EditForecastCotton" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MosaicExcelImportInBoundList">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/MosaicExcelImportInBoundList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportForecastCommon">
+      <soap:operation soapAction="http://tempuri.org/IInBoundService/ExcelImportForecastCommon" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InBoundService">
+    <wsdl:port name="BasicHttpBinding_IInBoundService" binding="tns:BasicHttpBinding_IInBoundService">
+      <soap:address location="http://localhost:45936/InBoundService/InBoundService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

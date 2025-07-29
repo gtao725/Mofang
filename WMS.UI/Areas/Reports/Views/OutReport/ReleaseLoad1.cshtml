@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />     
+        <input type="text" name="loadId" hint="Load" />
+        <input type="checkbox" name="qtyWhere" hint="可用库存不足" left="100" value="1" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            if ($("[name=loadId]").val() == "") {
+                                $.eipMsg.alert("Load必须填写!");
+                                return;
+                            }
+                            eip.datagrid.load("/Reports/OutReport/ReleaseLoadListDC", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+    });
+
+</script>

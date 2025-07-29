@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "ClientId", "客户名", "", "")
+        <input type="text" left="100" name="ReceiptId" hint="收货批次号" />
+        <input type="text" name="SoNumber" hint="SO" />
+        <input type="text" name="PoNumber" hint="PO" />
+        <input type="text" name="ALtItemNumber" hint="SKU" />
+        <input type="text" name="ReceiptDateBegin" hint="收货时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="ReceiptDateEnd" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <textarea name="SoNumberArr" left="60" hint="SO号"></textarea>
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/WarhouseReport/C_SerialNumberInDiffList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            hiddencolumns: ["WhCode"],
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+                "未扫数量": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"DetailList('" + row["收货批次号"] + "','" + row["WhCode"] + "')\" >" + row["未扫数量"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "已扫数量": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"DetailScanList('" + row["收货批次号"] + "','" + row["WhCode"] + "')\" >" + row["已扫数量"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                dofunc: function (grid, trs) {
+                    //for (i in trs)  //列 格式化增加颜色显示
+                    //    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+                }
+            }
+        });
+
+        $("[name=SoNumberArr]").css("height", "30px").css("width", "185px");
+        $("[name=SoNumberArr]").parent().css("height", "35px").css("width", "280px");
+
+
+    });
+    // 显示差异明细
+    function DetailList(val, WhCode) {
+        var dlg_Pos = eip.dialog.create("收货扫描细差异明细：" + val,
+            "<div id=layout_Detail1><div form=\"Y\" id=\"form_Detail1\">"
+            + "<input type=\"text\" name=\"detail_sonumber\" hint=\"SO\" />"
+            + "<input type=\"text\" name=\"detail_ponumber\" hint=\"PO\" />"
+            + "<input type=\"text\" name=\"detail_altitemnumber\" hint=\"SKU\" />"
+            + "<input type=\"text\" name=\"detail_huid\" hint=\"托盘\" />"
+            + "<textarea name=\"Detail_SoNumberArr\" left=\"60\" hint=\"SO号\"></textarea>"
+            + "</div>"
+            + "<table id=\"grid_detail1\"></table></div>", 1000, 600)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail1"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            showExcelExport: true,//显示汇出按钮
+            columns: {
+            }
+        });
+
+        eip.layout.create($('#layout_Detail1'), [{
+            obj: $('#form_Detail1'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Reports/WarhouseReport/C_SnInDiffDetail?ReceiptId=" + val + "&WhCode=" + WhCode, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#layout_Detail1"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        $("[name=Detail_SoNumberArr]").css("height", "30px").css("width", "185px");
+        $("[name=Detail_SoNumberArr]").parent().css("height", "35px").css("width", "280px");
+
+
+        if ($("[name=SoNumberArr]").val() != "")
+        {
+            $("[name=Detail_SoNumberArr]").val($("[name=SoNumberArr]").val());
+        }
+        eip.datagrid.load("/Reports/WarhouseReport/C_SnInDiffDetail?ReceiptId=" + val + "&WhCode=" + WhCode, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#layout_Detail1"))));
+     }
+
+
+    // 显示差异明细
+    function DetailScanList(val, WhCode) {
+        var dlg_Pos = eip.dialog.create("收货已扫描明细：" + val,
+            "<div id=layout_Detail2><div form=\"Y\" id=\"form_Detail2\">"
+            + "</div>"
+            + "<table id=\"grid_detail2\"></table></div>", 1000, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail2"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            showExcelExport: true,//显示汇出按钮
+            columns: {
+            }
+        });
+
+        eip.layout.create($('#layout_Detail2'), [{
+            obj: $('#form_Detail2'),
+            buttons: [
+                 
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+        eip.datagrid.load("/Reports/WarhouseReport/C_SnInDetail?ReceiptId=" + val + "&WhCode=" + WhCode, $("#grid_detail2"), eip.para.create($("input,select", $("#layout_Detail1"))));
+    }
+
+
+
+
+</script>

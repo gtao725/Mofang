@@ -1,0 +1,6 @@
+D:\work2022\wms\WMS.UI\bin\WMS.Report.Controllers.dll.config
+D:\work2022\wms\WMS.UI\bin\WMS.Report.Controllers.dll
+D:\work2022\wms\WMS.UI\bin\WMS.Report.Controllers.pdb
+D:\work2022\wms\WMS.Report.Controllers\obj\Debug\WMS.Report.Controllers.dll
+D:\work2022\wms\WMS.Report.Controllers\obj\Debug\WMS.Report.Controllers.pdb
+D:\work2022\wms\WMS.Report.Controllers\obj\Debug\WMS.Report.Controllers.csprojResolveAssemblyReference.cache

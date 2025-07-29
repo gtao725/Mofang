@@ -1,0 +1,6 @@
+D:\work2022\wms\WMS.UI.Controllers\bin\WMS.EIP.dll.config
+D:\work2022\wms\WMS.UI.Controllers\bin\WMS.EIP.dll
+D:\work2022\wms\WMS.UI.Controllers\bin\WMS.EIP.pdb
+D:\work2022\wms\WMS.EIP\obj\Debug\WMS.EIP.dll
+D:\work2022\wms\WMS.EIP\obj\Debug\WMS.EIP.pdb
+D:\work2022\WMS\WMS.EIP\obj\Debug\WMS.EIP.csprojResolveAssemblyReference.cache

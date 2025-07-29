@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+  <xs:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+  <xs:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:element name="WhClientListSelect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WhClientListSelectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="WhClientListSelectResult" nillable="true" type="q1:ArrayOfWhClient" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackTaskListByLoadResult" nillable="true" type="q2:ArrayOfPackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetSortTaskDetailByLoadResult" nillable="true" type="q3:ArrayOfSortTaskDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumSortTaskDetailListByLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumSortTaskDetailListByLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetSumSortTaskDetailListByLoadResult" nillable="true" type="q4:ArrayOfSortTaskDetailResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="entity" nillable="true" type="q5:PackTaskInsert" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PackTaskInsertByLoadResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packTaskId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackTaskByIdResult" nillable="true" type="q6:PackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackTaskStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sortGroupNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackTaskStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CheckPackTaskStatusResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByLoadOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByLoadOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackTaskListByLoadOrderResult" nillable="true" type="q7:ArrayOfPackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByLoadOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByLoadOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetSortTaskDetailByLoadOrderResult" nillable="true" type="q8:ArrayOfSortTaskDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sortGroupNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackTaskListResult" nillable="true" type="q9:ArrayOfPackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackHeadGroupId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packTaskId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackHeadGroupIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPackHeadGroupIdResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sortGroupId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetSortTaskDetailResult" nillable="true" type="q10:ArrayOfSortTaskDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackingType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackingTypeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackingTypeResult" nillable="true" type="q11:ArrayOfFlowDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetScanningConsumables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetScanningConsumablesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetScanningConsumablesResult" nillable="true" type="q12:ArrayOfFlowDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumSortTaskDetailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sortGroupId" type="xs:int" />
+        <xs:element minOccurs="0" name="sortGroupNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumSortTaskDetailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetSumSortTaskDetailListResult" nillable="true" type="q13:ArrayOfSortTaskDetailResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsert">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="entity" nillable="true" type="q14:PackTaskInsert" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PackTaskInsertResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePackHead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q15:PackHead" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePackHeadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdatePackHeadResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePackTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q16:PackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePackTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdatePackTaskResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q17:PackHead" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="CheckPackNumberResult" nillable="true" type="q18:ArrayOfPackHead" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q19:PackTaskSearch" />
+        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="expressNumberArr" nillable="true" type="q20:ArrayOfstring" />
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="customerOutPoNumberArr" nillable="true" type="q21:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetPackTaskSearchResultResult" nillable="true" type="q22:ArrayOfPackTaskSearchResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScanNumberDetailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packDetailId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ScanNumberDetailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="ScanNumberDetailListResult" nillable="true" type="q23:ArrayOfPackPackScanNumberResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeletePackHead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q24:PackHead" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeletePackHeadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeletePackHeadResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackDetailSearchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackDetailSearchResultResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetPackDetailSearchResultResult" nillable="true" type="q25:ArrayOfPackDetailSearchResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportPackTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packTaskId" type="xs:int" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportPackTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetCryReportPackTaskResult" nillable="true" type="q26:ArrayOfPackTaskCryReport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportExpressPackTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packTaskId" type="xs:int" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+        <xs:element minOccurs="0" name="content" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportExpressPackTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetCryReportExpressPackTaskResult" nillable="true" type="q27:ArrayOfPackTaskCryReportExpress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportYunPrintData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+        <xs:element minOccurs="0" name="content" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportYunPrintDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetCryReportYunPrintDataResult" nillable="true" type="q28:ArrayOfPackTaskCryReportYunPrintData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExpressNumberByYunPrint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExpressNumberByYunPrintResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExpressNumberByWork">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateExpressNumberByWorkResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpressNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="content" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpressNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetExpressNumberResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="checkLoss">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="lossCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="checkLossResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="checkLossResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLoadProcedureList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q29:LoadProcedureSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLoadProcedureListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetLoadProcedureListResult" nillable="true" type="q30:ArrayOfLoadProcedureResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBarCodeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBarCodeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetBarCodeListResult" nillable="true" type="q31:PackTaskResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackPrintDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckPackPrintDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CheckPackPrintDateResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TranLogAdd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q32:TranLog" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TranLogAddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TranLogAddResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemMasterByPackHeadId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemMasterByPackHeadIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetItemMasterByPackHeadIdResult" nillable="true" type="q33:ArrayOfItemMaster" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackHeadJsonByExpress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="expressNumber" nillable="true" type="q34:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackHeadJsonByExpressResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackHeadJsonByExpressResult" nillable="true" type="q35:ArrayOfPackHeadJson" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LossList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q36:LossSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LossListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="LossListResult" nillable="true" type="q37:ArrayOfLoss" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WorkPickLoadList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q38:LoadMasterSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WorkPickLoadListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="WorkPickLoadListResult" nillable="true" type="q39:ArrayOfLoadMasterResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumQtyPickTaskDetailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumQtyPickTaskDetailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetSumQtyPickTaskDetailListResult" nillable="true" type="q40:ArrayOfPickTaskDetailSumQtyResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumPickQtyPickTaskDetailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumPickQtyPickTaskDetailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetSumPickQtyPickTaskDetailListResult" nillable="true" type="q41:ArrayOfPickTaskDetailSumQtyResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPickTaskDetailList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPickTaskDetailListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPickTaskDetailListResult" nillable="true" type="q42:ArrayOfPickTaskDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickingLoad">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LoadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="HuId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PutHuId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PickingLoadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PickingLoadResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByCombinationAltItemNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskListByCombinationAltItemNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetPackTaskListByCombinationAltItemNumberResult" nillable="true" type="q43:ArrayOfPackTask" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumListByCombinationAltItemNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSumListByCombinationAltItemNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetSumListByCombinationAltItemNumberResult" nillable="true" type="q44:ArrayOfSortTaskDetailResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByCombinationAltItemNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="loadId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSortTaskDetailByCombinationAltItemNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GetSortTaskDetailByCombinationAltItemNumberResult" nillable="true" type="q45:ArrayOfSortTaskDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UCFGetCryReportPackTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="packHeadId" type="xs:int" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UCFGetCryReportPackTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="UCFGetCryReportPackTaskResult" nillable="true" type="q46:ArrayOfPackTaskCryReport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByCombinationAltItemNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="entity" nillable="true" type="q47:PackTaskInsert" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByCombinationAltItemNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PackTaskInsertByCombinationAltItemNumberResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResultByCombinationAltItemNumber">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q48:PackTaskSearch" />
+        <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="expressNumberArr" nillable="true" type="q49:ArrayOfstring" />
+        <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="customerOutPoNumberArr" nillable="true" type="q50:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResultByCombinationAltItemNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetPackTaskSearchResultByCombinationAltItemNumberResult" nillable="true" type="q51:ArrayOfPackTaskSearchResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResultByCombinationAltItemNumberUCF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q52:PackTaskSearch" />
+        <xs:element xmlns:q53="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="expressNumberArr" nillable="true" type="q53:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPackTaskSearchResultByCombinationAltItemNumberUCFResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetPackTaskSearchResultByCombinationAltItemNumberUCFResult" nillable="true" type="q54:ArrayOfPackTaskSearchResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByCombinationAltItemNumberUCF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="packTaskId" nillable="true" type="q55:ArrayOfNullableOfint" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PackTaskInsertByCombinationAltItemNumberUCFResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PackTaskInsertByCombinationAltItemNumberUCFResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UCFGetCryReportPackTask1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="packHeadId" nillable="true" type="q56:ArrayOfint" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UCFGetCryReportPackTask1Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="UCFGetCryReportPackTask1Result" nillable="true" type="q57:ArrayOfPackTaskCryReport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportExpressPackTask1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="packHeadId" nillable="true" type="q58:ArrayOfNullableOfint" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="type" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCryReportExpressPackTask1Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetCryReportExpressPackTask1Result" nillable="true" type="q59:ArrayOfPackTaskCryReportExpress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

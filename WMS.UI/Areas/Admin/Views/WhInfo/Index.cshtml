@@ -1,0 +1,148 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="whName" hint="仓库名" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    <input type="text" left="140" name="txt_whCode" hint="仓库Code" />
+    <input type="text" left="140" name="txt_whName" hint="仓库名称" />
+    <select left="140" name="txt_noHuIdFlag" hint="是否无托盘"><option value="0" selected>否</option><option value="1">是</option></select>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/WhInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增仓库", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增仓库", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+
+
+                                 + "</div></div>", 500, 178)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/WhInfo/AddWhInfo", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_whCode]").val("");
+                                                         $("[name=txt_whName]").val("");
+
+                                                         eip.datagrid.load("/admin/WhInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             $("[name=txt_whCode]").focus();
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            hiddencolumns: ["NoHuIdFlag"],
+            //lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditWhInfo(this)' title='编辑' ></a>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+    });
+
+    function EditWhInfo(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("修改仓库信息", "<div id=layout9 ><div form='Y' id='form9'>"
+                                    + "<span left=\"140\" hint=\"仓库Code\">" + row["仓库Code"] + "</span>"
+                                    + "<input type=\"text\"  left=\"140\"  name=\"edit_whName\"  value=\"" + row["仓库名称"] + "\" hint=\"仓库名称\" />"
+                                    + " <select left=\"140\" name=\"edit_noHuIdFlag\" hint=\"是否无托盘\"><option value=\"0\">否</option><option value=\"1\" >是</option></select>"
+                                    + "</div></div>", 500, 178)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "确认修改", icon: "save", click:
+                        function () {
+
+                            eip.get("/admin/WhInfo/WhInfoEdit?id=" + id, eip.para.create($("input,select,textarea", $("#layout9"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/admin/WhInfo/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_whName]").focus();
+        $("[name=edit_noHuIdFlag]").val((row["NoHuIdFlag"] == null ? "0" : row["NoHuIdFlag"]));
+    }
+
+</script>

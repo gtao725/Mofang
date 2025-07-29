@@ -1,0 +1,263 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="Supplier" hint="供应商" />
+        <input type="text" name="BeginDate" left="90" hint="登记时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")"/>
+        <input type="text" name="EndDate" left="20" hint="-" date='Y'value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+        <input type="text" name="ReceiptId" hint="收货批次" />
+        <input type="text" name="SoNumber" hint="SO" />
+        <select left="90" name="TruckWaitingTime" hint="等待时间"><option value=""></option><option value="1">>2小时</option></select>
+
+        <input type="text" name="BeginConsDate" left="90" hint="ConsDate" date='Y' />
+        <input type="text" name="EndConsDate" left="20" hint="-" date='Y' />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+
+    <input type="text" name="add_so" hint="进仓单(SO)" seq="2" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="add_po" hint="PO" seq="3" onkeypress="onkeyCheck()" left="140" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/InBound/ReceiptDelay/List?", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["Reason1", "Reason2", "Reason3"],
+            //checkbox: function (row) {
+            //    return "<input type=checkbox name=check_to   value=\"" + row["SO号"] + "\"  poNumber=\"" + row["PO号"] + "\"  itemNumber=\"" + row["款号"] + "\" unitName=\"" + row["单位名"] + "\"   >";
+            //},
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditReson(this)' title='修改信息' ></a>";
+                        return retHtml;
+                    }
+                }
+
+            },
+            //,"修改客户名": {
+            //    formatter: function (row) {
+            //        var retHtml = " ";
+            //        if (row["进仓单"] != "" && row["登记数量"] == "0") {
+            //            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditClientCode(this)' title='修改客户名' ></a>";
+            //        }
+
+            //        return retHtml;
+            //    }
+            //}
+            //},
+        });
+
+
+
+       var loadScript = function (url, callback) {
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            script.id = "eip_ajaxupload";
+            script.onload = script.onreadystatechange = function () {
+                if ((!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+                    callback && callback();
+                    script.onload = script.onreadystatechange = null;
+                    if (head && script.parentNode) {
+                        //head.removeChild(script);
+                    }
+                }
+            };
+            head.appendChild(script);
+        }
+
+        if ($("#eip_ajaxupload").size() < 1) loadScript("/Share/includes/upload/ajaxupload.js");
+
+    });
+
+    //修改库存明细
+    function EditReson(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg = eip.dialog.create("修改库存信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" name=\"receiptId\" hint=\"收货批次：\">" + row["收货批次"] + "</span>"
+                                    + "<span left=\"140\" hint=\"车牌号：\">" + row["Truck Number 车牌号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"是否预约：\">" + row["Appointment  是否预约"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"receiptId\" value=\"" + row["收货批次"] + "\"  />"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ReasonList"], "edit_ReasonCode1", "Reason Code1：", " ", " left='140' ",true)"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ReasonList"], "edit_ReasonCode2", "Reason Code2：", " ", " left='140' ",true)"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ReasonList"], "edit_ReasonCode3", "Reason Code3：", " ", " left='140' ",true)"
+                                    //+ "<input type=\"text\" left=\"140\" name=\"edit_ReasonCode1\" value=\"" + row["Reason Code1"] + "\" hint=\"Reason Code1：\" />"
+                                    //+ "<input type=\"text\" left=\"140\" name=\"edit_ReasonCode2\" value=\"" + row["Reason Code2"] + "\" hint=\"Reason Code2：\" />"
+                                    //+ "<input type=\"text\" left=\"140\" name=\"edit_ReasonCode3\" value=\"" + row["Reason Code3"] + "\" hint=\"Reason Code3：\" />"
+
+                                    + "</div></div>", 500, 470)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                           
+
+                            eip.get("/InBound/ReceiptDelay/SaveReason", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/InBound/ReceiptDelay/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_ReasonCode1]", $("#form2")).val(row["Reason1"]);
+        $("[name=edit_ReasonCode2]", $("#form2")).val(row["Reason2"]);
+        $("[name=edit_ReasonCode3]", $("#form2")).val(row["Reason3"]);
+        //$("[name=edit_qty]").focus();
+    }
+
+    function next() {
+        $('select.easyui-validatebox').validatebox('enableValidation');
+        if (!$("#form2").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=add_so]", $("#form2")).val() == "" && $("[name=add_po]", $("#form2")).val() == "") {
+            $.eipMsg.alert("请填写SO或PO!");
+            return;
+        }
+
+        window.location = "/InBound/InBoundOrder/AddIndex?add_so=" + $("[name=add_so]", $("#form2")).val() + "&add_po=" + $("[name=add_po]", $("#form2")).val() + "&clientId=" + eip.utf8($("[name=WhClientList]", $("#form2")).val()) + "&clientName=" + eip.utf8($("[name=WhClientList]", $("#form2")).find("option:selected").text());
+
+    }
+
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+            if (s == "4") {
+                $("input[seq=1]").focus();
+            }
+        }
+    }
+
+    //选择收货流程
+    function SelectFlowRule(val) {
+
+        var eles = $(':input[name],select[name]', $('#imports-layout'));
+
+        var dlg_Pos_Rule = eip.dialog.create("选择收货流程",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"100\" name=\"sel_flowRuleName\" hint=\"收货流程：\"><option value=\"0\" ></option></select>"
+            + "</div>"
+            + "</div>", 450, 200)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=sel_flowRuleName]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("收货流程必须选择！<br />请检查客户名是否填写正确！<br />如有导入多个客户，请确认是否有相同流程！");
+                                return;
+                            }
+
+                            if (val == 1) {
+                                eip.post("/InBound/InBoundOrder/ImportsInBoundOrderSOPO?processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), eip.para.create(eles), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg_Pos_Rule);
+                                        eip.dialog.close($('#imports-layout').parent());
+
+                                    }, function () { });
+                                }, null)
+                            } else {
+                                eip.post("/InBound/InBoundOrder/ImportsInBoundOrderPO?processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), eip.para.create(eles), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.dialog.close(dlg_Pos_Rule);
+                                        eip.dialog.close($('#imports-layout').parent());
+
+                                    }, function () { });
+                                }, null)
+                            }
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        eip.post("/InBound/InBoundOrder/CheckImportsInBoundOrder", eip.para.create(eles), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowRuleName]"), val, true);
+            }
+        });
+    }
+
+    function onkeyCheck() {
+        var event = arguments.callee.caller.arguments[0] || window.event;
+        if (event.keyCode == 13) {//判断是否按了回车，enter的keycode代码是13
+            next();
+        }
+    }
+
+    //删除预录入
+    function DeleteInBound(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var soNumber = row["进仓编号"];
+
+        $.eipMsg.confirm("确定删除预录入：<br/> SO:" + soNumber + "吗？", function () {
+            eip.get("/InBound/ForecastOrder/DeleteSO?&soNumber=" + soNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/InBound/ForecastOrder/List?", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            },null,true)
+        })
+
+    }
+</script>

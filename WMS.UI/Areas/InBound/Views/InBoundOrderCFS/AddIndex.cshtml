@@ -1,0 +1,520 @@
+﻿@model WMS.UI.Controllers.Model.RecCFSModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+
+<div id=layout>
+    @*<div region="north" id="form_Pos">
+            <input type="hidden" name="Hid_UId" value="">
+            <input type="hidden" name="Hid_UserName" value="">
+        </div>*@
+    <div region="west" style="width:340px;overflow-x:hidden;">
+        <div id="layout1">
+            <div form="Y" id="form1">
+                <input type="hidden" name="Hid_clientCode" value="@ViewData["client_name"]">
+                <input type="hidden" name="Hid_soNumber" value="@ViewData["so_number"]">
+                <span left="80" hint="客户名">@ViewData["client_name"]</span>
+                <span left="80" hint="进仓单">@ViewData["so_number"]</span>
+                @Html.EipGetSelectFor(model => model.ClientFLowNameList, (IEnumerable<SelectListItem>)ViewData["ClientFLowNameList"], new { @left = "80" }, null, null, false)
+                <input type="text" left="80" name="customer_po" seq="1" hint="PO" onkeypress="onkeynext(this)" onkeydown="keySend(event);" />
+                <input type="checkbox" left="80" name="check_poClean" hint="是否清空PO" />
+                <input type="text" left="80" cle="y" seq="2" name="alt_item_number" hint="SKU" onchange="cleanSelUnit()" onkeypress="onkeynext(this)" onkeydown="keySend(event);" />
+                <input type="text" left="80" cle="y" seq="3" name="style1" hint="属性1" onkeypress="onkeynext(this)" onkeydown="keySend(event);" />
+
+                @Html.EipInputFor(model => model.qty, new { @left = "80", @cle = "y", @seq = "4", @onkeypress = "onkeyCheck()", @onkeydown = "keySend(event);" })
+
+                <input type="text" left="80" name="cbm" hint="体积" value="0" onkeypress="onkeyCheck()" />
+                <input type="text" left="80" name="weight" hint="重量" value="0" onkeypress="onkeyCheck()" />
+
+                <input type="text" left="80" cle="y" name="style2" hint="属性2" onkeydown="keySend(event);" />
+                <input type="text" left="80" cle="y" name="style3" hint="属性3" onkeydown="keySend(event);" />
+
+                <span left="" hint="">
+                    <a href="#" class="easyui-linkbutton" onclick="onkeyGetUnitName();">&nbsp;&nbsp;获取单位&nbsp;&nbsp;</a>
+                </span>
+                <select left="80" name="sel_unitName" hint="单位"><option value="0"></option></select>
+
+                <textarea hint="结果显示区" left="3" id="save_result" name="save_result" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div region="center" style="width:55%;" title="">
+        <div id="layout2">
+            <div form="Y" id="form2">
+                <textarea hint="PO：" left="3" name="po_area" onkeypress="onkeySearch()"></textarea>
+                <textarea hint="SKU：" left="3" name="sku_area" onkeypress="onkeySearch()"></textarea>
+            </div>
+            <table id=grid></table>
+        </div>
+    </div>
+    <div style="display:none">
+        <input type="text" name="clientName" value="@ViewData["client_name"]" />
+        <input type="text" name="clientId" value="@ViewData["client_id"]" />
+        <input type="text" name="soNumber" value="@ViewData["so_number"]" />
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        eip.layout.create($("#layout"), [
+        ])
+
+        //页面布局
+        eip.layout.create(
+           $("#layout1"),
+           [{
+               obj: $('#form1'),
+               buttons: [
+                    {
+                        text: "确认保存[Ctrl+Enter]", icon: "save", click:
+                        function () {
+                            if (!$("#form1").form('validate') && save_list.length == 0) {
+                                if ($("[name=qty]").val() == "") {
+                                    $("[name=qty]").focus();
+                                }
+                                return false;
+                            }
+                            else if ($("[name=ClientFLowNameList]").val() == "" || $("[name=ClientFLowNameList]").val() == null) {
+                                $("[name=ClientFLowNameList]").focus();
+                                return false;
+                            }
+                            else {
+                                AddJsonArr(1);  //向json数组添加成员
+                            }
+                        }
+                    }
+               ]
+           }]);
+
+        eip.layout.create(
+          $("#layout2"),
+          [{
+              obj: $('#form2'),
+              buttons: [
+                   {
+                       text: "查询明细", icon: "search", click: function () {
+                           eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                       }
+                   },
+                   {
+                       text: "批量删除预录入明细", icon: "cancel", click:
+                          function () {
+                              if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                  $.eipMsg.alert("请先勾选需要删除的明细!");
+                                  return;
+                              }
+
+                              var arr_list = [];
+                              $("[name=check_to]:checked", $("#grid")).each(function () {
+                                  arr_list.push({ name: 'idarr', value: $(this).attr("idarr") });
+                              })
+
+                              eip.post("/InBound/InBoundOrder/BatchInBoundOrderDetailDel", arr_list, function (jsonObj) {
+                                  $.procAjaxData(jsonObj, function () {
+
+                                      eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+
+                                  }, function () { });
+                              }, null, true)
+                          }
+                   },
+                    {
+                        text: "一键删除SO预录入", icon: "cancel", click: function () {
+
+                            $.eipMsg.confirm("确定一键删除SO预录入吗？", function () {
+                                eip.get("/InBound/InBoundOrderCFS/DelInBoundBySO?clientCode=" + eip.utf8($("[name=Hid_clientCode]").val()) + "&soNumber=" + eip.utf8($("[name=Hid_soNumber]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+
+                                    }, function () { });
+                                }, null, true)
+                            })
+
+                        }
+                    },
+                    {
+                        text: "批量编辑", icon: "edit", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先勾选需要编辑的明细!");
+                                   return;
+                               }
+
+                               var grid = $("[name=check_to]:checked", $("#grid"));
+                               $.each(eip.datagrid.getTrs(grid), function (index, value) {
+                                   $(value).find("td.datagrid-action input:checkbox:enabled").triggerHandler("click");
+                               });
+                           }
+                    },
+                    {
+                        text: "批量保存", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先勾选需要编辑的明细!");
+                                   return;
+                               }
+
+                               var arr_list = eip.para.create($("input", $("#grid")));
+                               //eip.datagrid.getGrid($("#grid")).each(function () {
+                               //    arr_list.push({ name: 'idarr', value: $("[name=edit_qty]", $("#grid")) });
+                               //    arr_list.push({ name: 'qtyarr', value: $(this).attr("预录入数量") });
+                               //})
+
+                               eip.post("/InBound/InBoundOrder/BatchInBoundOrderDetailEdit", arr_list, function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+
+                                   }, function () { });
+                               }, null, true)
+
+                           }
+                    }
+              ]
+          }]);
+
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            lockcolumns: 1,
+            hiddencolumns: ["仓库"],
+            muledit: false,
+            checkbox: function (row) {
+                if (row["已登记数量"] == 0 || row["已登记数量"] == "") {
+                    return "<input type=checkbox name=check_to idarr=\"" + row["操作"] + "\" value=\"" + row["操作"] + "\" onclick='editAll(this)' >";
+                }
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑明细' ></a>";
+
+                        if (row["已登记数量"] == 0 || row["已登记数量"] == "") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='InBoundOrderDetailDel(this)' title='删除' ></a>";
+                        }
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                if ($("[name=edit_qty]").val() < row["已登记数量"]) {
+                                    $.eipMsg.alert("预录入数量必须大于等于已登记数量!");
+                                    return;
+                                }
+
+                                eip.get("/InBound/InBoundOrderCFS/InBoundOrderDetailEdit?Id=" + row["操作"], eip.para.create($("input,select", $("#layout2"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "预录入数量": {
+                    editor: {
+                        type: "func", func:
+                          function (row) {
+                              return "<input name=edit_qty value=''>";
+                          }
+                    }
+                },
+                "重量": {
+                    editor: { type: "text", name: "edit_weight" }
+                },
+                "体积": {
+                    editor: { type: "text", name: "edit_cbm" }
+                }
+            }
+
+        });
+
+        $("[name=save_result]").css("height", "237px").css("width", "310px");
+        $("[name=save_result]").parent().css("height", "240px").css("width", "320px");
+
+        $("[name=customer_po]").focus();
+
+        $("[name=po_area]").css("height", "55px").css("width", "185px");
+        $("[name=po_area]").parent().css("height", "60px").css("width", "240px");
+
+        $("[name=sku_area]").css("height", "55px").css("width", "185px");
+        $("[name=sku_area]").parent().css("height", "60px").css("width", "240px");
+
+        eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+        eip.hint.fit($("#layout2"));
+
+    });
+
+    //复选框回车选择事件
+    function poCleanCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            alert($("[name=check_poClean]").is(":checked"));
+            if ($("[name=check_poClean]").is(":checked") == false) {
+                $("[name=check_poClean]").attr("checked", 'true');
+            } else {
+                $("[name=check_poClean]").removeAttr("checked");
+            }
+        }
+
+    }
+
+    function editAll(obj) {
+        var tr = $(obj).parent().parent();
+        var rows = $("#grid").data("data");
+        var arr = ["预录入数量", "操作", "重量", "体积"];
+        eip.datagrid.edit(tr, arr)
+    }
+
+    var count = 0;              //计数器
+    var save_list = [];         //json数组
+
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            if (count == 0) {
+                document.getElementById('save_result').innerHTML = "";  //重新计数时 清空文本域
+            }
+            if (!$("#form1").form('validate')) {
+                $("[name=qty]").focus();
+                return false;
+            } else {
+                AddJsonArr(0);  //向json数组添加成员
+            }
+        }
+    }
+
+    //数量 重量 体积回车时 触发验证及向json数组添加成员
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+            if (s == "5") {
+                $("input[seq=1]").focus();
+            }
+        }
+    }
+
+    //Ctrl+Enter
+    function keySend(event) {
+        if (event.ctrlKey && event.keyCode == 13) {
+            if (!$("#form1").form('validate') && save_list.length == 0) {
+                if ($("[name=qty]").val() == "") {
+                    $("[name=qty]").focus();
+                }
+                return false;
+            }
+            else if ($("[name=ClientFLowNameList]").val() == "" || $("[name=ClientFLowNameList]").val() == null) {
+                $("[name=ClientFLowNameList]").focus();
+                return false;
+            }
+            else {
+                AddJsonArr(1);  //向json数组添加成员
+            }
+        }
+    }
+
+    //数组添加成员
+    function AddJsonArr(valType) {
+        if ($("[name=customer_po]").val() == "") {
+            $("[name=customer_po]").val($("[name=soNumber]").val());
+        }
+        if ($("[name=alt_item_number]").val() == "") {
+            $("[name=alt_item_number]").val($("[name=customer_po]").val());
+        }
+        if ($("[name=weight]").val() == "") {
+            $("[name=weight]").val(0);
+        }
+        if ($("[name=cbm]").val() == "") {
+            $("[name=cbm]").val(0);
+        }
+        var JsonFlag = true;
+        for (var i = 0; i < save_list.length ; i++) {
+            if (save_list[i]["Id"] == count && save_list[i]["customer_po"] == $("[name=customer_po]").val() && save_list[i]["alt_item_number"] == $("[name=alt_item_number]").val() && save_list[i]["style1"] == $("[name=style1]").val() && save_list[i]["style2"] == $("[name=style2]").val() && save_list[i]["style3"] == $("[name=style3]").val() && save_list[i]["unitId"] == $("[name=sel_unitName]").val()) {
+                JsonFlag = false;
+            }
+        }
+        if ($("[name=qty]").val() != "") {
+            if (JsonFlag) {
+                count++;
+                var arr =
+                   {
+                       'Id': count,
+                       'customer_po': $("[name=customer_po]").val(),
+                       'alt_item_number': $("[name=alt_item_number]").val(),
+                       'style1': $("[name=style1]").val(),
+                       'style2': $("[name=style2]").val(),
+                       'style3': $("[name=style3]").val(),
+                       'unitId': $("[name=sel_unitName]").val(),
+                       'unitName': $("[name=sel_unitName]").find("option:selected").text(),
+                       'qty': $("[name=qty]").val(),
+                       'weight': $("[name=weight]").val(),
+                       'cbm': $("[name=cbm]").val(),
+                   }
+                save_list.push(arr);
+
+                document.getElementById('save_result').innerHTML =
+                document.getElementById('save_result').innerHTML
+                + count + ". " + $("[name=customer_po]").val() + " "
+                + $("[name=alt_item_number]").val() + " " + $("[name=style1]").val() + " " + $("[name=qty]").val() + " " + $("[name=sel_unitName]").find("option:selected").text()
+                + "<br />";
+            }
+            CleanText();
+        }
+        if (save_list.length >= 5 || valType > 0) {   //如果计数器 为5时 提交数组至后台
+            ConfirmSave();
+        }
+    }
+
+    //保存动作
+    function ConfirmSave() {
+
+        var para = ChangeJsonArr(save_list)
+        para = eip.para.extend(para, [{ name: "ClientName", value: $("[name=clientName]", $("#layout")).val() }, { name: "ClientId", value: $("[name=clientId]", $("#layout")).val() }, { name: "SoNumber", value: $("[name=soNumber]", $("#layout")).val() }, { name: "ProcessId", value: $("[name=ClientFLowNameList]", $("#layout")).val() }, { name: "ProcessName", value: $("[name=ClientFLowNameList]", $("#layout")).find("option:selected").text() }]);
+
+        eip.post("/InBound/InBoundOrderCFS/CheckUnitName", para, function (val) {
+            if (val.split("$")[0] == "Y") {
+                document.getElementById('save_result').innerHTML = val.split("$")[1];
+                save_list = [];     //成功 清空json数组
+                count = 0;          //成功 重新计数
+                CleanText();
+                eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+            } else {
+                if (val != null) {
+                    $.eipMsg.alert(val.split("$")[0], function () { $("[name=customer_po]").focus(); });
+                } else {
+                    $.eipMsg.alert("操作失败，请重新确认保存！", function () { $("[name=customer_po]").focus(); });
+                }
+                document.getElementById('save_result').innerHTML = "";
+                cleanJsonArrByUnitName(val.split("$")[1]);   //减去Json数组成员
+            }
+        })
+    }
+
+    //组织数据 方便传递给后台
+    function ChangeJsonArr(obj) {
+        var arrList = [];
+        $.each(obj, function (n, value) {
+            arrList.push({ name: 'Id', value: value.Id });
+            arrList.push({ name: 'customer_po', value: value.customer_po });
+            arrList.push({ name: 'alt_item_number', value: value.alt_item_number });
+            arrList.push({ name: 'style1', value: value.style1 });
+            arrList.push({ name: 'style2', value: value.style2 });
+            arrList.push({ name: 'style3', value: value.style3 });
+            arrList.push({ name: 'unitId', value: value.unitId });
+            arrList.push({ name: 'unitName', value: value.unitName });
+            arrList.push({ name: 'qty', value: value.qty });
+            arrList.push({ name: 'weight', value: value.weight });
+            arrList.push({ name: 'cbm', value: value.cbm });
+        });
+        return arrList;
+    }
+
+    //清空文本框
+    function CleanText() {
+        $("input[cle=y]").val("");
+        cleanSelUnit();
+        if ($("[name=check_poClean]").is(":checked")) {
+            $("[name=customer_po]").val("");
+            $("[name=customer_po]").focus();
+        } else {
+            $("[name=alt_item_number]").focus();
+        }
+    }
+
+    //删除预录入明细
+    function InBoundOrderDetailDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        if (row["已登记数量"] > 0) {
+            $.eipMsg.alert("此条明细已做收货登记，不能删除!");
+            return;
+        }
+
+        $.eipMsg.confirm("确定删除此条明细吗？", function () {
+            eip.get("/InBound/InBoundOrderCFS/InBoundOrderDetailDel?Id=" + row["操作"], eip.para.create($("input,select", $("#layout2"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //通过输入的款号属性 得到单位
+    function onkeyGetUnitName() {
+        if ($("[name=customer_po]").val() == "") {
+            $("[name=customer_po]").val($("[name=soNumber]").val());
+        }
+        if ($("[name=alt_item_number]").val() == "") {
+            $("[name=alt_item_number]").val($("[name=customer_po]").val());
+        }
+        if ($("[name=alt_item_number]").val() != "") {
+            eip.post("/InBound/InBoundOrder/GetUnitSelList", eip.para.create($("input,select,textarea", $("#layout"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=sel_unitName]"), val, true);
+                }
+            })
+        }
+    }
+
+    function cleanSelUnit() {
+        $("[name=sel_unitName]").html("<option value=\"0\"></option>");
+    }
+
+    //循环json 减去 单位有误的某行数据
+    function cleanJsonArrByUnitName(val) {
+        Array.prototype.baoremove = function (dx) {
+            if (isNaN(dx) || dx > this.length) { return false; }
+            this.splice(dx, 1);
+        }
+        for (var i = 0; i < save_list.length; i++) {
+            if (save_list[i].Id == val) {
+                document.getElementById('save_result').innerHTML =
+               document.getElementById('save_result').innerHTML
+       + "<font color=red>" + save_list[i].Id + ". " + save_list[i].customer_po + " "
++ save_list[i].alt_item_number + " " + save_list[i].style1 + " " + save_list[i].qty + " " + save_list[i].unitName
++ " 单位有误已删除,请重新录入!</font><br />";
+            } else {
+                document.getElementById('save_result').innerHTML =
+                document.getElementById('save_result').innerHTML
+             + save_list[i].Id + ". " + save_list[i].customer_po + " "
+    + save_list[i].alt_item_number + " " + save_list[i].style1 + " " + save_list[i].qty + " " + save_list[i].unitName
+    + "<br />";
+            }
+        }
+
+        for (var i = 0; i < save_list.length; i++) {
+            if (save_list[i].Id == val) {
+                save_list.baoremove(i);
+            }
+        }
+    }
+
+    //PO SKU 回车后查询
+    function onkeySearch() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            eip.datagrid.load("/InBound/InBoundOrderCFS/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+        }
+    }
+
+
+
+</script>

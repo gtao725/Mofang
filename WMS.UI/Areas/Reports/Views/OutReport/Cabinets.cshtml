@@ -1,0 +1,66 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "ClientCode", "客户名", "", "")
+        <input type="text" name="load" hint="Load" />
+
+        <select class="easyui-vhuo'xia'alidatebox" hint="称重状态" name="Status"><option></option><option value='1'>已称重</option><option value='0'>未称重</option></select>
+
+        <input type="text" name="BeginShipDate" hint="出仓日期" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndShipDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <textarea name="ContainerNumber" left="60" hint="集装箱号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/CabinetsList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            sorts: { "Load": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [],
+            columns: {
+              
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=ContainerNumber]").css("height", "25px").css("width", "185px");
+        $("[name=ContainerNumber]").parent().css("height", "30px").css("width", "280px");
+
+    });
+
+</script>

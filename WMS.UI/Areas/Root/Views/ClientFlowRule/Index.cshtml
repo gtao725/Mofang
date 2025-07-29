@@ -1,0 +1,417 @@
+﻿@model WMS.UI.Controllers.Model.ClientFlowRuleModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="flowName" hint="流程名" />
+        <select name="txt_type" hint="类型" class='easyui-validatebox'><option value=""></option><option value="收货">收货</option><option value="出货">出货</option></select>
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_FlowName, new { @left = "140" })
+    <select left="140" name="txt_Type" hint="流程类型" class='easyui-validatebox' data-options='required:true ' missingMessage='流程类型不能为空!'><option value=""></option><option value="InBound">收货</option><option value="OutBound">出货</option></select>
+    <select left="140" name="txt_interceptFlag" hint="是否可拦截" class='easyui-validatebox' data-options='required:true ' missingMessage='是否可拦截不能为空!'><option value="0">不可拦截</option><option value="1">按订单拦截</option><option value="2">按Load拦截</option></select>
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["FieldOrderBySelect"], "txt_FieldOrderBy", "报表排序", "", "left='140' ")
+
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["InTempSelect"], "txt_inTemplate", "收货操作单", "", "left='140' ")
+
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["RecPZTempSelect"], "txt_pzTemplate", "收货凭证", "", "left='140' ")
+
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["OutTempSelect"], "txt_outTemplate", "出货操作单", "", "left='140' ")
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["UrlEdiSelect"], "txt_urlEdiId", "Edi任务名称", "", "left='140' ")
+
+    <select left="140" name="txt_checkAllHuWeightFlag" hint="收货托盘是否称重" class='easyui-validatebox'><option value="0" selected>否</option><option value="1">是</option></select>
+
+    <input type="text" left="140" name="txt_remark" hint="流程备注" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/ClientFlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增流程", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增流程", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 370)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/root/ClientFlowRule/AddClientFlowRule", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_FlowName]").val("");
+
+                                                         eip.datagrid.load("/root/ClientFlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_FlowName]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["类型", "排序ID", "inTemplate", "pZTemplate", "outTemplate", "UrlEdi主键", "UrlEdi主键2", "UrlEdi主键3", "checkAllHuWeightFlag"],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑流程' ></a>";
+
+                        if (row["类型名称"] == "收货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick=\"RecFlowRuleManager(this)\" title='流程配置' ></a>";
+                        }
+                        if (row["类型名称"] == "出货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='OutFlowRuleManager(this)' title='流程配置' ></a>";
+                        }
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+                                var type = row["类型名称"];
+
+                                if (type == "收货") {
+                                    var s = eip.utf8($("[name=edit_inTemplate]").val());
+                                    if (s == "" || s == null) {
+                                        $.eipMsg.alert("收货操作单不能为空！");
+                                        return;
+                                    }
+                                }
+                                if (type == "出货") {
+                                    var s = eip.utf8($("[name=edit_outTemplate]").val());
+                                    if (s == "" || s == null) {
+                                        $.eipMsg.alert("出货操作单不能为空！");
+                                        return;
+                                    }
+                                }
+
+                                var url = "/root/ClientFlowRule/ClientFlowRuleEdit?Id=" + Id + "&FlowName=" + eip.utf8($("[name=edit_FlowName]").val()) + "&FlowOrderBy=" + eip.utf8($("[name=edit_FlowOrderBy]").val()) + "&Remark=" + eip.utf8($("[name=edit_Remark]").val()) + "&orderById=" + eip.utf8($("[name=edit_FieldOrderBy]").val()) + "&edit_urlEdiId=" + eip.utf8($("[name=edit_urlEdiId]").val()) + "&edit_urlEdiId2=" + eip.utf8($("[name=edit_urlEdiId2]").val()) + "&edit_urlEdiId3=" + eip.utf8($("[name=edit_urlEdiId3]").val()) + "&edit_checkAllHuWeightFlag=" + eip.utf8($("[name=edit_checkAllHuWeightFlag]").val());
+
+                                if ($("[name=edit_inTemplate]")) {
+                                    url = url + "&inTemplate=" + eip.utf8($("[name=edit_inTemplate]").val());
+                                }
+                                if ($("[name=edit_pZTemplate]")) {
+                                    url = url + "&pzTemplate=" + eip.utf8($("[name=edit_pZTemplate]").val());
+                                }
+                                if ($("[name=edit_outTemplate]")) {
+                                    url = url + "&outTemplate=" + eip.utf8($("[name=edit_outTemplate]").val());
+                                }
+                                eip.get(url, null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/root/ClientFlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "流程名": {
+                    editor: { type: "text", name: "edit_FlowName" }
+                },
+                "流程备注": {
+                    editor: { type: "text", name: "edit_Remark" }
+                },
+                "流程排序": {
+                    editor: { type: "text", name: "edit_FlowOrderBy" }
+                },
+                "报表排序": {
+                    editor: {
+                        type: 'select', field: "排序ID", html: function (row) {
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["FieldOrderBySelect"], "edit_FieldOrderBy")");
+                        }
+                    }
+                },
+                "收货操作单": {
+                    editor: {
+                        type: 'select', field: "inTemplate", html: function (row) {
+                            if (row["类型名称"] == "收货") {
+                                return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["InTempSelect"], "edit_inTemplate")");
+                            }
+                        }
+                    }
+                }, "收货凭证": {
+                    editor: {
+                        type: 'select', field: "pZTemplate", html: function (row) {
+                            if (row["类型名称"] == "收货") {
+                                return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["RecPZTempSelect"], "edit_pZTemplate")");
+
+
+                            }
+                        }
+                    }
+                }, "出货操作单": {
+                    editor: {
+                        type: 'select', field: "outTemplate", html: function (row) {
+                            if (row["类型名称"] == "出货") {
+                                return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["OutTempSelect"], "edit_outTemplate")");
+
+                            }
+                        }
+                    }
+                }, "Edi任务名称": {
+                    editor: {
+                        type: 'select', field: "UrlEdi主键", html: function (row) {
+
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["UrlEdiSelect"], "edit_urlEdiId")");
+
+                        }
+                    }
+                }
+                , "Edi任务名称2": {
+                    editor: {
+                        type: 'select', field: "UrlEdi主键2", html: function (row) {
+
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["UrlEdiSelect"], "edit_urlEdiId2")");
+
+                        }
+                    }
+                }, "Edi任务名称3": {
+                    editor: {
+                        type: 'select', field: "UrlEdi主键3", html: function (row) {
+
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["UrlEdiSelect"], "edit_urlEdiId3")");
+
+                        }
+                    }
+                }, "收货托盘是否称重": {
+                    editor: {
+                        type: 'select', field: "checkAllHuWeightFlag", html: function (row) {
+
+                            return $(eip.form.createOptions($("<select name='edit_checkAllHuWeightFlag'></select>"), [{ val: "1", text: "是" }, { val: "0", text: "否" }], true));
+
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=flowName]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //出货流程配置管理
+    function OutFlowRuleManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var FlowHeadId = row["操作"]
+        var dlg_Pos = eip.dialog.create("出货流程配置———当前流程：" + row["流程名"], "<div id=layout_Pos>"
+                                + "<div id=\"form_Pos\" form=\"Y\" >"
+                                + "</div>"
+                                + "<table id=grid_Pos_set></table></div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "BusinessObjectGroupId", "RollbackFlag", "FlowHeadId", "GroupId", "StatusId", "RollbackFlagShow"]
+            , checkbox: function (row) {
+                var retHtml = " ";
+                retHtml += "<input type=checkbox name=chx_Pos  value='" + row["操作"] + "' funcName='" + row["流程名"] + "' businessObjectGroupId='" + row["BusinessObjectGroupId"] + "' rollbackFlag='" + row["RollbackFlag"] + "' groupId='" + row["GroupId"] + "' statusId='" + row["StatusId"] + "' statusName='" + row["状态名"] + "'  typeName='" + row["Type"] + "'  mark='" + row["Mark"] + "' ";
+                if (row["FlowHeadId"] != null || row["选择流程描述"] == "必选") {
+                    retHtml += "Checked";
+                }
+                retHtml += ">";
+                return retHtml;
+            }
+        });
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length == 0) {
+                               $.eipMsg.alert("请先选择流程!");
+                               return;
+                           }
+
+                           var arr_list = [];
+                           $("[name=chx_Pos]:checked", $("#grid_Pos_set")).each(function () {
+                               arr_list.push({ name: 'funcName', value: $(this).attr("funcName") });
+                               arr_list.push({ name: 'businessObjectGroupId', value: $(this).attr("businessObjectGroupId") });
+                               arr_list.push({ name: 'rollbackFlag', value: $(this).attr("rollbackFlag") });
+                               arr_list.push({ name: 'flowRuleId', value: $(this).val() });
+                               arr_list.push({ name: 'groupId', value: $(this).attr("groupId") });
+                               arr_list.push({ name: 'statusId', value: $(this).attr("statusId") });
+                               arr_list.push({ name: 'statusName', value: $(this).attr("statusName") });
+                               arr_list.push({ name: 'typeName', value: $(this).attr("typeName") });
+                               arr_list.push({ name: 'mark', value: $(this).attr("mark") });
+                           })
+
+                           eip.post("/root/ClientFlowRule/AddClientFlowDetail?FlowHeadId=" + FlowHeadId, arr_list, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   eip.datagrid.load("/root/ClientFlowRule/FlowRuleDetailList?FlowHeadId=" + FlowHeadId, $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        eip.datagrid.load("/root/ClientFlowRule/FlowRuleDetailList?FlowHeadId=" + FlowHeadId, $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+    }
+
+
+    //收货流程管理
+    function RecFlowRuleManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var FlowHeadId = row["操作"]
+        var FlowType = row["类型"];
+        var dlg_Pos = eip.dialog.create("收货流程配置———当前流程：" + row["流程名"], "<div id=layout_Pos>"
+                                + "<div region=\"north\" id=\"form_Pos\" style=\"height:65px;padding:5px;\">"
+                                + "<input type=\"hidden\" name=\"Hid_PId\" value=\"" + FlowHeadId + "\">流程名：<input type=\"text\" name=\"txt_flowName\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"RF流程列表\">"
+                                + "<table id=grid_Pos_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前已有RF流程\">"
+                                + "<table id=grid_Pos_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pos value='" + row["Id"] + "' >";
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pos_get"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"ClientFlowNameDel(this,'" + FlowHeadId + "','" + eip.utf8(FlowType) + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click: function () {
+                        eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameUnselected?Id=" + FlowHeadId + "&FlowType=" + FlowType + "&FlowName=" + eip.utf8($("[name=txt_flowName]").val()), $("#grid_Pos_set"), null);
+                    }
+                },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length == 0) {
+                               $.eipMsg.alert("请先选择流程!");
+                               return;
+                           }
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length > 1) {
+                               $.eipMsg.alert("RF流程只能选择一个!");
+                               return;
+                           }
+
+                           var para = eip.para.create($("input[name=chx_Pos]:checked", $("#grid_Pos_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_PId", value: $("[name=Hid_PId]", $("#form_Pos")).val() }]);
+
+                           eip.post("/root/ClientFlowRule/AddClientFlowRuleDetail", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameUnselected?Id=" + FlowHeadId + "&FlowType=" + FlowType + "&FlowName=null", $("#grid_Pos_set"), null);
+                                   eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameSelected?Id=" + FlowHeadId + "&FlowType=" + FlowType, $("#grid_Pos_get"), null);
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameUnselected?Id=" + FlowHeadId + "&FlowType=" + FlowType + "&FlowName=null", $("#grid_Pos_set"), null);
+        eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameSelected?Id=" + FlowHeadId + "&FlowType=" + FlowType, $("#grid_Pos_get"), null);
+    }
+
+    //删除
+    function ClientFlowNameDel(obj, FlowHeadId, FlowType) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除所选流程吗？", function () {
+            eip.get("/Root/ClientFlowRule/ClientFlowNameDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameUnselected?Id=" + FlowHeadId + "&FlowType=" + FlowType + "&FlowName=null", $("#grid_Pos_set"), null);
+                    eip.datagrid.load("/root/ClientFlowRule/ClientFlowNameSelected?Id=" + FlowHeadId + "&FlowType=" + FlowType, $("#grid_Pos_get"), null);
+
+                }, function () { });
+            })
+        })
+    }
+
+</script>

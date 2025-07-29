@@ -1,0 +1,163 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="pallate_name" hint="托盘号" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["PallateType"], "SelPallateType", "托盘类型", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_pallate, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_beginpallate, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_endpallate, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_pallateqtylength, new { @left = "140" })
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["PallateType"], "txt_type", "托盘类型", "", " left='140'")
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/Pallate/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "批量新增托盘", icon: "add", click:
+                             function () {
+                                 var dlg = eip.dialog.create("新增托盘", "<div id=layout1 ><div form='Y' id='form2'>"
+                                     + $("#form22").html()
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_pallate\" hint=\"托盘字母\" />"
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_beginpallate\" hint=\"起始数字\" />"
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_endpallate\" hint=\"结束数字\" />"
+                                     //+ "<input type=\"text\" left=\"140\" name=\"txt_type\" hint=\"托盘类型\" />"
+                                     + "</div></div>", 500, 230)
+
+                                 //窗体工具栏按钮 begin
+                                 eip.layout.create($('#layout1'), [{
+                                     obj: $('#form2'),
+                                     buttons: [
+                                         {
+                                             text: "保存", icon: "save", click:
+                                                 function () {
+
+                                                     if (!$("#form2").form('validate')) {
+                                                         return false;
+                                                     }
+
+                                                     eip.get("/Root/Pallate/AddPallate", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                         $.procAjaxData(jsonObj, function () {
+                                                             $("[name=txt_pallate]").val("");
+                                                             $("[name=txt_beginpallate]").val("");
+                                                             $("[name=txt_endpallate]").val("");
+                                                             $("[name=txt_pallateqtylength]").val("");
+                                                             $("[name=txt_type]").val("");
+                                                             eip.datagrid.load("/Root/Pallate/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                         }, function () { });
+                                                     }, null, true)
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 //end
+                                 $("[name=txt_pallate]").focus();
+                             }
+                    }, {
+                        text: "批量导入托盘", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '/Root/Pallate/imports', //若后台函数名为 imports，url就可以不传了
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+
+                                         eip.dialog.close($('#imports-layout').parent());
+
+                                         eip.datagrid.load("/Root/Pallate/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                     }, function () { })
+                                 },
+                                 columns: [
+                                     {
+                                         column: '托盘',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+
+                                 ]
+                             });
+                         }
+                    }, {
+                        text: "批量删除托盘", icon: "cancel", click:
+                           function () {
+                               if ($("[name=get_id]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=get_id]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'idarr', value: $(this).val() });
+                               })
+
+                               eip.post("/Root/Pallate/BatchDelPallate", arr_list, function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/Root/Pallate/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                   }, function () {
+                                   });
+                               }, null, true)
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "托盘类型ID", "修改人", "修改时间", "仓库"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+
+                return "<input type=checkbox name=get_id  value=\"" + row["操作"] + "\"   >";
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+</script>

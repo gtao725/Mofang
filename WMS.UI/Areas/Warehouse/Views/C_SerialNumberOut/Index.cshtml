@@ -1,0 +1,200 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户名", "", "")
+        <input type="text" name="txt_receiptId" hint="Load号" />
+        <input type="text" name="txt_soNumber" hint="SO号" />
+        <input type="text" name="txt_customerNumber" hint="PO号" />
+        <input type="text" name="txt_altItemNumber" hint="款号" />
+        <input type="text" name="txt_cartonId" hint="序列号" />
+        <input type="text" name="txt_huId" hint="托盘" />
+        <input type="text" name="BeginCreateDate" hint="出货时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["客户ID", "仓库", "ItemId"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"SerialNumberDel(this)\" title='删除' ></a>";
+                        //retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"SerialNumberDelByHuId(this)\" title='按托盘删除' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='SerialNumberAdd(this)' title='新增同一SOPO序列号' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='SerialNumberAddOther(this)' title='新增不同SOPO序列号' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/Warehouse/C_SerialNumberOut/SerialNumberEdit?id=" + Id + "&cartonId=" + eip.utf8($("[name=edit_cartonId]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "序列号": {
+                    editor: { type: "text", name: "edit_cartonId" }
+                }
+            }
+
+        });
+
+        $("[name=txt_soNumber]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    //删除序列号
+    function SerialNumberDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该序列号吗？", function () {
+            eip.get("/Warehouse/C_SerialNumberOut/SerialNumberDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+    ////按托盘删除序列号
+    //function SerialNumberDelByHuId(obj) {
+    //    var tr = eip.datagrid.getTr(obj)
+    //    var row = eip.datagrid.getData(tr)
+    //    var id = row["操作"];
+    //    $.eipMsg.confirm("确定按照托盘批量删除该序列号吗？", function () {
+    //        eip.get("/Warehouse/C_SerialNumberOut/SerialNumberDelByHuId?Id=" + id, null, function (jsonObj) {
+    //            $.procAjaxData(jsonObj, function () {
+    //                eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    //            }, function () { });
+    //        })
+    //    });
+    //}
+
+    //新增同一SOPO序列号
+    function SerialNumberAdd(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg_add = eip.dialog.create("新增同一SOPO序列号", "<div id=layout5 ><div form='Y' id='form5'>"
+                                + "<span left=\"140\" hint=\"Load号：\">" + row["Load号"] + "</span>"
+                                + "<span left=\"140\" hint=\"客户Code：\">" + row["客户Code"] + "</span>"
+                                + "<span left=\"140\" hint=\"SO号：\">" + row["SO号"] + "</span>"
+                                + "<span left=\"140\" hint=\"PO号：\">" + row["PO号"] + "</span>"
+                                + "<span left=\"140\" hint=\"款号：\">" + row["款号"] + "</span>"
+                                + "<span left=\"140\" hint=\"托盘：\">" + row["托盘"] + "</span>"
+                                + "<input type=\"text\" left=\"140\" name=\"add_cartonId\" hint=\"序列号：\" />"
+                                + "</div></div>", 500, 350)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            eip.get("/Warehouse/C_SerialNumberOut/SerialNumberAdd?receiptId=" + row["Load号"] + "&clientId=" + row["客户ID"] + "&clientCode=" + eip.utf8(row["客户Code"]) + "&soNumber=" + row["SO号"] + "&customerPoNumber=" + row["PO号"] + "&altItemNumber=" + row["款号"] + "&itemId=" + row["ItemId"] + "&huId=" + row["托盘"], eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg_add);
+                                    eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg_add);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=add_cartonId]").focus();
+    }
+
+    //新增不同SOPO序列号
+    function SerialNumberAddOther(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg_add6 = eip.dialog.create("新增不同SOPO序列号", "<div id=layout6 ><div form='Y' id='form6'>"
+                                + "<span left=\"140\" hint=\"Load号：\">" + row["Load号"] + "</span>"
+                                + "<span left=\"140\" hint=\"客户Code：\">" + row["客户Code"] + "</span>"
+
+                                + "<input type=\"text\" left=\"140\" name=\"add_soNumber\" hint=\"SO号：\" value=\"" + row["SO号"] + "\" />"
+                                + "<input type=\"text\" left=\"140\" name=\"add_poNumber\" hint=\"PO号：\" />"
+                                + "<input type=\"text\" left=\"140\" name=\"add_altItemNumber\" hint=\"款号：\" />"
+                                + "<input type=\"text\" left=\"140\" name=\"add_huId\" hint=\"托盘：\" />"
+                                + "<input type=\"text\" left=\"140\" name=\"add_cartonId\" hint=\"序列号：\" />"
+                                + "</div></div>", 500, 350)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            eip.get("/Warehouse/C_SerialNumberOut/SerialNumberAddOther?receiptId=" + row["Load号"] + "&clientId=" + row["客户ID"] + "&clientCode=" + eip.utf8(row["客户Code"]), eip.para.create($("input,select", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg_add6);
+                                    eip.datagrid.load("/Warehouse/C_SerialNumberOut/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg_add6);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=add_soNumber]").focus();
+    }
+
+</script>

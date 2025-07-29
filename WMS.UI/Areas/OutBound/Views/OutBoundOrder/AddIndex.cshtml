@@ -1,0 +1,345 @@
+﻿@model WMS.UI.Controllers.Model.OutBoundOrderModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div region="west" style="width:430px;overflow-x:hidden;">
+        <div id="layout1">
+            <div form="Y" id="form1">
+                <span left="100" hint="客户名：">@ViewData["clientCode"]</span>
+                <span left="100" hint="系统出库单号：">@ViewData["outPoNumber"]</span>
+                <span left="100" hint="客户出库单号：">@ViewData["customerOutPoNumber"]</span>
+                @Html.EipInputFor(model => model.alt_item_number, new { @left = "100", @cle = "y", @onkeypress = "onkeyCheck()" })
+                <input type="text" left="100" cle="y" name="style1" hint="属性1：" />
+                <input type="text" left="100" cle="y" name="style2" hint="属性2：" />
+                <input type="text" left="100" cle="y" name="style3" hint="属性3：" />
+                <span left="" hint="">
+                    <a href="#" class="easyui-linkbutton" onclick="onkeyGetUnitName();">&nbsp;&nbsp;获取单位&nbsp;&nbsp;</a>
+                </span>
+                <select left="100" name="sel_unitName" hint="单位："><option value="0"></option></select>
+
+                @Html.EipInputFor(model => model.qty, new { @left = "100", @cle = "y", @onkeypress = "onkeyCheck()" })
+                <input type="text" left="100" cle="y" name="so_number" hint="入库SO：" />
+                <input type="text" left="100" cle="y" name="customer_po" hint="入库PO：" />
+                <input type="text" left="100" cle="y" name="lot_number1" hint="Lot1：" onkeypress="onkeyCheck()" />
+                <input type="text" left="100" cle="y" name="lot_number2" hint="Lot2：" onkeypress="onkeyCheck()" />
+                <input class='easyui-validatebox' datetime='Y' hint='LotDate：' left='100' cle="y" name='lot_date' onkeypress="onkeyCheck()" />
+                <textarea hint="结果：" left="3" id="save_result" name="save_result" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div region="center" style="width:55%;" title="">
+        <div id="layout2">
+            <div form="Y" id="form2">
+                <textarea hint="SKU：" left="3" name="sku_area" onkeypress="onkeySearch()"></textarea>
+            </div>
+            <table id=grid></table>
+        </div>
+    </div>
+    <div style="display:none">
+        <input type="text" name="outBoundOrderId" value="@ViewData["outBoundOrderId"]" />
+        <input type="text" name="clientId" value="@ViewData["clientId"]" />
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.layout.create($("#layout"), [
+        ])
+
+        //页面布局
+        eip.layout.create(
+           $("#layout1"),
+           [{
+               obj: $('#form1'),
+               buttons: [
+                    {
+                        text: "确认保存", icon: "save", click:
+                        function () {
+                            if (count == 0) {
+                                document.getElementById('save_result').innerHTML = "";  //重新计数时 清空文本域
+                            }
+                            AddJsonArr(1);  //向后台提交json数组的数据
+                        }
+                    },
+                     {
+                         text: "返回查询", icon: "search", click: function () {
+                             window.location = "/OutBound/OutBoundOrder/Index";
+                         }
+                     }
+               ]
+           }]);
+
+        eip.layout.create(
+          $("#layout2"),
+          [{
+              obj: $('#form2'),
+              buttons: [
+                   {
+                       text: "查询", icon: "search", click: function () {
+                           eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                       }
+                   }
+              ]
+          }]);
+
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            lockcolumns: 1,
+            hiddencolumns: ["单位ID"],
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑明细' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='OutBoundOrderDetailDel(this)' title='删除' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+                                if ($("[name=edit_qty]").val() == "") {
+                                    $.eipMsg.alert("数量不能为空!");
+                                    return;
+                                }
+
+                                eip.get("/OutBound/OutBoundOrder/OutBoundOrderDetailEdit?Id=" + row["操作"] + "&Qty=" + $("[name=edit_qty]").val() + "&Sequence=" + eip.utf8($("[name=edit_Sequence]").val()), eip.para.create($("input,select", $("#layout2"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "数量": {
+                    editor: { type: "text", name: "edit_qty" }
+                },
+                "顺序": {
+                    editor: { type: "text", name: "edit_Sequence" }
+                }
+            }
+
+        });
+
+        $("[name=save_result]").css("height", "84px").css("width", "350px");
+        $("[name=save_result]").parent().css("height", "88px").css("width", "420px");
+
+        $("[name=sku_area]").css("height", "55px").css("width", "185px");
+        $("[name=sku_area]").parent().css("height", "60px").css("width", "240px");
+
+        eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+        eip.hint.fit($("#layout2"));
+
+        $("[name=alt_item_number]").focus();
+
+    });
+
+    var count = 0;              //计数器
+    var save_list = [];         //json数组
+
+    //数量回车时 触发验证及向json数组添加成员
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            if (count == 0) {
+                document.getElementById('save_result').innerHTML = "";  //重新计数时 清空文本域
+            }
+            AddJsonArr(0);  //向json数组添加成员
+        }
+    }
+
+    //清空文本框
+    function CleanText() {
+        $("input[cle=y]").val("");
+        $("[name=sel_unitName]").html("");
+        $("[name=alt_item_number]").focus();
+    }
+
+    //数组添加成员
+    function AddJsonArr(valType) {
+        if (!$("#form1").form('validate') && save_list.length == 0) {
+            if ($("[name=qty]").val() == "") {
+                $("[name=qty]").focus();
+            }
+            return false;
+        }
+        if ($("[name=sel_unitName]").find("option:selected").text() == "") {
+            $.eipMsg.alert("保存失败，请获取单位后先选择单位！", function () { $("[name=sel_unitName]").focus(); });
+            return;
+        }
+
+        if ($("[name=qty]").val() != "") {
+            var JsonFlag = true;
+            for (var i = 0; i < save_list.length ; i++) {
+                if (save_list[i]["so_number"] == $("[name=so_number]").val() && save_list[i]["customer_po"] == $("[name=customer_po]").val() && save_list[i]["alt_item_number"] == $("[name=alt_item_number]").val() && save_list[i]["style1"] == $("[name=style1]").val() && save_list[i]["style2"] == $("[name=style2]").val() && save_list[i]["style3"] == $("[name=style3]").val() && save_list[i]["lot1"] == $("[name=lot_number1]").val() && save_list[i]["lot2"] == $("[name=lot_number2]").val() && save_list[i]["lotDate"] == $("[name=lot_date]").val() && save_list[i]["unitId"] == $("[name=sel_unitName]").val()) {
+                    JsonFlag = false;
+                }
+            }
+            if (JsonFlag) {
+                count++;
+                var arr =
+                   {
+                       'Id': count,
+                       'so_number': $("[name=so_number]").val(),
+                       'customer_po': $("[name=customer_po]").val(),
+                       'alt_item_number': $("[name=alt_item_number]").val(),
+                       'style1': $("[name=style1]").val(),
+                       'style2': $("[name=style2]").val(),
+                       'style3': $("[name=style3]").val(),
+                       'lot1': $("[name=lot_number1]").val(),
+                       'lot2': $("[name=lot_number2]").val(),
+                       'lotDate': $("[name=lot_date]").val(),
+                       'qty': $("[name=qty]").val(),
+                       'unitId': $("[name=sel_unitName]").val(),
+                       'unitName': $("[name=sel_unitName]").find("option:selected").text()
+                   }
+                save_list.push(arr);
+
+                document.getElementById('save_result').innerHTML =
+                document.getElementById('save_result').innerHTML
+                + count + ". " + $("[name=so_number]").val() + " " + $("[name=customer_po]").val() + " "
+                + $("[name=alt_item_number]").val() + " "
+                + $("[name=style1]").val() + " " + $("[name=style2]").val() + " " + $("[name=style3]").val() + " " + $("[name=qty]").val() + " " + $("[name=sel_unitName]").find("option:selected").text() + " " + $("[name=lot_number1]").val() + " " + $("[name=lot_number2]").val() + " " + $("[name=lot_date]").val()
+                + "<br />";
+            }
+            CleanText();
+        }
+        if (save_list.length >= 5 || valType > 0) {   //如果计数器 为5时 提交数组至后台
+            ConfirmSave();
+        }
+    }
+
+    //保存动作
+    function ConfirmSave() {
+        var para = ChangeJsonArr(save_list)
+        para = eip.para.extend(para, [{ name: "outBoundOrderId", value: $("[name=outBoundOrderId]", $("#layout")).val() }, { name: "ClientId", value: $("[name=clientId]", $("#layout")).val() }]);
+
+        //先验证数据中的所有款号属性 对应的单位是否有误
+        eip.post("/OutBound/OutBoundOrder/CheckUnitName", para, function (val) {
+            if (val.split("$")[0] == "Y") {
+                document.getElementById('save_result').innerHTML = val.split("$")[1];
+                save_list = [];     //成功 清空json数组
+                count = 0;          //成功 重新计数
+                CleanText();
+                eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+            } else {
+                if (val != null) {
+                    $.eipMsg.alert(val.split("$")[0], function () { $("[name=alt_item_number]").focus(); });
+                } else {
+                    $.eipMsg.alert("操作失败，请重新确认保存！", function () { $("[name=alt_item_number]").focus(); });
+                }
+                document.getElementById('save_result').innerHTML = "";
+                cleanJsonArrByUnitName(val.split("$")[1]);   //减去Json数组成员
+            }
+        })
+    }
+
+    //组织数据 方便传递给后台
+    function ChangeJsonArr(obj) {
+        var arrList = [];
+        $.each(obj, function (n, value) {
+            arrList.push({ name: 'Id', value: value.Id });
+            arrList.push({ name: 'so_number', value: value.so_number });
+            arrList.push({ name: 'customer_po', value: value.customer_po });
+            arrList.push({ name: 'alt_item_number', value: value.alt_item_number });
+            arrList.push({ name: 'style1', value: value.style1 });
+            arrList.push({ name: 'style2', value: value.style2 });
+            arrList.push({ name: 'style3', value: value.style3 });
+            arrList.push({ name: 'lot1', value: value.lot1 });
+            arrList.push({ name: 'lot2', value: value.lot2 });
+            arrList.push({ name: 'lotDate', value: value.lotDate });
+            arrList.push({ name: 'unitId', value: value.unitId });
+            arrList.push({ name: 'unitName', value: value.unitName });
+            arrList.push({ name: 'qty', value: value.qty });
+        });
+        return arrList;
+    }
+
+
+    //删除预录入明细
+    function OutBoundOrderDetailDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除此条明细吗？", function () {
+            eip.get("/outBound/outBoundOrder/OutBoundOrderDetailDel?Id=" + row["操作"], eip.para.create($("input,select", $("#layout2"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+    function cleanSelUnit() {
+        $("[name=sel_unitName]").html("");
+    }
+
+    //循环json 减去 单位有误的某行数据
+    function cleanJsonArrByUnitName(val) {
+        Array.prototype.baoremove = function (dx) {
+            if (isNaN(dx) || dx > this.length) { return false; }
+            this.splice(dx, 1);
+        }
+        for (var i = 0; i < save_list.length; i++) {
+            if (save_list[i].Id == val) {
+                document.getElementById('save_result').innerHTML =
+               document.getElementById('save_result').innerHTML
+       + "<font color=red>" + save_list[i].Id + ". " + save_list[i].so_number + " " + save_list[i].customer_po + " "
++ save_list[i].alt_item_number + " " + save_list[i].style1 + " " + save_list[i].qty + " " + save_list[i].unitName
++ " 有误已删除,请重新录入!</font><br />";
+            } else {
+                document.getElementById('save_result').innerHTML =
+                document.getElementById('save_result').innerHTML
+             + save_list[i].Id + ". " + save_list[i].so_number + " " + save_list[i].customer_po + " "
+    + save_list[i].alt_item_number + " " + save_list[i].style1 + " " + save_list[i].qty + " " + save_list[i].unitName
+    + "<br />";
+            }
+        }
+
+        for (var i = 0; i < save_list.length; i++) {
+            if (save_list[i].Id == val) {
+                save_list.baoremove(i);
+            }
+        }
+    }
+
+    //通过输入的款号属性 得到单位
+    function onkeyGetUnitName() {
+        if ($("[name=customer_po]").val() == "") {
+            $("[name=customer_po]").val($("[name=soNumber]").val());
+        }
+        if ($("[name=alt_item_number]").val() == "") {
+            $("[name=alt_item_number]").val($("[name=customer_po]").val());
+        }
+        if ($("[name=alt_item_number]").val() != "") {
+            eip.post("/InBound/InBoundOrder/GetUnitSelList", eip.para.create($("input,select,textarea", $("#layout"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=sel_unitName]"), val, true);
+                }
+            })
+        }
+    }
+
+    //PO SKU 回车后查询
+    function onkeySearch() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            eip.datagrid.load("/OutBound/OutBoundOrder/OutBoundOrderDetailList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+        }
+    }
+
+
+</script>

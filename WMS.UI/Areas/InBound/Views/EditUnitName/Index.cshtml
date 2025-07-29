@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" />请注意：完成收货的批次才能更改单位
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            if ($("[name=receipt_id]", $("#layout")).val() == "") {
+                                $.eipMsg.alert("请输入收货批次号!");
+                                return;
+                            }
+                            eip.datagrid.load("/InBound/EditUnitName/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }, {
+                        text: "确认修改", icon: "save", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               EditDetailClientCode();
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["仓库"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=check_to   value=\"" + row["SO号"] + "\"  poNumber=\"" + row["PO号"] + "\"  itemNumber=\"" + row["款号"] + "\" unitName=\"" + row["单位名"] + "\"   >";
+            }
+        });
+
+        $("[name=receipt_id]").focus();
+
+    });
+
+    //修改客户名
+    function EditDetailClientCode() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'soNumber', value: $(this).val() });
+            arr_list.push({ name: 'poNumber', value: $(this).attr("poNumber") });
+            arr_list.push({ name: 'itemNumber', value: $(this).attr("itemNumber") });
+            arr_list.push({ name: 'unitName', value: $(this).attr("unitName") });
+        })
+
+        var val1 = $("[name=receipt_id]").val();
+
+        var dlg = eip.dialog.create("修改单位", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + val1 + "</span>"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["unitNameList"], "edit_clientCode", "单位名", " ", " left='140' ",true)"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            var clientCode = $("[name=edit_clientCode]").find("option:selected").text();
+                            if (clientCode == "") {
+                                $.eipMsg.alert("请先选择单位名!");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定修改单位吗？", function () {
+                           
+                                eip.post("/InBound/EditUnitName/EditUnitName?receiptId=" + val1 + "&unitName=" + $("[name=edit_clientCode]").val(), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/InBound/EditUnitName/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+</script>

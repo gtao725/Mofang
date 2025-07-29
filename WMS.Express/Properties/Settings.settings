@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WMS.Express.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WMS_Express_SFExpressService_CommonExpressServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://bsp-oisp.sf-express.com/bsp-oisp/ws/sfexpressService</Value>
+    </Setting>
+    <Setting Name="WMS_Express_SFExpressServiceTS_CommonExpressServiceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://218.17.248.244:11080/ws/sfexpressService</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,1295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AdminService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+      <xsd:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAdminService_LoginIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginIn" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_LoginIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginInResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UserUpdatePwd_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserUpdatePwd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_UserUpdatePwd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserUpdatePwdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhCompanyList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhCompanyList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhCompanyList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhCompanyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetWorkPowerByUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWorkPowerByUser" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_GetWorkPowerByUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWorkPowerByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_R_WhInfo_WhUserAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:R_WhInfo_WhUserAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_R_WhInfo_WhUserAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:R_WhInfo_WhUserAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionSelected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoSelected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPositionDeleteById_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPositionDeleteById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPositionDeleteById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPositionDeleteByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoWhUserDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoWhUserDel" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoWhUserDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoWhUserDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPositionListAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPositionListAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPositionListAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPositionListAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPwdInit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPwdInit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserPwdInit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserPwdInitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoWhUserEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoWhUserEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoWhUserEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoWhUserEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionSelect" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CopyWhUserPosition_InputMessage">
+    <wsdl:part name="parameters" element="tns:CopyWhUserPosition" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_CopyWhUserPosition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CopyWhUserPositionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserCheckFlagEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserCheckFlagEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserCheckFlagEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserCheckFlagEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerSelected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionPowerListAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionPowerListAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionPowerListAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionPowerListAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionPowerDelById_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionPowerDelById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPositionPowerDelById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPositionPowerDelByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerDelById_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerDelById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerDelById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerDelByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_PowerMVCUpdateByPowerId_InputMessage">
+    <wsdl:part name="parameters" element="tns:PowerMVCUpdateByPowerId" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_PowerMVCUpdateByPowerId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PowerMVCUpdateByPowerIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerMVCUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerMVCUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerMVCUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerMVCUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPoweMVCSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPoweMVCSelected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPoweMVCSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPoweMVCSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_PowerMVCUpdateById_InputMessage">
+    <wsdl:part name="parameters" element="tns:PowerMVCUpdateById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_PowerMVCUpdateById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PowerMVCUpdateByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_Sync_InputMessage">
+    <wsdl:part name="parameters" element="tns:Sync" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_Sync_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SyncResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuDelById_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuDelById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuDelById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuDelByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuSelected" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuUpdateById_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuUpdateById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuUpdateById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuUpdateByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_MenuNameSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:MenuNameSelect" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_MenuNameSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MenuNameSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhMenuEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhMenuEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerMVCList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerMVCList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhPowerMVCList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhPowerMVCListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserMenuGet_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserMenuGet" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhUserMenuGet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhUserMenuGetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusinessObjectList_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusinessObjectList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusinessObjectList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusinessObjectListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectDesSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectDesSelect" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectDesSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectDesSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectTypeSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectTypeSelect" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectTypeSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectTypeSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddBusObject_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusObject" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddBusObject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddBusObjectItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusObjectItem" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddBusObjectItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusObjectItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusinessObjectItemList_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusinessObjectItemList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusinessObjectItemList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusinessObjectItemListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectItemDelById_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectItemDelById" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectItemDelById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectItemDelByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectDel" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_BusObjectDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BusObjectDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RFFlowRuleList_InputMessage">
+    <wsdl:part name="parameters" element="tns:RFFlowRuleList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RFFlowRuleList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RFFlowRuleListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddRFFlorRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRFFlorRule" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddRFFlorRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRFFlorRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RFFlowRuleDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:RFFlowRuleDel" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_RFFlowRuleDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RFFlowRuleDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_EditRFFlowRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditRFFlowRule" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_EditRFFlowRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditRFFlowRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowRuleList_InputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowRuleList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddFlowRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddFlowRule" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_AddFlowRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddFlowRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowRuleDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleDel" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowRuleDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_EditFlowRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditFlowRule" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_EditFlowRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditFlowRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowNameSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:FlowNameSelect" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_FlowNameSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FlowNameSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoNameList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoNameList" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoNameList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoNameListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoAdd" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoEdit" />
+  </wsdl:message>
+  <wsdl:message name="IAdminService_WhInfoEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhInfoEditResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAdminService">
+    <wsdl:operation name="LoginIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/LoginIn" message="tns:IAdminService_LoginIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/LoginInResponse" message="tns:IAdminService_LoginIn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePwd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/UserUpdatePwd" message="tns:IAdminService_UserUpdatePwd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/UserUpdatePwdResponse" message="tns:IAdminService_UserUpdatePwd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhCompanyList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhCompanyList" message="tns:IAdminService_WhCompanyList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhCompanyListResponse" message="tns:IAdminService_WhCompanyList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoList" message="tns:IAdminService_WhInfoList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoListResponse" message="tns:IAdminService_WhInfoList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPowerByUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/GetWorkPowerByUser" message="tns:IAdminService_GetWorkPowerByUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/GetWorkPowerByUserResponse" message="tns:IAdminService_GetWorkPowerByUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserAdd" message="tns:IAdminService_WhUserAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserAddResponse" message="tns:IAdminService_WhUserAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="R_WhInfo_WhUserAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/R_WhInfo_WhUserAdd" message="tns:IAdminService_R_WhInfo_WhUserAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/R_WhInfo_WhUserAddResponse" message="tns:IAdminService_R_WhInfo_WhUserAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserList" message="tns:IAdminService_WhUserList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserListResponse" message="tns:IAdminService_WhUserList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionUnselected" message="tns:IAdminService_WhPositionUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionUnselectedResponse" message="tns:IAdminService_WhPositionUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionSelected" message="tns:IAdminService_WhPositionSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionSelectedResponse" message="tns:IAdminService_WhPositionSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoUnselected" message="tns:IAdminService_WhInfoUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoUnselectedResponse" message="tns:IAdminService_WhInfoUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoSelected" message="tns:IAdminService_WhInfoSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoSelectedResponse" message="tns:IAdminService_WhInfoSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPositionDeleteById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserPositionDeleteById" message="tns:IAdminService_WhUserPositionDeleteById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserPositionDeleteByIdResponse" message="tns:IAdminService_WhUserPositionDeleteById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoWhUserDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoWhUserDel" message="tns:IAdminService_WhInfoWhUserDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoWhUserDelResponse" message="tns:IAdminService_WhInfoWhUserDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPositionListAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserPositionListAdd" message="tns:IAdminService_WhUserPositionListAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserPositionListAddResponse" message="tns:IAdminService_WhUserPositionListAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPwdInit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserPwdInit" message="tns:IAdminService_WhUserPwdInit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserPwdInitResponse" message="tns:IAdminService_WhUserPwdInit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserEdit" message="tns:IAdminService_WhUserEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserEditResponse" message="tns:IAdminService_WhUserEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoWhUserEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoWhUserEdit" message="tns:IAdminService_WhInfoWhUserEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoWhUserEditResponse" message="tns:IAdminService_WhInfoWhUserEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionSelect" message="tns:IAdminService_WhPositionSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionSelectResponse" message="tns:IAdminService_WhPositionSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyWhUserPosition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/CopyWhUserPosition" message="tns:IAdminService_CopyWhUserPosition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/CopyWhUserPositionResponse" message="tns:IAdminService_CopyWhUserPosition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserCheckFlagEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserCheckFlagEdit" message="tns:IAdminService_WhUserCheckFlagEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserCheckFlagEditResponse" message="tns:IAdminService_WhUserCheckFlagEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionList" message="tns:IAdminService_WhPositionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionListResponse" message="tns:IAdminService_WhPositionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionAdd" message="tns:IAdminService_WhPositionAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionAddResponse" message="tns:IAdminService_WhPositionAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionEdit" message="tns:IAdminService_WhPositionEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionEditResponse" message="tns:IAdminService_WhPositionEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerUnselected" message="tns:IAdminService_WhPowerUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerUnselectedResponse" message="tns:IAdminService_WhPowerUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerSelected" message="tns:IAdminService_WhPowerSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerSelectedResponse" message="tns:IAdminService_WhPowerSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionPowerListAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionPowerListAdd" message="tns:IAdminService_WhPositionPowerListAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionPowerListAddResponse" message="tns:IAdminService_WhPositionPowerListAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionPowerDelById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPositionPowerDelById" message="tns:IAdminService_WhPositionPowerDelById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPositionPowerDelByIdResponse" message="tns:IAdminService_WhPositionPowerDelById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerList" message="tns:IAdminService_WhPowerList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerListResponse" message="tns:IAdminService_WhPowerList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerAdd" message="tns:IAdminService_WhPowerAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerAddResponse" message="tns:IAdminService_WhPowerAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerDelById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerDelById" message="tns:IAdminService_WhPowerDelById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerDelByIdResponse" message="tns:IAdminService_WhPowerDelById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PowerMVCUpdateByPowerId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/PowerMVCUpdateByPowerId" message="tns:IAdminService_PowerMVCUpdateByPowerId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/PowerMVCUpdateByPowerIdResponse" message="tns:IAdminService_PowerMVCUpdateByPowerId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerMVCUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerMVCUnselected" message="tns:IAdminService_WhPowerMVCUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerMVCUnselectedResponse" message="tns:IAdminService_WhPowerMVCUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPoweMVCSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPoweMVCSelected" message="tns:IAdminService_WhPoweMVCSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPoweMVCSelectedResponse" message="tns:IAdminService_WhPoweMVCSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PowerMVCUpdateById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/PowerMVCUpdateById" message="tns:IAdminService_PowerMVCUpdateById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/PowerMVCUpdateByIdResponse" message="tns:IAdminService_PowerMVCUpdateById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Sync">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/Sync" message="tns:IAdminService_Sync_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/SyncResponse" message="tns:IAdminService_Sync_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerEdit" message="tns:IAdminService_WhPowerEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerEditResponse" message="tns:IAdminService_WhPowerEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuList" message="tns:IAdminService_WhMenuList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuListResponse" message="tns:IAdminService_WhMenuList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuAdd" message="tns:IAdminService_WhMenuAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuAddResponse" message="tns:IAdminService_WhMenuAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuDelById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuDelById" message="tns:IAdminService_WhMenuDelById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuDelByIdResponse" message="tns:IAdminService_WhMenuDelById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuUnselected" message="tns:IAdminService_WhMenuUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuUnselectedResponse" message="tns:IAdminService_WhMenuUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuSelected" message="tns:IAdminService_WhMenuSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuSelectedResponse" message="tns:IAdminService_WhMenuSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuUpdateById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuUpdateById" message="tns:IAdminService_WhMenuUpdateById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuUpdateByIdResponse" message="tns:IAdminService_WhMenuUpdateById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MenuNameSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/MenuNameSelect" message="tns:IAdminService_MenuNameSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/MenuNameSelectResponse" message="tns:IAdminService_MenuNameSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhMenuEdit" message="tns:IAdminService_WhMenuEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhMenuEditResponse" message="tns:IAdminService_WhMenuEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerMVCList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhPowerMVCList" message="tns:IAdminService_WhPowerMVCList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhPowerMVCListResponse" message="tns:IAdminService_WhPowerMVCList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhUserMenuGet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhUserMenuGet" message="tns:IAdminService_WhUserMenuGet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhUserMenuGetResponse" message="tns:IAdminService_WhUserMenuGet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusinessObjectList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusinessObjectList" message="tns:IAdminService_BusinessObjectList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusinessObjectListResponse" message="tns:IAdminService_BusinessObjectList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectDesSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusObjectDesSelect" message="tns:IAdminService_BusObjectDesSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusObjectDesSelectResponse" message="tns:IAdminService_BusObjectDesSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectTypeSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusObjectTypeSelect" message="tns:IAdminService_BusObjectTypeSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusObjectTypeSelectResponse" message="tns:IAdminService_BusObjectTypeSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusObject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/AddBusObject" message="tns:IAdminService_AddBusObject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/AddBusObjectResponse" message="tns:IAdminService_AddBusObject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusObjectItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/AddBusObjectItem" message="tns:IAdminService_AddBusObjectItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/AddBusObjectItemResponse" message="tns:IAdminService_AddBusObjectItem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusinessObjectItemList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusinessObjectItemList" message="tns:IAdminService_BusinessObjectItemList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusinessObjectItemListResponse" message="tns:IAdminService_BusinessObjectItemList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectItemDelById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusObjectItemDelById" message="tns:IAdminService_BusObjectItemDelById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusObjectItemDelByIdResponse" message="tns:IAdminService_BusObjectItemDelById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/BusObjectDel" message="tns:IAdminService_BusObjectDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/BusObjectDelResponse" message="tns:IAdminService_BusObjectDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RFFlowRuleList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RFFlowRuleList" message="tns:IAdminService_RFFlowRuleList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RFFlowRuleListResponse" message="tns:IAdminService_RFFlowRuleList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRFFlorRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/AddRFFlorRule" message="tns:IAdminService_AddRFFlorRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/AddRFFlorRuleResponse" message="tns:IAdminService_AddRFFlorRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RFFlowRuleDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/RFFlowRuleDel" message="tns:IAdminService_RFFlowRuleDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/RFFlowRuleDelResponse" message="tns:IAdminService_RFFlowRuleDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditRFFlowRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/EditRFFlowRule" message="tns:IAdminService_EditRFFlowRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/EditRFFlowRuleResponse" message="tns:IAdminService_EditRFFlowRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/FlowRuleList" message="tns:IAdminService_FlowRuleList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/FlowRuleListResponse" message="tns:IAdminService_FlowRuleList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddFlowRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/AddFlowRule" message="tns:IAdminService_AddFlowRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/AddFlowRuleResponse" message="tns:IAdminService_AddFlowRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/FlowRuleDel" message="tns:IAdminService_FlowRuleDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/FlowRuleDelResponse" message="tns:IAdminService_FlowRuleDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditFlowRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/EditFlowRule" message="tns:IAdminService_EditFlowRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/EditFlowRuleResponse" message="tns:IAdminService_EditFlowRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FlowNameSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/FlowNameSelect" message="tns:IAdminService_FlowNameSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/FlowNameSelectResponse" message="tns:IAdminService_FlowNameSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoNameList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoNameList" message="tns:IAdminService_WhInfoNameList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoNameListResponse" message="tns:IAdminService_WhInfoNameList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoAdd" message="tns:IAdminService_WhInfoAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoAddResponse" message="tns:IAdminService_WhInfoAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAdminService/WhInfoEdit" message="tns:IAdminService_WhInfoEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAdminService/WhInfoEditResponse" message="tns:IAdminService_WhInfoEdit_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAdminService" type="tns:IAdminService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LoginIn">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/LoginIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserUpdatePwd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/UserUpdatePwd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhCompanyList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhCompanyList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPowerByUser">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/GetWorkPowerByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="R_WhInfo_WhUserAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/R_WhInfo_WhUserAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionUnselected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionSelected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoUnselected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoSelected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPositionDeleteById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserPositionDeleteById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoWhUserDel">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoWhUserDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPositionListAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserPositionListAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserPwdInit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserPwdInit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoWhUserEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoWhUserEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionSelect">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyWhUserPosition">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/CopyWhUserPosition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserCheckFlagEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserCheckFlagEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerUnselected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerSelected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionPowerListAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionPowerListAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPositionPowerDelById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPositionPowerDelById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerDelById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerDelById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PowerMVCUpdateByPowerId">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/PowerMVCUpdateByPowerId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerMVCUnselected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerMVCUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPoweMVCSelected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPoweMVCSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PowerMVCUpdateById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/PowerMVCUpdateById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sync">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/Sync" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuDelById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuDelById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuUnselected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuSelected">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuUpdateById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuUpdateById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MenuNameSelect">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/MenuNameSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhMenuEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhMenuEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhPowerMVCList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhPowerMVCList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhUserMenuGet">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhUserMenuGet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusinessObjectList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusinessObjectList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectDesSelect">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusObjectDesSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectTypeSelect">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusObjectTypeSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusObject">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/AddBusObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBusObjectItem">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/AddBusObjectItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusinessObjectItemList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusinessObjectItemList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectItemDelById">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusObjectItemDelById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusObjectDel">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/BusObjectDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RFFlowRuleList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/RFFlowRuleList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRFFlorRule">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/AddRFFlorRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RFFlowRuleDel">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/RFFlowRuleDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditRFFlowRule">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/EditRFFlowRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/FlowRuleList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddFlowRule">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/AddFlowRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleDel">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/FlowRuleDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditFlowRule">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/EditFlowRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FlowNameSelect">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/FlowNameSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoNameList">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoNameList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoAdd">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhInfoEdit">
+      <soap:operation soapAction="http://tempuri.org/IAdminService/WhInfoEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdminService">
+    <wsdl:port name="BasicHttpBinding_IAdminService" binding="tns:BasicHttpBinding_IAdminService">
+      <soap:address location="http://localhost:45936/AdminService/AdminService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

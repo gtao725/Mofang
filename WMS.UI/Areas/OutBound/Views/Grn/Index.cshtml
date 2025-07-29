@@ -1,0 +1,240 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="receiptid" hint="收货批次号码" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="是否收货" name="recstatus"><option></option><option value='未收货'>未收货</option><option value='有收货'>有收货</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="发送状态" name="sendstatus"><option></option><option value='未释放'>未发送</option><option value='已释放'>已发送</option></select>
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <textarea name="SO" left="60" hint="SO"></textarea>
+        
+        
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("[name=SO]").css("height", "45px").css("width", "185px");
+        $("[name=SO]").parent().css("height", "50px").css("width", "280px");
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/OutBound/Grn/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                   
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "SO": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"SOList('" + row["SO"] + "','" + row["客户"] + "')\" >" + row["SO"] + "</span>";
+                        return retHtml;
+                    }
+                }
+               
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=receiptid]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //查看SO 明细
+    //var so;
+    //var clientcode;
+    function SOList(val, val2) {
+        //so = val;
+        //clientcode = val2;
+
+        var dlg_Pos = eip.dialog.create("查看SO明细—SO：" + val,
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            //trcheck: true,
+            //trclick: function (grid, trs) {
+            //    eip.datagrid.edit(this)
+            //},
+            checkbox: function (row) {
+                return "<input type=checkbox name=detailid value=" + row["Id"] + "  onclick='detail_edit(this)' >";
+            },
+            hiddencolumns: [""],
+            columns: {
+                "SO": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"SOList('" + row["SO"] + "','" + row["客户"] + "')\" >" + row["SO"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "GRN收货时间": {
+                    editor: { type: "datetime", name: "GRN_ReceiptDate" }
+                },
+                "GRN数量": {
+                    editor: { type: "text", name: "GRN_Qty" }
+                },
+                "GRN立方": {
+                    editor: { type: "text", name: "GRN_Cbm" }
+                },
+                "GRN重量": {
+                    editor: { type: "text", name: "GRN_Kgs" }
+        }
+
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 },
+                  {
+                      text: "保存修改", icon: "ok", click:
+                         function () {
+                             SaveDetail();
+                         }
+                  },
+                   {
+                       text: "更新WMS数据", icon: "ok", click:
+                          function () {
+                              RefreshWmsData(val, val2);
+                          }
+                   },
+                   ,
+                   {
+                       text: "自动更新GRN数据", icon: "ok", click:
+                          function () {
+                              RefreshGRNData(val, val2);
+                          }
+                   },
+                    {
+                        text: "发送数据", icon: "ok", click:
+                            function () {
+                                SendGRN(val, val2);
+                            }
+                    }
+
+                   
+            ]
+         
+
+        }]);
+
+        eip.datagrid.load("/OutBound/Grn/SOList?SO=" + eip.utf8(val)+"&ClientCode=" + eip.utf8(val2), $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+
+
+    }
+
+
+    
+    function RefreshWmsData(val, val2) {
+        eip.get("/OutBound/Grn/RefreshWmsData?SO=" + eip.utf8(val) + "&ClientCode=" + eip.utf8(val2),null, function (res) {
+            if (res != "Y") {
+                alert(res);
+            }
+            else {
+                eip.datagrid.load("/OutBound/Grn/SOList?SO=" + eip.utf8(val) + "&ClientCode=" + eip.utf8(val2), $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+            }
+        });
+
+    }
+    function RefreshGRNData(val, val2) {
+        eip.get("/OutBound/Grn/GrnAutoUpdate?SO=" + eip.utf8(val) + "&ClientCode=" + eip.utf8(val2), null, function (res) {
+            if (res != "Y") {
+                alert(res);
+            }
+            else {
+                eip.datagrid.load("/OutBound/Grn/SOList?SO=" + eip.utf8(val) + "&ClientCode=" + eip.utf8(val2), $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+            }
+        });
+
+    }
+
+    function SendGRN(val, val2) {
+        eip.get("/OutBound/Grn/SendGRN?SO=" + eip.utf8(val) + "&ClientCode=" + eip.utf8(val2), null, function (res) {
+            if (res != "Y") {
+                alert(res);
+            } else {
+                alert("发送任务已创建");
+            }
+        });
+
+    }
+
+    function SaveDetail() {
+        var doflag=true;
+        $("[name=GRN_Cbm],[name=GRN_Qty]", $("#grid_detail")).each(function () {
+            if ($(this).val() == "")
+                doflag = false;
+
+        })
+        if (!doflag) {
+            alert("内容不能为空!")
+            return
+        }
+        //if ($("[name=GRN_Cbm]", $("#grid_detail")).val().isEmpty()) {
+        //    alert("内容不能为空!")
+        //    return;
+        //}
+
+        eip.post("/OutBound/Grn/SaveDetail", eip.para.create($("input", $("#grid_detail"))), function (res) {
+            if (res != "Y") {
+                alert(res);
+            } else {
+                alert("保存成功!");
+            }
+        });
+
+
+    }
+
+    
+    
+    function detail_edit(obj) {
+   
+        if ($(obj)._propAttr("checked") == true) {
+            eip.datagrid.edit($(obj).parent().parent())
+        } else { 
+            eip.datagrid.reset($(obj).parent().parent());
+        }
+    }
+</script>

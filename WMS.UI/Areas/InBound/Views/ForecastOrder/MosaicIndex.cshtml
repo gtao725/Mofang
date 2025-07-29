@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="SystemNumber" hint="系统编号" />
+        <input type="text" name="BeginDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+
+        <input type="text" name="BeginConsDate" left="90" hint="FFD" date='Y' value="" />
+        <input type="text" name="EndConsDate" left="20" hint="-" date='Y' value="" />
+
+        <input type="text" name="SoNumber" hint="SO" />
+        <input type="text" name="PoNumber" hint="PO" />
+        <input type="text" name="ItemNumber" hint="款号" />
+        <input type="text" name="RatioorBulk" left="130" hint="Ratio or Bulk" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/InBound/ForecastOrder/MosaicList", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "Forecast导入", icon: "add", click: function () {
+
+                            var dialog
+                            var fileType = "zip"    //定义能够上传的文件类型,当然要靠后面的onSubmit中的js去做判断
+                            new AjaxUpload($(this), {
+                                action: '/InBound/ForecastOrder/MosaicImport',
+                                name: 'UploadFile',   //这相当于<input type = "file" name = "UploadFile"/>
+                                onSubmit: function (file, ext) {
+                                    eip.showloading()
+
+                                    if (!(ext && /^(xls|xlsx)$/.test(ext))) {
+                                        alert("上传文件只能是EXECL!")
+                                        return false
+                                    }
+                                },
+                                onComplete: function (file, response) { //上传完毕后的操作
+
+                                    if (response.split("$")[0] != "Y") {
+                                        alert(response);
+                                    }
+                                    else {
+                                        alert(response);
+                                    }
+                                    eip.showloading(true)
+                                    eip.datagrid.load("/InBound/ForecastOrder/MosaicList", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                                }
+
+                            });
+
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["操作"],
+            columns: {
+
+            }
+        });
+
+        var loadScript = function (url, callback) {
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            script.id = "eip_ajaxupload";
+            script.onload = script.onreadystatechange = function () {
+                if ((!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+                    callback && callback();
+                    script.onload = script.onreadystatechange = null;
+                    if (head && script.parentNode) {
+
+                    }
+                }
+            };
+            head.appendChild(script);
+        }
+
+        if ($("#eip_ajaxupload").size() < 1) loadScript("/Share/includes/upload/ajaxupload.js");
+
+    });
+ 
+
+</script>

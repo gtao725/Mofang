@@ -1,0 +1,110 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" name="txt_receiptId"  hint="收货批次号" />
+        <input type="text" name="txt_soNumber" hint="SO号" />
+        <input type="text" name="txt_customerNumber" hint="PO号" />
+        <input type="text" name="txt_altItemNumber" hint="款号" />
+        <input type="text" name="txt_cartonId" hint="序列号" />
+        <input type="text" name="txt_huId" hint="托盘" />
+        <input type="text" name="BeginCreateDate" hint="收货时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_SerialNumberInHeport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["客户ID", "仓库", "PoId", "ItemId"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"SerialNumberDel(this)\" title='删除' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"SerialNumberDelByHuId(this)\" title='按托盘删除' ></a>";
+                        
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/Warehouse/C_SerialNumberInHeport/SerialNumberEdit?id=" + Id + "&cartonId=" + eip.utf8($("[name=edit_cartonId]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Warehouse/C_SerialNumberInHeport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+                            });
+                            return btn;
+                        }
+                    }
+
+                } 
+            }
+
+        });
+
+        $("[name=txt_soNumber]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    //删除序列号
+    function SerialNumberDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该序列号吗？", function () {
+            eip.get("/Warehouse/C_SerialNumberInHeport/SerialNumberDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_SerialNumberInHeport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+    //按托盘删除序列号
+    function SerialNumberDelByHuId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定按照托盘批量删除该序列号吗？", function () {
+            eip.get("/Warehouse/C_SerialNumberInHeport/SerialNumberDelByHuId?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_SerialNumberInHeport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+</script>

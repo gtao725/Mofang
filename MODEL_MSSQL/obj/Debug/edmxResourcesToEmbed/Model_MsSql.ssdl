@@ -1,0 +1,3031 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MODEL_MSSQL.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AddValueService">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RecLossTypeId" Type="int" />
+    <Property Name="RecLossId" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="BillDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="BLNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="NotLoadFlag" Type="int" />
+    <Property Name="ETD" Type="datetime" />
+    <Property Name="SoId" Type="int" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeCode" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeItem" Type="varchar" MaxLength="48" />
+    <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DaiDianId" Type="int" />
+    <Property Name="ContainerNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeType" Type="nvarchar" MaxLength="48" />
+    <Property Name="ChargeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="48" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="ChargeUnitName" Type="varchar" MaxLength="48" />
+    <Property Name="LadderNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="PriceTotal" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="48" />
+    <Property Name="TaxInclusiveFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="BillMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="BLNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="BusinessFlowGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FlowName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateUser" Type="varchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="varchar" MaxLength="48" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+    <Property Name="Remark" Type="varchar" MaxLength="50" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BusinessFlowHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupId" Type="int" Nullable="false" />
+    <Property Name="ObjectHeadId" Type="int" Nullable="false" />
+    <Property Name="ObjectBusinessName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="FlowRuleId" Type="int" />
+  </EntityType>
+  <EntityType Name="BusinessObjectDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeadId" Type="int" Nullable="false" />
+    <Property Name="DetailSeq" Type="int" Nullable="false" />
+    <Property Name="InParaObjectId" Type="int" />
+    <Property Name="InExecObjectId" Type="int" />
+    <Property Name="FormName" Type="varchar" MaxLength="48" />
+    <Property Name="FormNameApp" Type="varchar" MaxLength="48" />
+    <Property Name="BeforeOpenExecObjectId" Type="int" />
+    <Property Name="NextOpenFormName" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="BusinessObjectHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Base" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusinessObjectItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ObjectId" Type="int" Nullable="false" />
+    <Property Name="MustAttributeName" Type="varchar" MaxLength="48" />
+    <Property Name="MustAttributeNameCN" Type="varchar" MaxLength="48" />
+    <Property Name="ParaObjectId" Type="int" />
+    <Property Name="ProcDBName" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="BusinessObjects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ObjectName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ObjectValue" Type="varchar" MaxLength="48" />
+    <Property Name="ObjectDes" Type="varchar" MaxLength="48" />
+    <Property Name="ObjectType" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContractForm">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="ContractName" Type="nvarchar" MaxLength="100" />
+    <Property Name="WhCodeName" Type="varchar" MaxLength="50" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="ChargeName" Type="varchar" MaxLength="100" />
+    <Property Name="TransportType" Type="varchar" MaxLength="50" />
+    <Property Name="Shift" Type="varchar" MaxLength="10" />
+    <Property Name="LadderNumberBegin" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LadderNumberEnd" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LadderNumberBeginCBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LadderNumberEndCBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="MonthlyFlag" Type="varchar" MaxLength="5" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="ChargeUnitName" Type="varchar" MaxLength="20" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Ratio" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MaxPriceTotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="GroupId" Type="varchar" MaxLength="10" />
+    <Property Name="ActiveDateBegin" Type="date" />
+    <Property Name="ActiveDateEnd" Type="date" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ContractFormExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="ChargeName" Type="varchar" MaxLength="100" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+  </EntityType>
+  <EntityType Name="ContractFormOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="ContractName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="ChargeName" Type="varchar" MaxLength="100" />
+    <Property Name="LadderNumberBegin" Type="int" />
+    <Property Name="LadderNumberEnd" Type="int" />
+    <Property Name="ChargeUnitName" Type="varchar" MaxLength="20" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="10" />
+    <Property Name="SuitCase" Type="varchar" MaxLength="10" />
+    <Property Name="Port" Type="varchar" MaxLength="10" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CRTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="Url" Type="varchar" MaxLength="100" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+    <Property Name="TemplateName" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CycleCountCheck">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TaskNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+  </EntityType>
+  <EntityType Name="CycleCountDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TaskNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CheckUser" Type="varchar" MaxLength="48" />
+    <Property Name="CheckDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CycleCountInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TaskNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="50" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="50" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="HoldId" Type="int" />
+    <Property Name="HoldReason" Type="nvarchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="CycleCountMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TaskNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreateType" Type="int" />
+    <Property Name="TypeDescription" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationNullFlag" Type="int" />
+    <Property Name="OneByOneScanFlag" Type="int" />
+    <Property Name="CompareStorageLocationHu" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DamcoGRNDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="LN" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="SoDigit" Type="nvarchar" MaxLength="20" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style" Type="nvarchar" MaxLength="48" />
+    <Property Name="GWI_Pcs" Type="int" />
+    <Property Name="GWI_Qty" Type="int" />
+    <Property Name="GWI_Cbm" Type="float" />
+    <Property Name="GWI_nwKgs" Type="float" />
+    <Property Name="GWI_Kgs" Type="float" />
+    <Property Name="WMS_Qty" Type="int" />
+    <Property Name="WMS_Cbm" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="WMS_Kgs" Type="float" />
+    <Property Name="AVG_Qty" Type="int" />
+    <Property Name="AVG_Cbm" Type="float" />
+    <Property Name="AVG_Kgs" Type="float" />
+    <Property Name="AVG_ReceiptDate" Type="datetime" />
+    <Property Name="WMS_ReceiptDate" Type="datetime" />
+    <Property Name="GRN_Qty" Type="int" />
+    <Property Name="GRN_Cbm" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="GRN_Kgs" Type="float" />
+    <Property Name="GRN_ReceiptDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DamcoGRNHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SiteId" Type="nvarchar" MaxLength="48" />
+    <Property Name="CustomerId" Type="nvarchar" MaxLength="48" />
+    <Property Name="Mark" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="SoDigit" Type="nvarchar" MaxLength="20" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="WmsQty" Type="int" />
+    <Property Name="WmsCbm" Type="float" />
+    <Property Name="SendType" Type="nvarchar" MaxLength="48" />
+    <Property Name="SendTime" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="48" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DamcoGrnRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="AutoSend" Type="int" />
+    <Property Name="DifferentialInterceptionFlag" Type="int" />
+    <Property Name="DifferenceRate" Type="int" />
+    <Property Name="DifferentialMailFlag" Type="int" />
+    <Property Name="TotalCheck" Type="int" />
+    <Property Name="AvgFlag" Type="int" />
+    <Property Name="MailFlag" Type="int" />
+    <Property Name="MatchLevel" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptDateSource" Type="varchar" MaxLength="48" />
+    <Property Name="CBMSource" Type="varchar" MaxLength="48" />
+    <Property Name="KgsSource" Type="varchar" MaxLength="48" />
+    <Property Name="MailTo" Type="nvarchar" MaxLength="200" />
+    <Property Name="GrnType" Type="nvarchar" MaxLength="10" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="Sendtype" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="DcReturnException">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SKU" Type="nvarchar" MaxLength="48" />
+    <Property Name="HuId" Type="nvarchar" MaxLength="48" />
+    <Property Name="ExpressNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="InorderNumberAlt" Type="nvarchar" MaxLength="48" />
+    <Property Name="OMSReturnNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Status" Type="nchar" MaxLength="8" />
+    <Property Name="Remark" Type="nchar" MaxLength="480" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="OrderStatus" Type="varchar" MaxLength="100" />
+    <Property Name="rmk1" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="DcShipingException">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpressNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+    <Property Name="EdiStatus" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ExcelImportInBound">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SystemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Consignee" Type="nvarchar" MaxLength="96" />
+    <Property Name="IncoTerm" Type="nvarchar" MaxLength="48" />
+    <Property Name="OriginService" Type="nvarchar" MaxLength="48" />
+    <Property Name="Supplier" Type="nvarchar" MaxLength="96" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="RatioPack" Type="nvarchar" MaxLength="48" />
+    <Property Name="KeycodeRatioPack" Type="nvarchar" MaxLength="48" />
+    <Property Name="DepartmentNo" Type="nvarchar" MaxLength="48" />
+    <Property Name="SubBrand" Type="nvarchar" MaxLength="48" />
+    <Property Name="PlaceOfReceipt" Type="nvarchar" MaxLength="48" />
+    <Property Name="PlaceOfDelivery" Type="nvarchar" MaxLength="48" />
+    <Property Name="BookedCarton" Type="int" />
+    <Property Name="BookedWeight" Type="nvarchar" MaxLength="48" />
+    <Property Name="BookedCBM" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="3" />
+    <Property Name="DistributionChannel" Type="nvarchar" MaxLength="48" />
+    <Property Name="ADDate" Type="nvarchar" MaxLength="48" />
+    <Property Name="PriorityFlag" Type="nvarchar" MaxLength="48" />
+    <Property Name="ConsDate" Type="date" />
+    <Property Name="DCDD" Type="date" />
+    <Property Name="OverseasDecantFlag" Type="nvarchar" MaxLength="48" />
+    <Property Name="Mixed" Type="nvarchar" MaxLength="48" />
+    <Property Name="PackingClusterGroup" Type="nvarchar" MaxLength="48" />
+    <Property Name="QC" Type="nvarchar" MaxLength="48" />
+    <Property Name="Labeling" Type="varchar" MaxLength="50" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="96" />
+    <Property Name="LabelingSend" Type="nvarchar" MaxLength="48" />
+    <Property Name="ExpressNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="DoesTheFactoryConfirm" Type="nvarchar" MaxLength="48" />
+    <Property Name="PalletizationForHeavyCargo" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="ExcelImportInBoundCom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SystemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style1" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style2" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style3" Type="nvarchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Remark1" Type="datetime" />
+    <Property Name="Remark2" Type="nvarchar" MaxLength="192" />
+    <Property Name="Remark3" Type="nvarchar" MaxLength="192" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ExcelImportInBoundCotton">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SystemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="DC" Type="nvarchar" MaxLength="48" />
+    <Property Name="PO" Type="nvarchar" MaxLength="48" />
+    <Property Name="BookingDate" Type="nvarchar" MaxLength="48" />
+    <Property Name="Consignee" Type="nvarchar" MaxLength="48" />
+    <Property Name="Shipper" Type="nvarchar" MaxLength="48" />
+    <Property Name="ShipeeziSO" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Brand" Type="nvarchar" MaxLength="48" />
+    <Property Name="ERD" Type="nvarchar" MaxLength="48" />
+    <Property Name="COGETD" Type="nvarchar" MaxLength="48" />
+    <Property Name="COGETA" Type="nvarchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="BookedQTY" Type="int" />
+    <Property Name="LOGITQTY" Type="int" />
+    <Property Name="ColourCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="Size" Type="nvarchar" MaxLength="48" />
+    <Property Name="PlaceOfReceipt" Type="nvarchar" MaxLength="48" />
+    <Property Name="BookedPOR" Type="nvarchar" MaxLength="48" />
+    <Property Name="BookedPortOfDischarge" Type="nvarchar" MaxLength="48" />
+    <Property Name="ASOS" Type="nvarchar" MaxLength="96" />
+    <Property Name="ClothesHanger" Type="nvarchar" MaxLength="48" />
+    <Property Name="Hudson" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ExcelImportOutBound">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ContainerNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style1" Type="nvarchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+  </EntityType>
+  <EntityType Name="FeeDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="FeeNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="TCRProcessMode" Type="varchar" MaxLength="100" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ChangDiFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ChangDiHours" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TruckFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DaDanFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="EquipmentUseFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OtherFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="OperationQty" Type="int" Nullable="false" />
+    <Property Name="OperationUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="OperationHours" Type="int" />
+    <Property Name="FactoryUserCount" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="PeopleNormalFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleFujiaFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleNormalHours" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleNormalNightHours" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleWeekendHours" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="PeopleStatutoryHolidayHours" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FeeHoliday">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="HolidayName" Type="varchar" MaxLength="40" />
+    <Property Name="DayBegin" Type="varchar" MaxLength="20" />
+    <Property Name="Type" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FeeMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="FeeNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="Type" Type="varchar" MaxLength="10" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCodeCN" Type="varchar" MaxLength="48" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LuruFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="YuShouFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="YuShouUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="JieSuanFee" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="JieSuanUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="BillingType" Type="nvarchar" MaxLength="48" />
+    <Property Name="InvoiceType" Type="nvarchar" MaxLength="48" />
+    <Property Name="NoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="InvoiceTopContent" Type="nvarchar" MaxLength="100" />
+    <Property Name="OperationBeginDate" Type="datetime" />
+    <Property Name="OperationEndDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FieldOrderBy">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="4" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ColumnName" Type="varchar" MaxLength="100" />
+    <Property Name="ColumnNameByDesc" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FlowDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FlowHeadId" Type="int" Nullable="false" />
+    <Property Name="FlowRuleId" Type="int" Nullable="false" />
+    <Property Name="FunctionName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="BusinessObjectGroupId" Type="int" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="RollbackFlag" Type="int" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="StatusName" Type="varchar" MaxLength="48" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+    <Property Name="Mark" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="FlowHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="FlowName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Remark" Type="varchar" MaxLength="200" />
+    <Property Name="InterceptFlag" Type="int" />
+    <Property Name="FieldOrderById" Type="int" />
+    <Property Name="InTemplate" Type="varchar" MaxLength="50" />
+    <Property Name="PZTemplate" Type="varchar" MaxLength="50" />
+    <Property Name="RecStockSugApi" Type="varchar" MaxLength="480" />
+    <Property Name="RecStockCheckApi" Type="varchar" MaxLength="48" />
+    <Property Name="OutTemplate" Type="varchar" MaxLength="50" />
+    <Property Name="OutSerialNumberCheckIn" Type="varchar" MaxLength="4" />
+    <Property Name="UrlEdiId" Type="int" />
+    <Property Name="UrlEdiId2" Type="int" />
+    <Property Name="UrlEdiId3" Type="int" />
+    <Property Name="FlowOrderBy" Type="int" />
+    <Property Name="CheckAllHuWeightFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FlowRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FunctionId" Type="int" Nullable="false" />
+    <Property Name="RuleType" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="FunctionName" Type="varchar" MaxLength="48" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="StatusName" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="FunctionFlag" Type="int" />
+    <Property Name="RequiredFlag" Type="int" />
+    <Property Name="RelyId" Type="int" />
+    <Property Name="BusinessObjectGroupId" Type="int" />
+    <Property Name="SelectRuleDescription" Type="nvarchar" MaxLength="200" />
+    <Property Name="RollbackFlag" Type="int" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+    <Property Name="Mark" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="Heport_R_SerialNumberInOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style1" Type="nvarchar" MaxLength="48" />
+    <Property Name="CartonId" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="SumCartonQty" Type="int" />
+  </EntityType>
+  <EntityType Name="HeportSerialNumberIn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="CartonId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HoldMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReasonType" Type="varchar" MaxLength="8" />
+    <Property Name="HoldReason" Type="nvarchar" MaxLength="48" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Holiday">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HolidayName" Type="varchar" MaxLength="40" />
+    <Property Name="DayBegin" Type="varchar" MaxLength="20" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HuDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="PlanQty" Type="int" />
+    <Property Name="ReceiptDate" Type="datetime" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Attribute1" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HuMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptDate" Type="datetime" Nullable="false" />
+    <Property Name="HoldId" Type="int" />
+    <Property Name="HoldReason" Type="nvarchar" MaxLength="200" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="TransactionFlag" Type="int" />
+    <Property Name="HuLength" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="HuWidth" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="HuHeight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="HuWeight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InBoundOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SoId" Type="int" />
+    <Property Name="PoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AltCustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="OrderType" Type="varchar" MaxLength="48" />
+    <Property Name="ProcessId" Type="int" />
+    <Property Name="ProcessName" Type="varchar" MaxLength="48" />
+    <Property Name="OrderSource" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="PlanInTime" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InBoundOrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PoId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="RegQty" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CustomNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="CustomDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InBoundSO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InvMove">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="MoveNum" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InvMoveDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="MoveNum" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="48" />
+    <Property Name="ZoneId" Type="int" Nullable="false" />
+    <Property Name="ZoneName" Type="varchar" MaxLength="48" />
+    <Property Name="DesZoneId" Type="int" Nullable="false" />
+    <Property Name="DesZoneName" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Style1" Type="varchar" MaxLength="48" />
+    <Property Name="Style2" Type="varchar" MaxLength="48" />
+    <Property Name="Style3" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="EAN" Type="varchar" MaxLength="48" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="HandFlag" Type="int" />
+    <Property Name="ScanFlag" Type="int" />
+    <Property Name="ScanRule" Type="varchar" MaxLength="50" />
+    <Property Name="UnitFlag" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RgularId" Type="int" Nullable="false" />
+    <Property Name="LocFlag" Type="int" Nullable="false" />
+    <Property Name="LocOnHandFlag" Type="int" Nullable="false" />
+    <Property Name="OnHandFlag" Type="int" Nullable="false" />
+    <Property Name="OneItemLPFlag" Type="int" Nullable="false" />
+    <Property Name="OneItemSizeLPFlag" Type="int" Nullable="false" />
+    <Property Name="CartonName" Type="varchar" MaxLength="48" />
+    <Property Name="InStallService" Type="int" />
+    <Property Name="Remark1" Type="varchar" MaxLength="100" />
+    <Property Name="Remark2" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ItemMasterColorCode">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ColorCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ColorDescription" Type="nvarchar" MaxLength="96" />
+  </EntityType>
+  <EntityType Name="ItemMasterExtendOMS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="16" Nullable="false" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="16" Nullable="false" />
+    <Property Name="AltItemNumber" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="CusItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Pcs" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="160" />
+    <Property Name="Color" Type="nvarchar" MaxLength="160" />
+    <Property Name="Matieral" Type="nvarchar" MaxLength="240" />
+    <Property Name="CusStyle" Type="nvarchar" MaxLength="160" />
+    <Property Name="Category" Type="nvarchar" MaxLength="160" />
+    <Property Name="Class" Type="nvarchar" MaxLength="160" />
+    <Property Name="Style" Type="nvarchar" MaxLength="48" />
+    <Property Name="Size" Type="nvarchar" MaxLength="24" />
+    <Property Name="PackageStyle" Type="nvarchar" MaxLength="48" />
+    <Property Name="BoxCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="OriginCountry" Type="nvarchar" MaxLength="48" />
+    <Property Name="UnitName" Type="nvarchar" MaxLength="16" />
+    <Property Name="Status" Type="nvarchar" MaxLength="16" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="Remark1" Type="nvarchar" MaxLength="240" />
+    <Property Name="Remark2" Type="nvarchar" MaxLength="240" />
+    <Property Name="Remark3" Type="nvarchar" MaxLength="240" />
+    <Property Name="Remark4" Type="nvarchar" MaxLength="240" />
+    <Property Name="Remark5" Type="nvarchar" MaxLength="240" />
+  </EntityType>
+  <EntityType Name="KmartWaitingReason">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReasonCode" Type="nvarchar" MaxLength="96" />
+    <Property Name="TruckWaitingReason" Type="nvarchar" MaxLength="96" />
+    <Property Name="ReasonDescription" Type="nvarchar" MaxLength="480" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="96" />
+  </EntityType>
+  <EntityType Name="LoadCharge">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="Status2" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadChargeDaiDian">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DaiDianName" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LoadChargeDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="NotLoadFlag" Type="int" />
+    <Property Name="ETD" Type="datetime" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="SoStatus" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeCode" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeItem" Type="varchar" MaxLength="48" />
+    <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ContainerNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeType" Type="nvarchar" MaxLength="48" />
+    <Property Name="ChargeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="48" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="ChargeUnitName" Type="varchar" MaxLength="48" />
+    <Property Name="LadderNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="PriceTotal" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LoadChargeRuleId" Type="int" />
+    <Property Name="CustomerFlag" Type="int" />
+    <Property Name="WarehouseFlag" Type="int" />
+    <Property Name="BargainingFlag" Type="int" />
+    <Property Name="DaiDianId" Type="int" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="480" />
+    <Property Name="TaxInclusiveFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadChargeRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FunctionId" Type="int" />
+    <Property Name="FunctionName" Type="nvarchar" MaxLength="50" />
+    <Property Name="FunctionUnitName" Type="nvarchar" MaxLength="50" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="TypeName" Type="nvarchar" MaxLength="48" />
+    <Property Name="SOFeeFlag" Type="int" />
+    <Property Name="FunctionFlag" Type="int" />
+    <Property Name="RequiredFlag" Type="int" />
+    <Property Name="CustomerFlag" Type="int" />
+    <Property Name="WarehouseFlag" Type="int" />
+    <Property Name="BargainingFlag" Type="int" />
+    <Property Name="DaiDianId" Type="int" />
+    <Property Name="ChargeCode" Type="varchar" MaxLength="48" />
+    <Property Name="ChargeItem" Type="varchar" MaxLength="48" />
+    <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ClientAutoCharge" Type="nvarchar" MaxLength="480" />
+  </EntityType>
+  <EntityType Name="LoadContainerDetailExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SystemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="BillNumber" Type="varchar" MaxLength="48" />
+    <Property Name="LadingNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadContainerExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="100" />
+    <Property Name="ChuCangFS" Type="varchar" MaxLength="72" />
+    <Property Name="VesselName" Type="varchar" MaxLength="72" />
+    <Property Name="VesselNumber" Type="varchar" MaxLength="72" />
+    <Property Name="CarriageName" Type="varchar" MaxLength="72" />
+    <Property Name="ETD" Type="datetime" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="48" />
+    <Property Name="Port" Type="varchar" MaxLength="48" />
+    <Property Name="DeliveryPlace" Type="varchar" MaxLength="48" />
+    <Property Name="BillNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ContainerNumber" Type="varchar" MaxLength="48" />
+    <Property Name="SealNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ContainerSource" Type="varchar" MaxLength="48" />
+    <Property Name="WeightFlag" Type="int" />
+    <Property Name="WeightDate" Type="datetime" />
+    <Property Name="NetWeight" Type="int" />
+    <Property Name="GrossWeight" Type="int" />
+    <Property Name="TotalQty" Type="int" />
+    <Property Name="TotalCBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="TotalWeight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="DischageCode" Type="varchar" MaxLength="50" />
+    <Property Name="PortSuitcase" Type="varchar" MaxLength="50" />
+    <Property Name="BaQty" Type="varchar" MaxLength="10" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="50" />
+    <Property Name="CaoZuoUser" Type="varchar" MaxLength="50" />
+    <Property Name="ClientDescription" Type="nvarchar" MaxLength="200" />
+    <Property Name="SystemNumber" Type="varchar" MaxLength="50" />
+    <Property Name="PlanQty" Type="int" />
+    <Property Name="ShippingOrigin" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadContainerExtendHuDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoadContainerId" Type="int" Nullable="false" />
+    <Property Name="ProcessId" Type="int" Nullable="false" />
+    <Property Name="ProcessName" Type="varchar" MaxLength="48" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadContainerType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="48" />
+    <Property Name="ContainerName" Type="varchar" MaxLength="72" />
+    <Property Name="CBM" Type="int" />
+    <Property Name="Weight" Type="int" />
+    <Property Name="SQty" Type="int" />
+    <Property Name="BigSmallType" Type="varchar" MaxLength="10" />
+    <Property Name="ClassType" Type="varchar" MaxLength="10" />
+    <Property Name="ContainerCodeType" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadCreateRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="RuleName" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="OrderQty" Type="int" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="ShipMode" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LoadMasterId" Type="int" />
+    <Property Name="OutBoundOrderId" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadHuIdExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoadMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="300" />
+    <Property Name="ClientQty" Type="int" />
+    <Property Name="ShipMode" Type="varchar" MaxLength="48" />
+    <Property Name="Status0" Type="varchar" MaxLength="48" />
+    <Property Name="Status1" Type="varchar" MaxLength="48" />
+    <Property Name="Status2" Type="varchar" MaxLength="48" />
+    <Property Name="Status3" Type="varchar" MaxLength="48" />
+    <Property Name="ProcessId" Type="int" Nullable="false" />
+    <Property Name="ProcessName" Type="varchar" MaxLength="48" />
+    <Property Name="Location" Type="varchar" MaxLength="10" />
+    <Property Name="Remark" Type="varchar" MaxLength="2000" />
+    <Property Name="ReleaseDate" Type="datetime" />
+    <Property Name="BeginPickDate" Type="datetime" />
+    <Property Name="EndPickDate" Type="datetime" />
+    <Property Name="BeginPackDate" Type="datetime" />
+    <Property Name="EndPackDate" Type="datetime" />
+    <Property Name="BeginSortDate" Type="datetime" />
+    <Property Name="EndSortDate" Type="datetime" />
+    <Property Name="ShipDate" Type="datetime" />
+    <Property Name="PlanQty" Type="int" />
+    <Property Name="SumQty" Type="int" />
+    <Property Name="DSSumQty" Type="int" />
+    <Property Name="SumCBM" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="SumWeight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="EchQty" Type="int" />
+    <Property Name="BaQty" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LocationTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LocationTypesDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationTypeId" Type="int" Nullable="false" />
+    <Property Name="TypeName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="UpperQty" Type="int" />
+    <Property Name="AlertQty" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LoginLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="DeviceName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LookUp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TableName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ColumnName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ColumnKey" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="72" />
+  </EntityType>
+  <EntityType Name="Loss">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="LossCode" Type="varchar" MaxLength="48" />
+    <Property Name="LossDescription" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="WorkLevel" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="NightTime">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="NightBegin" Type="varchar" MaxLength="20" />
+    <Property Name="NightEnd" Type="varchar" MaxLength="20" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OMSInvChange">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TranType" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="TranDate" Type="datetime" />
+    <Property Name="TranUser" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="int" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="LotNumber1" Type="nvarchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="nvarchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="ChangeQty" Type="int" />
+    <Property Name="ChangeLotNumber1" Type="nvarchar" MaxLength="48" />
+    <Property Name="ChangeLotNumber2" Type="nvarchar" MaxLength="48" />
+    <Property Name="ChangeLotDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OutBoundOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AltCustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ProcessId" Type="int" Nullable="false" />
+    <Property Name="NowProcessId" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="StatusName" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="DSFLag" Type="int" />
+    <Property Name="OrderSource" Type="varchar" MaxLength="48" />
+    <Property Name="OrderType" Type="varchar" MaxLength="48" />
+    <Property Name="PlanOutTime" Type="datetime" />
+    <Property Name="LoadFlag" Type="int" Nullable="false" />
+    <Property Name="OutOrderGroupId" Type="int" />
+    <Property Name="buy_name" Type="varchar" MaxLength="50" />
+    <Property Name="buy_company" Type="varchar" MaxLength="500" />
+    <Property Name="address" Type="varchar" MaxLength="500" />
+    <Property Name="InterceptFlag" Type="int" />
+    <Property Name="CheckInvFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OutBoundOrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="OutBoundOrderId" Type="int" Nullable="false" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="DSFLag" Type="int" />
+    <Property Name="InBoundOrderDetailId" Type="int" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="StowPosition" Type="varchar" MaxLength="8" />
+    <Property Name="TotalCbm" Type="decimal" Precision="18" Scale="6" />
+    <Property Name="MinReceiptDate" Type="datetime" />
+    <Property Name="MaxShipDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PackHeadId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="PlanQty" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PackTaskId" Type="int" />
+    <Property Name="PackGroupId" Type="int" />
+    <Property Name="PackNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ExpressNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ExpressNumberParent" Type="varchar" MaxLength="48" />
+    <Property Name="ExpressStatus" Type="nvarchar" MaxLength="5" />
+    <Property Name="ExpressMessage" Type="varchar" MaxLength="400" />
+    <Property Name="GetExpressNumberErrorFlag" Type="int" />
+    <Property Name="TransferHeadId" Type="varchar" MaxLength="10" />
+    <Property Name="TransferConveyorId" Type="varchar" MaxLength="48" />
+    <Property Name="TransferSystemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="PackCarton" Type="varchar" MaxLength="480" />
+    <Property Name="Status" Type="int" />
+    <Property Name="PrintDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackHeadJson">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ExpressNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Json" Type="nvarchar(max)" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackScanNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PackDetailId" Type="int" />
+    <Property Name="ScanNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="SortGroupId" Type="int" />
+    <Property Name="SortGroupNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltCustomerOutPoNumber" Type="varchar" MaxLength="50" />
+    <Property Name="TransportType" Type="varchar" MaxLength="48" />
+    <Property Name="PackQty" Type="int" />
+    <Property Name="j_company" Type="varchar" MaxLength="100" />
+    <Property Name="j_contact" Type="varchar" MaxLength="100" />
+    <Property Name="j_tel" Type="varchar" MaxLength="50" />
+    <Property Name="j_province" Type="varchar" MaxLength="20" />
+    <Property Name="j_city" Type="varchar" MaxLength="30" />
+    <Property Name="j_county" Type="varchar" MaxLength="48" />
+    <Property Name="j_address" Type="varchar" MaxLength="200" />
+    <Property Name="d_company" Type="varchar" MaxLength="100" />
+    <Property Name="d_contact" Type="varchar" MaxLength="100" />
+    <Property Name="d_tel" Type="varchar" MaxLength="50" />
+    <Property Name="d_Province" Type="varchar" MaxLength="20" />
+    <Property Name="d_city" Type="varchar" MaxLength="30" />
+    <Property Name="d_address" Type="varchar" MaxLength="200" />
+    <Property Name="express_code" Type="nvarchar" MaxLength="50" />
+    <Property Name="express_type" Type="nvarchar" MaxLength="5" />
+    <Property Name="express_type_zh" Type="varchar" MaxLength="20" />
+    <Property Name="parcel_quantity" Type="int" />
+    <Property Name="companyCode" Type="varchar" MaxLength="20" />
+    <Property Name="custid" Type="varchar" MaxLength="20" />
+    <Property Name="cod" Type="money" />
+    <Property Name="j_name" Type="varchar" MaxLength="100" />
+    <Property Name="form_code" Type="varchar" MaxLength="20" />
+    <Property Name="dest_code" Type="varchar" MaxLength="48" />
+    <Property Name="AirFlag" Type="varchar" MaxLength="20" />
+    <Property Name="Status" Type="int" />
+    <Property Name="PackMoreFlag" Type="int" />
+    <Property Name="SingleFlag" Type="int" />
+    <Property Name="ZdFlag" Type="int" />
+    <Property Name="SinglePlaneTemplate" Type="varchar" MaxLength="48" />
+    <Property Name="PackingListTemplate" Type="varchar" MaxLength="48" />
+    <Property Name="Remark" Type="varchar" MaxLength="200" />
+    <Property Name="OrderCreateDate" Type="datetime" />
+    <Property Name="Json" Type="varchar(max)" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PackTaskJson">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltCustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Json" Type="nvarchar(max)" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Pallates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TypeId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PallateTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PhotoMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PhotoId" Type="int" />
+    <Property Name="UploadDate" Type="datetime" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="50" />
+    <Property Name="Number" Type="varchar" MaxLength="48" />
+    <Property Name="Number2" Type="varchar" MaxLength="48" />
+    <Property Name="Number3" Type="varchar" MaxLength="50" />
+    <Property Name="Number4" Type="varchar" MaxLength="50" />
+    <Property Name="PoId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="UnitName" Type="varchar" MaxLength="50" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="RegQty" Type="int" />
+    <Property Name="HuId" Type="varchar" MaxLength="50" />
+    <Property Name="HoldReason" Type="varchar" MaxLength="300" />
+    <Property Name="TCRStatus" Type="varchar" MaxLength="50" />
+    <Property Name="TCRCheckUser" Type="varchar" MaxLength="50" />
+    <Property Name="TCRCheckDate" Type="datetime" />
+    <Property Name="TCRProcessMode" Type="varchar" MaxLength="100" />
+    <Property Name="SettlementMode" Type="varchar" MaxLength="20" />
+    <Property Name="SumPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DeliveryDate" Type="datetime" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CheckStatus1" Type="varchar" MaxLength="5" />
+    <Property Name="CheckUser1" Type="varchar" MaxLength="48" />
+    <Property Name="CheckDate1" Type="datetime" />
+    <Property Name="KRemark1" Type="varchar" MaxLength="100" />
+    <Property Name="KRemark2" Type="varchar" MaxLength="100" />
+    <Property Name="KRemark3" Type="varchar" MaxLength="100" />
+    <Property Name="CheckStatus2" Type="varchar" MaxLength="5" />
+    <Property Name="CheckUser2" Type="varchar" MaxLength="48" />
+    <Property Name="CheckDate2" Type="datetime" />
+    <Property Name="CRemark1" Type="varchar" MaxLength="100" />
+    <Property Name="OrderSource" Type="varchar" MaxLength="50" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PickTaskDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="OutBoundOrderId" Type="int" />
+    <Property Name="HuDetailId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="Location" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="PickQty" Type="int" />
+    <Property Name="DSFLag" Type="int" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Sequence" Type="int" />
+    <Property Name="Position" Type="varchar" MaxLength="8" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="Status1" Type="varchar" MaxLength="48" />
+    <Property Name="PickLocationDes" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptDate" Type="datetime" />
+    <Property Name="InvDays" Type="int" />
+    <Property Name="PickingSequence" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PlatformUserInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UserCode" Type="varchar" MaxLength="48" />
+    <Property Name="Password" Type="varchar" MaxLength="72" Nullable="false" />
+    <Property Name="LoginTime" Type="datetime" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_Client_FlowRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="BusinessFlowGroupId" Type="int" />
+    <Property Name="Type" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="R_LoadRule_FlowHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RuleId" Type="int" />
+    <Property Name="FlowHeadId" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_Location_Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="WhLocationId" Type="int" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="EAN" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="MinQty" Type="int" />
+    <Property Name="MaxQty" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_Location_Item_RG">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="WhLocationId" Type="int" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="EAN" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="MinQty" Type="int" />
+    <Property Name="MaxQty" Type="int" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_SerialNumberInOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="CartonId" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_WhClient_WhAgent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="AgentId" Type="int" Nullable="false" />
+    <Property Name="AgentType" Type="nvarchar" MaxLength="72" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="R_WhInfo_WhUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="WhCodeId" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="Receipt">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RegId" Type="int" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptDate" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HoldReason" Type="nvarchar" MaxLength="200" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PoId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LotFlag" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Attribute1" Type="varchar" MaxLength="48" />
+    <Property Name="Custom1" Type="varchar" MaxLength="48" />
+    <Property Name="Custom2" Type="varchar" MaxLength="48" />
+    <Property Name="Custom3" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptCharge">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="EndReceiptDate" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptChargeDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ChargeType" Type="nvarchar" MaxLength="48" />
+    <Property Name="ChargeName" Type="nvarchar" MaxLength="100" />
+    <Property Name="TransportType" Type="varchar" MaxLength="48" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="NightTimeFlag" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="ChargeUnitName" Type="varchar" MaxLength="48" />
+    <Property Name="LadderNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="PriceTotal" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="HolidayFlag" Type="varchar" MaxLength="5" />
+    <Property Name="MonthlyFlag" Type="varchar" MaxLength="5" />
+    <Property Name="GroupId" Type="varchar" MaxLength="10" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptPartialRegister">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PhotoId" Type="int" />
+    <Property Name="UploadDate" Type="datetime" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptPartialRegisterDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="PoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptRegister">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RegisterDate" Type="datetime" />
+    <Property Name="ReceiptType" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ProcessId" Type="int" />
+    <Property Name="ProcessName" Type="varchar" MaxLength="48" />
+    <Property Name="HoldOutBoundOrderId" Type="int" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="PrintDate" Type="datetime" />
+    <Property Name="TransportType" Type="varchar" MaxLength="48" />
+    <Property Name="TransportTypeExtend" Type="varchar" MaxLength="48" />
+    <Property Name="TruckNumber" Type="varchar" MaxLength="48" />
+    <Property Name="TruckLength" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+    <Property Name="TruckStatus" Type="int" />
+    <Property Name="DSFLag" Type="int" />
+    <Property Name="GreenPassFLag" Type="int" />
+    <Property Name="QueueUpFLag" Type="int" />
+    <Property Name="QueueUpUser" Type="varchar" MaxLength="50" />
+    <Property Name="QueueUpRemark" Type="varchar" MaxLength="100" />
+    <Property Name="BaoAnRemark" Type="varchar" MaxLength="100" />
+    <Property Name="LoadMasterId" Type="int" />
+    <Property Name="OutBoundOrderId" Type="int" />
+    <Property Name="SumQty" Type="int" />
+    <Property Name="SumCBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="RecSumQty" Type="int" />
+    <Property Name="RecSumCBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="RecSumWeight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="BkDate" Type="varchar" MaxLength="50" />
+    <Property Name="BkDateBegin" Type="datetime" />
+    <Property Name="BkDateEnd" Type="datetime" />
+    <Property Name="InvoiceTitle" Type="nvarchar" MaxLength="48" />
+    <Property Name="ArriveDate" Type="datetime" />
+    <Property Name="ParkingUser" Type="varchar" MaxLength="50" />
+    <Property Name="ParkingDate" Type="datetime" />
+    <Property Name="StorageDate" Type="datetime" />
+    <Property Name="DepartureDate" Type="datetime" />
+    <Property Name="BeginReceiptDate" Type="datetime" />
+    <Property Name="EndReceiptDate" Type="datetime" />
+    <Property Name="ResetCount" Type="int" />
+    <Property Name="FaxInCount" Type="int" />
+    <Property Name="FaxOutCount" Type="int" />
+    <Property Name="TruckCount" Type="int" />
+    <Property Name="BillCount" Type="int" />
+    <Property Name="DNCount" Type="int" />
+    <Property Name="GoodType" Type="nvarchar" MaxLength="48" />
+    <Property Name="AddServiceStatus" Type="varchar" MaxLength="48" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="BookOrigin" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ReceiptRegisterDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="InOrderDetailId" Type="int" Nullable="false" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PoId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" Nullable="false" />
+    <Property Name="RegQty" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptRegisterExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HoldReason1" Type="nvarchar" MaxLength="96" />
+    <Property Name="HoldReason2" Type="nvarchar" MaxLength="96" />
+    <Property Name="HoldReason3" Type="nvarchar" MaxLength="96" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReceiptTruck">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TruckNumber" Type="varchar" MaxLength="48" />
+    <Property Name="TruckStatus" Type="int" />
+    <Property Name="ParkingUser" Type="varchar" MaxLength="48" />
+    <Property Name="ParkingDate" Type="datetime" />
+    <Property Name="StorageDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RecLoss">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RecLossName" Type="varchar" MaxLength="48" />
+    <Property Name="RecLossDescription" Type="varchar" MaxLength="48" />
+    <Property Name="RecLossTypeId" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="RecSort" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RecLossType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RecLossType" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ReleaseLoadDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReleaseMark" Type="nvarchar" MaxLength="96" />
+    <Property Name="Description" Type="nvarchar" MaxLength="480" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="OutSoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="OutCustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="OutAltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="OutItemId" Type="int" />
+    <Property Name="OutUnitName" Type="varchar" MaxLength="48" />
+    <Property Name="OutUnitId" Type="int" />
+    <Property Name="OutQty" Type="int" />
+    <Property Name="OutLotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="OutLotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="OutLotDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RFFlowRule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FunctionId" Type="int" Nullable="false" />
+    <Property Name="RuleType" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="FunctionName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="FunctionFlag" Type="int" />
+    <Property Name="RequiredFlag" Type="int" />
+    <Property Name="RelyId" Type="int" />
+    <Property Name="BusinessObjectHeadId" Type="int" />
+    <Property Name="SelectRuleDescription" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="SerialNumberDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeadId" Type="int" Nullable="false" />
+    <Property Name="SNType" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="PCS" Type="int" />
+    <Property Name="UPC" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SerialNumberIn">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="PoId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="CartonId" Type="varchar" MaxLength="192" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="ToOutStatus" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SerialNumberInOutExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="Style1" Type="nvarchar" MaxLength="48" />
+    <Property Name="CartonId" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="SerialNumberOut">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="CartonId" Type="varchar" MaxLength="192" Nullable="false" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SortTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SortTaskDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="GroupId" Type="int" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="EAN" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="PlanQty" Type="int" Nullable="false" />
+    <Property Name="PickQty" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="PackQty" Type="int" />
+    <Property Name="TransferQty" Type="int" />
+    <Property Name="HoldQty" Type="int" />
+    <Property Name="HoldFlag" Type="int" />
+    <Property Name="GroupNumber" Type="nvarchar" MaxLength="48" />
+    <Property Name="HandFlag" Type="int" Nullable="false" />
+    <Property Name="ScanFlag" Type="int" Nullable="false" />
+    <Property Name="ScanRule" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="StringrRgular">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RgularName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="RgularValue" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Remark" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="SupplementTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SupplementNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SupplementTaskDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="SupplementTaskId" Type="int" />
+    <Property Name="SupplementNumber" Type="varchar" MaxLength="48" />
+    <Property Name="HuDetailId" Type="int" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" />
+    <Property Name="PutLocationId" Type="varchar" MaxLength="48" />
+    <Property Name="GroupNumber" Type="varchar" MaxLength="48" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="EAN" Type="varchar" MaxLength="48" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="LotNumber1" Type="varchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="varchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TCRProcess">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TCRProcessMode" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TranLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TranType" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="200" />
+    <Property Name="TranDate" Type="datetime" />
+    <Property Name="TranUser" Type="varchar" MaxLength="48" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="ProcessId" Type="int" />
+    <Property Name="SoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="PoID" Type="int" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="TranQty" Type="int" />
+    <Property Name="TranQty2" Type="int" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" />
+    <Property Name="HuId2" Type="varchar" MaxLength="48" />
+    <Property Name="LotFlag" Type="int" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="LotNumber1" Type="nvarchar" MaxLength="48" />
+    <Property Name="LotNumber2" Type="nvarchar" MaxLength="48" />
+    <Property Name="LotDate" Type="datetime" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="ReceiptDate" Type="datetime" />
+    <Property Name="Location" Type="varchar" MaxLength="48" />
+    <Property Name="Location2" Type="varchar" MaxLength="48" />
+    <Property Name="HoldId" Type="int" />
+    <Property Name="HoldReason" Type="varchar" MaxLength="300" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="Remark" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="TransferDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TransferHeadId" Type="int" />
+    <Property Name="TransferSystemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="50" />
+    <Property Name="PlanQty" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TransferHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TransferTaskId" Type="int" />
+    <Property Name="TransferSystemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="SortGroupId" Type="int" />
+    <Property Name="SortGroupNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CustomerOutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="OutPoNumber" Type="varchar" MaxLength="48" />
+    <Property Name="PackGroupId" Type="int" />
+    <Property Name="PackNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ExpressNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Length" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Width" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Height" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="PackCarton" Type="varchar" MaxLength="480" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ExpressNumberParent" Type="varchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="TransferScanNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TransferHeadId" Type="int" />
+    <Property Name="TransferSystemNumber" Type="varchar" MaxLength="48" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="AltItemNumber" Type="varchar" MaxLength="50" />
+    <Property Name="ScanNumber" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TransferTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="TransferId" Type="nvarchar" MaxLength="48" />
+    <Property Name="TransferNumber" Type="varchar" MaxLength="48" />
+    <Property Name="TransportType" Type="varchar" MaxLength="50" />
+    <Property Name="express_code" Type="nvarchar" MaxLength="50" />
+    <Property Name="express_type" Type="nvarchar" MaxLength="5" />
+    <Property Name="express_type_zh" Type="varchar" MaxLength="20" />
+    <Property Name="Status" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TruckQueueDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HeadId" Type="int" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="ReceiptId" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="UnloadingArea" Type="nvarchar" MaxLength="10" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="BkNumber" Type="varchar" MaxLength="48" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="GoodsType" Type="varchar" MaxLength="48" />
+    <Property Name="BkDateBegin" Type="datetime" />
+    <Property Name="BkDateEnd" Type="datetime" />
+    <Property Name="RegisterDate" Type="datetime" />
+    <Property Name="BkIsValid" Type="int" />
+    <Property Name="SeeFlag" Type="int" />
+    <Property Name="SeeTime" Type="datetime" />
+    <Property Name="SeeUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="OverSizeFlag" Type="int" />
+    <Property Name="FeesStatus" Type="int" />
+    <Property Name="BookChannel" Type="varchar" MaxLength="24" />
+    <Property Name="BookOrigin" Type="varchar" MaxLength="50" />
+    <Property Name="NoticeFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ResetCount" Type="int" />
+    <Property Name="SmallLoadingArea" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TruckQueueHead">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="WMSWhCode" Type="nvarchar" MaxLength="48" />
+    <Property Name="TruckNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="TruckStatus" Type="nvarchar" MaxLength="10" />
+    <Property Name="TruckLength" Type="nvarchar" MaxLength="10" />
+    <Property Name="AllowTime" Type="datetime" />
+    <Property Name="AllowUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="JumpingRemark" Type="nvarchar" MaxLength="50" />
+    <Property Name="EntryTime" Type="datetime" />
+    <Property Name="DepartureTime" Type="datetime" />
+    <Property Name="DepartureType" Type="nvarchar" MaxLength="12" />
+    <Property Name="GreenPassFlag" Type="int" />
+    <Property Name="BookOrigin" Type="nvarchar" MaxLength="12" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ResetCount" Type="int" />
+  </EntityType>
+  <EntityType Name="UnitDefault">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UnitNameCN" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="OrderById" Type="int" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Proportion" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ItemNumber" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UrlEdi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" />
+    <Property Name="Url" Type="varchar" MaxLength="100" />
+    <Property Name="Field" Type="nvarchar" MaxLength="200" />
+    <Property Name="HttpType" Type="varchar" MaxLength="10" />
+    <Property Name="UrlName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UrlEdiTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" />
+    <Property Name="Url" Type="varchar" MaxLength="100" />
+    <Property Name="Field" Type="nvarchar" MaxLength="200" />
+    <Property Name="Mark" Type="nvarchar" MaxLength="200" />
+    <Property Name="HttpType" Type="varchar" MaxLength="10" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Result" Type="nvarchar" MaxLength="500" />
+    <Property Name="RunQty" Type="int" />
+    <Property Name="SendTime" Type="datetime" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserPriceT">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Rank" Type="int" Nullable="false" />
+    <Property Name="itemType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserShenT">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Amt" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WhAgent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AgentName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AgentCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="AgentType" Type="nvarchar" MaxLength="72" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhClient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientName" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="WarnCBM" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ZoneFlag" Type="int" />
+    <Property Name="ClientType" Type="varchar" MaxLength="50" />
+    <Property Name="NightTime" Type="varchar" MaxLength="50" />
+    <Property Name="ContractName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ContractNameOut" Type="nvarchar" MaxLength="100" />
+    <Property Name="Passageway" Type="nvarchar" MaxLength="48" />
+    <Property Name="ReleaseRule" Type="int" />
+    <Property Name="RecCBMPercent" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="WhClientExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="InvClearUpSkuMaxQty" Type="int" />
+    <Property Name="NotOnlySkuPutawayQty" Type="int" />
+    <Property Name="RegularExpression" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="WhClientType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="10" />
+    <Property Name="ClientType" Type="varchar" MaxLength="50" />
+    <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+    <Property Name="CreateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhCompany">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CompanyCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="WhName" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="WhDescription" Type="nvarchar" MaxLength="1024" />
+    <Property Name="WhAddress" Type="nvarchar" MaxLength="1024" />
+    <Property Name="WhContract" Type="nvarchar" MaxLength="1024" />
+    <Property Name="WhTel" Type="nvarchar" MaxLength="1024" />
+    <Property Name="WhActiveEndDate" Type="datetime" />
+    <Property Name="WhLevel" Type="int" Nullable="false" />
+    <Property Name="NoHuIdFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+  </EntityType>
+  <EntityType Name="WhLevel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="WhLevel" Type="int" Nullable="false" />
+    <Property Name="WhLevelDescription" Type="varchar" MaxLength="1024" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LocationId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="HoldId" Type="int" Nullable="false" />
+    <Property Name="HoldReason" Type="nvarchar" MaxLength="48" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="LocationTypeId" Type="int" Nullable="false" />
+    <Property Name="LocationTypeDetailId" Type="int" />
+    <Property Name="Location" Type="varchar" MaxLength="48" />
+    <Property Name="LocationColumn" Type="varchar" MaxLength="48" />
+    <Property Name="LocationRow" Type="int" />
+    <Property Name="LocationFloor" Type="int" />
+    <Property Name="LocationPcs" Type="int" />
+    <Property Name="MaxPltQty" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="ChangeTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="MenuName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="MenuNameCN" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MenuUrl" Type="varchar" MaxLength="256" />
+    <Property Name="MenuIcon" Type="varchar" MaxLength="50" />
+    <Property Name="MenuSort" Type="int" />
+    <Property Name="PowerId" Type="int" />
+    <Property Name="PowerName" Type="varchar" MaxLength="48" />
+    <Property Name="ParentMenuId" Type="int" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhPosition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="72" Nullable="false" />
+    <Property Name="PositionNameCN" Type="nvarchar" MaxLength="72" />
+    <Property Name="Status" Type="varchar" MaxLength="48" />
+    <Property Name="WorkPowerFlag" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhPositionPower">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="PositionId" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PowerId" Type="int" Nullable="false" />
+    <Property Name="PowerName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PowerVal" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhPositionPowerMVC">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="AreaName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ControllerName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ActionName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="HttpMethod" Type="int" Nullable="false" />
+    <Property Name="PowerId" Type="int" />
+    <Property Name="PowerName" Type="varchar" MaxLength="48" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhPower">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="PowerName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PowerDescription" Type="varchar" MaxLength="256" />
+    <Property Name="PowerType" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WhUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PassWord" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="UserNameCN" Type="nvarchar" MaxLength="256" />
+    <Property Name="Status" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UserCode" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+    <Property Name="CheckFlag" Type="int" />
+  </EntityType>
+  <EntityType Name="WhUserPosition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="PositionId" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="varchar" MaxLength="72" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="WorkloadAccount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="50" />
+    <Property Name="ReceiptId" Type="varchar" MaxLength="48" />
+    <Property Name="LoadId" Type="varchar" MaxLength="48" />
+    <Property Name="HuId" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="WorkType" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="UserCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="LotFlag" Type="int" />
+    <Property Name="EchFlag" Type="int" />
+    <Property Name="Qty" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="CBM" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="Weight" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="ReceiptDate" Type="datetime" />
+    <Property Name="BaQty" Type="decimal" Precision="18" Scale="4" />
+  </EntityType>
+  <EntityType Name="ZoneLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="Location" Type="varchar" MaxLength="48" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Zones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ZoneName" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="UpId" Type="int" Nullable="false" />
+    <Property Name="RegFlag" Type="int" />
+    <Property Name="ZoneCBM" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ZonesExtend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WhCode" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="ZoneOrderBy" Type="int" />
+    <Property Name="OnlySkuFlag" Type="int" />
+    <Property Name="MaxLocationIdQty" Type="int" />
+    <Property Name="MaxPallateQty" Type="int" />
+    <Property Name="MaxECH" Type="int" />
+    <Property Name="CreateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="UpdateUser" Type="nvarchar" MaxLength="48" />
+    <Property Name="UpdateDate" Type="datetime" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“WMS.dbo.truckQueueView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="truckQueueView">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="WhCode" />
+      <PropertyRef Name="GreenPassFlag" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="DetailId" Type="int" />
+    <Property Name="seq" Type="bigint" />
+    <Property Name="WhCode" Type="nvarchar" MaxLength="48" Nullable="false" />
+    <Property Name="UnloadingArea" Type="nvarchar" MaxLength="10" />
+    <Property Name="TruckNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="TruckLength" Type="nvarchar" MaxLength="10" />
+    <Property Name="CBM" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="Description" Type="varchar" MaxLength="72" />
+    <Property Name="ClientCode" Type="varchar" MaxLength="48" />
+    <Property Name="GreenPassFlag" Type="varchar" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_PackDetail_PackHead">
+    <End Role="PackHead" Type="Self.PackHead" Multiplicity="0..1" />
+    <End Role="PackDetail" Type="Self.PackDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PackHead">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PackDetail">
+        <PropertyRef Name="PackHeadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MODEL_MSSQLStoreContainer">
+    <EntitySet Name="AddValueService" EntityType="Self.AddValueService" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillMaster" EntityType="Self.BillMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessFlowGroup" EntityType="Self.BusinessFlowGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessFlowHead" EntityType="Self.BusinessFlowHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessObjectDetail" EntityType="Self.BusinessObjectDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessObjectHead" EntityType="Self.BusinessObjectHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessObjectItems" EntityType="Self.BusinessObjectItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusinessObjects" EntityType="Self.BusinessObjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContractForm" EntityType="Self.ContractForm" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContractFormExtend" EntityType="Self.ContractFormExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContractFormOut" EntityType="Self.ContractFormOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CRTemplate" EntityType="Self.CRTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CycleCountCheck" EntityType="Self.CycleCountCheck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CycleCountDetail" EntityType="Self.CycleCountDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CycleCountInventory" EntityType="Self.CycleCountInventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CycleCountMaster" EntityType="Self.CycleCountMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DamcoGRNDetail" EntityType="Self.DamcoGRNDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DamcoGRNHead" EntityType="Self.DamcoGRNHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DamcoGrnRule" EntityType="Self.DamcoGrnRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DcReturnException" EntityType="Self.DcReturnException" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DcShipingException" EntityType="Self.DcShipingException" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelImportInBound" EntityType="Self.ExcelImportInBound" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelImportInBoundCom" EntityType="Self.ExcelImportInBoundCom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelImportInBoundCotton" EntityType="Self.ExcelImportInBoundCotton" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelImportOutBound" EntityType="Self.ExcelImportOutBound" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeDetail" EntityType="Self.FeeDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeHoliday" EntityType="Self.FeeHoliday" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FeeMaster" EntityType="Self.FeeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FieldOrderBy" EntityType="Self.FieldOrderBy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FlowDetail" EntityType="Self.FlowDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FlowHead" EntityType="Self.FlowHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FlowRule" EntityType="Self.FlowRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Heport_R_SerialNumberInOut" EntityType="Self.Heport_R_SerialNumberInOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HeportSerialNumberIn" EntityType="Self.HeportSerialNumberIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HoldMaster" EntityType="Self.HoldMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HuDetail" EntityType="Self.HuDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HuMaster" EntityType="Self.HuMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InBoundOrder" EntityType="Self.InBoundOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InBoundOrderDetail" EntityType="Self.InBoundOrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InBoundSO" EntityType="Self.InBoundSO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvMove" EntityType="Self.InvMove" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvMoveDetail" EntityType="Self.InvMoveDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemMaster" EntityType="Self.ItemMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemMasterColorCode" EntityType="Self.ItemMasterColorCode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemMasterExtendOMS" EntityType="Self.ItemMasterExtendOMS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KmartWaitingReason" EntityType="Self.KmartWaitingReason" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadCharge" EntityType="Self.LoadCharge" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadChargeDaiDian" EntityType="Self.LoadChargeDaiDian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadChargeDetail" EntityType="Self.LoadChargeDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadChargeRule" EntityType="Self.LoadChargeRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadContainerDetailExtend" EntityType="Self.LoadContainerDetailExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadContainerExtend" EntityType="Self.LoadContainerExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadContainerExtendHuDetail" EntityType="Self.LoadContainerExtendHuDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadContainerType" EntityType="Self.LoadContainerType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadCreateRule" EntityType="Self.LoadCreateRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadDetail" EntityType="Self.LoadDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadHuIdExtend" EntityType="Self.LoadHuIdExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoadMaster" EntityType="Self.LoadMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationTypes" EntityType="Self.LocationTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationTypesDetail" EntityType="Self.LocationTypesDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LookUp" EntityType="Self.LookUp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Loss" EntityType="Self.Loss" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NightTime" EntityType="Self.NightTime" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OMSInvChange" EntityType="Self.OMSInvChange" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OutBoundOrder" EntityType="Self.OutBoundOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OutBoundOrderDetail" EntityType="Self.OutBoundOrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackDetail" EntityType="Self.PackDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackHead" EntityType="Self.PackHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackHeadJson" EntityType="Self.PackHeadJson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackScanNumber" EntityType="Self.PackScanNumber" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackTask" EntityType="Self.PackTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackTaskJson" EntityType="Self.PackTaskJson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pallates" EntityType="Self.Pallates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PallateTypes" EntityType="Self.PallateTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhotoMaster" EntityType="Self.PhotoMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PickTaskDetail" EntityType="Self.PickTaskDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlatformUserInfo" EntityType="Self.PlatformUserInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_Client_FlowRule" EntityType="Self.R_Client_FlowRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_LoadRule_FlowHead" EntityType="Self.R_LoadRule_FlowHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_Location_Item" EntityType="Self.R_Location_Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_Location_Item_RG" EntityType="Self.R_Location_Item_RG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_SerialNumberInOut" EntityType="Self.R_SerialNumberInOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_WhClient_WhAgent" EntityType="Self.R_WhClient_WhAgent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="R_WhInfo_WhUser" EntityType="Self.R_WhInfo_WhUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptCharge" EntityType="Self.ReceiptCharge" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptChargeDetail" EntityType="Self.ReceiptChargeDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptPartialRegister" EntityType="Self.ReceiptPartialRegister" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptPartialRegisterDetail" EntityType="Self.ReceiptPartialRegisterDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptRegister" EntityType="Self.ReceiptRegister" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptRegisterDetail" EntityType="Self.ReceiptRegisterDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptRegisterExtend" EntityType="Self.ReceiptRegisterExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptTruck" EntityType="Self.ReceiptTruck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecLoss" EntityType="Self.RecLoss" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecLossType" EntityType="Self.RecLossType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReleaseLoadDetail" EntityType="Self.ReleaseLoadDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RFFlowRule" EntityType="Self.RFFlowRule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SerialNumberDetail" EntityType="Self.SerialNumberDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SerialNumberIn" EntityType="Self.SerialNumberIn" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SerialNumberInOutExtend" EntityType="Self.SerialNumberInOutExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SerialNumberOut" EntityType="Self.SerialNumberOut" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SortTask" EntityType="Self.SortTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SortTaskDetail" EntityType="Self.SortTaskDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StringrRgular" EntityType="Self.StringrRgular" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SupplementTask" EntityType="Self.SupplementTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SupplementTaskDetail" EntityType="Self.SupplementTaskDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TCRProcess" EntityType="Self.TCRProcess" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TranLog" EntityType="Self.TranLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransferDetail" EntityType="Self.TransferDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransferHead" EntityType="Self.TransferHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransferScanNumber" EntityType="Self.TransferScanNumber" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransferTask" EntityType="Self.TransferTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TruckQueueDetail" EntityType="Self.TruckQueueDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TruckQueueHead" EntityType="Self.TruckQueueHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitDefault" EntityType="Self.UnitDefault" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UrlEdi" EntityType="Self.UrlEdi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UrlEdiTask" EntityType="Self.UrlEdiTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPriceT" EntityType="Self.UserPriceT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserShenT" EntityType="Self.UserShenT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhAgent" EntityType="Self.WhAgent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhClient" EntityType="Self.WhClient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhClientExtend" EntityType="Self.WhClientExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhClientType" EntityType="Self.WhClientType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhCompany" EntityType="Self.WhCompany" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhInfo" EntityType="Self.WhInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhLevel" EntityType="Self.WhLevel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhLocation" EntityType="Self.WhLocation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhMenu" EntityType="Self.WhMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhPosition" EntityType="Self.WhPosition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhPositionPower" EntityType="Self.WhPositionPower" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhPositionPowerMVC" EntityType="Self.WhPositionPowerMVC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhPower" EntityType="Self.WhPower" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhUser" EntityType="Self.WhUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WhUserPosition" EntityType="Self.WhUserPosition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkloadAccount" EntityType="Self.WorkloadAccount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ZoneLocation" EntityType="Self.ZoneLocation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zones" EntityType="Self.Zones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ZonesExtend" EntityType="Self.ZonesExtend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="truckQueueView" EntityType="Self.truckQueueView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [truckQueueView].[Id] AS [Id], 
+    [truckQueueView].[DetailId] AS [DetailId], 
+    [truckQueueView].[seq] AS [seq], 
+    [truckQueueView].[WhCode] AS [WhCode], 
+    [truckQueueView].[UnloadingArea] AS [UnloadingArea], 
+    [truckQueueView].[TruckNumber] AS [TruckNumber], 
+    [truckQueueView].[PhoneNumber] AS [PhoneNumber], 
+    [truckQueueView].[TruckLength] AS [TruckLength], 
+    [truckQueueView].[CBM] AS [CBM], 
+    [truckQueueView].[Description] AS [Description], 
+    [truckQueueView].[ClientCode] AS [ClientCode], 
+    [truckQueueView].[GreenPassFlag] AS [GreenPassFlag]
+    FROM [dbo].[truckQueueView] AS [truckQueueView]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_PackDetail_PackHead" Association="Self.FK_PackDetail_PackHead">
+      <End Role="PackHead" EntitySet="PackHead" />
+      <End Role="PackDetail" EntitySet="PackDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

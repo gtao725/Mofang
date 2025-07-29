@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        <input type="text" name="TaskNumber" hint="盘点任务号" />
+        <input type="text" name="LocationId" hint="库位" />
+        <input type="text" name="HuId" hint="托盘" />
+        <input type="text" name="CustomerPoNumber" hint="PO" />
+        <input type="text" name="AltItemNumber" hint="款号" />
+        <input type="text" name="BeginCreateDate" hint="盘点时间" date='Y' value="@DateTime.Now.AddDays(-20).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <input name="whetherDifference" hint="只显示差异" type="checkbox" value="1">
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/WarhouseReport/CycleCountList", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+    });
+
+</script>

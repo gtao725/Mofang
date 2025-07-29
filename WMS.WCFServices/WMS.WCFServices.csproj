@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9BAB820E-43FE-43A5-A8B7-D4DE02162543}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS.WCFServices</RootNamespace>
+    <AssemblyName>WMS.WCFServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminService\AdminService.svc" />
+    <Content Include="BsService\BsService.svc" />
+    <Content Include="CommonService\CommonService.svc" />
+    <Content Include="CrystalReportsService\CrystalReportsService.svc" />
+    <Content Include="EclService\EclService.svc" />
+    <Content Include="EipCfsServer\CfsService.svc" />
+    <Content Include="InBoundService\InBoundService.svc" />
+    <Content Include="InVentoryService\InVentoryService.svc" />
+    <Content Include="OutBoundService\OutBoundService.svc" />
+    <Content Include="GMSService\GMSService.svc" />
+    <Content Include="PackTaskService\PackTaskService.svc" />
+    <Content Include="RecReportService\RecReportService.svc" />
+    <Content Include="RecService\RecService.svc" />
+    <Content Include="RootService\RootService.svc" />
+    <Content Include="SortTaskService\SortTaskService.svc" />
+    <Content Include="TransferTaskService\TransferTaskService.svc" />
+    <Content Include="UserService\UserService.svc" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminService\AdminService.svc.cs">
+      <DependentUpon>AdminService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="AdminService\IAdminService.cs" />
+    <Compile Include="BsService\BsService.svc.cs">
+      <DependentUpon>BsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BsService\IBsService.cs" />
+    <Compile Include="CommonService\CommonService.svc.cs">
+      <DependentUpon>CommonService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="CommonService\ICommonService.cs" />
+    <Compile Include="CrystalReportsService\CrystalReportsService.svc.cs">
+      <DependentUpon>CrystalReportsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReportsService\ICrystalReportsService.cs" />
+    <Compile Include="EclService\EclService.svc.cs">
+      <DependentUpon>EclService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="EclService\IEclService.cs" />
+    <Compile Include="EipCfsServer\CfsService.svc.cs">
+      <DependentUpon>CfsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="EipCfsServer\ICfsService.cs" />
+    <Compile Include="InBoundService\IInBoundService.cs" />
+    <Compile Include="InBoundService\InBoundService.svc.cs">
+      <DependentUpon>InBoundService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="InVentoryService\IInVentoryService.cs" />
+    <Compile Include="InVentoryService\InVentoryService.svc.cs">
+      <DependentUpon>InVentoryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="OutBoundService\IOutBoundService.cs" />
+    <Compile Include="OutBoundService\OutBoundService.svc.cs">
+      <DependentUpon>OutBoundService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GMSService\IGMSService.cs" />
+    <Compile Include="GMSService\GMSService.svc.cs">
+      <DependentUpon>GMSService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PackTaskService\IPackTaskService.cs" />
+    <Compile Include="PackTaskService\PackTaskService.svc.cs">
+      <DependentUpon>PackTaskService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecReportService\IRecReportService.cs" />
+    <Compile Include="RecReportService\RecReportService.svc.cs">
+      <DependentUpon>RecReportService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RecService\IRecService.cs" />
+    <Compile Include="RecService\RecService.svc.cs">
+      <DependentUpon>RecService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RootService\IRootService.cs" />
+    <Compile Include="RootService\RootService.svc.cs">
+      <DependentUpon>RootService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SortTaskService\ISortTaskService.cs" />
+    <Compile Include="SortTaskService\SortTaskService.svc.cs">
+      <DependentUpon>SortTaskService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="TransferTaskService\ITransferTaskService.cs" />
+    <Compile Include="TransferTaskService\TransferTaskService.svc.cs">
+      <DependentUpon>TransferTaskService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="UserService\IUserService.cs" />
+    <Compile Include="UserService\UserService.svc.cs">
+      <DependentUpon>UserService.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MODEL_MSSQL\MODEL_MSSQL.csproj">
+      <Project>{7da3a2ef-6b45-4dba-8ab6-90e89f803287}</Project>
+      <Name>MODEL_MSSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.BLLClass\WMS.BLLClass.csproj">
+      <Project>{f9efd309-0335-4be3-8e81-6ce41be77e25}</Project>
+      <Name>WMS.BLLClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.BLL\WMS.BLL.csproj">
+      <Project>{9354fe6e-c43b-45f0-bd11-43df01e2a5cd}</Project>
+      <Name>WMS.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.IBLL\WMS.IBLL.csproj">
+      <Project>{19650d41-33cd-48cb-8aa0-632085075680}</Project>
+      <Name>WMS.IBLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:45936/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

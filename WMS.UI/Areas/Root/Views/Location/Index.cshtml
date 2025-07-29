@@ -1,0 +1,443 @@
+﻿@model WMS.UI.Controllers.Model.RootModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="location_name" hint="储位" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "SelZone", "区域", "")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LocationType"], "SelLocationType", "储位类型", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form11' style="display:none">
+    @Html.EipInputFor(model => model.txt_beginLocation, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_beginLocationColumn1, new { @left = "140" })
+    <input type="text" left="20" name="txt_beginLocationColumn2" hint="" />
+    @Html.EipInputFor(model => model.txt_endLocationColumn1, new { @left = "140" })
+    <input type="text" left="20" name="txt_endLocationColumn2" hint="" />
+    @Html.EipInputFor(model => model.txt_beginLocationRow, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_endLocationRow, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_LocationFloor, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_LocationPcs, new { @left = "140" })
+</div>
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_reclocation, new { @left = "140" })
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "txt_zone", "区域", "", "left='140' ")
+</div>
+<div id='form33' style="display:none">
+    @Html.EipInputFor(model => model.txt_outlocation, new { @left = "140" })
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "txt_zone", "区域", "", "left='140' ")
+</div>
+
+<div id='form88' style="display:none">
+    <input type="text" left="140" name="txt_setABLocationId" hint="异常库位" value="" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "按规则新增储位", icon: "add", click:
+                             function () {
+                                 var dlg = eip.dialog.create("新增储位", "<div id=layoutLocation ><div form='Y' id='formLocation'>"
+                                      + $("#form11").html()
+                                     + "</div></div>", 500, 300)
+
+                                 //窗体工具栏按钮 begin
+                                 eip.layout.create($('#layoutLocation'), [{
+                                     obj: $('#formLocation'),
+                                     buttons: [
+                                         {
+                                             text: "保存", icon: "save", click:
+                                                 function () {
+                                                     if (!$("#layoutLocation").form('validate')) {
+                                                         return false;
+                                                     }
+
+                                                     eip.get("/Root/Location/AddLocation", eip.para.create($("input,select", $("#layoutLocation"))), function (jsonObj) {
+                                                         $.procAjaxData(jsonObj, function () {
+
+                                                         }, function () { });
+                                                     }, null, true)
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 //end
+
+                                 $("[name=txt_reclocation]").focus();
+                             }
+                    },
+                     {
+                         text: "批量导入储位", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/Location/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+
+                                          eip.dialog.close($('#imports-layout').parent());
+
+                                          eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '储位',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '区域',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '最大托盘数',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      }
+                                  ]
+                              });
+                          }
+                     },
+                    {
+                        text: "新增收货门区", icon: "add", click:
+                             function () {
+                                 var dlg = eip.dialog.create("新增收货门区", "<div id=layout1 ><div form='Y' id='form2'>"
+                                      + $("#form22").html()
+                                     @*+ "<input type=\"text\" left=\"140\" name=\"txt_reclocation\" hint=\"收货储位名\" /><br/>"
+                                      + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "txt_zone", "区域","", "left='140' ")"*@
+                                     + "</div></div>", 500, 200)
+
+                                 //窗体工具栏按钮 begin
+                                 eip.layout.create($('#layout1'), [{
+                                     obj: $('#form2'),
+                                     buttons: [
+                                         {
+                                             text: "保存", icon: "save", click:
+                                                 function () {
+
+                                                     if (!$("#form2").form('validate')) {
+                                                         return false;
+                                                     }
+
+                                                     eip.get("/Root/Location/AddRecLocation", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                         $.procAjaxData(jsonObj, function () {
+                                                             $("[name=txt_reclocation]").val("");
+                                                             $("[name=txt_zone]").val("");
+                                                             eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                         }, function () { });
+                                                     })
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 //end
+
+                                 $("[name=txt_reclocation]").focus();
+                             }
+                    },
+                    {
+                        text: "新增备货门区", icon: "add", click:
+                            function () {
+                                var dlg = eip.dialog.create("新增备货门区", "<div id=layout3 ><div form='Y' id='form3'>"
+                                     + $("#form33").html()
+                                    @*+ "<input type=\"text\" left=\"140\" name=\"txt_outlocation\" hint=\"出货储位名\" /><br/>"
+                                      + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "txt_zone", "区域","", "left='140' ")"*@
+                                    + "</div></div>", 500, 200)
+
+                                //窗体工具栏按钮 begin
+                                eip.layout.create($('#layout3'), [{
+                                    obj: $('#form3'),
+                                    buttons: [
+                                        {
+                                            text: "保存", icon: "save", click:
+                                                function () {
+                                                    if (!$("#form3").form('validate')) {
+                                                        return false;
+                                                    }
+
+                                                    eip.get("/Root/Location/AddOutLocation", eip.para.create($("input,select", $("#layout3"))), function (jsonObj) {
+                                                        $.procAjaxData(jsonObj, function () {
+                                                            $("[name=txt_outlocation]").val("");
+                                                            $("[name=txt_zone]").val("");
+                                                            eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                        }, function () { });
+                                                    })
+                                                }
+                                        },
+                                       {
+                                           text: "关闭窗口", icon: "no", click:
+                                              function () {
+                                                  eip.dialog.close(dlg);
+                                              }
+                                       }
+                                    ]
+                                }])
+                                //end
+
+                                $("[name=txt_outlocation]").focus();
+                            }
+                    },
+                    {
+                        text: "批量修改储位类型", icon: "edit", click:
+                             function () {
+
+                                 if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                     $.eipMsg.alert("请先查询后勾选储位信息!");
+                                     return;
+                                 }
+
+                                 var dlg = eip.dialog.create("批量修改储位类型", "<div id=layoutEditLocation ><div form='Y' id='formEditLocation'>"
+                                + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LocationType"], "edit_locationType","储位类型","", " left='140' ")"
+                                     + "</div></div>", 500, 220)
+
+                                 eip.layout.create($('#layoutEditLocation'), [{
+                                     obj: $('#formEditLocation'),
+                                     buttons: [
+                                         {
+                                             text: "确认修改", icon: "save", click:
+                                                 function () {
+
+                                                     if ($("[name=edit_locationType]").val() == "") {
+                                                         $.eipMsg.alert("请先选择储位类型!");
+                                                         return;
+                                                     }
+
+                                                     var arr_list = [];
+                                                     $("[name=check_to]:checked", $("#grid")).each(function () {
+                                                         arr_list.push({ name: 'id', value: $(this).val() });
+                                                     })
+
+
+                                                     $.eipMsg.confirm("确定修改所选的储位类型吗？<br />修改后，将影响收出货储位使用！", function () {
+                                                         eip.post("/Root/Location/EditOutLocation?locationTypeId=" + $("[name=edit_locationType]").val(), arr_list, function (jsonObj) {
+                                                             $.procAjaxData(jsonObj, function () {
+
+                                                                 eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                                                 eip.dialog.close(dlg);
+
+                                                             }, function () { });
+                                                         }, null, true)
+                                                     })
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 $("[name=txt_reclocation]").focus();
+                             }
+                    }, {
+                        text: "批量删除储位", icon: "cancel", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=check_to]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'idarr', value: $(this).val() });
+                               })
+
+                               eip.post("/Root/Location/BatchDelLocation", arr_list, function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                   }, function () {
+                                   });
+                               })
+
+                           }
+                    },
+                    {
+                        text: "异常库位默认设置", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("异常库位默认设置-扫描枪异常库位上架时默认使用", "<div id=layout8 ><div form='Y' id='form8'>"
+                                 + $("#form88").html()
+                                 + "</div></div>", 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout8'), [{
+                                 obj: $('#form8'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+
+                                                 eip.get("/Root/Location/SetAbLocationId", eip.para.create($("input,select", $("#layout8"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+
+                                                         $("[name=txt_setABLocationId]").val("");
+
+                                                         eip.dialog.close(dlg);
+
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             eip.post("/Root/Location/GetAbLocationId", null, function (result1) {
+                                 if (result1 != "") {
+                                     $("[name=txt_setABLocationId]").val(result1);
+                                 }
+                             })
+
+                             $("[name=txt_setABLocationId]").focus();
+                         }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["区域ID", "储位类型ID", "修改人", "修改时间", "仓库"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+
+                return "<input type=checkbox name=check_to  value=\"" + row["操作"] + "\" >";
+
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditLocationId(this)' title='修改' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelLocation(this)' title='删除' ></a>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    function EditLocationId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("修改储位信息", "<div id=layout9 ><div form='Y' id='form9'>"
+                                    + "<input type=\"text\"  left=\"140\"  name=\"edit_LocationId\"  value=\"" + row["储位"] + "\" hint=\"储位\" />"
+
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "edit_ZoneId", "区域", " ", " left='140' ",true)"
+
+                                     + "<input type=\"text\"  left=\"140\"  name=\"edit_Location\"  value=\"" + row["库区"] + "\" hint=\"库区\" />"
+
+                                     + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LocationType"], "edit_LocationTypeId", "储位类型", " ", " left='140' ",true)"
+
+                                    + "</div></div>", 500, 238)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "确认修改", icon: "save", click:
+                        function () {
+
+                            eip.get("/Root/Location/EditLocationId?id=" + id, eip.para.create($("input,select,textarea", $("#layout9"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_LocationId]").focus();
+        $("[name=edit_ZoneId]").val(row["区域ID"]);
+        $("[name=edit_LocationTypeId]").val(row["储位类型ID"]);
+    }
+
+    //删除
+    function DelLocation(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除所选行的信息吗？", function () {
+            eip.get("/Root/Location/DelLocation?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/Location/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+</script>

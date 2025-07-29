@@ -1,0 +1,2996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MODEL_MSSQLStoreContainer" CdmEntityContainer="WMS_Entities">
+    <EntitySetMapping Name="LocationTypes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LocationType">
+        <MappingFragment StoreEntitySet="LocationTypes">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pallates">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Pallate">
+        <MappingFragment StoreEntitySet="Pallates">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PallateTypes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PallateType">
+        <MappingFragment StoreEntitySet="PallateTypes">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlatformUserInfoes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PlatformUserInfo">
+        <MappingFragment StoreEntitySet="PlatformUserInfo">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_WhClient_WhAgent">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_WhClient_WhAgent">
+        <MappingFragment StoreEntitySet="R_WhClient_WhAgent">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="AgentType" ColumnName="AgentType" />
+          <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhLevels">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhLevel">
+        <MappingFragment StoreEntitySet="WhLevel">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="WhLevelDescription" ColumnName="WhLevelDescription" />
+          <ScalarProperty Name="WhLevel1" ColumnName="WhLevel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhCompanies">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhCompany">
+        <MappingFragment StoreEntitySet="WhCompany">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhMenus">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhMenu">
+        <MappingFragment StoreEntitySet="WhMenu">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+          <ScalarProperty Name="PowerName" ColumnName="PowerName" />
+          <ScalarProperty Name="PowerId" ColumnName="PowerId" />
+          <ScalarProperty Name="MenuSort" ColumnName="MenuSort" />
+          <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+          <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+          <ScalarProperty Name="MenuNameCN" ColumnName="MenuNameCN" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhPositionPowers">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhPositionPower">
+        <MappingFragment StoreEntitySet="WhPositionPower">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PowerVal" ColumnName="PowerVal" />
+          <ScalarProperty Name="PowerName" ColumnName="PowerName" />
+          <ScalarProperty Name="PowerId" ColumnName="PowerId" />
+          <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhPositionPowerMVCs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhPositionPowerMVC">
+        <MappingFragment StoreEntitySet="WhPositionPowerMVC">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PowerName" ColumnName="PowerName" />
+          <ScalarProperty Name="PowerId" ColumnName="PowerId" />
+          <ScalarProperty Name="HttpMethod" ColumnName="HttpMethod" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhPowers">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhPower">
+        <MappingFragment StoreEntitySet="WhPower">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PowerType" ColumnName="PowerType" />
+          <ScalarProperty Name="PowerDescription" ColumnName="PowerDescription" />
+          <ScalarProperty Name="PowerName" ColumnName="PowerName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhUserPositions">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhUserPosition">
+        <MappingFragment StoreEntitySet="WhUserPosition">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+          <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_WhInfo_WhUser">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_WhInfo_WhUser">
+        <MappingFragment StoreEntitySet="R_WhInfo_WhUser">
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="WhCodeId" ColumnName="WhCodeId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZoneLocations">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ZoneLocation">
+        <MappingFragment StoreEntitySet="ZoneLocation">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InBoundSOes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.InBoundSO">
+        <MappingFragment StoreEntitySet="InBoundSO">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StringrRgulars">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.StringrRgular">
+        <MappingFragment StoreEntitySet="StringrRgular">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="RgularValue" ColumnName="RgularValue" />
+          <ScalarProperty Name="RgularName" ColumnName="RgularName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptRegisterDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptRegisterDetail">
+        <MappingFragment StoreEntitySet="ReceiptRegisterDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="RegQty" ColumnName="RegQty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PoId" ColumnName="PoId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="InOrderDetailId" ColumnName="InOrderDetailId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessObjectDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessObjectDetail">
+        <MappingFragment StoreEntitySet="BusinessObjectDetail">
+          <ScalarProperty Name="FormNameApp" ColumnName="FormNameApp" />
+          <ScalarProperty Name="NextOpenFormName" ColumnName="NextOpenFormName" />
+          <ScalarProperty Name="BeforeOpenExecObjectId" ColumnName="BeforeOpenExecObjectId" />
+          <ScalarProperty Name="FormName" ColumnName="FormName" />
+          <ScalarProperty Name="InExecObjectId" ColumnName="InExecObjectId" />
+          <ScalarProperty Name="InParaObjectId" ColumnName="InParaObjectId" />
+          <ScalarProperty Name="DetailSeq" ColumnName="DetailSeq" />
+          <ScalarProperty Name="HeadId" ColumnName="HeadId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessObjectHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessObjectHead">
+        <MappingFragment StoreEntitySet="BusinessObjectHead">
+          <ScalarProperty Name="Base" ColumnName="Base" />
+          <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessObjectItems">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessObjectItem">
+        <MappingFragment StoreEntitySet="BusinessObjectItems">
+          <ScalarProperty Name="ProcDBName" ColumnName="ProcDBName" />
+          <ScalarProperty Name="ParaObjectId" ColumnName="ParaObjectId" />
+          <ScalarProperty Name="MustAttributeNameCN" ColumnName="MustAttributeNameCN" />
+          <ScalarProperty Name="MustAttributeName" ColumnName="MustAttributeName" />
+          <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessObjects">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessObject">
+        <MappingFragment StoreEntitySet="BusinessObjects">
+          <ScalarProperty Name="ObjectType" ColumnName="ObjectType" />
+          <ScalarProperty Name="ObjectDes" ColumnName="ObjectDes" />
+          <ScalarProperty Name="ObjectValue" ColumnName="ObjectValue" />
+          <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CycleCountDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.CycleCountDetail">
+        <MappingFragment StoreEntitySet="CycleCountDetail">
+          <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+          <ScalarProperty Name="CheckUser" ColumnName="CheckUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Unit">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="Proportion" ColumnName="Proportion" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessFlowHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessFlowHead">
+        <MappingFragment StoreEntitySet="BusinessFlowHead">
+          <ScalarProperty Name="FlowRuleId" ColumnName="FlowRuleId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ObjectBusinessName" ColumnName="ObjectBusinessName" />
+          <ScalarProperty Name="ObjectHeadId" ColumnName="ObjectHeadId" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessFlowGroups">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BusinessFlowGroup">
+        <MappingFragment StoreEntitySet="BusinessFlowGroup">
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="FlowName" ColumnName="FlowName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadDetail">
+        <MappingFragment StoreEntitySet="LoadDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="OutBoundOrderId" ColumnName="OutBoundOrderId" />
+          <ScalarProperty Name="LoadMasterId" ColumnName="LoadMasterId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HuDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.HuDetail">
+        <MappingFragment StoreEntitySet="HuDetail">
+          <ScalarProperty Name="Attribute1" ColumnName="Attribute1" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitDefaults">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.UnitDefault">
+        <MappingFragment StoreEntitySet="UnitDefault">
+          <ScalarProperty Name="OrderById" ColumnName="OrderById" />
+          <ScalarProperty Name="UnitNameCN" ColumnName="UnitNameCN" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LookUps">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LookUp">
+        <MappingFragment StoreEntitySet="LookUp">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ColumnKey" ColumnName="ColumnKey" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_Client_FlowRule">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_Client_FlowRule">
+        <MappingFragment StoreEntitySet="R_Client_FlowRule">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="BusinessFlowGroupId" ColumnName="BusinessFlowGroupId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RFFlowRules">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.RFFlowRule">
+        <MappingFragment StoreEntitySet="RFFlowRule">
+          <ScalarProperty Name="SelectRuleDescription" ColumnName="SelectRuleDescription" />
+          <ScalarProperty Name="BusinessObjectHeadId" ColumnName="BusinessObjectHeadId" />
+          <ScalarProperty Name="RelyId" ColumnName="RelyId" />
+          <ScalarProperty Name="RequiredFlag" ColumnName="RequiredFlag" />
+          <ScalarProperty Name="FunctionFlag" ColumnName="FunctionFlag" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+          <ScalarProperty Name="RuleType" ColumnName="RuleType" />
+          <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FlowRules">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FlowRule">
+        <MappingFragment StoreEntitySet="FlowRule">
+          <ScalarProperty Name="Mark" ColumnName="Mark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="RollbackFlag" ColumnName="RollbackFlag" />
+          <ScalarProperty Name="SelectRuleDescription" ColumnName="SelectRuleDescription" />
+          <ScalarProperty Name="BusinessObjectGroupId" ColumnName="BusinessObjectGroupId" />
+          <ScalarProperty Name="RelyId" ColumnName="RelyId" />
+          <ScalarProperty Name="RequiredFlag" ColumnName="RequiredFlag" />
+          <ScalarProperty Name="FunctionFlag" ColumnName="FunctionFlag" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+          <ScalarProperty Name="RuleType" ColumnName="RuleType" />
+          <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FlowDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FlowDetail">
+        <MappingFragment StoreEntitySet="FlowDetail">
+          <ScalarProperty Name="Mark" ColumnName="Mark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="RollbackFlag" ColumnName="RollbackFlag" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="BusinessObjectGroupId" ColumnName="BusinessObjectGroupId" />
+          <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+          <ScalarProperty Name="FlowRuleId" ColumnName="FlowRuleId" />
+          <ScalarProperty Name="FlowHeadId" ColumnName="FlowHeadId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SortTasks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SortTask">
+        <MappingFragment StoreEntitySet="SortTask">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackScanNumbers">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackScanNumber">
+        <MappingFragment StoreEntitySet="PackScanNumber">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ScanNumber" ColumnName="ScanNumber" />
+          <ScalarProperty Name="PackDetailId" ColumnName="PackDetailId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CycleCountChecks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.CycleCountCheck">
+        <MappingFragment StoreEntitySet="CycleCountCheck">
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SortTaskDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SortTaskDetail">
+        <MappingFragment StoreEntitySet="SortTaskDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ScanRule" ColumnName="ScanRule" />
+          <ScalarProperty Name="ScanFlag" ColumnName="ScanFlag" />
+          <ScalarProperty Name="HandFlag" ColumnName="HandFlag" />
+          <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+          <ScalarProperty Name="HoldFlag" ColumnName="HoldFlag" />
+          <ScalarProperty Name="HoldQty" ColumnName="HoldQty" />
+          <ScalarProperty Name="TransferQty" ColumnName="TransferQty" />
+          <ScalarProperty Name="PackQty" ColumnName="PackQty" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PickQty" ColumnName="PickQty" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_LoadRule_FlowHead">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_LoadRule_FlowHead">
+        <MappingFragment StoreEntitySet="R_LoadRule_FlowHead">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="FlowHeadId" ColumnName="FlowHeadId" />
+          <ScalarProperty Name="RuleId" ColumnName="RuleId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadCreateRules">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadCreateRule">
+        <MappingFragment StoreEntitySet="LoadCreateRule">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ShipMode" ColumnName="ShipMode" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="OrderQty" ColumnName="OrderQty" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OMSInvChanges">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.OMSInvChange">
+        <MappingFragment StoreEntitySet="OMSInvChange">
+          <ScalarProperty Name="ChangeLotDate" ColumnName="ChangeLotDate" />
+          <ScalarProperty Name="ChangeLotNumber2" ColumnName="ChangeLotNumber2" />
+          <ScalarProperty Name="ChangeLotNumber1" ColumnName="ChangeLotNumber1" />
+          <ScalarProperty Name="ChangeQty" ColumnName="ChangeQty" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TranUser" ColumnName="TranUser" />
+          <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TranType" ColumnName="TranType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationTypesDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LocationTypesDetail">
+        <MappingFragment StoreEntitySet="LocationTypesDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="AlertQty" ColumnName="AlertQty" />
+          <ScalarProperty Name="UpperQty" ColumnName="UpperQty" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="LocationTypeId" ColumnName="LocationTypeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplementTasks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SupplementTask">
+        <MappingFragment StoreEntitySet="SupplementTask">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SupplementNumber" ColumnName="SupplementNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplementTaskDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SupplementTaskDetail">
+        <MappingFragment StoreEntitySet="SupplementTaskDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+          <ScalarProperty Name="PutLocationId" ColumnName="PutLocationId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="HuDetailId" ColumnName="HuDetailId" />
+          <ScalarProperty Name="SupplementNumber" ColumnName="SupplementNumber" />
+          <ScalarProperty Name="SupplementTaskId" ColumnName="SupplementTaskId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_Location_Item">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_Location_Item">
+        <MappingFragment StoreEntitySet="R_Location_Item">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="MaxQty" ColumnName="MaxQty" />
+          <ScalarProperty Name="MinQty" ColumnName="MinQty" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="WhLocationId" ColumnName="WhLocationId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadHuIdExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadHuIdExtend">
+        <MappingFragment StoreEntitySet="LoadHuIdExtend">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadContainerExtendHuDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadContainerExtendHuDetail">
+        <MappingFragment StoreEntitySet="LoadContainerExtendHuDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="LoadContainerId" ColumnName="LoadContainerId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SerialNumberOuts">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SerialNumberOut">
+        <MappingFragment StoreEntitySet="SerialNumberOut">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCRProcesses">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TCRProcess">
+        <MappingFragment StoreEntitySet="TCRProcess">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="TCRProcessMode" ColumnName="TCRProcessMode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhAgents">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhAgent">
+        <MappingFragment StoreEntitySet="WhAgent">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="AgentType" ColumnName="AgentType" />
+          <ScalarProperty Name="AgentCode" ColumnName="AgentCode" />
+          <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkloadAccounts">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WorkloadAccount">
+        <MappingFragment StoreEntitySet="WorkloadAccount">
+          <ScalarProperty Name="BaQty" ColumnName="BaQty" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="EchFlag" ColumnName="EchFlag" />
+          <ScalarProperty Name="LotFlag" ColumnName="LotFlag" />
+          <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+          <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_SerialNumberInOut">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_SerialNumberInOut">
+        <MappingFragment StoreEntitySet="R_SerialNumberInOut">
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TranLogs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TranLog">
+        <MappingFragment StoreEntitySet="TranLog">
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="HoldId" ColumnName="HoldId" />
+          <ScalarProperty Name="Location2" ColumnName="Location2" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="LotFlag" ColumnName="LotFlag" />
+          <ScalarProperty Name="HuId2" ColumnName="HuId2" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="TranQty2" ColumnName="TranQty2" />
+          <ScalarProperty Name="TranQty" ColumnName="TranQty" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="PoID" ColumnName="PoID" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="TranUser" ColumnName="TranUser" />
+          <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TranType" ColumnName="TranType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CycleCountInventories">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.CycleCountInventory">
+        <MappingFragment StoreEntitySet="CycleCountInventory">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="HoldId" ColumnName="HoldId" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zones">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Zone">
+        <MappingFragment StoreEntitySet="Zones">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ZoneCBM" ColumnName="ZoneCBM" />
+          <ScalarProperty Name="RegFlag" ColumnName="RegFlag" />
+          <ScalarProperty Name="UpId" ColumnName="UpId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ZoneName" ColumnName="ZoneName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhotoMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PhotoMaster">
+        <MappingFragment StoreEntitySet="PhotoMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="OrderSource" ColumnName="OrderSource" />
+          <ScalarProperty Name="CRemark1" ColumnName="CRemark1" />
+          <ScalarProperty Name="CheckDate2" ColumnName="CheckDate2" />
+          <ScalarProperty Name="CheckUser2" ColumnName="CheckUser2" />
+          <ScalarProperty Name="CheckStatus2" ColumnName="CheckStatus2" />
+          <ScalarProperty Name="KRemark3" ColumnName="KRemark3" />
+          <ScalarProperty Name="KRemark2" ColumnName="KRemark2" />
+          <ScalarProperty Name="KRemark1" ColumnName="KRemark1" />
+          <ScalarProperty Name="CheckDate1" ColumnName="CheckDate1" />
+          <ScalarProperty Name="CheckUser1" ColumnName="CheckUser1" />
+          <ScalarProperty Name="CheckStatus1" ColumnName="CheckStatus1" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+          <ScalarProperty Name="SumPrice" ColumnName="SumPrice" />
+          <ScalarProperty Name="SettlementMode" ColumnName="SettlementMode" />
+          <ScalarProperty Name="TCRProcessMode" ColumnName="TCRProcessMode" />
+          <ScalarProperty Name="TCRCheckDate" ColumnName="TCRCheckDate" />
+          <ScalarProperty Name="TCRCheckUser" ColumnName="TCRCheckUser" />
+          <ScalarProperty Name="TCRStatus" ColumnName="TCRStatus" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="RegQty" ColumnName="RegQty" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PoId" ColumnName="PoId" />
+          <ScalarProperty Name="Number4" ColumnName="Number4" />
+          <ScalarProperty Name="Number3" ColumnName="Number3" />
+          <ScalarProperty Name="Number2" ColumnName="Number2" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransferTasks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TransferTask">
+        <MappingFragment StoreEntitySet="TransferTask">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="express_type_zh" ColumnName="express_type_zh" />
+          <ScalarProperty Name="express_type" ColumnName="express_type" />
+          <ScalarProperty Name="express_code" ColumnName="express_code" />
+          <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+          <ScalarProperty Name="TransferNumber" ColumnName="TransferNumber" />
+          <ScalarProperty Name="TransferId" ColumnName="TransferId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransferDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TransferDetail">
+        <MappingFragment StoreEntitySet="TransferDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="TransferSystemNumber" ColumnName="TransferSystemNumber" />
+          <ScalarProperty Name="TransferHeadId" ColumnName="TransferHeadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransferScanNumbers">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TransferScanNumber">
+        <MappingFragment StoreEntitySet="TransferScanNumber">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ScanNumber" ColumnName="ScanNumber" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="TransferSystemNumber" ColumnName="TransferSystemNumber" />
+          <ScalarProperty Name="TransferHeadId" ColumnName="TransferHeadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CRTemplates">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.CRTemplate">
+        <MappingFragment StoreEntitySet="CRTemplate">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TemplateName" ColumnName="TemplateName" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackTaskJsons">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackTaskJson">
+        <MappingFragment StoreEntitySet="PackTaskJson">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Json" ColumnName="Json" />
+          <ScalarProperty Name="AltCustomerOutPoNumber" ColumnName="AltCustomerOutPoNumber" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UrlEdiTasks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.UrlEdiTask">
+        <MappingFragment StoreEntitySet="UrlEdiTask">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+          <ScalarProperty Name="RunQty" ColumnName="RunQty" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="HttpType" ColumnName="HttpType" />
+          <ScalarProperty Name="Mark" ColumnName="Mark" />
+          <ScalarProperty Name="Field" ColumnName="Field" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UrlEdis">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.UrlEdi">
+        <MappingFragment StoreEntitySet="UrlEdi">
+          <ScalarProperty Name="UrlName" ColumnName="UrlName" />
+          <ScalarProperty Name="HttpType" ColumnName="HttpType" />
+          <ScalarProperty Name="Field" ColumnName="Field" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptTrucks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptTruck">
+        <MappingFragment StoreEntitySet="ReceiptTruck">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="StorageDate" ColumnName="StorageDate" />
+          <ScalarProperty Name="ParkingDate" ColumnName="ParkingDate" />
+          <ScalarProperty Name="ParkingUser" ColumnName="ParkingUser" />
+          <ScalarProperty Name="TruckStatus" ColumnName="TruckStatus" />
+          <ScalarProperty Name="TruckNumber" ColumnName="TruckNumber" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadContainerDetailExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadContainerDetailExtend">
+        <MappingFragment StoreEntitySet="LoadContainerDetailExtend">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="LadingNumber" ColumnName="LadingNumber" />
+          <ScalarProperty Name="BillNumber" ColumnName="BillNumber" />
+          <ScalarProperty Name="SystemNumber" ColumnName="SystemNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhClientTypes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhClientType">
+        <MappingFragment StoreEntitySet="WhClientType">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receipts">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Receipt">
+        <MappingFragment StoreEntitySet="Receipt">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Custom3" ColumnName="Custom3" />
+          <ScalarProperty Name="Custom2" ColumnName="Custom2" />
+          <ScalarProperty Name="Custom1" ColumnName="Custom1" />
+          <ScalarProperty Name="Attribute1" ColumnName="Attribute1" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="LotFlag" ColumnName="LotFlag" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PoId" ColumnName="PoId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="RegId" ColumnName="RegId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhPositions">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhPosition">
+        <MappingFragment StoreEntitySet="WhPosition">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="WorkPowerFlag" ColumnName="WorkPowerFlag" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PositionNameCN" ColumnName="PositionNameCN" />
+          <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NightTimes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.NightTime">
+        <MappingFragment StoreEntitySet="NightTime">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="NightEnd" ColumnName="NightEnd" />
+          <ScalarProperty Name="NightBegin" ColumnName="NightBegin" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptCharges">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptCharge">
+        <MappingFragment StoreEntitySet="ReceiptCharge">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="EndReceiptDate" ColumnName="EndReceiptDate" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Holidays">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Holiday">
+        <MappingFragment StoreEntitySet="Holiday">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="DayBegin" ColumnName="DayBegin" />
+          <ScalarProperty Name="HolidayName" ColumnName="HolidayName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptChargeDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptChargeDetail">
+        <MappingFragment StoreEntitySet="ReceiptChargeDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="MonthlyFlag" ColumnName="MonthlyFlag" />
+          <ScalarProperty Name="HolidayFlag" ColumnName="HolidayFlag" />
+          <ScalarProperty Name="PriceTotal" ColumnName="PriceTotal" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LadderNumber" ColumnName="LadderNumber" />
+          <ScalarProperty Name="ChargeUnitName" ColumnName="ChargeUnitName" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="NightTimeFlag" ColumnName="NightTimeFlag" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="ChargeType" ColumnName="ChargeType" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackHeadJsons">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackHeadJson">
+        <MappingFragment StoreEntitySet="PackHeadJson">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Json" ColumnName="Json" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContractForms">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ContractForm">
+        <MappingFragment StoreEntitySet="ContractForm">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ActiveDateEnd" ColumnName="ActiveDateEnd" />
+          <ScalarProperty Name="ActiveDateBegin" ColumnName="ActiveDateBegin" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="MaxPriceTotal" ColumnName="MaxPriceTotal" />
+          <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ChargeUnitName" ColumnName="ChargeUnitName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MonthlyFlag" ColumnName="MonthlyFlag" />
+          <ScalarProperty Name="LadderNumberEndCBM" ColumnName="LadderNumberEndCBM" />
+          <ScalarProperty Name="LadderNumberBeginCBM" ColumnName="LadderNumberBeginCBM" />
+          <ScalarProperty Name="LadderNumberEnd" ColumnName="LadderNumberEnd" />
+          <ScalarProperty Name="LadderNumberBegin" ColumnName="LadderNumberBegin" />
+          <ScalarProperty Name="Shift" ColumnName="Shift" />
+          <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="WhCodeName" ColumnName="WhCodeName" />
+          <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeHolidays">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FeeHoliday">
+        <MappingFragment StoreEntitySet="FeeHoliday">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="DayBegin" ColumnName="DayBegin" />
+          <ScalarProperty Name="HolidayName" ColumnName="HolidayName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FeeMaster">
+        <MappingFragment StoreEntitySet="FeeMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="OperationEndDate" ColumnName="OperationEndDate" />
+          <ScalarProperty Name="OperationBeginDate" ColumnName="OperationBeginDate" />
+          <ScalarProperty Name="InvoiceTopContent" ColumnName="InvoiceTopContent" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="NoNumber" ColumnName="NoNumber" />
+          <ScalarProperty Name="InvoiceType" ColumnName="InvoiceType" />
+          <ScalarProperty Name="BillingType" ColumnName="BillingType" />
+          <ScalarProperty Name="JieSuanUser" ColumnName="JieSuanUser" />
+          <ScalarProperty Name="JieSuanFee" ColumnName="JieSuanFee" />
+          <ScalarProperty Name="YuShouUser" ColumnName="YuShouUser" />
+          <ScalarProperty Name="YuShouFee" ColumnName="YuShouFee" />
+          <ScalarProperty Name="LuruFee" ColumnName="LuruFee" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="ClientCodeCN" ColumnName="ClientCodeCN" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="FeeNumber" ColumnName="FeeNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPriceTs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.UserPriceT">
+        <MappingFragment StoreEntitySet="UserPriceT">
+          <ScalarProperty Name="itemType" ColumnName="itemType" />
+          <ScalarProperty Name="Rank" ColumnName="Rank" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserShenTs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.UserShenT">
+        <MappingFragment StoreEntitySet="UserShenT">
+          <ScalarProperty Name="Amt" ColumnName="Amt" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackDetail">
+        <MappingFragment StoreEntitySet="PackDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PackHeadId" ColumnName="PackHeadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SerialNumberDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SerialNumberDetail">
+        <MappingFragment StoreEntitySet="SerialNumberDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="UPC" ColumnName="UPC" />
+          <ScalarProperty Name="PCS" ColumnName="PCS" />
+          <ScalarProperty Name="SNType" ColumnName="SNType" />
+          <ScalarProperty Name="HeadId" ColumnName="HeadId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SerialNumberIns">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SerialNumberIn">
+        <MappingFragment StoreEntitySet="SerialNumberIn">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ToOutStatus" ColumnName="ToOutStatus" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PoId" ColumnName="PoId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AddValueServices">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.AddValueService">
+        <MappingFragment StoreEntitySet="AddValueService">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="RecLossId" ColumnName="RecLossId" />
+          <ScalarProperty Name="RecLossTypeId" ColumnName="RecLossTypeId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecLossTypes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.RecLossType">
+        <MappingFragment StoreEntitySet="RecLossType">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="RecLossType1" ColumnName="RecLossType" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InBoundOrders">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.InBoundOrder">
+        <MappingFragment StoreEntitySet="InBoundOrder">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="PlanInTime" ColumnName="PlanInTime" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="OrderSource" ColumnName="OrderSource" />
+          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="AltCustomerPoNumber" ColumnName="AltCustomerPoNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoId" ColumnName="SoId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InBoundOrderDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.InBoundOrderDetail">
+        <MappingFragment StoreEntitySet="InBoundOrderDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CustomDate" ColumnName="CustomDate" />
+          <ScalarProperty Name="CustomNumber1" ColumnName="CustomNumber1" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="RegQty" ColumnName="RegQty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="PoId" ColumnName="PoId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadCharges">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadCharge">
+        <MappingFragment StoreEntitySet="LoadCharge">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status2" ColumnName="Status2" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Losses">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Loss">
+        <MappingFragment StoreEntitySet="Loss">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="WorkLevel" ColumnName="WorkLevel" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="LossDescription" ColumnName="LossDescription" />
+          <ScalarProperty Name="LossCode" ColumnName="LossCode" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContractFormOuts">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ContractFormOut">
+        <MappingFragment StoreEntitySet="ContractFormOut">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="SuitCase" ColumnName="SuitCase" />
+          <ScalarProperty Name="ContainerType" ColumnName="ContainerType" />
+          <ScalarProperty Name="ChargeUnitName" ColumnName="ChargeUnitName" />
+          <ScalarProperty Name="LadderNumberEnd" ColumnName="LadderNumberEnd" />
+          <ScalarProperty Name="LadderNumberBegin" ColumnName="LadderNumberBegin" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BillMaster">
+        <MappingFragment StoreEntitySet="BillMaster">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="BLNumber" ColumnName="BLNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecLosses">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.RecLoss">
+        <MappingFragment StoreEntitySet="RecLoss">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="RecSort" ColumnName="RecSort" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="RecLossTypeId" ColumnName="RecLossTypeId" />
+          <ScalarProperty Name="RecLossDescription" ColumnName="RecLossDescription" />
+          <ScalarProperty Name="RecLossName" ColumnName="RecLossName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeeDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FeeDetail">
+        <MappingFragment StoreEntitySet="FeeDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PeopleStatutoryHolidayHours" ColumnName="PeopleStatutoryHolidayHours" />
+          <ScalarProperty Name="PeopleWeekendHours" ColumnName="PeopleWeekendHours" />
+          <ScalarProperty Name="PeopleNormalNightHours" ColumnName="PeopleNormalNightHours" />
+          <ScalarProperty Name="PeopleNormalHours" ColumnName="PeopleNormalHours" />
+          <ScalarProperty Name="PeopleFujiaFee" ColumnName="PeopleFujiaFee" />
+          <ScalarProperty Name="PeopleNormalFee" ColumnName="PeopleNormalFee" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FactoryUserCount" ColumnName="FactoryUserCount" />
+          <ScalarProperty Name="OperationHours" ColumnName="OperationHours" />
+          <ScalarProperty Name="OperationUser" ColumnName="OperationUser" />
+          <ScalarProperty Name="OperationQty" ColumnName="OperationQty" />
+          <ScalarProperty Name="OtherFee" ColumnName="OtherFee" />
+          <ScalarProperty Name="EquipmentUseFee" ColumnName="EquipmentUseFee" />
+          <ScalarProperty Name="DaDanFee" ColumnName="DaDanFee" />
+          <ScalarProperty Name="TruckFee" ColumnName="TruckFee" />
+          <ScalarProperty Name="PeopleFee" ColumnName="PeopleFee" />
+          <ScalarProperty Name="ChangDiHours" ColumnName="ChangDiHours" />
+          <ScalarProperty Name="ChangDiFee" ColumnName="ChangDiFee" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="TCRProcessMode" ColumnName="TCRProcessMode" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="FeeNumber" ColumnName="FeeNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadContainerTypes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadContainerType">
+        <MappingFragment StoreEntitySet="LoadContainerType">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ContainerCodeType" ColumnName="ContainerCodeType" />
+          <ScalarProperty Name="ClassType" ColumnName="ClassType" />
+          <ScalarProperty Name="BigSmallType" ColumnName="BigSmallType" />
+          <ScalarProperty Name="SQty" ColumnName="SQty" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="ContainerName" ColumnName="ContainerName" />
+          <ScalarProperty Name="ContainerType" ColumnName="ContainerType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DcReturnExceptions">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.DcReturnException">
+        <MappingFragment StoreEntitySet="DcReturnException">
+          <ScalarProperty Name="rmk1" ColumnName="rmk1" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="OMSReturnNumber" ColumnName="OMSReturnNumber" />
+          <ScalarProperty Name="InorderNumberAlt" ColumnName="InorderNumberAlt" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadChargeDaiDians">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadChargeDaiDian">
+        <MappingFragment StoreEntitySet="LoadChargeDaiDian">
+          <ScalarProperty Name="DaiDianName" ColumnName="DaiDianName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OutBoundOrderDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.OutBoundOrderDetail">
+        <MappingFragment StoreEntitySet="OutBoundOrderDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="MaxShipDate" ColumnName="MaxShipDate" />
+          <ScalarProperty Name="MinReceiptDate" ColumnName="MinReceiptDate" />
+          <ScalarProperty Name="TotalCbm" ColumnName="TotalCbm" />
+          <ScalarProperty Name="StowPosition" ColumnName="StowPosition" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="InBoundOrderDetailId" ColumnName="InBoundOrderDetailId" />
+          <ScalarProperty Name="DSFLag" ColumnName="DSFLag" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="OutBoundOrderId" ColumnName="OutBoundOrderId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackHead">
+        <MappingFragment StoreEntitySet="PackHead">
+          <ScalarProperty Name="TransferConveyorId" ColumnName="TransferConveyorId" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PrintDate" ColumnName="PrintDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PackCarton" ColumnName="PackCarton" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="TransferSystemNumber" ColumnName="TransferSystemNumber" />
+          <ScalarProperty Name="TransferHeadId" ColumnName="TransferHeadId" />
+          <ScalarProperty Name="GetExpressNumberErrorFlag" ColumnName="GetExpressNumberErrorFlag" />
+          <ScalarProperty Name="ExpressMessage" ColumnName="ExpressMessage" />
+          <ScalarProperty Name="ExpressStatus" ColumnName="ExpressStatus" />
+          <ScalarProperty Name="ExpressNumberParent" ColumnName="ExpressNumberParent" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="PackNumber" ColumnName="PackNumber" />
+          <ScalarProperty Name="PackGroupId" ColumnName="PackGroupId" />
+          <ScalarProperty Name="PackTaskId" ColumnName="PackTaskId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZonesExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ZonesExtend">
+        <MappingFragment StoreEntitySet="ZonesExtend">
+          <ScalarProperty Name="MaxECH" ColumnName="MaxECH" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="MaxPallateQty" ColumnName="MaxPallateQty" />
+          <ScalarProperty Name="MaxLocationIdQty" ColumnName="MaxLocationIdQty" />
+          <ScalarProperty Name="OnlySkuFlag" ColumnName="OnlySkuFlag" />
+          <ScalarProperty Name="ZoneOrderBy" ColumnName="ZoneOrderBy" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhClientExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhClientExtend">
+        <MappingFragment StoreEntitySet="WhClientExtend">
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="RegularExpression" ColumnName="RegularExpression" />
+          <ScalarProperty Name="NotOnlySkuPutawayQty" ColumnName="NotOnlySkuPutawayQty" />
+          <ScalarProperty Name="InvClearUpSkuMaxQty" ColumnName="InvClearUpSkuMaxQty" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SerialNumberInOutExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.SerialNumberInOutExtend">
+        <MappingFragment StoreEntitySet="SerialNumberInOutExtend">
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="Style1" ColumnName="Style1" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadContainerExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadContainerExtend">
+        <MappingFragment StoreEntitySet="LoadContainerExtend">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ShippingOrigin" ColumnName="ShippingOrigin" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="SystemNumber" ColumnName="SystemNumber" />
+          <ScalarProperty Name="ClientDescription" ColumnName="ClientDescription" />
+          <ScalarProperty Name="CaoZuoUser" ColumnName="CaoZuoUser" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="BaQty" ColumnName="BaQty" />
+          <ScalarProperty Name="PortSuitcase" ColumnName="PortSuitcase" />
+          <ScalarProperty Name="DischageCode" ColumnName="DischageCode" />
+          <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+          <ScalarProperty Name="TotalCBM" ColumnName="TotalCBM" />
+          <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+          <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+          <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+          <ScalarProperty Name="WeightDate" ColumnName="WeightDate" />
+          <ScalarProperty Name="WeightFlag" ColumnName="WeightFlag" />
+          <ScalarProperty Name="ContainerSource" ColumnName="ContainerSource" />
+          <ScalarProperty Name="SealNumber" ColumnName="SealNumber" />
+          <ScalarProperty Name="ContainerNumber" ColumnName="ContainerNumber" />
+          <ScalarProperty Name="BillNumber" ColumnName="BillNumber" />
+          <ScalarProperty Name="DeliveryPlace" ColumnName="DeliveryPlace" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="ContainerType" ColumnName="ContainerType" />
+          <ScalarProperty Name="ETD" ColumnName="ETD" />
+          <ScalarProperty Name="CarriageName" ColumnName="CarriageName" />
+          <ScalarProperty Name="VesselNumber" ColumnName="VesselNumber" />
+          <ScalarProperty Name="VesselName" ColumnName="VesselName" />
+          <ScalarProperty Name="ChuCangFS" ColumnName="ChuCangFS" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvMoves">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.InvMove">
+        <MappingFragment StoreEntitySet="InvMove">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="MoveNum" ColumnName="MoveNum" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvMoveDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.InvMoveDetail">
+        <MappingFragment StoreEntitySet="InvMoveDetail">
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="DesZoneName" ColumnName="DesZoneName" />
+          <ScalarProperty Name="DesZoneId" ColumnName="DesZoneId" />
+          <ScalarProperty Name="ZoneName" ColumnName="ZoneName" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="MoveNum" ColumnName="MoveNum" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginLogs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoginLog">
+        <MappingFragment StoreEntitySet="LoginLog">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhInfoes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhInfo">
+        <MappingFragment StoreEntitySet="WhInfo">
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="NoHuIdFlag" ColumnName="NoHuIdFlag" />
+          <ScalarProperty Name="WhLevel" ColumnName="WhLevel" />
+          <ScalarProperty Name="WhActiveEndDate" ColumnName="WhActiveEndDate" />
+          <ScalarProperty Name="WhTel" ColumnName="WhTel" />
+          <ScalarProperty Name="WhContract" ColumnName="WhContract" />
+          <ScalarProperty Name="WhAddress" ColumnName="WhAddress" />
+          <ScalarProperty Name="WhDescription" ColumnName="WhDescription" />
+          <ScalarProperty Name="WhName" ColumnName="WhName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhLocations">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhLocation">
+        <MappingFragment StoreEntitySet="WhLocation">
+          <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="MaxPltQty" ColumnName="MaxPltQty" />
+          <ScalarProperty Name="LocationPcs" ColumnName="LocationPcs" />
+          <ScalarProperty Name="LocationFloor" ColumnName="LocationFloor" />
+          <ScalarProperty Name="LocationRow" ColumnName="LocationRow" />
+          <ScalarProperty Name="LocationColumn" ColumnName="LocationColumn" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="LocationTypeDetailId" ColumnName="LocationTypeDetailId" />
+          <ScalarProperty Name="LocationTypeId" ColumnName="LocationTypeId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="HoldId" ColumnName="HoldId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMasterExtendOMS">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ItemMasterExtendOM">
+        <MappingFragment StoreEntitySet="ItemMasterExtendOMS">
+          <ScalarProperty Name="Remark5" ColumnName="Remark5" />
+          <ScalarProperty Name="Remark4" ColumnName="Remark4" />
+          <ScalarProperty Name="Remark3" ColumnName="Remark3" />
+          <ScalarProperty Name="Remark2" ColumnName="Remark2" />
+          <ScalarProperty Name="Remark1" ColumnName="Remark1" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="OriginCountry" ColumnName="OriginCountry" />
+          <ScalarProperty Name="BoxCode" ColumnName="BoxCode" />
+          <ScalarProperty Name="PackageStyle" ColumnName="PackageStyle" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Style" ColumnName="Style" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="CusStyle" ColumnName="CusStyle" />
+          <ScalarProperty Name="Matieral" ColumnName="Matieral" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="Pcs" ColumnName="Pcs" />
+          <ScalarProperty Name="CusItemNumber" ColumnName="CusItemNumber" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PickTaskDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PickTaskDetail">
+        <MappingFragment StoreEntitySet="PickTaskDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="PickingSequence" ColumnName="PickingSequence" />
+          <ScalarProperty Name="InvDays" ColumnName="InvDays" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="PickLocationDes" ColumnName="PickLocationDes" />
+          <ScalarProperty Name="Status1" ColumnName="Status1" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="DSFLag" ColumnName="DSFLag" />
+          <ScalarProperty Name="PickQty" ColumnName="PickQty" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="HuDetailId" ColumnName="HuDetailId" />
+          <ScalarProperty Name="OutBoundOrderId" ColumnName="OutBoundOrderId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DcShipingExceptions">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.DcShipingException">
+        <MappingFragment StoreEntitySet="DcShipingException">
+          <ScalarProperty Name="EdiStatus" ColumnName="EdiStatus" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HeportSerialNumberIns">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.HeportSerialNumberIn">
+        <MappingFragment StoreEntitySet="HeportSerialNumberIn">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Heport_R_SerialNumberInOut">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.Heport_R_SerialNumberInOut">
+        <MappingFragment StoreEntitySet="Heport_R_SerialNumberInOut">
+          <ScalarProperty Name="SumCartonQty" ColumnName="SumCartonQty" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CartonId" ColumnName="CartonId" />
+          <ScalarProperty Name="Style1" ColumnName="Style1" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="CustomerPoNumber" ColumnName="CustomerPoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CycleCountMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.CycleCountMaster">
+        <MappingFragment StoreEntitySet="CycleCountMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CompareStorageLocationHu" ColumnName="CompareStorageLocationHu" />
+          <ScalarProperty Name="OneByOneScanFlag" ColumnName="OneByOneScanFlag" />
+          <ScalarProperty Name="LocationNullFlag" ColumnName="LocationNullFlag" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />
+          <ScalarProperty Name="CreateType" ColumnName="CreateType" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KmartWaitingReasons">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.KmartWaitingReason">
+        <MappingFragment StoreEntitySet="KmartWaitingReason">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="ReasonDescription" ColumnName="ReasonDescription" />
+          <ScalarProperty Name="TruckWaitingReason" ColumnName="TruckWaitingReason" />
+          <ScalarProperty Name="ReasonCode" ColumnName="ReasonCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptRegisterExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptRegisterExtend">
+        <MappingFragment StoreEntitySet="ReceiptRegisterExtend">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="HoldReason3" ColumnName="HoldReason3" />
+          <ScalarProperty Name="HoldReason2" ColumnName="HoldReason2" />
+          <ScalarProperty Name="HoldReason1" ColumnName="HoldReason1" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HuMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.HuMaster">
+        <MappingFragment StoreEntitySet="HuMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="HuWeight" ColumnName="HuWeight" />
+          <ScalarProperty Name="HuHeight" ColumnName="HuHeight" />
+          <ScalarProperty Name="HuWidth" ColumnName="HuWidth" />
+          <ScalarProperty Name="HuLength" ColumnName="HuLength" />
+          <ScalarProperty Name="TransactionFlag" ColumnName="TransactionFlag" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="HoldId" ColumnName="HoldId" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="HuId" ColumnName="HuId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptRegisters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptRegister">
+        <MappingFragment StoreEntitySet="ReceiptRegister">
+          <ScalarProperty Name="BookOrigin" ColumnName="BookOrigin" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="AddServiceStatus" ColumnName="AddServiceStatus" />
+          <ScalarProperty Name="GoodType" ColumnName="GoodType" />
+          <ScalarProperty Name="DNCount" ColumnName="DNCount" />
+          <ScalarProperty Name="BillCount" ColumnName="BillCount" />
+          <ScalarProperty Name="TruckCount" ColumnName="TruckCount" />
+          <ScalarProperty Name="FaxOutCount" ColumnName="FaxOutCount" />
+          <ScalarProperty Name="FaxInCount" ColumnName="FaxInCount" />
+          <ScalarProperty Name="ResetCount" ColumnName="ResetCount" />
+          <ScalarProperty Name="EndReceiptDate" ColumnName="EndReceiptDate" />
+          <ScalarProperty Name="BeginReceiptDate" ColumnName="BeginReceiptDate" />
+          <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+          <ScalarProperty Name="StorageDate" ColumnName="StorageDate" />
+          <ScalarProperty Name="ParkingDate" ColumnName="ParkingDate" />
+          <ScalarProperty Name="ParkingUser" ColumnName="ParkingUser" />
+          <ScalarProperty Name="ArriveDate" ColumnName="ArriveDate" />
+          <ScalarProperty Name="InvoiceTitle" ColumnName="InvoiceTitle" />
+          <ScalarProperty Name="BkDateEnd" ColumnName="BkDateEnd" />
+          <ScalarProperty Name="BkDateBegin" ColumnName="BkDateBegin" />
+          <ScalarProperty Name="BkDate" ColumnName="BkDate" />
+          <ScalarProperty Name="RecSumWeight" ColumnName="RecSumWeight" />
+          <ScalarProperty Name="RecSumCBM" ColumnName="RecSumCBM" />
+          <ScalarProperty Name="RecSumQty" ColumnName="RecSumQty" />
+          <ScalarProperty Name="SumCBM" ColumnName="SumCBM" />
+          <ScalarProperty Name="SumQty" ColumnName="SumQty" />
+          <ScalarProperty Name="OutBoundOrderId" ColumnName="OutBoundOrderId" />
+          <ScalarProperty Name="LoadMasterId" ColumnName="LoadMasterId" />
+          <ScalarProperty Name="BaoAnRemark" ColumnName="BaoAnRemark" />
+          <ScalarProperty Name="QueueUpRemark" ColumnName="QueueUpRemark" />
+          <ScalarProperty Name="QueueUpUser" ColumnName="QueueUpUser" />
+          <ScalarProperty Name="QueueUpFLag" ColumnName="QueueUpFLag" />
+          <ScalarProperty Name="GreenPassFLag" ColumnName="GreenPassFLag" />
+          <ScalarProperty Name="DSFLag" ColumnName="DSFLag" />
+          <ScalarProperty Name="TruckStatus" ColumnName="TruckStatus" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="TruckLength" ColumnName="TruckLength" />
+          <ScalarProperty Name="TruckNumber" ColumnName="TruckNumber" />
+          <ScalarProperty Name="TransportTypeExtend" ColumnName="TransportTypeExtend" />
+          <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+          <ScalarProperty Name="PrintDate" ColumnName="PrintDate" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="HoldOutBoundOrderId" ColumnName="HoldOutBoundOrderId" />
+          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReceiptType" ColumnName="ReceiptType" />
+          <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptPartialRegisters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptPartialRegister">
+        <MappingFragment StoreEntitySet="ReceiptPartialRegister">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptPartialRegisterDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReceiptPartialRegisterDetail">
+        <MappingFragment StoreEntitySet="ReceiptPartialRegisterDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelImportInBounds">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ExcelImportInBound">
+        <MappingFragment StoreEntitySet="ExcelImportInBound">
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="PalletizationForHeavyCargo" ColumnName="PalletizationForHeavyCargo" />
+          <ScalarProperty Name="DoesTheFactoryConfirm" ColumnName="DoesTheFactoryConfirm" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="LabelingSend" ColumnName="LabelingSend" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Labeling" ColumnName="Labeling" />
+          <ScalarProperty Name="QC" ColumnName="QC" />
+          <ScalarProperty Name="PackingClusterGroup" ColumnName="PackingClusterGroup" />
+          <ScalarProperty Name="Mixed" ColumnName="Mixed" />
+          <ScalarProperty Name="OverseasDecantFlag" ColumnName="OverseasDecantFlag" />
+          <ScalarProperty Name="DCDD" ColumnName="DCDD" />
+          <ScalarProperty Name="ConsDate" ColumnName="ConsDate" />
+          <ScalarProperty Name="PriorityFlag" ColumnName="PriorityFlag" />
+          <ScalarProperty Name="ADDate" ColumnName="ADDate" />
+          <ScalarProperty Name="DistributionChannel" ColumnName="DistributionChannel" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="BookedCBM" ColumnName="BookedCBM" />
+          <ScalarProperty Name="BookedWeight" ColumnName="BookedWeight" />
+          <ScalarProperty Name="BookedCarton" ColumnName="BookedCarton" />
+          <ScalarProperty Name="PlaceOfDelivery" ColumnName="PlaceOfDelivery" />
+          <ScalarProperty Name="PlaceOfReceipt" ColumnName="PlaceOfReceipt" />
+          <ScalarProperty Name="SubBrand" ColumnName="SubBrand" />
+          <ScalarProperty Name="DepartmentNo" ColumnName="DepartmentNo" />
+          <ScalarProperty Name="KeycodeRatioPack" ColumnName="KeycodeRatioPack" />
+          <ScalarProperty Name="RatioPack" ColumnName="RatioPack" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="OriginService" ColumnName="OriginService" />
+          <ScalarProperty Name="IncoTerm" ColumnName="IncoTerm" />
+          <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+          <ScalarProperty Name="SystemNumber" ColumnName="SystemNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReleaseLoadDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ReleaseLoadDetail">
+        <MappingFragment StoreEntitySet="ReleaseLoadDetail">
+          <ScalarProperty Name="OutLotDate" ColumnName="OutLotDate" />
+          <ScalarProperty Name="OutLotNumber2" ColumnName="OutLotNumber2" />
+          <ScalarProperty Name="OutLotNumber1" ColumnName="OutLotNumber1" />
+          <ScalarProperty Name="OutQty" ColumnName="OutQty" />
+          <ScalarProperty Name="OutUnitId" ColumnName="OutUnitId" />
+          <ScalarProperty Name="OutUnitName" ColumnName="OutUnitName" />
+          <ScalarProperty Name="OutItemId" ColumnName="OutItemId" />
+          <ScalarProperty Name="OutAltItemNumber" ColumnName="OutAltItemNumber" />
+          <ScalarProperty Name="OutCustomerPoNumber" ColumnName="OutCustomerPoNumber" />
+          <ScalarProperty Name="OutSoNumber" ColumnName="OutSoNumber" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ReleaseMark" ColumnName="ReleaseMark" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContractFormExtends">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ContractFormExtend">
+        <MappingFragment StoreEntitySet="ContractFormExtend">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FieldOrderBies">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FieldOrderBy">
+        <MappingFragment StoreEntitySet="FieldOrderBy">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="ColumnNameByDesc" ColumnName="ColumnNameByDesc" />
+          <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OutBoundOrders">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.OutBoundOrder">
+        <MappingFragment StoreEntitySet="OutBoundOrder">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CheckInvFlag" ColumnName="CheckInvFlag" />
+          <ScalarProperty Name="InterceptFlag" ColumnName="InterceptFlag" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="buy_company" ColumnName="buy_company" />
+          <ScalarProperty Name="buy_name" ColumnName="buy_name" />
+          <ScalarProperty Name="OutOrderGroupId" ColumnName="OutOrderGroupId" />
+          <ScalarProperty Name="LoadFlag" ColumnName="LoadFlag" />
+          <ScalarProperty Name="PlanOutTime" ColumnName="PlanOutTime" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="OrderSource" ColumnName="OrderSource" />
+          <ScalarProperty Name="DSFLag" ColumnName="DSFLag" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="NowProcessId" ColumnName="NowProcessId" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="AltCustomerOutPoNumber" ColumnName="AltCustomerOutPoNumber" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FlowHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.FlowHead">
+        <MappingFragment StoreEntitySet="FlowHead">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="CheckAllHuWeightFlag" ColumnName="CheckAllHuWeightFlag" />
+          <ScalarProperty Name="FlowOrderBy" ColumnName="FlowOrderBy" />
+          <ScalarProperty Name="UrlEdiId3" ColumnName="UrlEdiId3" />
+          <ScalarProperty Name="UrlEdiId2" ColumnName="UrlEdiId2" />
+          <ScalarProperty Name="UrlEdiId" ColumnName="UrlEdiId" />
+          <ScalarProperty Name="OutSerialNumberCheckIn" ColumnName="OutSerialNumberCheckIn" />
+          <ScalarProperty Name="OutTemplate" ColumnName="OutTemplate" />
+          <ScalarProperty Name="RecStockCheckApi" ColumnName="RecStockCheckApi" />
+          <ScalarProperty Name="RecStockSugApi" ColumnName="RecStockSugApi" />
+          <ScalarProperty Name="PZTemplate" ColumnName="PZTemplate" />
+          <ScalarProperty Name="InTemplate" ColumnName="InTemplate" />
+          <ScalarProperty Name="FieldOrderById" ColumnName="FieldOrderById" />
+          <ScalarProperty Name="InterceptFlag" ColumnName="InterceptFlag" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="FlowName" ColumnName="FlowName" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelImportOutBounds">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ExcelImportOutBound">
+        <MappingFragment StoreEntitySet="ExcelImportOutBound">
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Style1" ColumnName="Style1" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ContainerNumber" ColumnName="ContainerNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelImportInBoundCottons">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ExcelImportInBoundCotton">
+        <MappingFragment StoreEntitySet="ExcelImportInBoundCotton">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Hudson" ColumnName="Hudson" />
+          <ScalarProperty Name="ClothesHanger" ColumnName="ClothesHanger" />
+          <ScalarProperty Name="ASOS" ColumnName="ASOS" />
+          <ScalarProperty Name="BookedPortOfDischarge" ColumnName="BookedPortOfDischarge" />
+          <ScalarProperty Name="BookedPOR" ColumnName="BookedPOR" />
+          <ScalarProperty Name="PlaceOfReceipt" ColumnName="PlaceOfReceipt" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="ColourCode" ColumnName="ColourCode" />
+          <ScalarProperty Name="LOGITQTY" ColumnName="LOGITQTY" />
+          <ScalarProperty Name="BookedQTY" ColumnName="BookedQTY" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="COGETA" ColumnName="COGETA" />
+          <ScalarProperty Name="COGETD" ColumnName="COGETD" />
+          <ScalarProperty Name="ERD" ColumnName="ERD" />
+          <ScalarProperty Name="Brand" ColumnName="Brand" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ShipeeziSO" ColumnName="ShipeeziSO" />
+          <ScalarProperty Name="Shipper" ColumnName="Shipper" />
+          <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="PO" ColumnName="PO" />
+          <ScalarProperty Name="DC" ColumnName="DC" />
+          <ScalarProperty Name="SystemNumber" ColumnName="SystemNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HoldMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.HoldMaster">
+        <MappingFragment StoreEntitySet="HoldMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="HoldReason" ColumnName="HoldReason" />
+          <ScalarProperty Name="ReasonType" ColumnName="ReasonType" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhClients">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhClient">
+        <MappingFragment StoreEntitySet="WhClient">
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="RecCBMPercent" ColumnName="RecCBMPercent" />
+          <ScalarProperty Name="ReleaseRule" ColumnName="ReleaseRule" />
+          <ScalarProperty Name="Passageway" ColumnName="Passageway" />
+          <ScalarProperty Name="ContractNameOut" ColumnName="ContractNameOut" />
+          <ScalarProperty Name="ContractName" ColumnName="ContractName" />
+          <ScalarProperty Name="NightTime" ColumnName="NightTime" />
+          <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+          <ScalarProperty Name="ZoneFlag" ColumnName="ZoneFlag" />
+          <ScalarProperty Name="WarnCBM" ColumnName="WarnCBM" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ItemMaster">
+        <MappingFragment StoreEntitySet="ItemMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Remark2" ColumnName="Remark2" />
+          <ScalarProperty Name="Remark1" ColumnName="Remark1" />
+          <ScalarProperty Name="InStallService" ColumnName="InStallService" />
+          <ScalarProperty Name="CartonName" ColumnName="CartonName" />
+          <ScalarProperty Name="OneItemSizeLPFlag" ColumnName="OneItemSizeLPFlag" />
+          <ScalarProperty Name="OneItemLPFlag" ColumnName="OneItemLPFlag" />
+          <ScalarProperty Name="OnHandFlag" ColumnName="OnHandFlag" />
+          <ScalarProperty Name="LocOnHandFlag" ColumnName="LocOnHandFlag" />
+          <ScalarProperty Name="LocFlag" ColumnName="LocFlag" />
+          <ScalarProperty Name="RgularId" ColumnName="RgularId" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitFlag" ColumnName="UnitFlag" />
+          <ScalarProperty Name="ScanRule" ColumnName="ScanRule" />
+          <ScalarProperty Name="ScanFlag" ColumnName="ScanFlag" />
+          <ScalarProperty Name="HandFlag" ColumnName="HandFlag" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="Style3" ColumnName="Style3" />
+          <ScalarProperty Name="Style2" ColumnName="Style2" />
+          <ScalarProperty Name="Style1" ColumnName="Style1" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadMasters">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadMaster">
+        <MappingFragment StoreEntitySet="LoadMaster">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="BaQty" ColumnName="BaQty" />
+          <ScalarProperty Name="EchQty" ColumnName="EchQty" />
+          <ScalarProperty Name="SumWeight" ColumnName="SumWeight" />
+          <ScalarProperty Name="SumCBM" ColumnName="SumCBM" />
+          <ScalarProperty Name="DSSumQty" ColumnName="DSSumQty" />
+          <ScalarProperty Name="SumQty" ColumnName="SumQty" />
+          <ScalarProperty Name="PlanQty" ColumnName="PlanQty" />
+          <ScalarProperty Name="ShipDate" ColumnName="ShipDate" />
+          <ScalarProperty Name="EndSortDate" ColumnName="EndSortDate" />
+          <ScalarProperty Name="BeginSortDate" ColumnName="BeginSortDate" />
+          <ScalarProperty Name="EndPackDate" ColumnName="EndPackDate" />
+          <ScalarProperty Name="BeginPackDate" ColumnName="BeginPackDate" />
+          <ScalarProperty Name="EndPickDate" ColumnName="EndPickDate" />
+          <ScalarProperty Name="BeginPickDate" ColumnName="BeginPickDate" />
+          <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+          <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+          <ScalarProperty Name="Status3" ColumnName="Status3" />
+          <ScalarProperty Name="Status2" ColumnName="Status2" />
+          <ScalarProperty Name="Status1" ColumnName="Status1" />
+          <ScalarProperty Name="Status0" ColumnName="Status0" />
+          <ScalarProperty Name="ShipMode" ColumnName="ShipMode" />
+          <ScalarProperty Name="ClientQty" ColumnName="ClientQty" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WhUsers">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.WhUser">
+        <MappingFragment StoreEntitySet="WhUser">
+          <ScalarProperty Name="CheckFlag" ColumnName="CheckFlag" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="UserNameCN" ColumnName="UserNameCN" />
+          <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.BillDetail">
+        <MappingFragment StoreEntitySet="BillDetail">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="TaxInclusiveFlag" ColumnName="TaxInclusiveFlag" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="PriceTotal" ColumnName="PriceTotal" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LadderNumber" ColumnName="LadderNumber" />
+          <ScalarProperty Name="ChargeUnitName" ColumnName="ChargeUnitName" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ContainerType" ColumnName="ContainerType" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="ChargeType" ColumnName="ChargeType" />
+          <ScalarProperty Name="ContainerNumber" ColumnName="ContainerNumber" />
+          <ScalarProperty Name="DaiDianId" ColumnName="DaiDianId" />
+          <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+          <ScalarProperty Name="ChargeItem" ColumnName="ChargeItem" />
+          <ScalarProperty Name="ChargeCode" ColumnName="ChargeCode" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="SoId" ColumnName="SoId" />
+          <ScalarProperty Name="ETD" ColumnName="ETD" />
+          <ScalarProperty Name="NotLoadFlag" ColumnName="NotLoadFlag" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="BLNumber" ColumnName="BLNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadChargeDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadChargeDetail">
+        <MappingFragment StoreEntitySet="LoadChargeDetail">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="TaxInclusiveFlag" ColumnName="TaxInclusiveFlag" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="DaiDianId" ColumnName="DaiDianId" />
+          <ScalarProperty Name="BargainingFlag" ColumnName="BargainingFlag" />
+          <ScalarProperty Name="WarehouseFlag" ColumnName="WarehouseFlag" />
+          <ScalarProperty Name="CustomerFlag" ColumnName="CustomerFlag" />
+          <ScalarProperty Name="LoadChargeRuleId" ColumnName="LoadChargeRuleId" />
+          <ScalarProperty Name="PriceTotal" ColumnName="PriceTotal" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="LadderNumber" ColumnName="LadderNumber" />
+          <ScalarProperty Name="ChargeUnitName" ColumnName="ChargeUnitName" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="ContainerType" ColumnName="ContainerType" />
+          <ScalarProperty Name="ChargeName" ColumnName="ChargeName" />
+          <ScalarProperty Name="ChargeType" ColumnName="ChargeType" />
+          <ScalarProperty Name="ContainerNumber" ColumnName="ContainerNumber" />
+          <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+          <ScalarProperty Name="ChargeItem" ColumnName="ChargeItem" />
+          <ScalarProperty Name="ChargeCode" ColumnName="ChargeCode" />
+          <ScalarProperty Name="SoStatus" ColumnName="SoStatus" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="ETD" ColumnName="ETD" />
+          <ScalarProperty Name="NotLoadFlag" ColumnName="NotLoadFlag" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoadChargeRules">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.LoadChargeRule">
+        <MappingFragment StoreEntitySet="LoadChargeRule">
+          <ScalarProperty Name="ClientAutoCharge" ColumnName="ClientAutoCharge" />
+          <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+          <ScalarProperty Name="ChargeItem" ColumnName="ChargeItem" />
+          <ScalarProperty Name="ChargeCode" ColumnName="ChargeCode" />
+          <ScalarProperty Name="DaiDianId" ColumnName="DaiDianId" />
+          <ScalarProperty Name="BargainingFlag" ColumnName="BargainingFlag" />
+          <ScalarProperty Name="WarehouseFlag" ColumnName="WarehouseFlag" />
+          <ScalarProperty Name="CustomerFlag" ColumnName="CustomerFlag" />
+          <ScalarProperty Name="RequiredFlag" ColumnName="RequiredFlag" />
+          <ScalarProperty Name="FunctionFlag" ColumnName="FunctionFlag" />
+          <ScalarProperty Name="SOFeeFlag" ColumnName="SOFeeFlag" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+          <ScalarProperty Name="FunctionUnitName" ColumnName="FunctionUnitName" />
+          <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+          <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TruckQueueDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TruckQueueDetail">
+        <MappingFragment StoreEntitySet="TruckQueueDetail">
+          <ScalarProperty Name="SmallLoadingArea" ColumnName="SmallLoadingArea" />
+          <ScalarProperty Name="ResetCount" ColumnName="ResetCount" />
+          <ScalarProperty Name="BookChannel" ColumnName="BookChannel" />
+          <ScalarProperty Name="NoticeFlag" ColumnName="NoticeFlag" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="BookOrigin" ColumnName="BookOrigin" />
+          <ScalarProperty Name="FeesStatus" ColumnName="FeesStatus" />
+          <ScalarProperty Name="OverSizeFlag" ColumnName="OverSizeFlag" />
+          <ScalarProperty Name="SeeUser" ColumnName="SeeUser" />
+          <ScalarProperty Name="SeeTime" ColumnName="SeeTime" />
+          <ScalarProperty Name="SeeFlag" ColumnName="SeeFlag" />
+          <ScalarProperty Name="BkIsValid" ColumnName="BkIsValid" />
+          <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+          <ScalarProperty Name="BkDateEnd" ColumnName="BkDateEnd" />
+          <ScalarProperty Name="BkDateBegin" ColumnName="BkDateBegin" />
+          <ScalarProperty Name="GoodsType" ColumnName="GoodsType" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="BkNumber" ColumnName="BkNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="UnloadingArea" ColumnName="UnloadingArea" />
+          <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="HeadId" ColumnName="HeadId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMasterColorCodes">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ItemMasterColorCode">
+        <MappingFragment StoreEntitySet="ItemMasterColorCode">
+          <ScalarProperty Name="ColorDescription" ColumnName="ColorDescription" />
+          <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TruckQueueHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TruckQueueHead">
+        <MappingFragment StoreEntitySet="TruckQueueHead">
+          <ScalarProperty Name="WMSWhCode" ColumnName="WMSWhCode" />
+          <ScalarProperty Name="ResetCount" ColumnName="ResetCount" />
+          <ScalarProperty Name="BookOrigin" ColumnName="BookOrigin" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="GreenPassFlag" ColumnName="GreenPassFlag" />
+          <ScalarProperty Name="DepartureType" ColumnName="DepartureType" />
+          <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+          <ScalarProperty Name="EntryTime" ColumnName="EntryTime" />
+          <ScalarProperty Name="JumpingRemark" ColumnName="JumpingRemark" />
+          <ScalarProperty Name="AllowUser" ColumnName="AllowUser" />
+          <ScalarProperty Name="AllowTime" ColumnName="AllowTime" />
+          <ScalarProperty Name="TruckLength" ColumnName="TruckLength" />
+          <ScalarProperty Name="TruckStatus" ColumnName="TruckStatus" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="TruckNumber" ColumnName="TruckNumber" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelImportInBoundComs">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.ExcelImportInBoundCom">
+        <MappingFragment StoreEntitySet="ExcelImportInBoundCom">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Remark3" ColumnName="Remark3" />
+          <ScalarProperty Name="Remark2" ColumnName="Remark2" />
+          <ScalarProperty Name="Remark1" ColumnName="Remark1" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Style3" ColumnName="Style3" />
+          <ScalarProperty Name="Style2" ColumnName="Style2" />
+          <ScalarProperty Name="Style1" ColumnName="Style1" />
+          <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="SystemNumber" ColumnName="SystemNumber" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackTasks">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.PackTask">
+        <MappingFragment StoreEntitySet="PackTask">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Json" ColumnName="Json" />
+          <ScalarProperty Name="OrderCreateDate" ColumnName="OrderCreateDate" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="PackingListTemplate" ColumnName="PackingListTemplate" />
+          <ScalarProperty Name="SinglePlaneTemplate" ColumnName="SinglePlaneTemplate" />
+          <ScalarProperty Name="ZdFlag" ColumnName="ZdFlag" />
+          <ScalarProperty Name="SingleFlag" ColumnName="SingleFlag" />
+          <ScalarProperty Name="PackMoreFlag" ColumnName="PackMoreFlag" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AirFlag" ColumnName="AirFlag" />
+          <ScalarProperty Name="dest_code" ColumnName="dest_code" />
+          <ScalarProperty Name="form_code" ColumnName="form_code" />
+          <ScalarProperty Name="j_name" ColumnName="j_name" />
+          <ScalarProperty Name="cod" ColumnName="cod" />
+          <ScalarProperty Name="custid" ColumnName="custid" />
+          <ScalarProperty Name="companyCode" ColumnName="companyCode" />
+          <ScalarProperty Name="parcel_quantity" ColumnName="parcel_quantity" />
+          <ScalarProperty Name="express_type_zh" ColumnName="express_type_zh" />
+          <ScalarProperty Name="express_type" ColumnName="express_type" />
+          <ScalarProperty Name="express_code" ColumnName="express_code" />
+          <ScalarProperty Name="d_address" ColumnName="d_address" />
+          <ScalarProperty Name="d_city" ColumnName="d_city" />
+          <ScalarProperty Name="d_Province" ColumnName="d_Province" />
+          <ScalarProperty Name="d_tel" ColumnName="d_tel" />
+          <ScalarProperty Name="d_contact" ColumnName="d_contact" />
+          <ScalarProperty Name="d_company" ColumnName="d_company" />
+          <ScalarProperty Name="j_address" ColumnName="j_address" />
+          <ScalarProperty Name="j_county" ColumnName="j_county" />
+          <ScalarProperty Name="j_city" ColumnName="j_city" />
+          <ScalarProperty Name="j_province" ColumnName="j_province" />
+          <ScalarProperty Name="j_tel" ColumnName="j_tel" />
+          <ScalarProperty Name="j_contact" ColumnName="j_contact" />
+          <ScalarProperty Name="j_company" ColumnName="j_company" />
+          <ScalarProperty Name="PackQty" ColumnName="PackQty" />
+          <ScalarProperty Name="TransportType" ColumnName="TransportType" />
+          <ScalarProperty Name="AltCustomerOutPoNumber" ColumnName="AltCustomerOutPoNumber" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="SortGroupNumber" ColumnName="SortGroupNumber" />
+          <ScalarProperty Name="SortGroupId" ColumnName="SortGroupId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransferHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.TransferHead">
+        <MappingFragment StoreEntitySet="TransferHead">
+          <ScalarProperty Name="ExpressNumberParent" ColumnName="ExpressNumberParent" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PackCarton" ColumnName="PackCarton" />
+          <ScalarProperty Name="Weight" ColumnName="Weight" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="ExpressNumber" ColumnName="ExpressNumber" />
+          <ScalarProperty Name="PackNumber" ColumnName="PackNumber" />
+          <ScalarProperty Name="PackGroupId" ColumnName="PackGroupId" />
+          <ScalarProperty Name="OutPoNumber" ColumnName="OutPoNumber" />
+          <ScalarProperty Name="CustomerOutPoNumber" ColumnName="CustomerOutPoNumber" />
+          <ScalarProperty Name="SortGroupNumber" ColumnName="SortGroupNumber" />
+          <ScalarProperty Name="SortGroupId" ColumnName="SortGroupId" />
+          <ScalarProperty Name="LoadId" ColumnName="LoadId" />
+          <ScalarProperty Name="TransferSystemNumber" ColumnName="TransferSystemNumber" />
+          <ScalarProperty Name="TransferTaskId" ColumnName="TransferTaskId" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="truckQueueViews">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.truckQueueView">
+        <MappingFragment StoreEntitySet="truckQueueView">
+          <ScalarProperty Name="TruckLength" ColumnName="TruckLength" />
+          <ScalarProperty Name="GreenPassFlag" ColumnName="GreenPassFlag" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CBM" ColumnName="CBM" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="TruckNumber" ColumnName="TruckNumber" />
+          <ScalarProperty Name="UnloadingArea" ColumnName="UnloadingArea" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="seq" ColumnName="seq" />
+          <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DamcoGrnRules">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.DamcoGrnRule">
+        <MappingFragment StoreEntitySet="DamcoGrnRule">
+          <ScalarProperty Name="Sendtype" ColumnName="Sendtype" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="GrnType" ColumnName="GrnType" />
+          <ScalarProperty Name="MailTo" ColumnName="MailTo" />
+          <ScalarProperty Name="KgsSource" ColumnName="KgsSource" />
+          <ScalarProperty Name="CBMSource" ColumnName="CBMSource" />
+          <ScalarProperty Name="ReceiptDateSource" ColumnName="ReceiptDateSource" />
+          <ScalarProperty Name="MatchLevel" ColumnName="MatchLevel" />
+          <ScalarProperty Name="MailFlag" ColumnName="MailFlag" />
+          <ScalarProperty Name="AvgFlag" ColumnName="AvgFlag" />
+          <ScalarProperty Name="TotalCheck" ColumnName="TotalCheck" />
+          <ScalarProperty Name="DifferentialMailFlag" ColumnName="DifferentialMailFlag" />
+          <ScalarProperty Name="DifferenceRate" ColumnName="DifferenceRate" />
+          <ScalarProperty Name="DifferentialInterceptionFlag" ColumnName="DifferentialInterceptionFlag" />
+          <ScalarProperty Name="AutoSend" ColumnName="AutoSend" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DamcoGRNDetails">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.DamcoGRNDetail">
+        <MappingFragment StoreEntitySet="DamcoGRNDetail">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="GRN_ReceiptDate" ColumnName="GRN_ReceiptDate" />
+          <ScalarProperty Name="GRN_Kgs" ColumnName="GRN_Kgs" />
+          <ScalarProperty Name="GRN_Cbm" ColumnName="GRN_Cbm" />
+          <ScalarProperty Name="GRN_Qty" ColumnName="GRN_Qty" />
+          <ScalarProperty Name="WMS_ReceiptDate" ColumnName="WMS_ReceiptDate" />
+          <ScalarProperty Name="AVG_ReceiptDate" ColumnName="AVG_ReceiptDate" />
+          <ScalarProperty Name="AVG_Kgs" ColumnName="AVG_Kgs" />
+          <ScalarProperty Name="AVG_Cbm" ColumnName="AVG_Cbm" />
+          <ScalarProperty Name="AVG_Qty" ColumnName="AVG_Qty" />
+          <ScalarProperty Name="WMS_Kgs" ColumnName="WMS_Kgs" />
+          <ScalarProperty Name="WMS_Cbm" ColumnName="WMS_Cbm" />
+          <ScalarProperty Name="WMS_Qty" ColumnName="WMS_Qty" />
+          <ScalarProperty Name="GWI_Kgs" ColumnName="GWI_Kgs" />
+          <ScalarProperty Name="GWI_nwKgs" ColumnName="GWI_nwKgs" />
+          <ScalarProperty Name="GWI_Cbm" ColumnName="GWI_Cbm" />
+          <ScalarProperty Name="GWI_Qty" ColumnName="GWI_Qty" />
+          <ScalarProperty Name="GWI_Pcs" ColumnName="GWI_Pcs" />
+          <ScalarProperty Name="Style" ColumnName="Style" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="PoNumber" ColumnName="PoNumber" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="SoDigit" ColumnName="SoDigit" />
+          <ScalarProperty Name="SoCode" ColumnName="SoCode" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="LN" ColumnName="LN" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DamcoGRNHeads">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.DamcoGRNHead">
+        <MappingFragment StoreEntitySet="DamcoGRNHead">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+          <ScalarProperty Name="SendType" ColumnName="SendType" />
+          <ScalarProperty Name="WmsCbm" ColumnName="WmsCbm" />
+          <ScalarProperty Name="WmsQty" ColumnName="WmsQty" />
+          <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+          <ScalarProperty Name="SoDigit" ColumnName="SoDigit" />
+          <ScalarProperty Name="SoCode" ColumnName="SoCode" />
+          <ScalarProperty Name="Mark" ColumnName="Mark" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="R_Location_Item_RG">
+      <EntityTypeMapping TypeName="MODEL_MSSQL.R_Location_Item_RG">
+        <MappingFragment StoreEntitySet="R_Location_Item_RG">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="UpdateUser" ColumnName="UpdateUser" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="MaxQty" ColumnName="MaxQty" />
+          <ScalarProperty Name="MinQty" ColumnName="MinQty" />
+          <ScalarProperty Name="LotDate" ColumnName="LotDate" />
+          <ScalarProperty Name="LotNumber2" ColumnName="LotNumber2" />
+          <ScalarProperty Name="LotNumber1" ColumnName="LotNumber1" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="AltItemNumber" ColumnName="AltItemNumber" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+          <ScalarProperty Name="WhLocationId" ColumnName="WhLocationId" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="WhCode" ColumnName="WhCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

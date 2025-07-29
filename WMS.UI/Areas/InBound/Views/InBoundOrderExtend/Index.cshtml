@@ -1,0 +1,176 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="soNumber" hint="SO号" />
+        <input type="text" name="altItemNumber" hint="SKU" />
+        <input type="text" name="cartonId" hint="SN" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                     {
+                         text: "查询", icon: "search", click: function () {
+
+                             var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                             eip.datagrid.load("/InBound/InBoundOrderExtend/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                         }
+                     },
+                     {
+                         text: "批量导入预录入(SN)", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '', //若后台函数名为 imports，url就可以不传了
+                                  close: false,
+                                  submit: function (jsonObj) {
+
+                                      SelectFlowRule();
+
+                                  },
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '客户名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      }
+                                      ,
+                                      {
+                                          column: 'SO',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: 'SKU',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: 'SN',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '数量',
+                                          type: "number",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '是否验证款号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["操作"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+             
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+    });
+
+
+    //选择收货流程
+    function SelectFlowRule() {
+
+        var eles = $(':input[name],select[name]', $('#imports-layout'));
+
+        var dlg_Pos_Rule = eip.dialog.create("选择收货流程",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"100\" name=\"sel_flowRuleName\" hint=\"收货流程：\"><option value=\"0\" ></option></select>"
+            + "</div>"
+            + "</div>", 450, 130)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认导入", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=sel_flowRuleName]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("收货流程必须选择！<br />如果没有流程显示请检查客户名是否填写正确！<br />如有导入多个客户，请确认客户间是否有相同流程！");
+                                return;
+                            }
+
+                            eip.post("/InBound/InBoundOrderExtend/ImportsInBoundOrder?processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), eip.para.create(eles), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg_Pos_Rule);
+                                    eip.dialog.close($('#imports-layout').parent());
+
+                                }, function () { });
+                            }, null, true)
+
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        eip.post("/InBound/InBoundOrderExtend/CheckImportsInBoundOrder", eip.para.create(eles), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowRuleName]"), val, true);
+            }
+        });
+    }
+
+
+</script>

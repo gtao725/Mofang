@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="86f55a7d-5437-434f-94e6-afff20e5489a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/RootService/RootService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RootService5.xsd" MetadataType="Schema" ID="913212cf-1256-49da-ac3e-69f0059023e7" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd5" />
+    <MetadataFile FileName="RootService.xsd" MetadataType="Schema" ID="2b79f007-31f3-4f3b-b99d-cf7dfcb0f008" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RootService1.xsd" MetadataType="Schema" ID="68f1baae-a0c6-4dc4-84ff-6628ec2f2683" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RootService.wsdl" MetadataType="Wsdl" ID="e59158df-0d72-4990-8729-cd8898a5d709" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?wsdl" />
+    <MetadataFile FileName="RootService2.xsd" MetadataType="Schema" ID="8f66f27b-365b-46ff-83e8-b3ad2e23ecc5" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RootService3.xsd" MetadataType="Schema" ID="97bc2c0d-ca6b-49d5-8bcb-338034c751b7" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd4" />
+    <MetadataFile FileName="RootService4.xsd" MetadataType="Schema" ID="4b168528-09dd-4a5e-b74d-a97dc88bb7f1" SourceId="1" SourceUrl="http://localhost:45936/RootService/RootService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

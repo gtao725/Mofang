@@ -1,0 +1,1404 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["CreateUserName"], "createUser", "创建人", "", "")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientCode", "客户名", "", "")
+        <input type="text" name="load" hint="Load" />
+        <input type="text" name="billNumber" hint="提单号" />
+
+        <select class="easyui-validatebox" hint="出库方式" name="shipMode"><option></option><option value='海运'>海运</option><option value='提货'>提货</option><option value='铁路'>铁路</option></select>
+
+        <input type="text" name="BeginETD" hint="ETD" date='Y' />
+        <input type="text" name="EndETD" left="20" hint="-" date='Y' />
+
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <select class="easyui-vhuo'xia'alidatebox" hint="释放状态" name="Status0"><option></option><option value='未释放'>未释放</option><option value='已释放'>已释放</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="备货状态" name="Status1"><option></option><option value='未备货'>未备货</option><option value='正在备货'>正在备货</option><option value='完成备货'>完成备货</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="装箱状态" name="Status3"><option></option><option value='未装箱'>未装箱</option><option value='正在装箱'>正在装箱</option><option value='完成装箱'>完成装箱</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="封箱状态" name="ShipStatus"><option></option><option value='未封箱'>否</option><option value='已封箱'>是</option></select>
+        <input type="text" name="sealNumber" hint="封号" />
+
+        <textarea name="containerNumber" hint="集装箱号"></textarea>
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    <select class="easyui-validatebox" data-options="required:true " hint="出库方式" left="140" missingMessage="出库方式不能为空!" name="txt_shipMode"><option value='海运'>海运</option><option value='提货'>提货</option><option value='铁路'>铁路</option></select>
+    <input type="text" left="140" name="add_VesselName" hint="船名" />
+    <input type="text" left="140" name="add_VesselNumber" hint="航次" />
+    <input type="text" left="140" name="add_CarriageName" hint="船公司" />
+    <input type="text" left="140" name="add_ETD" date="Y" hint="ETD时间" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LoadContainerTypeSelect"], "add_ContainerType", "箱型", " ", " left='140' ", true)
+    <input type="text" left="140" name="add_Port" hint="港区" />
+    <input type="text" left="140" name="add_DeliveryPlace" hint="交货地" />
+    <input type="text" left="140" name="add_BillNumber" hint="提单号" />
+    <input type="text" left="140" name="add_ContainerNumber" hint="箱号" />
+    <input type="text" left="140" name="add_SealNumber" hint="封号" />
+    <select class="easyui-validatebox" hint="是否称重" left="140" name="add_WeightFlag"><option value='0'>否</option><option value='1'>是</option></select>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+
+                            if ($("[name=BeginCreateDate]", $("#layout")).val() == "") {
+                                $.eipMsg.alert("请先选择创建开始时间！");
+                                return;
+                            }
+
+                            if ($("[name=EndCreateDate]", $("#layout")).val() == "") {
+                                $.eipMsg.alert("请先选择创建结束时间！");
+                                return;
+                            }
+
+                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                        }
+                    }
+                    , {
+                        text: "创建装箱单", icon: "add", click: function () {
+                            var dlg = eip.dialog.create("创建装箱单", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 470)
+
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                if ($("[name=txt_shipMode]", $("#form2")).val() == "") {
+                                                    $.eipMsg.alert("出库方式必须选择!");
+                                                    return;
+                                                }
+                                                if ($("[name=add_BillNumber]", $("#form2")).val() == "") {
+                                                    $.eipMsg.alert("提单号必须填写!");
+                                                    return;
+                                                }
+                                                if ($("[name=add_ContainerNumber]", $("#form2")).val() == "") {
+                                                    $.eipMsg.alert("箱号必须填写!");
+                                                    return;
+                                                }
+                                                if ($("[name=add_SealNumber]", $("#form2")).val() == "") {
+                                                    $.eipMsg.alert("封号必须填写!");
+                                                    return;
+                                                }
+                                                if ($("[name=add_ContainerType]", $("#form2")).val() == "") {
+                                                    $.eipMsg.alert("箱型必须选择!");
+                                                    return;
+                                                }
+
+                                                eip.get("/OutBound/LoadContainerExtendBySN/LoadContainerAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                    eip.dialog.close(dlg);
+                                                    $.procAjaxData(jsonObj, function () {
+
+                                                        if (jsonObj.Data) {
+
+                                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                        } else {
+                                                            $.eipMsg.alert("保存出错了!");
+                                                        }
+
+                                                    }, function () { });
+                                                }, null, true)
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $(function () {
+                                $('select.easyui-validatebox').validatebox('disableValidation')
+                            });
+                        }
+                    },
+                    {
+                        text: "SN导入创建出货计划", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '', //若后台函数名为 imports，url就可以不传了
+                                 close: false,
+                                 submit: function (jsonObj) {
+
+                                     //SelectOutFlowRule();
+
+                                     var eles = $(':input[name],select[name]', $('#imports-layout'));
+                                     eip.post("/OutBound/LoadContainerExtendBySN/ImportsOutBoundOrderByExtend", eip.para.create(eles), function (jsonObj) {
+                                         $.procAjaxData(jsonObj, function () {
+
+                                             eip.dialog.close($('#imports-layout').parent());
+
+                                             eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                         }, function () { });
+                                     }, null, true)
+                                 },
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+
+                                     }, function () { })
+                                 },
+                                 columns: [
+                                     {
+                                         column: '客户名',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: '出库单号',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: 'SN',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                     {
+                                         column: '数量',
+                                         type: "number",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                 ]
+                             });
+                         }
+                    }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["创建人", "已选库存", "ProcessId", "loadMasterId"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "Load": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"LoadSecond_OutBoundOrderList('" + row["Load"] + "','" + row["loadMasterId"] + "','" + row["释放状态"] + "')\" >" + row["Load"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["释放状态"] == "未释放" || row["释放状态"] == "") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditContainerNumber(this)' title='修改明细' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelContainerNumber(this)' title='删除' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"SelectInventory(this)\" title='整出选择库存' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"SelectInventoryByPOSKU(this)\" title='非整出选择库存' ></a>";
+
+                        }
+
+                        if (row["释放状态"] == "未释放" && row["Load"] != "") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-reload' plain=true onclick='ReleaseLoad(this)' title='释放Load' ></a>";
+                        }
+                        if (row["释放状态"] == "已释放" && row["备货状态"] != "完成备货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='RollbackLoad(this)' title='撤销释放' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='打印出货操作单' ></a>";
+                        }
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditLoadRemark(this)' title='修改备注' ></a>";
+
+                        return retHtml;
+                    }
+                },
+                "出库SN调整": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["释放状态"] == "已释放" && row["装箱状态"] != "完成装箱") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='ChangeLoadContainerExtendBySNList(this)' title='出库SN调整' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=load]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+
+        $("[name=containerNumber]").css("height", "25px").css("width", "135px");
+        $("[name=containerNumber]").parent().css("height", "30px").css("width", "270px");
+    });
+
+    //修改出货备注
+    function EditLoadRemark(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg = eip.dialog.create("修改出货备注", "<div id=layout6 ><div form='Y' id='form6'>"
+                                    + "<span left=\"140\" hint=\"Load\">" + row["Load"] + "</span>"
+                                     + "<input type=\"hidden\" left=\"1\" name=\"edit_LoadMasterId\" value=\"" + row["loadMasterId"] + "\"  />"
+                                    + "<textarea rows=\"3\" cols=\"20\"  left=\"140\" name=\"edit_remark\" hint=\"出货备注\" >" + row["出货备注"] + "</textarea>"
+
+                                    + "</div></div>", 520, 250)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            eip.get("/OutBound/Load/EditLoadRemark", eip.para.create($("input,select,textarea", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_remark]").focus();
+    }
+
+    function ChangeLoadContainerExtendBySNList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("出库SN调整-出货单详细列表",
+             "<div id=layout_Detail4><div form=\"Y\" id=\"form_Detail4\">"
+             + "</div>"
+             + "<input type=\"text\"  name=\"txt_huId_sn hint=\"SN\" />"
+             + "<table id=\"grid_detail4\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail4"),
+            pagesize: 200,
+            hiddencolumns: ["ItemId"],
+            columns: {
+                "删除": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["装箱状态"] == "未装箱") {
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='ChangeLoadContainerExtendBySNDel(this)' title='删除SN' ></a>";
+
+                        } else {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-warning' plain=true onclick='AlterMessage()' title='提示' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail4'), [{
+            obj: $('#form_Detail4'),
+            buttons: [
+                {
+                    text: "新增SN", icon: "add", click:
+                       function () {
+                           ChangeLoadContainerExtendBySNAdd(obj);
+                       }
+                },
+                 {
+
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/ChangeLoadContainerExtendBySNList?loadId=" + row["Load"], $("#grid_detail4"), eip.para.create($("input,select", $("#layout_Detail4"))));
+    }
+
+    function ChangeLoadContainerExtendBySNAdd(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var load = row["Load"];
+
+        var dlg = eip.dialog.create("新增SN", "<div id=layout11 ><div form='Y' id='form11'>"
+                                    + "<input type=\"text\" left=\"140\" name=\"add_changesn\" value=\"\" hint=\"SN：\" />"
+                                    + "</div></div>", 500, 120)
+
+        eip.layout.create($('#layout11'), [{
+            obj: $('#form11'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=add_changesn]", $("#layout11")).val() == "") {
+                                $.eipMsg.alert("请输入需要新增的SN!");
+                                return;
+                            }
+
+                            eip.get("/OutBound/LoadContainerExtendBySN/ChangeLoadContainerExtendBySNAdd?load=" + load, eip.para.create($("input,select", $("#layout11"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/ChangeLoadContainerExtendBySNList?loadId=" + load, $("#grid_detail4"), eip.para.create($("input,select", $("#layout_Detail4"))));
+
+                                }, function () { });
+                            }, null, true)
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=add_changesn]", $("#layout11")).focus();
+    }
+
+    function AlterMessage() {
+        $.eipMsg.alert("SN未装箱前可操作，装箱后无法操作！");
+    }
+
+    function ChangeLoadContainerExtendBySNDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var load = row["Load号"];
+        var huid = row["SN"];
+        var clientcode = row["客户名"];
+        var sonumber = row["SO号"];
+        var ponumber = row["PO"];
+        var itemnumber = row["SKU"];
+        var unitname = row["单位"];
+        var itemid = row["ItemId"];
+        var lotnumber1 = row["Lot1"];
+        var lotnumber2 = row["Lot2"];
+
+        $.eipMsg.confirm("确定删除该SN吗？删除后无法撤销及再次添加！", function () {
+            eip.get("/OutBound/LoadContainerExtendBySN/ChangeLoadContainerExtendBySNDel?load=" + load + "&huid=" + eip.utf8(huid) + "&clientcode=" + eip.utf8(clientcode) + "&sonumber=" + eip.utf8(sonumber) + "&ponumber=" + eip.utf8(ponumber) + "&itemnumber=" + eip.utf8(itemnumber) + "&unitname=" + unitname + "&itemid=" + itemid + "&lotnumber1=" + lotnumber1 + "&lotnumber2=" + lotnumber2, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/ChangeLoadContainerExtendBySNList?loadId=" + load, $("#grid_detail4"), eip.para.create($("input,select", $("#layout_Detail4"))));
+
+                }, function () { });
+            }, null, true)
+        })
+    }
+
+    //查看Load  明细
+    function LoadSecond_OutBoundOrderList(val, val1, val2) {
+        var dlg_Pos = eip.dialog.create("查看Load明细—Load：" + val + "，释放状态：" + val2,
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: [""]
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/LoadToOutBoundOrderList?LoadMasterId=" + val1, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+    //选择出货流程
+    function SelectOutFlowRule() {
+
+        var eles = $(':input[name],select[name]', $('#imports-layout'));
+
+        var dlg_Pos_Rule = eip.dialog.create("选择出货流程",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"100\" name=\"sel_flowRuleName\" hint=\"出货流程：\"><option value=\"0\" ></option></select>"
+            + "</div>"
+            + "</div>", 450, 200)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认流程并导入", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=sel_flowRuleName]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("出货流程必须选择！\r\n出货流程为空代表客户流程不一致或客户未配置流程！");
+                                return;
+                            }
+
+                            eip.post("/OutBound/LoadContainerExtendBySN/ImportsOutBoundOrderByExtend?processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), eip.para.create(eles), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg_Pos_Rule);
+                                    eip.dialog.close($('#imports-layout').parent());
+
+                                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            }, null)
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        eip.post("/OutBound/LoadContainerExtendBySN/CheckImportsSNCreateFlowRule", eip.para.create(eles), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowRuleName]"), val, true);
+            }
+        });
+    }
+
+    //释放Load
+    function ReleaseLoad(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        if (row["出库方式"] == "集装箱") {
+            if (row["箱号"] == "" || row["封号"] == "") {
+                $.eipMsg.alert("请先维护箱封号信息!");
+                return;
+            }
+        }
+
+        eip.get("/OutBound/Load/CheckLoadContainerQtyToOutDetail?LoadId=" + row["Load"], null, function (val) {
+            if (val == "Y") {
+                eip.get("/OutBound/Load/ReleaseLoad?LoadId=" + row["Load"], null, function (jsonObj) {
+                    $.procAjaxData(jsonObj, function () {
+
+                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                    }, function () {
+                        showReleaseLoadDetailList(row["Load"]);
+                    });
+                }, null, true)
+            }
+            else {
+                $.eipMsg.alert(val);
+            }
+        })
+
+    }
+
+    //释放异常后显示异常明细列表
+    function showReleaseLoadDetailList(val1) {
+        var dlg_Pos = eip.dialog.create("释放Load异常明细列表—Load：" + val1,
+             "<div id=layout_Detail_release><div form=\"Y\" id=\"form_Detail_release\">"
+             + "</div>"
+             + "<table id=\"grid_detail_release\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_release"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            columns: {
+
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_release'), [{
+            obj: $('#form_Detail_release'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/Load/showReleaseLoadDetailList?LoadId=" + val1, $("#grid_detail_release"), eip.para.create($("input,select", $("#layout_Detail_release"))));
+                       }
+                },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/OutBound/Load/showReleaseLoadDetailList?LoadId=" + val1, $("#grid_detail_release"), eip.para.create($("input,select", $("#layout_Detail_release"))));
+    }
+
+    //撤销释放
+    function RollbackLoad(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确认撤销释放Load：" + row["Load"] + "吗？", function () {
+            eip.get("/OutBound/Load/RollbackLoad?Load=" + row["Load"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            }, null, true)
+        })
+    }
+
+    //维护箱封号
+    function EditContainerNumber(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var dlg = eip.dialog.create("修改明细", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"Load\">" + row["Load"] + "</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_VesselName\" value=\"" + row["船名"] + "\" hint=\"船名\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_VesselNumber\" value=\"" + row["航次"] + "\" hint=\"航次\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_CarriageName\" value=\"" + row["船公司"] + "\" hint=\"船公司\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_ETD\" date=\"Y\" value=\"" + row["ETD时间"] + "\" hint=\"ETD时间\"  />"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LoadContainerTypeSelect"], "edit_ContainerType", "箱型", " ", " left='140' ",true)"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Port\" value=\"" + row["港区"] + "\" hint=\"港区\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_DeliveryPlace\" value=\"" + row["交货地"] + "\" hint=\"交货地\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_BillNumber\" value=\"" + row["提单号"] + "\" hint=\"提单号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_ContainerNumber\" value=\"" + row["箱号"] + "\" hint=\"箱号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_SealNumber\" value=\"" + row["封号"] + "\" hint=\"封号\" />"
+
+                                    + "</div></div>", 520, 450)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_BillNumber]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("提单号必须填写!");
+                                return;
+                            }
+                            if ($("[name=edit_ContainerNumber]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("箱号必须填写!");
+                                return;
+                            }
+                            if ($("[name=edit_SealNumber]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("封号必须填写!");
+                                return;
+                            }
+                            eip.get("/OutBound/LoadContainerExtendBySN/EditContainerNumber?id=" + id, eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_ContainerType]", $("#form5")).val(row["箱型"]);
+    }
+
+    //删除Load
+    function DelContainerNumber(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除箱单吗？", function () {
+            eip.get("/OutBound/LoadContainerExtendBySN/LoadContainerDelById?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    var dlg_Pos;
+    //选择库存生成CLP
+    function SelectInventory(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadContainerId = row["操作"];
+
+        dlg_Pos = eip.dialog.create("整出选择库存，提单号：" + row["提单号"] + "，箱号：" + row["箱号"] + "，封号：" + row["封号"],
+           "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "<textarea hint=\"SO号\"  name=\"so_area\" ></textarea>"
+            + "<input type=\"text\" left=\"100\" name=\"so_like\" hint=\"SO号模糊匹配\" />"
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_clientCode","客户名","", "  ")"
+
+           + "</div>"
+           + "<table id=\"grid_detail\"></table></div>", 1000, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 50,
+            ajaxType: "post",
+            hiddencolumns: ["操作"]
+            , checkbox: function (row) {
+                if (row["库存数量"] > row["已选数量"]) {
+                    return "<input type=checkbox name=check_to  value=\"" + row["SO号"] + "\" clientCode='" + row["客户名"] + "'  >";
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventory", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail")).length == 0) {
+                                $.eipMsg.alert("请先选择库存信息!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail")).each(function () {
+                                arr_list.push({ name: 'soNumber', value: $(this).val() });
+                                arr_list.push({ name: 'clientCode', value: $(this).attr("clientCode") });
+                            })
+
+                            eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerCheckProcessName", arr_list, function (result1) {
+                                //验证出货流程是否只有一个
+                                if (result1 == "N") {
+                                    SelectLoadContainerRule(arr_list, loadContainerId, "");
+                                } else if (result1.split("$")[0] == "Y") {
+
+                                    eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailAdd?loadContainerId=" + loadContainerId + "&processId=" + result1.split("$")[1] + "&processName=" + eip.utf8(result1.split("$")[2]), arr_list, function (jsonObj) {
+                                        $.procAjaxData(jsonObj, function () {
+
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventory", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                        }, function () { });
+                                    }, null, true)
+
+                                }
+                            })
+
+                        }
+                 },
+                 {
+                     text: "查看已选择库存", icon: "search", click:
+                        function () {
+                            SelectInventoryDetail(loadContainerId, "");
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }])
+        $("[name=so_area]").focus();
+
+        $("[name=so_area]").css("height", "25px").css("width", "135px");
+        $("[name=so_area]").parent().css("height", "30px").css("width", "270px");
+
+        eip.hint.fit($("#layout_Detail"));
+    }
+
+    var dlg_Pos_ByPO;
+    //选择库存生成CLP
+    function SelectInventoryByPOSKU(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadContainerId = row["操作"];
+
+        dlg_Pos_ByPO = eip.dialog.create("非整出选择库存，箱号：" + row["箱号"] + "，封号：" + row["封号"],
+           "<div id=layout_Detail_byposku><div form=\"Y\" id=\"form_Detail_byposku\">"
+            + "<textarea hint=\"SO号\"  name=\"so_area\" ></textarea>"
+            + "<textarea hint=\"PO\"  name=\"po_area\" ></textarea>"
+            + "<textarea hint=\"款号\"  name=\"sku_area\" ></textarea>"
+            + "<textarea hint=\"属性1\"  name=\"style1_area\" ></textarea>"
+            + "<textarea hint=\"属性2\"  name=\"style2_area\" ></textarea>"
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_clientCode","客户名","", "  ")"
+
+           + "</div>"
+           + "<table id=\"grid_detail_byposku\"></table></div>", 1100, 520)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_byposku"),
+            pagesize: 50,
+            hiddencolumns: ["操作"]
+            , checkbox: function (row) {
+                if (row["库存数量"] > row["已选数量"]) {
+                    return "<input type=checkbox name=check_to  value=\"" + row["SO号"] + "\" poNumber=\"" + row["PO"] + "\" altNumber=\"" + row["款号ID"] + "\" clientCode='" + row["客户名"] + "'  >";
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_byposku'), [{
+            obj: $('#form_Detail_byposku'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventoryByPOSKU", $("#grid_detail_byposku"), eip.para.create($("input,select,textarea", $("#form_Detail_byposku"))));
+                       }
+                },
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail_byposku")).length == 0) {
+                                $.eipMsg.alert("请先选择库存信息!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail_byposku")).each(function () {
+                                arr_list.push({ name: 'soNumber', value: $(this).val() });
+                                arr_list.push({ name: 'poNumber', value: $(this).attr("poNumber") });
+                                arr_list.push({ name: 'altNumber', value: $(this).attr("altNumber") });
+                                arr_list.push({ name: 'clientCode', value: $(this).attr("clientCode") });
+                            })
+
+                            eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerCheckProcessName", arr_list, function (result1) {
+                                //验证出货流程是否只有一个
+                                if (result1 == "N") {
+                                    SelectLoadContainerRule(arr_list, loadContainerId, "byposku");
+                                } else if (result1.split("$")[0] == "Y") {
+
+                                    eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailAddByPOSKU?loadContainerId=" + loadContainerId + "&processId=" + result1.split("$")[1] + "&processName=" + eip.utf8(result1.split("$")[2]), arr_list, function (jsonObj) {
+                                        $.procAjaxData(jsonObj, function () {
+
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventoryByPOSKU", $("#grid_detail_byposku"), eip.para.create($("input,select,textarea", $("#form_Detail_byposku"))));
+
+
+                                        }, function () { });
+                                    }, null, true)
+
+                                }
+                            })
+
+                        }
+                 },
+                  {
+                      text: "查看已选择库存", icon: "search", click:
+                         function () {
+                             SelectInventoryDetail(loadContainerId, "byposku");
+                         }
+                  },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_ByPO);
+                        }
+                 }
+            ]
+        }])
+
+        $("[name=so_area]").css("height", "25px").css("width", "155px");
+        $("[name=so_area]").parent().css("height", "30px").css("width", "230px");
+
+        $("[name=po_area]").css("height", "25px").css("width", "155px");
+        $("[name=po_area]").parent().css("height", "30px").css("width", "230px");
+
+        $("[name=sku_area]").css("height", "25px").css("width", "155px");
+        $("[name=sku_area]").parent().css("height", "30px").css("width", "230px");
+
+        $("[name=style1_area]").css("height", "25px").css("width", "155px");
+        $("[name=style1_area]").parent().css("height", "30px").css("width", "230px");
+
+        $("[name=style2_area]").css("height", "25px").css("width", "155px");
+        $("[name=style2_area]").parent().css("height", "30px").css("width", "230px");
+
+        eip.hint.fit($("#layout_Detail"));
+
+    }
+
+    //选择出货流程
+    function SelectLoadContainerRule(arr_list, loadContainerId, var1) {
+        var dlg_Pos_Rule = eip.dialog.create("选择出货流程",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"100\" name=\"sel_flowRuleName\" hint=\"出货流程：\"><option value=\"0\" ></option></select>"
+            + "</div>"
+            + "</div>", 450, 200)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=sel_flowRuleName]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("出货流程必须选择！\r\n出货流程为空代表所选客户流程不一致，请重新选择库存！");
+                                return;
+                            }
+
+                            //如果是 按POSKU查询添加的
+                            if (var1 == "byposku") {
+
+                                eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailAddByPOSKU?loadContainerId=" + loadContainerId + "&processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        //eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventoryByPOSKU", $("#grid_detail_byposku"), eip.para.create($("input,select,textarea", $("#form_Detail_byposku"))));
+
+                                        //SelectInventoryDetail(jsonObj.Data["Id"], "byposku");
+
+                                        eip.dialog.close(dlg_Pos_Rule);
+
+                                    }, function () { });
+                                }, null, true)
+
+                            } else {
+
+                                //按SO匹配查询的
+                                eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailAdd?loadContainerId=" + loadContainerId + "&processId=" + $("[name=sel_flowRuleName]", $("#form_ruleDetail")).val() + "&processName=" + eip.utf8(processName), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        //eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectInventory", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                        //SelectInventoryDetail(jsonObj.Data["Id"], "");
+
+                                        eip.dialog.close(dlg_Pos_Rule);
+
+
+                                    }, function () { });
+                                }, null, true)
+                            }
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        eip.post("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailCheck", arr_list, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowRuleName]"), val, true);
+            }
+        });
+    }
+
+
+    //当前选择库存明细列表
+    function SelectInventoryDetail(val, val1) {
+        var dlg_Pos1 = eip.dialog.create("查看已选库存",
+            "<div id=layout_Detail1><div form=\"Y\" id=\"form_Detail1\">"
+            + "</div>"
+            + "<table id=\"grid_detail1\"></table></div>", 1000, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail1"),
+            pagesize: 200,
+            hiddencolumns: ["id"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["属性ID"] != null) {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='detail_edit($(this).parent().parent())' title='修改顺序和数量' ></a>";
+                        } else {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='detail_edit1($(this).parent().parent())' title='修改顺序' ></a>";
+                        }
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"DelLoadContainerHuDetail(this,'" + val + "')\" title='删除明细' ></a>";
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+                                var so = row["SO号"];
+                                var po = row["PO"];
+                                var sku = row["款号"];
+                                var id = row["id"];
+                                if (id != "undefined") {
+                                    if ($("[name=edit_Qty]").val() == "") {
+                                        $.eipMsg.alert("数量不能为空！");
+                                        return;
+                                    }
+                                    if ($("[name=edit_Qty]").val() == "0") {
+                                        $.eipMsg.alert("数量不能为0！");
+                                        return;
+                                    }
+                                }
+
+                                eip.get("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailEdit?Id=" + id + "&Qty=" + $("[name=edit_Qty]").val() + "&Sequence=" + $("[name=edit_Sequence]").val() + "&so=" + so + "&po=" + po + "&sku=" + sku + "&loadContainerId=" + val, null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        if (row["属性ID"] != null) {
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSkuStyle?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                                        }
+                                        else if (row["款号"] != null) {
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSku?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                                        }
+                                        else if (row["PO"] != null) {
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                                        } else {
+                                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                                        }
+
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "数量": {
+                    editor: { type: "text", name: "edit_Qty" }
+                },
+                "顺序": {
+                    editor: { type: "text", name: "edit_Sequence" }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail1'), [{
+            obj: $('#form_Detail1'),
+            buttons: [
+                {
+                    text: "确认保存", icon: "save", click:
+                       function () {
+                           eip.get("/OutBound/LoadContainerExtendBySN/CheckLoadContainerCBMToRealease?loadContainerId=" + val, null, function (result1) {
+                               //验证箱型和立方
+                               if (result1 == "Y") {
+
+                                   eip.get("/OutBound/LoadContainerExtendBySN/CheckLoadContainerDetailToRealease?loadContainerId=" + val, null, function (result) {
+                                       //是否是海运
+                                       if (result == "Y") {
+                                           eip.post("/OutBound/LoadContainerExtendBySN/ConfirmLoadMasterAdd?loadContainerId=" + val, null, function (jsonObj) {
+                                               $.procAjaxData(jsonObj, function () {
+                                                   eip.dialog.close(dlg_Pos1);
+                                                   if (val1 == "byposku") {
+                                                       eip.dialog.close(dlg_Pos_ByPO);
+                                                   } else {
+                                                       eip.dialog.close(dlg_Pos);
+                                                   }
+
+                                                   eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                               }, function () { });
+                                           }, null, true)
+                                       } else {
+                                           //提示装箱单数量与立方
+                                           $.eipMsg.confirm(result, function () {
+
+                                               eip.post("/OutBound/LoadContainerExtendBySN/ConfirmLoadMasterAdd?loadContainerId=" + val, null, function (jsonObj) {
+                                                   $.procAjaxData(jsonObj, function () {
+                                                       eip.dialog.close(dlg_Pos1);
+                                                       if (val1 == "byposku") {
+                                                           eip.dialog.close(dlg_Pos_ByPO);
+                                                       } else {
+                                                           eip.dialog.close(dlg_Pos);
+                                                       }
+
+                                                       eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                   }, function () { });
+                                               }, null, true)
+
+                                           })
+                                       }
+                                   })
+                               } else {
+                                   $.eipMsg.confirm(result1, function () {
+
+                                       eip.get("/OutBound/LoadContainerExtendBySN/CheckLoadContainerDetailToRealease?loadContainerId=" + val, null, function (result) {
+                                           //是否是海运
+                                           if (result == "Y") {
+                                               eip.post("/OutBound/LoadContainerExtendBySN/ConfirmLoadMasterAdd?loadContainerId=" + val, null, function (jsonObj) {
+                                                   $.procAjaxData(jsonObj, function () {
+                                                       eip.dialog.close(dlg_Pos1);
+                                                       if (val1 == "byposku") {
+                                                           eip.dialog.close(dlg_Pos_ByPO);
+                                                       } else {
+                                                           eip.dialog.close(dlg_Pos);
+                                                       }
+
+                                                       eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                   }, function () { });
+                                               }, null, true)
+                                           } else {
+                                               //提示装箱单数量与立方
+                                               $.eipMsg.confirm(result, function () {
+
+                                                   eip.post("/OutBound/LoadContainerExtendBySN/ConfirmLoadMasterAdd?loadContainerId=" + val, null, function (jsonObj) {
+                                                       $.procAjaxData(jsonObj, function () {
+                                                           eip.dialog.close(dlg_Pos1);
+                                                           if (val1 == "byposku") {
+                                                               eip.dialog.close(dlg_Pos_ByPO);
+                                                           } else {
+                                                               eip.dialog.close(dlg_Pos);
+                                                           }
+
+                                                           eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                       }, function () { });
+                                                   }, null, true)
+
+                                               })
+                                           }
+                                       })
+
+                                   })
+                               }
+                           })
+
+                       }
+                },
+                {
+                    text: "按SO查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                       }
+                },
+                {
+                    text: "按PO查询", icon: "search", click:
+                      function () {
+                          eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                      }
+                },
+                 {
+                     text: "按款号查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSku?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                       }
+                 },
+                  {
+                      text: "按款号属性查询", icon: "search", click:
+                        function () {
+                            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSkuStyle?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                        }
+                  },
+                  {
+                      text: "按SO导入顺序", icon: 'imports', click:
+                       function () {
+                           eip.imports({
+                               url: "/OutBound/LoadContainerExtendBySN/ImportsSequenceBySo?loadContainerId=" + val, //若后台函数名为 imports，url就可以不传了
+                               doFunc: function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+
+                                   }, function () { })
+                               },
+                               columns: [
+                                  {
+                                      column: 'SO号',
+                                      type: "string",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                                  ,
+                                  {
+                                      column: '顺序',
+                                      type: "number",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                               ]
+                           });
+                       }
+                  },
+                  {
+                      text: "按PO导入顺序", icon: 'imports', click:
+                       function () {
+                           eip.imports({
+                               url: "/OutBound/LoadContainerExtendBySN/ImportsSequenceBySoPo?loadContainerId=" + val, //若后台函数名为 imports，url就可以不传了
+                               doFunc: function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+
+                                   }, function () { })
+                               },
+                               columns: [
+                                  {
+                                      column: 'SO号',
+                                      type: "string",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                                  ,
+                                  {
+                                      column: 'PO',
+                                      type: "string",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                                  ,
+                                  {
+                                      column: '顺序',
+                                      type: "number",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                               ]
+                           });
+                       }
+                  },
+                  {
+                      text: "按款号导入顺序", icon: 'imports', click:
+                       function () {
+                           eip.imports({
+                               url: "/OutBound/LoadContainerExtendBySN/ImportsSequenceBySoPoSku?loadContainerId=" + val, //若后台函数名为 imports，url就可以不传了
+                               doFunc: function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSku?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+
+                                   }, function () { })
+                               },
+                               columns: [
+                                  {
+                                      column: 'SO号',
+                                      type: "string",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                                  ,
+                                  {
+                                      column: 'PO',
+                                      type: "string",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                                  ,
+                                   {
+                                       column: '款号',
+                                       type: "string",
+                                       width: 100,
+                                       empty: false, //允许空值
+                                       optional: false //该列是否可选
+                                   }
+                                  ,
+                                  {
+                                      column: '顺序',
+                                      type: "number",
+                                      width: 100,
+                                      empty: false, //允许空值
+                                      optional: false //该列是否可选
+                                  }
+                               ]
+                           });
+                       }
+                  },
+                   {
+                       text: "按款号属性导入顺序", icon: 'imports', click:
+                        function () {
+                            eip.imports({
+                                url: "/OutBound/LoadContainerExtendBySN/ImportsSequenceBySoPoSkuStyle?loadContainerId=" + val, //若后台函数名为 imports，url就可以不传了
+                                doFunc: function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSkuStyle?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+
+                                    }, function () { })
+                                },
+                                columns: [
+                                   {
+                                       column: 'SO号',
+                                       type: "string",
+                                       width: 100,
+                                       empty: false, //允许空值
+                                       optional: false //该列是否可选
+                                   }
+                                   ,
+                                   {
+                                       column: 'PO',
+                                       type: "string",
+                                       width: 100,
+                                       empty: false, //允许空值
+                                       optional: false //该列是否可选
+                                   }
+                                   ,
+                                    {
+                                        column: '款号',
+                                        type: "string",
+                                        width: 100,
+                                        empty: false, //允许空值
+                                        optional: false //该列是否可选
+                                    }
+                                     ,
+                                    {
+                                        column: '属性ID',
+                                        type: "number",
+                                        width: 100,
+                                        empty: false, //允许空值
+                                        optional: false //该列是否可选
+                                    }
+                                   ,
+                                   {
+                                       column: '顺序',
+                                       type: "number",
+                                       width: 100,
+                                       empty: false, //允许空值
+                                       optional: false //该列是否可选
+                                   }
+                                ]
+                            });
+                        }
+                   },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos1);
+                        }
+                 }
+            ]
+        }])
+
+        //按款号属性 明细查询
+        if (val1 == "byposku") {
+
+            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSkuStyle?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+
+        } else {
+            eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+        }
+    }
+
+    //删除装箱单选择明细
+    function DelLoadContainerHuDetail(obj, val) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var so = row["SO号"];
+        var po = row["PO"];
+        var sku = row["款号"];
+        var id = row["id"];
+
+        $.eipMsg.confirm("确定删除所选明细吗？", function () {
+            eip.get("/OutBound/LoadContainerExtendBySN/LoadContainerHuDetailDel?Id=" + id + "&so=" + so + "&po=" + po + "&sku=" + sku + "&loadContainerId=" + val, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    if (row["属性ID"] != null) {
+                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSkuStyle?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                    }
+                    else if (row["款号"] != null) {
+                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPoSku?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                    }
+                    else if (row["PO"] != null) {
+                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySoPo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                    } else {
+                        eip.datagrid.load("/OutBound/LoadContainerExtendBySN/SelectLoadContainerHuDetailBySo?loadContainerId=" + val, $("#grid_detail1"), eip.para.create($("input,select,textarea", $("#form_Detail1"))));
+                    }
+
+                    eip.datagrid.load("/OutBound/LoadContainerExtendBySN/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    function detail_edit(tr) {
+        eip.datagrid.edit(tr, ["操作", "数量", "顺序"])
+    }
+
+    function detail_edit1(tr) {
+        eip.datagrid.edit(tr, ["操作", "顺序"])
+    }
+
+
+    //打印出货操作单
+    function PrintReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Load"];
+
+        eip.get("/OutBound/Load/PrintLoadId?LoadId=" + row["Load"], null, function (val) {
+
+            window.open(val + "?load_id=" + Id);
+
+        })
+    }
+
+
+</script>

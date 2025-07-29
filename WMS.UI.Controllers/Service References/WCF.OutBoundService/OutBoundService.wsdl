@@ -1,0 +1,1884 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OutBoundService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOutBoundService_InterceptOutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:InterceptOutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_InterceptOutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InterceptOutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ClientFlowNameSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClientFlowNameSelect" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ClientFlowNameSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClientFlowNameSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AddReceiptIdByInterceptOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptIdByInterceptOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AddReceiptIdByInterceptOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptIdByInterceptOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AddReceiptIdByInterceptOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptIdByInterceptOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AddReceiptIdByInterceptOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddReceiptIdByInterceptOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckInterceptOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInterceptOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckInterceptOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckInterceptOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_GetInterceptOrderReceiptId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInterceptOrderReceiptId" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_GetInterceptOrderReceiptId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInterceptOrderReceiptIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_InterceptOrderBatchReturnToWarehouse_InputMessage">
+    <wsdl:part name="parameters" element="tns:InterceptOrderBatchReturnToWarehouse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_InterceptOrderBatchReturnToWarehouse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InterceptOrderBatchReturnToWarehouseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsOutBoundOrderExtendBySN_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsOutBoundOrderExtendBySN" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsOutBoundOrderExtendBySN_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsOutBoundOrderExtendBySNResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailHuIdDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailHuIdDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailHuIdDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailHuIdDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailHuIdAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailHuIdAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PickTaskDetailHuIdAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PickTaskDetailHuIdAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CottonExcelImportOutBoundList_InputMessage">
+    <wsdl:part name="parameters" element="tns:CottonExcelImportOutBoundList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CottonExcelImportOutBoundList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CottonExcelImportOutBoundListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ExcelImportOutBoundCotton_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportOutBoundCotton" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ExcelImportOutBoundCotton_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcelImportOutBoundCottonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutFlowHeadListByClientId_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutFlowHeadListByClientId" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutFlowHeadListByClientId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutFlowHeadListByClientIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutFlowHeadListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutFlowHeadListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutFlowHeadListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutFlowHeadListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_FlowRuleStatusListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleStatusListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_FlowRuleStatusListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FlowRuleStatusListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ConfirmOutBoundOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmOutBoundOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ConfirmOutBoundOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmOutBoundOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_RollbackOutBoundOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackOutBoundOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_RollbackOutBoundOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackOutBoundOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundCheckUnitName_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundCheckUnitName" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundCheckUnitName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundCheckUnitNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDetailDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDetailDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsOutBoundOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsOutBoundOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsOutBoundOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsOutBoundOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadToOutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadToOutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadToOutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadToOutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerExtendAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerExtendAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerExtendAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerExtendAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerTypeSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerTypeSelect" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerTypeSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerTypeSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_Load_OutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:Load_OutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_Load_OutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Load_OutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadDetailAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDetailAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadDetailAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDetailAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadSecond_OutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadSecond_OutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadSecond_OutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadSecond_OutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadDetailDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDetailDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadDetailDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDetailDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckReleaseLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReleaseLoad" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckReleaseLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReleaseLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_RollbackLoad_InputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackLoad" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_RollbackLoad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RollbackLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckReleaseLoadGetType_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReleaseLoadGetType" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckReleaseLoadGetType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckReleaseLoadGetTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendSearch" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendImport_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendImport" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendImport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendDelete" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadHuIdExtendDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHuIdExtendDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterEditRemark_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterEditRemark" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadMasterEditRemark_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadMasterEditRemarkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CreateUserSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserSelect" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CreateUserSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerDelete_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerDelete" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerDelete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailListByPOSKU_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailListByPOSKU" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailListByPOSKU_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailListByPOSKUResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerClientCodeRule_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerClientCodeRule" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerClientCodeRule_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerClientCodeRuleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAddByPOSKU_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAddByPOSKU" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAddByPOSKU_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAddByPOSKUResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAddByImportPOSKU_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAddByImportPOSKU" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailAddByImportPOSKU_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailAddByImportPOSKUResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySo" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPo" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPoSku_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPoSku" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPoSku_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPoSkuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPoSkuStyle_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPoSkuStyle" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_SelectLoadContainerHuDetailBySoPoSkuStyle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectLoadContainerHuDetailBySoPoSkuStyleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerHuDetailDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerHuDetailDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySo" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPo" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPoSku_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPoSku" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPoSku_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPoSkuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPoSkuStyle_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPoSkuStyle" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ImportsSequenceBySoPoSkuStyle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImportsSequenceBySoPoSkuStyleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ConfirmLoadMasterAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmLoadMasterAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ConfirmLoadMasterAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmLoadMasterAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerDetailToRealease_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerDetailToRealease" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerDetailToRealease_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerDetailToRealeaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerQtyToOutDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerQtyToOutDetail" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerQtyToOutDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerQtyToOutDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerCBMToRealease_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerCBMToRealease" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadContainerCBMToRealease_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadContainerCBMToRealeaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSOutBoundOrderList_InputMessage">
+    <wsdl:part name="parameters" element="tns:DSOutBoundOrderList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSOutBoundOrderList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DSOutBoundOrderListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSOutBoundImport_InputMessage">
+    <wsdl:part name="parameters" element="tns:DSOutBoundImport" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSOutBoundImport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DSOutBoundImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSLoadDetailDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:DSLoadDetailDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DSLoadDetailDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DSLoadDetailDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PrintOutTempalte_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrintOutTempalte" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_PrintOutTempalte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrintOutTempalteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleUnselected_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleUnselected" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleUnselected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleUnselectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleSelected" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleCheck_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleCheck" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleCheck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailDelById_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailDelById" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailDelById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailDelByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailWarehouseList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailWarehouseList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailWarehouseList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailWarehouseListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleWarehouseSelected_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleWarehouseSelected" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleWarehouseSelected_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleWarehouseSelectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerWarehouseEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerWarehouseEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadContainerWarehouseEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadContainerWarehouseEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailCheck_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailCheck" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailCheck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeClientAutoCharge_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeClientAutoCharge" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeClientAutoCharge_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeClientAutoChargeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AAgainLoadCharge_InputMessage">
+    <wsdl:part name="parameters" element="tns:AAgainLoadCharge" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_AAgainLoadCharge_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AAgainLoadChargeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DaiDianSelectList_InputMessage">
+    <wsdl:part name="parameters" element="tns:DaiDianSelectList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_DaiDianSelectList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DaiDianSelectListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleSelectList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleSelectList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleSelectList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleSelectListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDaiDianSelectList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDaiDianSelectList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDaiDianSelectList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDaiDianSelectListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleAdd_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleAdd" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleAdd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleAddResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleEdit" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeRuleEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeRuleEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailAddBySO_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailAddBySO" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailAddBySO_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailAddBySOResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailEditBySO_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailEditBySO" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailEditBySO_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailEditBySOResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailSOList_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailSOList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailSOList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailSOListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailSoDel_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailSoDel" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_LoadChargeDetailSoDel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadChargeDetailSoDelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_GetLoadChangeRuleTypeName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadChangeRuleTypeName" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_GetLoadChangeRuleTypeName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoadChangeRuleTypeNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadChangeErrorCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadChangeErrorCount" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_CheckLoadChangeErrorCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoadChangeErrorCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ReleaseLoadDetailList_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseLoadDetailList" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_ReleaseLoadDetailList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseLoadDetailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderIntercept_InputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderIntercept" />
+  </wsdl:message>
+  <wsdl:message name="IOutBoundService_OutBoundOrderIntercept_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OutBoundOrderInterceptResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IOutBoundService">
+    <wsdl:operation name="InterceptOutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/InterceptOutBoundOrderList" message="tns:IOutBoundService_InterceptOutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/InterceptOutBoundOrderListResponse" message="tns:IOutBoundService_InterceptOutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClientFlowNameSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ClientFlowNameSelect" message="tns:IOutBoundService_ClientFlowNameSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ClientFlowNameSelectResponse" message="tns:IOutBoundService_ClientFlowNameSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptIdByInterceptOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrder" message="tns:IOutBoundService_AddReceiptIdByInterceptOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrderResponse" message="tns:IOutBoundService_AddReceiptIdByInterceptOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptIdByInterceptOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrderList" message="tns:IOutBoundService_AddReceiptIdByInterceptOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrderListResponse" message="tns:IOutBoundService_AddReceiptIdByInterceptOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckInterceptOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckInterceptOrder" message="tns:IOutBoundService_CheckInterceptOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckInterceptOrderResponse" message="tns:IOutBoundService_CheckInterceptOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInterceptOrderReceiptId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/GetInterceptOrderReceiptId" message="tns:IOutBoundService_GetInterceptOrderReceiptId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/GetInterceptOrderReceiptIdResponse" message="tns:IOutBoundService_GetInterceptOrderReceiptId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InterceptOrderBatchReturnToWarehouse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/InterceptOrderBatchReturnToWarehouse" message="tns:IOutBoundService_InterceptOrderBatchReturnToWarehouse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/InterceptOrderBatchReturnToWarehouseResponse" message="tns:IOutBoundService_InterceptOrderBatchReturnToWarehouse_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsOutBoundOrderExtendBySN">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsOutBoundOrderExtendBySN" message="tns:IOutBoundService_ImportsOutBoundOrderExtendBySN_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsOutBoundOrderExtendBySNResponse" message="tns:IOutBoundService_ImportsOutBoundOrderExtendBySN_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailList" message="tns:IOutBoundService_PickTaskDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailListResponse" message="tns:IOutBoundService_PickTaskDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailHuIdDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdDel" message="tns:IOutBoundService_PickTaskDetailHuIdDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdDelResponse" message="tns:IOutBoundService_PickTaskDetailHuIdDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailHuIdAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdAdd" message="tns:IOutBoundService_PickTaskDetailHuIdAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdAddResponse" message="tns:IOutBoundService_PickTaskDetailHuIdAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CottonExcelImportOutBoundList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CottonExcelImportOutBoundList" message="tns:IOutBoundService_CottonExcelImportOutBoundList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CottonExcelImportOutBoundListResponse" message="tns:IOutBoundService_CottonExcelImportOutBoundList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportOutBoundCotton">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ExcelImportOutBoundCotton" message="tns:IOutBoundService_ExcelImportOutBoundCotton_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ExcelImportOutBoundCottonResponse" message="tns:IOutBoundService_ExcelImportOutBoundCotton_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderList" message="tns:IOutBoundService_OutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderListResponse" message="tns:IOutBoundService_OutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutFlowHeadListByClientId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutFlowHeadListByClientId" message="tns:IOutBoundService_OutFlowHeadListByClientId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutFlowHeadListByClientIdResponse" message="tns:IOutBoundService_OutFlowHeadListByClientId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutFlowHeadListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutFlowHeadListSelect" message="tns:IOutBoundService_OutFlowHeadListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutFlowHeadListSelectResponse" message="tns:IOutBoundService_OutFlowHeadListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleStatusListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/FlowRuleStatusListSelect" message="tns:IOutBoundService_FlowRuleStatusListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/FlowRuleStatusListSelectResponse" message="tns:IOutBoundService_FlowRuleStatusListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderAdd" message="tns:IOutBoundService_OutBoundOrderAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderAddResponse" message="tns:IOutBoundService_OutBoundOrderAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmOutBoundOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ConfirmOutBoundOrder" message="tns:IOutBoundService_ConfirmOutBoundOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ConfirmOutBoundOrderResponse" message="tns:IOutBoundService_ConfirmOutBoundOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RollbackOutBoundOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/RollbackOutBoundOrder" message="tns:IOutBoundService_RollbackOutBoundOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/RollbackOutBoundOrderResponse" message="tns:IOutBoundService_RollbackOutBoundOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundCheckUnitName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundCheckUnitName" message="tns:IOutBoundService_OutBoundCheckUnitName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundCheckUnitNameResponse" message="tns:IOutBoundService_OutBoundCheckUnitName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailAdd" message="tns:IOutBoundService_OutBoundOrderDetailAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailAddResponse" message="tns:IOutBoundService_OutBoundOrderDetailAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailList" message="tns:IOutBoundService_OutBoundOrderDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailListResponse" message="tns:IOutBoundService_OutBoundOrderDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailEdit" message="tns:IOutBoundService_OutBoundOrderDetailEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailEditResponse" message="tns:IOutBoundService_OutBoundOrderDetailEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailDel" message="tns:IOutBoundService_OutBoundOrderDetailDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDetailDelResponse" message="tns:IOutBoundService_OutBoundOrderDetailDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDel" message="tns:IOutBoundService_OutBoundOrderDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderDelResponse" message="tns:IOutBoundService_OutBoundOrderDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsOutBoundOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsOutBoundOrder" message="tns:IOutBoundService_ImportsOutBoundOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsOutBoundOrderResponse" message="tns:IOutBoundService_ImportsOutBoundOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterList" message="tns:IOutBoundService_LoadMasterList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterListResponse" message="tns:IOutBoundService_LoadMasterList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadToOutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadToOutBoundOrderList" message="tns:IOutBoundService_LoadToOutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadToOutBoundOrderListResponse" message="tns:IOutBoundService_LoadToOutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterAdd" message="tns:IOutBoundService_LoadMasterAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterAddResponse" message="tns:IOutBoundService_LoadMasterAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerExtendAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerExtendAdd" message="tns:IOutBoundService_LoadContainerExtendAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerExtendAddResponse" message="tns:IOutBoundService_LoadContainerExtendAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerTypeSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerTypeSelect" message="tns:IOutBoundService_LoadContainerTypeSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerTypeSelectResponse" message="tns:IOutBoundService_LoadContainerTypeSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Load_OutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/Load_OutBoundOrderList" message="tns:IOutBoundService_Load_OutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/Load_OutBoundOrderListResponse" message="tns:IOutBoundService_Load_OutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadDetailAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadDetailAdd" message="tns:IOutBoundService_LoadDetailAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadDetailAddResponse" message="tns:IOutBoundService_LoadDetailAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterDel" message="tns:IOutBoundService_LoadMasterDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterDelResponse" message="tns:IOutBoundService_LoadMasterDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadSecond_OutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadSecond_OutBoundOrderList" message="tns:IOutBoundService_LoadSecond_OutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadSecond_OutBoundOrderListResponse" message="tns:IOutBoundService_LoadSecond_OutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadDetailDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadDetailDel" message="tns:IOutBoundService_LoadDetailDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadDetailDelResponse" message="tns:IOutBoundService_LoadDetailDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckReleaseLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckReleaseLoad" message="tns:IOutBoundService_CheckReleaseLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckReleaseLoadResponse" message="tns:IOutBoundService_CheckReleaseLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RollbackLoad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/RollbackLoad" message="tns:IOutBoundService_RollbackLoad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/RollbackLoadResponse" message="tns:IOutBoundService_RollbackLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckReleaseLoadGetType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckReleaseLoadGetType" message="tns:IOutBoundService_CheckReleaseLoadGetType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckReleaseLoadGetTypeResponse" message="tns:IOutBoundService_CheckReleaseLoadGetType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendSearch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendSearch" message="tns:IOutBoundService_LoadHuIdExtendSearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendSearchResponse" message="tns:IOutBoundService_LoadHuIdExtendSearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendImport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendImport" message="tns:IOutBoundService_LoadHuIdExtendImport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendImportResponse" message="tns:IOutBoundService_LoadHuIdExtendImport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendDelete" message="tns:IOutBoundService_LoadHuIdExtendDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadHuIdExtendDeleteResponse" message="tns:IOutBoundService_LoadHuIdExtendDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterEditRemark">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterEditRemark" message="tns:IOutBoundService_LoadMasterEditRemark_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadMasterEditRemarkResponse" message="tns:IOutBoundService_LoadMasterEditRemark_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerList" message="tns:IOutBoundService_LoadContainerList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerListResponse" message="tns:IOutBoundService_LoadContainerList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CreateUserSelect" message="tns:IOutBoundService_CreateUserSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CreateUserSelectResponse" message="tns:IOutBoundService_CreateUserSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerAdd" message="tns:IOutBoundService_LoadContainerAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerAddResponse" message="tns:IOutBoundService_LoadContainerAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerEdit" message="tns:IOutBoundService_LoadContainerEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerEditResponse" message="tns:IOutBoundService_LoadContainerEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerDelete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerDelete" message="tns:IOutBoundService_LoadContainerDelete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerDeleteResponse" message="tns:IOutBoundService_LoadContainerDelete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailList" message="tns:IOutBoundService_LoadContainerHuDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailListResponse" message="tns:IOutBoundService_LoadContainerHuDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailListByPOSKU">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailListByPOSKU" message="tns:IOutBoundService_LoadContainerHuDetailListByPOSKU_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailListByPOSKUResponse" message="tns:IOutBoundService_LoadContainerHuDetailListByPOSKU_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerClientCodeRule">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerClientCodeRule" message="tns:IOutBoundService_CheckLoadContainerClientCodeRule_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerClientCodeRuleResponse" message="tns:IOutBoundService_CheckLoadContainerClientCodeRule_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAdd" message="tns:IOutBoundService_LoadContainerHuDetailAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddResponse" message="tns:IOutBoundService_LoadContainerHuDetailAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAddByPOSKU">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByPOSKU" message="tns:IOutBoundService_LoadContainerHuDetailAddByPOSKU_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByPOSKUResponse" message="tns:IOutBoundService_LoadContainerHuDetailAddByPOSKU_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAddByImportPOSKU">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByImportPOSKU" message="tns:IOutBoundService_LoadContainerHuDetailAddByImportPOSKU_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByImportPOSKUResponse" message="tns:IOutBoundService_LoadContainerHuDetailAddByImportPOSKU_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySo" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoResponse" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPo" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoResponse" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPoSku">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSku" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPoSku_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSkuResponse" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPoSku_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPoSkuStyle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSkuStyle" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPoSkuStyle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSkuStyleResponse" message="tns:IOutBoundService_SelectLoadContainerHuDetailBySoPoSkuStyle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailEdit" message="tns:IOutBoundService_LoadContainerHuDetailEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailEditResponse" message="tns:IOutBoundService_LoadContainerHuDetailEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailDel" message="tns:IOutBoundService_LoadContainerHuDetailDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerHuDetailDelResponse" message="tns:IOutBoundService_LoadContainerHuDetailDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySo" message="tns:IOutBoundService_ImportsSequenceBySo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoResponse" message="tns:IOutBoundService_ImportsSequenceBySo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPo" message="tns:IOutBoundService_ImportsSequenceBySoPo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoResponse" message="tns:IOutBoundService_ImportsSequenceBySoPo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPoSku">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSku" message="tns:IOutBoundService_ImportsSequenceBySoPoSku_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSkuResponse" message="tns:IOutBoundService_ImportsSequenceBySoPoSku_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPoSkuStyle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSkuStyle" message="tns:IOutBoundService_ImportsSequenceBySoPoSkuStyle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSkuStyleResponse" message="tns:IOutBoundService_ImportsSequenceBySoPoSkuStyle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmLoadMasterAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ConfirmLoadMasterAdd" message="tns:IOutBoundService_ConfirmLoadMasterAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ConfirmLoadMasterAddResponse" message="tns:IOutBoundService_ConfirmLoadMasterAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerDetailToRealease">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerDetailToRealease" message="tns:IOutBoundService_CheckLoadContainerDetailToRealease_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerDetailToRealeaseResponse" message="tns:IOutBoundService_CheckLoadContainerDetailToRealease_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerQtyToOutDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerQtyToOutDetail" message="tns:IOutBoundService_CheckLoadContainerQtyToOutDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerQtyToOutDetailResponse" message="tns:IOutBoundService_CheckLoadContainerQtyToOutDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerCBMToRealease">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerCBMToRealease" message="tns:IOutBoundService_CheckLoadContainerCBMToRealease_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadContainerCBMToRealeaseResponse" message="tns:IOutBoundService_CheckLoadContainerCBMToRealease_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DSOutBoundOrderList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/DSOutBoundOrderList" message="tns:IOutBoundService_DSOutBoundOrderList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/DSOutBoundOrderListResponse" message="tns:IOutBoundService_DSOutBoundOrderList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DSOutBoundImport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/DSOutBoundImport" message="tns:IOutBoundService_DSOutBoundImport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/DSOutBoundImportResponse" message="tns:IOutBoundService_DSOutBoundImport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DSLoadDetailDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/DSLoadDetailDel" message="tns:IOutBoundService_DSLoadDetailDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/DSLoadDetailDelResponse" message="tns:IOutBoundService_DSLoadDetailDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintOutTempalte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/PrintOutTempalte" message="tns:IOutBoundService_PrintOutTempalte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/PrintOutTempalteResponse" message="tns:IOutBoundService_PrintOutTempalte_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleUnselected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleUnselected" message="tns:IOutBoundService_LoadChargeRuleUnselected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleUnselectedResponse" message="tns:IOutBoundService_LoadChargeRuleUnselected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleSelected" message="tns:IOutBoundService_LoadChargeRuleSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleSelectedResponse" message="tns:IOutBoundService_LoadChargeRuleSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleCheck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleCheck" message="tns:IOutBoundService_LoadChargeRuleCheck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleCheckResponse" message="tns:IOutBoundService_LoadChargeRuleCheck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailDelById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailDelById" message="tns:IOutBoundService_LoadChargeDetailDelById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailDelByIdResponse" message="tns:IOutBoundService_LoadChargeDetailDelById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailWarehouseList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailWarehouseList" message="tns:IOutBoundService_LoadChargeDetailWarehouseList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailWarehouseListResponse" message="tns:IOutBoundService_LoadChargeDetailWarehouseList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleWarehouseSelected">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleWarehouseSelected" message="tns:IOutBoundService_LoadChargeRuleWarehouseSelected_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleWarehouseSelectedResponse" message="tns:IOutBoundService_LoadChargeRuleWarehouseSelected_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerWarehouseEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerWarehouseEdit" message="tns:IOutBoundService_LoadContainerWarehouseEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadContainerWarehouseEditResponse" message="tns:IOutBoundService_LoadContainerWarehouseEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailCheck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailCheck" message="tns:IOutBoundService_LoadChargeDetailCheck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailCheckResponse" message="tns:IOutBoundService_LoadChargeDetailCheck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeClientAutoCharge">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeClientAutoCharge" message="tns:IOutBoundService_LoadChargeClientAutoCharge_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeClientAutoChargeResponse" message="tns:IOutBoundService_LoadChargeClientAutoCharge_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailList" message="tns:IOutBoundService_LoadChargeDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailListResponse" message="tns:IOutBoundService_LoadChargeDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeEdit" message="tns:IOutBoundService_LoadChargeEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeEditResponse" message="tns:IOutBoundService_LoadChargeEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AAgainLoadCharge">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/AAgainLoadCharge" message="tns:IOutBoundService_AAgainLoadCharge_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/AAgainLoadChargeResponse" message="tns:IOutBoundService_AAgainLoadCharge_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DaiDianSelectList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/DaiDianSelectList" message="tns:IOutBoundService_DaiDianSelectList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/DaiDianSelectListResponse" message="tns:IOutBoundService_DaiDianSelectList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleSelectList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleSelectList" message="tns:IOutBoundService_LoadChargeRuleSelectList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleSelectListResponse" message="tns:IOutBoundService_LoadChargeRuleSelectList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDaiDianSelectList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDaiDianSelectList" message="tns:IOutBoundService_LoadChargeDaiDianSelectList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDaiDianSelectListResponse" message="tns:IOutBoundService_LoadChargeDaiDianSelectList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleAdd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleAdd" message="tns:IOutBoundService_LoadChargeRuleAdd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleAddResponse" message="tns:IOutBoundService_LoadChargeRuleAdd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleEdit" message="tns:IOutBoundService_LoadChargeRuleEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeRuleEditResponse" message="tns:IOutBoundService_LoadChargeRuleEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailAddBySO">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailAddBySO" message="tns:IOutBoundService_LoadChargeDetailAddBySO_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailAddBySOResponse" message="tns:IOutBoundService_LoadChargeDetailAddBySO_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailEditBySO">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailEditBySO" message="tns:IOutBoundService_LoadChargeDetailEditBySO_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailEditBySOResponse" message="tns:IOutBoundService_LoadChargeDetailEditBySO_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailSOList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailSOList" message="tns:IOutBoundService_LoadChargeDetailSOList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailSOListResponse" message="tns:IOutBoundService_LoadChargeDetailSOList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailSoDel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailSoDel" message="tns:IOutBoundService_LoadChargeDetailSoDel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/LoadChargeDetailSoDelResponse" message="tns:IOutBoundService_LoadChargeDetailSoDel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadChangeRuleTypeName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/GetLoadChangeRuleTypeName" message="tns:IOutBoundService_GetLoadChangeRuleTypeName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/GetLoadChangeRuleTypeNameResponse" message="tns:IOutBoundService_GetLoadChangeRuleTypeName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadChangeErrorCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadChangeErrorCount" message="tns:IOutBoundService_CheckLoadChangeErrorCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/CheckLoadChangeErrorCountResponse" message="tns:IOutBoundService_CheckLoadChangeErrorCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseLoadDetailList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/ReleaseLoadDetailList" message="tns:IOutBoundService_ReleaseLoadDetailList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/ReleaseLoadDetailListResponse" message="tns:IOutBoundService_ReleaseLoadDetailList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderIntercept">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderIntercept" message="tns:IOutBoundService_OutBoundOrderIntercept_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOutBoundService/OutBoundOrderInterceptResponse" message="tns:IOutBoundService_OutBoundOrderIntercept_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOutBoundService" type="tns:IOutBoundService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InterceptOutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/InterceptOutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClientFlowNameSelect">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ClientFlowNameSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptIdByInterceptOrder">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddReceiptIdByInterceptOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/AddReceiptIdByInterceptOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckInterceptOrder">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckInterceptOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInterceptOrderReceiptId">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/GetInterceptOrderReceiptId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InterceptOrderBatchReturnToWarehouse">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/InterceptOrderBatchReturnToWarehouse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsOutBoundOrderExtendBySN">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsOutBoundOrderExtendBySN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/PickTaskDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailHuIdDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PickTaskDetailHuIdAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/PickTaskDetailHuIdAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CottonExcelImportOutBoundList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CottonExcelImportOutBoundList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcelImportOutBoundCotton">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ExcelImportOutBoundCotton" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutFlowHeadListByClientId">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutFlowHeadListByClientId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutFlowHeadListSelect">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutFlowHeadListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FlowRuleStatusListSelect">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/FlowRuleStatusListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmOutBoundOrder">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ConfirmOutBoundOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RollbackOutBoundOrder">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/RollbackOutBoundOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundCheckUnitName">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundCheckUnitName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderDetailAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderDetailEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDetailDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderDetailDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsOutBoundOrder">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsOutBoundOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadMasterList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadToOutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadToOutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadMasterAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerExtendAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerExtendAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerTypeSelect">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerTypeSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Load_OutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/Load_OutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadDetailAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadDetailAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadMasterDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadSecond_OutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadSecond_OutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadDetailDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadDetailDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckReleaseLoad">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckReleaseLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RollbackLoad">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/RollbackLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckReleaseLoadGetType">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckReleaseLoadGetType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendSearch">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadHuIdExtendSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendImport">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadHuIdExtendImport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadHuIdExtendDelete">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadHuIdExtendDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadMasterEditRemark">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadMasterEditRemark" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserSelect">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CreateUserSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerDelete">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailListByPOSKU">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailListByPOSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerClientCodeRule">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckLoadContainerClientCodeRule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAddByPOSKU">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByPOSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailAddByImportPOSKU">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailAddByImportPOSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySo">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPo">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPoSku">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSku" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectLoadContainerHuDetailBySoPoSkuStyle">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/SelectLoadContainerHuDetailBySoPoSkuStyle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerHuDetailDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerHuDetailDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySo">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsSequenceBySo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPo">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPoSku">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSku" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ImportsSequenceBySoPoSkuStyle">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ImportsSequenceBySoPoSkuStyle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmLoadMasterAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ConfirmLoadMasterAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerDetailToRealease">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckLoadContainerDetailToRealease" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerQtyToOutDetail">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckLoadContainerQtyToOutDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadContainerCBMToRealease">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckLoadContainerCBMToRealease" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DSOutBoundOrderList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/DSOutBoundOrderList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DSOutBoundImport">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/DSOutBoundImport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DSLoadDetailDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/DSLoadDetailDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintOutTempalte">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/PrintOutTempalte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleUnselected">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleUnselected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleSelected">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleCheck">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailDelById">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailDelById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailWarehouseList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailWarehouseList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleWarehouseSelected">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleWarehouseSelected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadContainerWarehouseEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadContainerWarehouseEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailCheck">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailCheck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeClientAutoCharge">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeClientAutoCharge" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AAgainLoadCharge">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/AAgainLoadCharge" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DaiDianSelectList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/DaiDianSelectList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleSelectList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleSelectList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDaiDianSelectList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDaiDianSelectList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleAdd">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleAdd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeRuleEdit">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeRuleEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailAddBySO">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailAddBySO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailEditBySO">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailEditBySO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailSOList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailSOList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadChargeDetailSoDel">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/LoadChargeDetailSoDel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadChangeRuleTypeName">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/GetLoadChangeRuleTypeName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLoadChangeErrorCount">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/CheckLoadChangeErrorCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseLoadDetailList">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/ReleaseLoadDetailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OutBoundOrderIntercept">
+      <soap:operation soapAction="http://tempuri.org/IOutBoundService/OutBoundOrderIntercept" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OutBoundService">
+    <wsdl:port name="BasicHttpBinding_IOutBoundService" binding="tns:BasicHttpBinding_IOutBoundService">
+      <soap:address location="http://localhost:45936/OutBoundService/OutBoundService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

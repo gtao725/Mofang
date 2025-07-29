@@ -1,0 +1,483 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id="CostDlg" class="easyui-dialog" title="添加收货信息" data-options="closed:true" style="width:650px;height:500px;">
+    <div id="layoutDlg">
+        <div region="north" style="width:550px;height:215px;">
+            <div id="layout3">
+                <div form="Y" id="form3">
+                    <input type="text" left="240" name="txt_ReceiptId" hint="收货批次号" />
+                    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_ClientCode", "客户", "", "left='240' ")
+                    <input type="text" left="240" name="txt_SoNumber" hint="SO号" />
+                    <input type="text" left="240" name="txt_CustomerPoNumber" hint="客户PO" />
+                    <input type="text" left="240" name="txt_HuId" hint="托盘" />
+                    <select name="sel_lotFlag" hint="是否分票" left="240"><option value="0" selected>否</option><option value="1">是</option></select>
+                </div>
+            </div>
+        </div>
+        <div region="center">
+            <div id="layout2">
+                <div form="Y" id="form2">
+                </div>
+                <table id="gridRec"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="OpenDlg5" class="easyui-dialog" title="添加明细" data-options="closed:true" style="width:650px;height:400px;">
+    <div id="layout5">
+        <div id='form5' form="Y">
+            <input type="text" left="240" name="txt_AltItemNumber" hint="款号" />
+            <input type="text" left="240" name="txt_Qty" hint="数量" />
+            <input type="text" left="240" name="txt_Length" hint="长" />
+            <input type="text" left="240" name="txt_Width" hint="宽" />
+            <input type="text" left="240" name="txt_Height" hint="高" />
+            <input type="text" left="240" name="txt_Weight" hint="重量" />
+            <input type="text" left="240" name="txt_LotNumber1" hint="Lot1" />
+            <input type="text" left="240" name="txt_LotNumber2" hint="Lot2" />
+            <input type="text" left="240" name="txt_LotDate" hint="LotDate" value="" class='easyui-validatebox' data-options='validType:[&#39;date&#39;]' date='Y' />
+            <div id="d_tab55">
+                <table id="tab55"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="OpenDlg6" class="easyui-dialog" title="添加工人" data-options="closed:true" style="width:650px;height:400px;">
+    <div id="layout6">
+        <div id='form6' form="Y">
+            <select name="sel_workType" hint="工种" left="240"><option value=""></option><option value="理货员">理货员</option><option value="装卸工">装卸工</option><option value="叉车工">叉车工</option><option value="电车">电车</option></select>
+            <input type="text" left="240" name="txt_userCode" hint="工号" />
+            <div id="d_tab66">
+                <table id="tab66"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="OpenDlg7" class="easyui-dialog" title="添加工人" data-options="closed:true" style="width:650px;height:400px;">
+    <div id="layout7">
+        <div id='form7' form="Y">
+            <input type="text" left="240" name="txt_cartonId" hint="箱号" />
+            <div id="d_tab77">
+                <table id="tab77"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var recJson = {
+        'ReceiptId': '', 'ClientId': '', 'ClientCode': '', 'SoNumber': '', 'CustomerPoNumber': '', 'HuId': '', 'LotFlag': '',
+        'RecModeldetail': [], "WorkloadAccountModel": [], "HoldMasterModel": [], "SerialNumberInModel": []
+    }
+    //alert(mycart.resId + '-' + mycart.resName + '' + '-' + mycart.detail[0].detail)
+
+    var cost_dialog;
+    var cost_dlg5, cost_dlg5Html;
+    var cost_dlg6, cost_dlg6Html;
+    var cost_dlg7, cost_dlg7Html;
+    var cost_dlg8, cost_dlg8Html;
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "添加收货信息", icon: "search", click: function () {
+                            cost_dialog = $("#CostDlg").dialog("open");
+                        }
+                    }
+
+                ]
+            }]);
+        var layoutDlg = eip.layout.create($("#layoutDlg"));
+        //layout3布局
+
+        var layout3 = eip.layout.create(
+            $("#layout3"),
+            [{
+                obj: $('#form3'),
+                buttons: [
+                    {
+                        text: "保存", icon: "save", click: function () {
+                            if ($("[name=chx_holdResoan]:checked", $("#gridRec")).length > 1) {
+                                $.eipMsg.alert("客户异常原因只能选择一个！");
+                                return;
+                            }
+                            if ($("[name=chx_holdResoan]:checked", $("#gridRec")).length > 0) {
+                                $("[name=chx_holdResoan]:checked", $("#gridRec")).each(function () {
+                                    recJson.HoldMasterModel.push({
+                                        'HoldId': $(this).val(),
+                                        'HoldReason': $(this).attr("holdReasonArr")
+                                    });
+                                })
+                            }
+                            recJson.ReceiptId = $("[name=txt_ReceiptId]").val();
+                            recJson.ClientId = $("[name=txt_ClientCode]").val();
+                            recJson.ClientCode = $("[name=txt_ClientCode]").find("option:selected").text();
+                            recJson.SoNumber = $("[name=txt_SoNumber]").val();
+                            recJson.CustomerPoNumber = $("[name=txt_CustomerPoNumber]").val();
+                            recJson.HuId = $("[name=txt_HuId]").val();
+                            recJson.LotFlag = $("[name=sel_lotFlag]").val();
+
+                            $.post("/Rec/C_RecWeb/ReceiptInsert", recJson, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+
+                                }, function () { });
+                            }, "json")
+                            //eip.post("/admin/Power/WhPowerMVCListAdd", recJson, function (jsonObj) {
+                            //    $.procAjaxData(jsonObj, function () {
+
+                            //    }, function () { });
+                            //})
+                        }
+                    },
+                    {
+                        text: "清除已添加的收货信息", icon: "no", click:
+                           function () {
+                               recJson = {
+                                   'ReceiptId': '', 'ClientId': '', 'ClientCode': '', 'SoNumber': '', 'CustomerPoNumber': '', 'HuId': '', 'LotFlag': '',
+                                   'RecModeldetail': [], "WorkloadAccountModel": [], "HoldMasterModel": [], "SerialNumberInModel": []
+                               }
+                           }
+                    },
+                    {
+                        text: "关闭窗口", icon: "no", click:
+                           function () {
+                               eip.dialog.close(cost_dialog);
+                               recJson = {
+                                   'ReceiptId': '', 'ClientId': '', 'ClientCode': '', 'SoNumber': '', 'CustomerPoNumber': '', 'HuId': '', 'LotFlag': '',
+                                   'RecModeldetail': [], "WorkloadAccountModel": [], "HoldMasterModel": [], "SerialNumberInModel": []
+                               }
+                           }
+                    }
+                ]
+            }]);
+
+        //layout2布局
+        var layout2 = eip.layout.create(
+            $("#layout2"),
+            [{
+                obj: $('#form2'),
+                buttons: [
+                    {
+                        text: "添加明细", icon: "add", click: function () {
+                            if (cost_dlg5Html == undefined)
+                                cost_dlg5Html = $("#OpenDlg5").html()
+                            else
+                                $("#OpenDlg5").html(cost_dlg5Html)
+
+                            cost_dlg5 = $("#OpenDlg5").dialog("open");
+
+                            eip.layout.create($('#layout5'), [{
+                                obj: $('#form5'),
+                                buttons: [
+                                    {
+                                        text: "确认添加", icon: "save", click:
+                                            function () {
+                                                if ($("[name=txt_AltItemNumber]").val() == "") {
+                                                    $.eipMsg.alert("款号必须填写！");
+                                                    return;
+                                                }
+                                                if ($("[name=txt_Qty]").val() == "") {
+                                                    $.eipMsg.alert("数量必须填写！");
+                                                    return;
+                                                }
+                                                if (CheckSerialNumberModel()) {
+                                                    AddRecDetailJson();     //添加Json数组
+                                                    $("[name=txt_Qty]").val("");
+                                                    $("[name=txt_Qty]").focus();
+                                                } else {
+                                                    $.eipMsg.alert("上个款号已采集了箱号，请填写上个款号！");
+                                                }
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(cost_dlg5);
+                                          }
+                                   }
+                                ]
+                            }])
+                            RecDetailLoad();        //加载收货明细数据
+                        }
+                    },
+                    {
+                        text: "添加工人", icon: "add", click: function () {
+                            if (cost_dlg6Html == undefined) {
+                                cost_dlg6Html = $("#OpenDlg6").html()
+                            } else
+                                $("#OpenDlg6").html(cost_dlg6Html)
+
+
+                            cost_dlg6 = $("#OpenDlg6").dialog("open");
+
+                            eip.layout.create($('#layout6'), [{
+                                obj: $('#form6'),
+                                buttons: [
+                                    {
+                                        text: "确认添加", icon: "save", click:
+                                            function () {
+                                                if ($("[name=sel_workType]").val() == "") {
+                                                    $.eipMsg.alert("工种必须选择！");
+                                                    return;
+                                                }
+                                                if ($("[name=txt_userCode]").val() == "") {
+                                                    $.eipMsg.alert("工号必须填写！");
+                                                    return;
+                                                }
+                                                AddWorkLoadJson();     //添加Json数组
+                                                $("[name=txt_userCode]").val("");
+                                                $("[name=txt_userCode]").focus();
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(cost_dlg6);
+                                          }
+                                   }
+                                ]
+                            }])
+                            WorkLoad();     //加载工人数据
+                        }
+                    },
+                    {
+                        text: "采集箱号", icon: "add", click: function () {
+                            if (recJson.RecModeldetail.length == 0) {
+                                $.eipMsg.alert("请先添加明细数据！");
+                                return;
+                            }
+
+                            if (cost_dlg7Html == undefined) {
+                                cost_dlg7Html = $("#OpenDlg7").html()
+                            } else
+                                $("#OpenDlg7").html(cost_dlg7Html)
+
+
+                            cost_dlg7 = $("#OpenDlg7").dialog("open");
+
+                            eip.layout.create($('#layout7'), [{
+                                obj: $('#form7'),
+                                buttons: [
+                                    {
+                                        text: "确认添加", icon: "save", click:
+                                            function () {
+                                                if ($("[name=txt_cartonId]").val() == "") {
+                                                    $.eipMsg.alert("箱号必须填写！");
+                                                    return;
+                                                }
+                                                if (CheckRecModel()) {
+                                                    AddWSerialNumberJson();     //添加Json数组
+                                                    $("[name=txt_cartonId]").val("");
+                                                    $("[name=txt_cartonId]").focus();
+                                                } else {
+                                                    $.eipMsg.alert("箱号采集只能为同一款号！");
+                                                }
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(cost_dlg7);
+                                          }
+                                   }
+                                ]
+                            }])
+                            SerialNumberLoad();     //加载采集箱号数据
+                        }
+                    },
+                    {
+                        text: "查询客户异常原因", icon: "search", click: function () {
+                            if ($("[name=txt_ClientCode]").val() == "") {
+                                $.eipMsg.alert("请先选择客户！");
+                                $("[name=txt_ClientCode]").focus();
+                                return;
+                            }
+
+                            eip.datagrid.load("/Rec/C_RecWeb/HoldMasterListByRec", $("#gridRec"), eip.para.create($("input,select", $("#form3"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#gridRec"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "客户ID"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_holdResoan value=" + row["操作"] + " holdReasonArr=\"" + row["异常原因"] + "\" >";
+            },
+            muledit: false,
+            columns: {
+
+            }
+        });
+
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+        });
+    });
+
+
+    //添加收货明细数据
+    function AddRecDetailJson() {
+        recJson.RecModeldetail.push({
+            'AltItemNumber': $("[name=txt_AltItemNumber]").val() == "" ? '' : $("[name=txt_AltItemNumber]").val(),
+            'Qty': $("[name=txt_Qty]").val() == "" ? '' : $("[name=txt_Qty]").val(),
+            'Length': $("[name=txt_Length]").val() == "" ? '' : $("[name=txt_Length]").val(),
+            'Width': $("[name=txt_Width]").val() == "" ? '' : $("[name=txt_Width]").val(),
+            'Height': $("[name=txt_Height]").val() == "" ? '' : $("[name=txt_Height]").val(),
+            'Weight': $("[name=txt_Weight]").val() == "" ? '' : $("[name=txt_Weight]").val(),
+            'LotNumber1': $("[name=txt_LotNumber1]").val() == "" ? '' : $("[name=txt_LotNumber1]").val(),
+            'LotNumber2': $("[name=txt_LotNumber2]").val() == "" ? '' : $("[name=txt_LotNumber2]").val(),
+            'LotDate': $("[name=txt_LotDate]").val() == "" ? '' : $("[name=txt_LotDate]").val()
+        });
+        var tabHtml = "";
+        if (recJson.RecModeldetail.length == 0) {
+            tabHtml = "<tr><td>已添加的明细：</td></tr>";
+        }
+        tabHtml = "<tr><td>款号：" + $("[name=txt_AltItemNumber]").val()
+                        + " 数量：" + $("[name=txt_Qty]").val()
+                        + " 长：" + $("[name=txt_Length]").val()
+                        + " 宽：" + $("[name=txt_Width]").val()
+                        + " 高：" + $("[name=txt_Height]").val()
+                        + " 重量：" + $("[name=txt_Weight]").val()
+                        + " lot1：" + $("[name=txt_LotNumber1]").val()
+                        + " lot2：" + $("[name=txt_LotNumber2]").val()
+                        + " lotdate：" + $("[name=txt_LotDate]").val() + "</td></tr>";
+        $("#tab55").append(tabHtml)
+    }
+
+    //添加工人数据
+    function AddWorkLoadJson() {
+        recJson.WorkloadAccountModel.push({
+            'WorkType': $("[name=sel_workType]").val() == "" ? '' : $("[name=sel_workType]").val(),
+            'UserCode': $("[name=txt_userCode]").val() == "" ? '' : $("[name=txt_userCode]").val()
+        });
+        var tabHtml = "";
+        if (recJson.WorkloadAccountModel.length == 0) {
+            tabHtml = "<tr><td>已添加的工人：</td></tr>";
+        }
+        tabHtml = "<tr><td>工种：" + $("[name=sel_workType]").val()
+                         + " 工号：" + $("[name=txt_userCode]").val() + "</td></tr>";
+        $("#tab66").append(tabHtml)
+    }
+
+    //添加采集箱号数据
+    function AddWSerialNumberJson() {
+        recJson.SerialNumberInModel.push({
+            'CartonId': $("[name=txt_cartonId]").val() == "" ? '' : $("[name=txt_cartonId]").val()
+        });
+        var tabHtml = "";
+        if (recJson.SerialNumberInModel.length == 0) {
+            tabHtml = "<tr><td>已采集的箱号：</td></tr>";
+        }
+        tabHtml = "<tr><td>箱号：" + $("[name=txt_cartonId]").val() + "</td></tr>";
+        $("#tab77").append(tabHtml)
+    }
+
+    //加载收货明细数据
+    function RecDetailLoad() {
+        var tabHtml = "<tr><td>已添加的明细：</td></tr>";
+        for (var i = 0; i < recJson.RecModeldetail.length; i++) {
+            tabHtml += "<tr><td>款号：" + recJson.RecModeldetail[i].AltItemNumber
+                           + " 数量：" + recJson.RecModeldetail[i].Qty
+                           + " 长：" + recJson.RecModeldetail[i].Length
+                           + " 宽：" + recJson.RecModeldetail[i].Width
+                           + " 高：" + recJson.RecModeldetail[i].Height
+                           + " 重量：" + recJson.RecModeldetail[i].Weight
+                           + " lot1：" + recJson.RecModeldetail[i].LotNumber1
+                           + " lot2：" + recJson.RecModeldetail[i].LotNumber2
+                           + " lotdate：" + recJson.RecModeldetail[i].LotDate + "</td></tr>";
+        }
+        $("#tab55").html(tabHtml)
+    }
+    //加载收货工人数据
+    function WorkLoad() {
+        var tabHtml = "<tr><td>已添加的工人：</td></tr>";
+        for (var i = 0; i < recJson.WorkloadAccountModel.length; i++) {
+            tabHtml += "<tr><td>工种：" + recJson.WorkloadAccountModel[i].WorkType
+                             + " 工号：" + recJson.WorkloadAccountModel[i].UserCode + "</td></tr>";
+        }
+        $("#tab66").html(tabHtml)
+    }
+
+    //加载收货工人数据
+    function SerialNumberLoad() {
+        var tabHtml = "<tr><td>已采集的箱号：</td></tr>";
+        for (var i = 0; i < recJson.SerialNumberInModel.length; i++) {
+            tabHtml += "<tr><td>箱号：" + recJson.SerialNumberInModel[i].CartonId + "</td></tr>";
+        }
+        $("#tab77").html(tabHtml)
+    }
+
+    //验证收货明细数据的款号 是否为多个
+    function CheckRecModel() {
+        var boolResult = true;
+        var arrList = new Array();
+        for (var i = 0; i < recJson.RecModeldetail.length; i++) {
+            if (arrList.indexOf(recJson.RecModeldetail[i].AltItemNumber)) {
+                arrList.push(recJson.RecModeldetail[i].AltItemNumber);
+            }
+        }
+        if (arrList.length > 1) {
+            boolResult = false;
+        }
+        return boolResult;
+    }
+
+    //验证是否已采集箱号
+    function CheckSerialNumberModel() {
+        var boolResult = true;
+        var arrList = new Array();
+        for (var i = 0; i < recJson.RecModeldetail.length; i++) {
+            if (arrList.indexOf(recJson.RecModeldetail[i].AltItemNumber)) {
+                arrList.push(recJson.RecModeldetail[i].AltItemNumber);
+            }
+        }
+        if (recJson.SerialNumberInModel.length > 0) {
+            if (arrList.length > 1) {
+                boolResult = false;     //存在多个款号
+            } else if (arrList.length == 1) {
+                if ($("[name=txt_AltItemNumber]").val() != arrList[0]) {
+                    boolResult = false;
+                }
+            }
+        }
+        return boolResult;
+    }
+</script>

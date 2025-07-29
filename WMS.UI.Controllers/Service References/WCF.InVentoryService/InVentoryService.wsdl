@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="InVentoryService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/InVentoryService/InVentoryService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/InVentoryService/InVentoryService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/InVentoryService/InVentoryService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+      <xsd:import schemaLocation="http://localhost:45936/InVentoryService/InVentoryService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/InVentoryService/InVentoryService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IInVentoryService_WhClientListSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelect" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_WhClientListSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WhClientListSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_C_InVentoryList_InputMessage">
+    <wsdl:part name="parameters" element="tns:C_InVentoryList" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_C_InVentoryList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:C_InVentoryListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_C_InVentoryQuestionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:C_InVentoryQuestionList" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_C_InVentoryQuestionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:C_InVentoryQuestionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuMasterEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:HuMasterEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuMasterEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HuMasterEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuMasterHuDetailEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:HuMasterHuDetailEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuMasterHuDetailEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HuMasterHuDetailEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_AddInventory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddInventory" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_AddInventory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddInventoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuIdRemoveLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:HuIdRemoveLocation" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_HuIdRemoveLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HuIdRemoveLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_PltHoldEdit_InputMessage">
+    <wsdl:part name="parameters" element="tns:PltHoldEdit" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_PltHoldEdit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PltHoldEditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_EditInventoryExtendHuId_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditInventoryExtendHuId" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_EditInventoryExtendHuId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditInventoryExtendHuIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_ListInvMove_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListInvMove" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_ListInvMove_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListInvMoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_CreateInvMove_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateInvMove" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_CreateInvMove_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateInvMoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_BatchEditHuIdLot_InputMessage">
+    <wsdl:part name="parameters" element="tns:BatchEditHuIdLot" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_BatchEditHuIdLot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BatchEditHuIdLotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_BatchPutHuIdABLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:BatchPutHuIdABLocation" />
+  </wsdl:message>
+  <wsdl:message name="IInVentoryService_BatchPutHuIdABLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BatchPutHuIdABLocationResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IInVentoryService">
+    <wsdl:operation name="WhClientListSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/WhClientListSelect" message="tns:IInVentoryService_WhClientListSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/WhClientListSelectResponse" message="tns:IInVentoryService_WhClientListSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="C_InVentoryList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/C_InVentoryList" message="tns:IInVentoryService_C_InVentoryList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/C_InVentoryListResponse" message="tns:IInVentoryService_C_InVentoryList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="C_InVentoryQuestionList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/C_InVentoryQuestionList" message="tns:IInVentoryService_C_InVentoryQuestionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/C_InVentoryQuestionListResponse" message="tns:IInVentoryService_C_InVentoryQuestionList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HuMasterEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/HuMasterEdit" message="tns:IInVentoryService_HuMasterEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/HuMasterEditResponse" message="tns:IInVentoryService_HuMasterEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HuMasterHuDetailEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/HuMasterHuDetailEdit" message="tns:IInVentoryService_HuMasterHuDetailEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/HuMasterHuDetailEditResponse" message="tns:IInVentoryService_HuMasterHuDetailEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddInventory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/AddInventory" message="tns:IInVentoryService_AddInventory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/AddInventoryResponse" message="tns:IInVentoryService_AddInventory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HuIdRemoveLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/HuIdRemoveLocation" message="tns:IInVentoryService_HuIdRemoveLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/HuIdRemoveLocationResponse" message="tns:IInVentoryService_HuIdRemoveLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PltHoldEdit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/PltHoldEdit" message="tns:IInVentoryService_PltHoldEdit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/PltHoldEditResponse" message="tns:IInVentoryService_PltHoldEdit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditInventoryExtendHuId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/EditInventoryExtendHuId" message="tns:IInVentoryService_EditInventoryExtendHuId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/EditInventoryExtendHuIdResponse" message="tns:IInVentoryService_EditInventoryExtendHuId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListInvMove">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/ListInvMove" message="tns:IInVentoryService_ListInvMove_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/ListInvMoveResponse" message="tns:IInVentoryService_ListInvMove_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvMove">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/CreateInvMove" message="tns:IInVentoryService_CreateInvMove_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/CreateInvMoveResponse" message="tns:IInVentoryService_CreateInvMove_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BatchEditHuIdLot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/BatchEditHuIdLot" message="tns:IInVentoryService_BatchEditHuIdLot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/BatchEditHuIdLotResponse" message="tns:IInVentoryService_BatchEditHuIdLot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BatchPutHuIdABLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInVentoryService/BatchPutHuIdABLocation" message="tns:IInVentoryService_BatchPutHuIdABLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInVentoryService/BatchPutHuIdABLocationResponse" message="tns:IInVentoryService_BatchPutHuIdABLocation_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IInVentoryService" type="tns:IInVentoryService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="WhClientListSelect">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/WhClientListSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="C_InVentoryList">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/C_InVentoryList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="C_InVentoryQuestionList">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/C_InVentoryQuestionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HuMasterEdit">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/HuMasterEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HuMasterHuDetailEdit">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/HuMasterHuDetailEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddInventory">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/AddInventory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HuIdRemoveLocation">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/HuIdRemoveLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PltHoldEdit">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/PltHoldEdit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditInventoryExtendHuId">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/EditInventoryExtendHuId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListInvMove">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/ListInvMove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateInvMove">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/CreateInvMove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchEditHuIdLot">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/BatchEditHuIdLot" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchPutHuIdABLocation">
+      <soap:operation soapAction="http://tempuri.org/IInVentoryService/BatchPutHuIdABLocation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InVentoryService">
+    <wsdl:port name="BasicHttpBinding_IInVentoryService" binding="tns:BasicHttpBinding_IInVentoryService">
+      <soap:address location="http://localhost:45936/InVentoryService/InVentoryService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

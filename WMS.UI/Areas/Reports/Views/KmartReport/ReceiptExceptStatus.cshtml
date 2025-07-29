@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        <input type="text" left="90" name="ReceiptId" hint="收货批次号" />
+        <input type="text" left="90" name="SoNumber" hint="进仓号码" />
+        <input type="text" name="PoNumber" hint="订单号" />
+        <input type="text" name="ItemNumber" hint="款号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="处理结果" name="Status1"><option value=''></option><option value='未处理'>未处理</option><option value='已处理'>已处理</option></select>
+
+        <input type="text" name="BeginReceiptDate" left="90" hint="收货时间" date='Y'   />
+        <input type="text" name="EndReceiptDate" left="20" hint="-" date='Y'   />
+
+        <input type="text" name="BeginConsDate" left="90" hint="ConsDate" date='Y' />
+        <input type="text" name="EndConsDate" left="20" hint="-" date='Y' />
+
+        <input type="text" left="100" name="so_like" hint="订单号模糊匹配" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/KmartReport/ReceiptExceptStatusList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+        $("[name=so_number]").css("height", "30px").css("width", "185px");
+        $("[name=so_number]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=hu_id]").css("height", "30px").css("width", "185px");
+        $("[name=hu_id]").parent().css("height", "35px").css("width", "280px");
+    });
+
+</script>

@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/eip.css">
+    <script type="text/javascript" src="/share/includes/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/share/includes/easyui/jquery.easyui.min.js"></script>
+    <script  type="text/javascript"src="~/Share/includes/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/share/includes/common.js"></script>
+    <script type="text/javascript" src="/share/includes/calendar2_utf8.js"></script>
+    <script  type="text/javascript"src="/Share/includes/calendar/WdatePicker.js"></script>
+    <script type="text/javascript">
+        var csrf = '{{csrf_token}}';
+    </script>
+    <script type="text/plain" id=eip_datagrid_tp>
+        <tbody>
+            <tr height="30px">
+                <td style="border-bottom:1px solid #95B8E7;background:#f4f4f4;">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td><select class="pagination-page-list"></select></td>
+                                <td><div class="pagination-btn-separator"></div></td>
+                                <td><a href="javascript:void(0)" page="1" data-options="iconCls:'pagination-first','plain':true"></a></td>
+                                <td><a href="javascript:void(0)" page="-1" data-options="iconCls:'pagination-prev','plain':true"></a></td>
+                                <td id="eip_grid_page_info" style="padding-left:6px;padding-right:6px;">{0}</td>
+                                <td><a href="javascript:void(0)" page="+1" data-options="iconCls:'pagination-next','plain':true"></a></td>
+                                <td id="eip-last-page-td"><a href="javascript:void(0)" page="0" data-options="iconCls:'pagination-last','plain':true"></a></td>
+                                <td><div class="pagination-btn-separator"></div></td>
+                                <td><a href="javascript:void(0)" id="eip_datagrid_excel" data-options="plain:true,iconCls:'icon-excel'"></a></td>
+                                <td>
+                                    <a href="javascript:void(0)" id="eip_datagrid_more" data-options="iconCls:'icon-menu'"></a>
+                                    <div id="eip_datagrid_more_menu" style="width:150px; display:none;">
+                                        <div excel-setup data-options="iconCls:'icon-excel'">{1}</div>
+                                        <div column-setup data-options="iconCls:'icon-column_set'">{2}</div>
+                                    </div>
+                                </td>
+                                <td><a href="javascript:void(0)" id=eip_grid_notes_btn data-options="iconCls:'icon-notes','plain':true" title='{3}' onclick=\"eip.datagrid.sendNotes(this)\" /></td>
+                                <td><div class="pagination-btn-separator"></div></td>
+                                <td id="eip_grid_sum" style="padding-left:6px;padding-right:6px;">{4}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="datagrid-view">
+                        <div class="datagrid-view1">
+                            <div class="datagrid-header" style="height: 26px;">
+                                <div class="datagrid-header-inner" style="display: block;">
+                                    <table class="datagrid-htable" border="0" cellspacing="0" cellpadding="0" style="height: 25px;width: 1px !important;table-layout: fixed !important;">
+                                        <tbody>
+                                            <tr class="datagrid-header-row"></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="datagrid-body" style="margin-top: 0px;">
+                                <div class="datagrid-body-inner">
+                                    <table class="datagrid-btable" style="table-layout: fixed !important;width: 1px !important;" cellspacing="0" cellpadding="0" border="0">
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="datagrid-footer" style="margin-top: 0px;display:none;">
+                                <div class="datagrid-footer-inner" style="display: block;">
+                                    <table class="datagrid-ftable" cellspacing="0" cellpadding="0" border="0"><tbody></tbody></table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="datagrid-view2">
+                            <div class="datagrid-header" style="height: 26px;">
+                                <div class="datagrid-header-inner" style="display: block;">
+                                    <table class="datagrid-htable" border="0" cellspacing="0" cellpadding="0" style="height: 25px;table-layout: fixed !important;width: 1px !important;">
+                                        <tbody>
+                                            <tr class="datagrid-header-row"></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="datagrid-body" style="margin-top: 0px;">
+                                <table class="datagrid-btable" style="table-layout: fixed !important;width: 1px !important;" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody></tbody>
+                                </table>
+                                <div class="datagrid-body-line">&nbsp;</div>
+                            </div>
+                            <div class="datagrid-footer" style="margin-top: 0px;display:none;">
+                                <div class="datagrid-footer-inner" style="display: block;">
+                                    <table class="datagrid-ftable" style="table-layout: fixed !important;width: 1px !important;" cellspacing="0" cellpadding="0" border="0"><tbody></tbody></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="datagrid-mask" class="datagrid-mask" style="display:none"></div>
+                    <div id="datagrid-mask-msg" class="datagrid-mask-msg" style="display:none;left:50%"></div>
+                </td>
+            </tr>
+        </tbody>
+    </script>
+    <script type="text/javascript">
+        //var page={},_lang_user='';
+        $(function(){
+            //page={{page|safe}};
+            //document.title=page._title;
+            //_lang_user=page['_lang']=='' || !page['_lang'] ? 'SIMPLIFIED' : page['_lang'];
+            //_eip_lang_p= page['_langs'] || {};
+            //if (![].map || !JSON){
+            //    $(document.body).empty();
+            //    return alert(Lang('对不起，EIP不能在您的浏览器上运行，请安装 Chrome 浏览器。'));
+            //}
+            $(document.body).bind("click", function () {
+                eip.postmessage('MenuHide');
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div id="eip-mask" class="window-mask" style="display:none;z-index: 19000;"></div>
+    <div id="eip-mask-msg" class="datagrid-mask-msg" style="display:none;z-index: 19001;left:50%;top:50%;font-size:11px;"></div>
+    @RenderBody()
+</body>
+</html>

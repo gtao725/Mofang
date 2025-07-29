@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WMS.WCFServices.RecService.RecService" CodeBehind="RecService.svc.cs" %>

@@ -1,0 +1,160 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "clientCode", "客户名", "", "")
+        <input type="text" name="load" hint="Load" />
+        <input type="text" left="90" name="OutPoNumber" hint="系统出库单号" />
+        <input type="text" left="90" name="CustomerOutPoNumber" hint="客户出库单号" />
+        <input type="text" left="90" name="AltCustomerOutPoNumber" hint="平台单号" />
+        <input type="text" left="90" name="ExpressNumber" hint="快递单号" />
+        <input type="text" name="packCarton" hint="包装耗材" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/TransferHeadList", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: ["Id"],
+            columns: {
+                "Load": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"TransferDetailList(this)\" >" + row["Load"] + "</span>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+    });
+
+
+    //查看包装明细ByLoad
+    function TransferDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var val = row["Load"];
+
+        var dlg_Pos = eip.dialog.create("交接明细—Load：" + val,
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "<input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""],
+            columns: {
+                "客户出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"TransferScanNumberList(this)\" >" + row["客户出库单号"] + "</span>";
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/TransferDetailList?LoadId=" + val, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+
+    }
+
+    //查看包装明细By客户出库单号
+    function TransferScanNumberList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadId = row["Load"];
+        var val = row["客户出库单号"];
+
+        var dlg_Pos2 = eip.dialog.create("交接明细—客户出库单号：" + val,
+             "<div id=layout_Detail2><div form=\"Y\" id=\"form_Detail2\">"
+              + "<input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+             + "<table id=\"grid_detail2\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail2"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""]
+
+        });
+
+        eip.layout.create($('#layout_Detail2'), [{
+            obj: $('#form_Detail2'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos2);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/TransferScanNumberList?customerPoNumber=" + val + "&LoadId=" + loadId, $("#grid_detail2"), eip.para.create($("input,select", $("#layout_Detail2"))));
+    }
+
+
+</script>

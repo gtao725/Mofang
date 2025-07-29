@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS.BLLClass</RootNamespace>
+    <AssemblyName>WMS.BLLClass</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\WMS.WebApi\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminClass\View\BusinessObject.cs" />
+    <Compile Include="AdminClass\View\BusinessObjectItem.cs" />
+    <Compile Include="AdminClass\View\FlowRule.cs" />
+    <Compile Include="AdminClass\View\RFFlowRule.cs" />
+    <Compile Include="AdminClass\View\PowerMaster.cs" />
+    <Compile Include="AdminClass\View\WhInfo.cs" />
+    <Compile Include="AdminClass\View\WhMenu.cs" />
+    <Compile Include="AdminClass\View\WhPosition.cs" />
+    <Compile Include="AdminClass\View\WhPositionPowerMVC.cs" />
+    <Compile Include="AdminClass\View\WhPositionWhPower.cs" />
+    <Compile Include="AdminClass\View\WhPower.cs" />
+    <Compile Include="AdminClass\View\WhUser.cs" />
+    <Compile Include="AdminClass\View\WhUserWhPosition.cs" />
+    <Compile Include="BaseClass\BaseSearch.cs" />
+    <Compile Include="BusinessClass\BusinessFlowDetailList.cs" />
+    <Compile Include="BusinessClass\BusinessObjectHeadModel.cs" />
+    <Compile Include="BusinessClass\BusinessObjectModel.cs" />
+    <Compile Include="EipClass\Bs.cs" />
+    <Compile Include="EipClass\Ecl.cs" />
+    <Compile Include="ExpressModel\ExpressModel.cs" />
+    <Compile Include="APIComClass\APICom.cs" />
+    <Compile Include="GMSClass\GMS.cs" />
+    <Compile Include="GrnClass\Grn.cs" />
+    <Compile Include="InBoundClass\Grn.cs" />
+    <Compile Include="InBoundClass\DcReturnExceptionIn.cs" />
+    <Compile Include="InBoundClass\forecastOrder.cs" />
+    <Compile Include="InBoundClass\InBoundOrder.cs" />
+    <Compile Include="InBoundClass\InBoundOrderDetail.cs" />
+    <Compile Include="InBoundClass\InBoundOrderExtend.cs" />
+    <Compile Include="InBoundClass\ReceiptRegister.cs" />
+    <Compile Include="InBoundClass\ReceiptRegisterDetail.cs" />
+    <Compile Include="InVentoryClass\HuDetail.cs" />
+    <Compile Include="InVentoryClass\SupplementTask.cs" />
+    <Compile Include="InVentoryClass\InVentory.cs" />
+    <Compile Include="OutBoundClass\BoschPackEntity.cs" />
+    <Compile Include="OutBoundClass\BillDetail.cs" />
+    <Compile Include="OutBoundClass\InterceptOrder.cs" />
+    <Compile Include="OutBoundClass\JsonPackEntity.cs" />
+    <Compile Include="OutBoundClass\LoadContainer.cs" />
+    <Compile Include="OutBoundClass\LoadContainerHuDetail.cs" />
+    <Compile Include="OutBoundClass\LoadMaster.cs" />
+    <Compile Include="OutBoundClass\OutBoundOrder.cs" />
+    <Compile Include="OutBoundClass\OutBoundOrderDetail.cs" />
+    <Compile Include="OutBoundClass\PackTaskJson.cs" />
+    <Compile Include="OutBoundClass\PackTaskResult.cs" />
+    <Compile Include="OutBoundClass\PackTaskDetail.cs" />
+    <Compile Include="OutBoundClass\PickTaskDetail.cs" />
+    <Compile Include="OutBoundClass\ReleaseLoad.cs" />
+    <Compile Include="OutBoundClass\ShipLoadPlt.cs" />
+    <Compile Include="OutBoundClass\ShipLoadDesModel.cs" />
+    <Compile Include="OutBoundClass\ShipPickDesModel.cs" />
+    <Compile Include="OutBoundClass\SortTaskDetail.cs" />
+    <Compile Include="OutBoundClass\TransferDetailCe.cs" />
+    <Compile Include="OutBoundClass\TransferExpressNumber.cs" />
+    <Compile Include="OutBoundClass\TransferHead.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecClass\Receipt.cs" />
+    <Compile Include="RecClass\ReceiptDetailToUI.cs" />
+    <Compile Include="RecClass\RecLossType.cs" />
+    <Compile Include="RecClass\RecSkuDataCe.cs" />
+    <Compile Include="RecClass\RecLotFlagDescription.cs" />
+    <Compile Include="RecClass\RecSkuUnit.cs" />
+    <Compile Include="RecReportClass\ReceiptReport.cs" />
+    <Compile Include="RootClass\BusinessFlowGroup.cs" />
+    <Compile Include="RootClass\BusinessFlowHead.cs" />
+    <Compile Include="RootClass\CeItemMaster.cs" />
+    <Compile Include="RootClass\ContractForm.cs" />
+    <Compile Include="RootClass\CRReport.cs" />
+    <Compile Include="RootClass\CRTemp.cs" />
+    <Compile Include="RootClass\CycleCountCheck.cs" />
+    <Compile Include="RootClass\CycleCountDetail.cs" />
+    <Compile Include="RootClass\CycleCountInventory.cs" />
+    <Compile Include="RootClass\CycleCountMaster.cs" />
+    <Compile Include="RootClass\FeeMaster.cs" />
+    <Compile Include="RootClass\FieldOrderBy.cs" />
+    <Compile Include="RootClass\HoldMaster.cs" />
+    <Compile Include="RootClass\FlowDetail.cs" />
+    <Compile Include="RootClass\FlowHead.cs" />
+    <Compile Include="RootClass\ReceiptPartialRegister.cs" />
+    <Compile Include="RootClass\Holiday.cs" />
+    <Compile Include="RootClass\LoadCreateRule.cs" />
+    <Compile Include="RootClass\Location.cs" />
+    <Compile Include="RootClass\Loss.cs" />
+    <Compile Include="RootClass\DamcoGrnRule.cs" />
+    <Compile Include="RootClass\NightTime.cs" />
+    <Compile Include="RootClass\PhotoMaster.cs" />
+    <Compile Include="RootClass\R_Location_Item.cs" />
+    <Compile Include="RootClass\SerialNumber.cs" />
+    <Compile Include="RootClass\SupplementTask.cs" />
+    <Compile Include="RootClass\SupplementTaskDetail.cs" />
+    <Compile Include="RootClass\WhAgent.cs" />
+    <Compile Include="RootClass\WhClient.cs" />
+    <Compile Include="RootClass\Units.cs" />
+    <Compile Include="RootClass\WhItem.cs" />
+    <Compile Include="RootClass\WhItemExtendOMS.cs" />
+    <Compile Include="RootClass\WhLocation.cs" />
+    <Compile Include="RootClass\WhLocationType.cs" />
+    <Compile Include="RootClass\WhPallate.cs" />
+    <Compile Include="RootClass\WhPallateType.cs" />
+    <Compile Include="RootClass\WhZone.cs" />
+    <Compile Include="RootClass\WorkloadAccount.cs" />
+    <Compile Include="RootClass\Highcharts.cs" />
+    <Compile Include="RootClass\ZoneLocation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WMS.DI\WMS.DI.csproj">
+      <Project>{3842087b-8bf1-4694-81f1-7792d1785df8}</Project>
+      <Name>WMS.DI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

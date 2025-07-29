@@ -1,0 +1,460 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="FeeNumber" hint="账单编号" />
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="创建人" name="createUser"><option value='当前用户' selected>当前用户</option><option></option></select>
+        <textarea name="soNumber" left="60" hint="集装箱号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    <input type="text" name="txt_Description" hint="备注" seq="1" left="140" onkeypress="onkeyCheck()" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/BillMaster/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "新增账单", icon: "add", click: function () {
+                            dlg = eip.dialog.create("新增账单", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 200)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "确认创建", icon: "save", click:
+                                            function () {
+                                                addReg();
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        if (row["状态"] == "U") {
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"FeeDetailAddList('" + row["系统编号"] + "')\" title='添加出货箱单费用' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"FeeDetailSOAddList('" + row["系统编号"] + "')\" title='添加SO特费' ></a>";
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true  onclick=\"BillFeeDetailDelAll('" + row["系统编号"] + "')\" title='账单删除' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+        });
+
+
+        $("[name=soNumber]").css("height", "45px").css("width", "185px");
+        $("[name=soNumber]").parent().css("height", "50px").css("width", "280px");
+    });
+
+    //新增
+    function addReg() {
+        if (!$("#form2").form('validate')) {
+            return false;
+        }
+
+        eip.get("/Root/BillMaster/AddFeeMaster", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+            $.procAjaxData(jsonObj, function () {
+                eip.dialog.close(dlg);
+                if (jsonObj.Data) {
+                    FeeDetailAddList(jsonObj.Data["BLNumber"]);    //显示添加明细
+
+                    eip.datagrid.load("/Root/BillMaster/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                } else {
+                    $.eipMsg.alert("保存出错了!");
+                }
+
+            })
+        })
+    }
+
+    var dlg_Pos
+    //出货箱单费用选择列表
+    function FeeDetailAddList(obj) {
+        dlg_Pos = eip.dialog.create("[1].出货箱单费用选择列表--账单编号：" + obj,
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "<textarea hint=\"Load\"  name=\"fee_loadId_area\" ></textarea>"
+            + "<textarea hint=\"箱号\"  name=\"fee_containerNumber_area\" ></textarea>"
+
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhAgentList"], "fee_agentCode", "货代名", " ", "  ",true)"
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "fee_clientCode", "客户名", " ", "  ", true)"
+
+            + "<input type=\"text\"  name=\"fee_createDateBegin\" date=\"Y\" value=\"@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")\" hint=\"ETD日期\"  />"
+            + "<input type=\"text\" left=\"30\" name=\"fee_createDateEnd\" date=\"Y\" value=\"@DateTime.Now.AddDays(+7).ToString("yyyy-MM-dd")\" hint=\"-\"  />"
+            + " <select class=\"easyui-vhuo'xia'alidatebox\" hint=\"状态\" name=\"fee_LoadChargeStatus\"><option></option><option value='未确认'>未确认</option><option value='已确认' selected>已确认</option></select>"
+            + "</div>"
+
+            + "<table id=\"grid_detail\"></table></div>", 950, 500);
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["操作"],
+            checkbox: function (row) {
+                if (row["费用状态"] == "已确认") {
+                    return "<input type=checkbox name=check_to  value=\"" + row["Load"] + "\"  >";
+                }
+            },
+            columns: {
+
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/BillMaster/FeeDetailAddList", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "[2].确认添加所选箱单-添加后客服不可再修改", icon: "add", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail")).length == 0) {
+                                $.eipMsg.alert("请先选择箱单费用信息!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail")).each(function () {
+                                arr_list.push({ name: 'loadId', value: $(this).val() });
+                            })
+
+                            eip.post("/Root/BillMaster/BillDetailAdd?BLNumber=" + obj, arr_list, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+                                    eip.datagrid.load("/Root/BillMaster/FeeDetailAddList", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                }, function () { });
+                            }, null, true)
+
+                        }
+                 },
+                 {
+                     text: "[3].查看已添加的箱单费用", icon: "search", click:
+                        function () {
+                            showFeeDetailAddList(obj, "");
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }])
+
+        $("[name=fee_loadId_area]").css("height", "40px").css("width", "155px");
+        $("[name=fee_loadId_area]").parent().css("height", "45px").css("width", "230px");
+
+        $("[name=fee_containerNumber_area]").css("height", "40px").css("width", "155px");
+        $("[name=fee_containerNumber_area]").parent().css("height", "45px").css("width", "230px");
+
+    }
+
+    var dlg_Pos_show
+    //显示已选择的箱单费用
+    function showFeeDetailAddList(obj, val) {
+        dlg_Pos_show = eip.dialog.create("[3].查看已添加的箱单费用--账单编号：" + obj,
+            "<div id=layout_Detai2><div form=\"Y\" id=\"form_Detai2\">"
+            + "<input type=\"text\"  name=\"txt_detail_loadId\" hint=\"Load号\" />"
+            + "<input type=\"text\"  name=\"txt_detail_containerNumber\" hint=\"箱号\" />"
+            + "<input type=\"text\"  name=\"txt_detail_soNumber\" hint=\"SO号\" />"
+            + "<input type=\"text\"  name=\"txt_detail_ETD_begin\" date=\"Y\" value=\"\" hint=\"ETD日期\"  />"
+            + "<input type=\"text\" left=\"30\" name=\"txt_detail_ETD_end\" date=\"Y\" value=\"\" hint=\"-\"  />"
+            + "</div>"
+            + "<table id=\"grid_detai2\"></table></div>", 950, 500);
+
+        eip.datagrid.create({
+            obj: $("#grid_detai2"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-reload' plain=true onclick=\"AgainLoadCharge(this)\" title='重新计算Load费用' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"DelBillDetail(this,'" + obj + "')\" title='按Load删除全部费用' ></a>";
+
+                        return retHtml;
+                    }
+                },
+                "操作1": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"DelBillDetailSO(this,'" + obj + "')\" title='按SO删除特费' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detai2'), [{
+            obj: $('#form_Detai2'),
+            buttons: [
+                {
+                    text: "SCM装箱费账单", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList?BLNumber=" + obj, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+                       }
+                }, {
+                    text: "SCM特费账单", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList1?BLNumber=" + obj, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+                       }
+                }, {
+                    text: "SO特费账单", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList2?BLNumber=" + obj, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+                       }
+                },
+                 {
+                     text: "[4].再次确认账单", icon: "add", click:
+                        function () {
+                            $.eipMsg.confirm("确定生成账单吗？确认后不可再添加箱单！", function () {
+                                eip.get("/Root/BillMaster/BillMasterEdit?BLNumber=" + obj, null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.dialog.close(dlg_Pos_show);
+                                        eip.dialog.close(dlg_Pos);
+
+                                        eip.datagrid.load("/Root/BillMaster/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                    }, function () { });
+                                })
+                            })
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_show);
+                        }
+                 }
+            ]
+        }])
+
+        if (val == "") {
+            eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList?BLNumber=" + obj, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+        } else {
+            eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList2?BLNumber=" + obj, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+        }
+    }
+
+
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg();
+        }
+    }
+
+    //删除费用明细
+    function DelBillDetail(obj, blNumber) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadId = row["操作"];
+
+        $.eipMsg.confirm("确定删除该Load下的所有箱单费用吗？", function () {
+            eip.get("/Root/BillMaster/BillDetailDel?LoadId=" + loadId + "&BLNumber=" + blNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList?BLNumber=" + blNumber, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //重新计算费用
+    function AgainLoadCharge(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadId = row["操作"];
+
+        eip.get("/OutBound/LoadContainer/AgainLoadCharge?LoadId=" + loadId, null, function (jsonObj) {
+            $.procAjaxData(jsonObj, function () {
+
+            }, function () { });
+        })
+    }
+
+    //账单删除
+    function BillFeeDetailDelAll(blNumber) {
+
+        $.eipMsg.confirm("确定删除账单吗？", function () {
+            eip.get("/Root/BillMaster/BillFeeDetailDelAll?BLNumber=" + blNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Root/BillMaster/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                }, function () { });
+            }, null, true)
+        })
+    }
+
+    var dlg_Pos_SO
+    //出货箱单费用选择列表
+    function FeeDetailSOAddList(obj) {
+        dlg_Pos_SO = eip.dialog.create("[1].出货SO特费选择列表--账单编号：" + obj,
+            "<div id=layout_Detail_SO><div form=\"Y\" id=\"form_Detail_SO\">"
+            + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_sea_clientCode", "客户名", "", "  ")"
+            + "<input type=\"text\"  name=\"txt_sea_ETD_begin\" date=\"Y\" value=\"@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")\" hint=\"ETD日期\"  />"
+            + "<input type=\"text\" left=\"30\" name=\"txt_sea_ETD_end\" date=\"Y\" value=\"@DateTime.Now.AddDays(+7).ToString("yyyy-MM-dd")\" hint=\"-\"  />"
+
+             + "<input type=\"text\" name=\"txt_sea_BillNumber\" hint=\"提单号\" />"
+             + "<input type=\"text\" name=\"txt_sea_SoNumber\" hint=\"SO号\" />"
+             + "<textarea hint=\"SO批量\" name=\"txt_sea_SoNumber_area\"></textarea>"
+             + "<input type=\"text\" name=\"txt_sea_ContainerNumber\" hint=\"箱号\" />"
+            + "</div>"
+            + "<table id=\"grid_detail_SO\"></table></div>", 950, 500);
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_SO"),
+            pagesize: 200,
+            hiddencolumns: ["操作"],
+            checkbox: function (row) {
+
+                return "<input type=checkbox name=check_to  value=\"" + row["操作"] + "\"  >";
+
+            },
+            columns: {
+
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail_SO'), [{
+            obj: $('#form_Detail_SO'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/BillMaster/GetLoadChargeSOList", $("#grid_detail_SO"), eip.para.create($("input,select,textarea", $("#form_Detail_SO"))));
+                       }
+                },
+                 {
+                     text: "[2].确认添加所选SO特费-添加后客服不可再修改", icon: "add", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail_SO")).length == 0) {
+                                $.eipMsg.alert("请先选择SO特费!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail_SO")).each(function () {
+                                arr_list.push({ name: 'id', value: $(this).val() });
+                            })
+
+                            eip.post("/Root/BillMaster/BillDetailAddSO?BLNumber=" + obj, arr_list, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+                                    eip.datagrid.load("/Root/BillMaster/GetLoadChargeSOList", $("#grid_detail_SO"), eip.para.create($("input,select,textarea", $("#form_Detail_SO"))));
+
+                                }, function () { });
+                            }, null, true)
+
+                        }
+                 },
+                 {
+                     text: "[3].查看已添加的SO特费", icon: "search", click:
+                        function () {
+                            showFeeDetailAddList(obj, "SO");
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_SO);
+                        }
+                 }
+            ]
+        }])
+
+        $("[name=txt_sea_SoNumber_area]").css("height", "40px").css("width", "155px");
+        $("[name=txt_sea_SoNumber_area]").parent().css("height", "45px").css("width", "230px");
+
+    }
+
+
+    //删除费用明细
+    function DelBillDetailSO(obj, blNumber) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作1"];
+
+        $.eipMsg.confirm("确定删除该SO的特费吗？", function () {
+            eip.get("/Root/BillMaster/DelBillDetailSO?id=" + id + "&BLNumber=" + blNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/BillMaster/showFeeDetailAddList2?BLNumber=" + blNumber, $("#grid_detai2"), eip.para.create($("input,select,textarea", $("#form_Detai2"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+
+</script>

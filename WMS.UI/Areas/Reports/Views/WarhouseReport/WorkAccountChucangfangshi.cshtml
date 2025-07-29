@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        <input type="text" name="LoadId" hint="Load号" />
+        <input type="text" name="ContainerNumber" hint="集装箱号" />
+      
+        <select class="easyui-vhuo'xia'alidatebox" hint="装箱状态" name="Status3"><option></option><option value='全部未完成'>全部未完成</option><option value='未装箱'>未装箱</option><option value='正在装箱'>正在装箱</option><option value='完成装箱'>完成装箱</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="出仓方式" name="shipMode"><option></option><option value='集装箱'>集装箱</option><option value='货厢'>货厢</option><option value='快递'>快递</option><option value='提货'>提货</option></select>
+        <input type="text" name="ETDBegin" hint="开航日期" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="ETDEnd" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="PackDateBegin" hint="装箱时间" date='Y'  />
+        <input type="text" name="PackDateEnd" left="20" hint="-" date='Y'  />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/WarhouseReport/WorkAccountChucangfangshiList", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+                
+            }
+        });
+
+    });
+
+</script>

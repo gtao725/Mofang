@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+  <xs:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:45936/RecService/RecService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+  <xs:element name="C_RecQuestionList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q1:ReceiptSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="C_RecQuestionListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="C_RecQuestionListResult" nillable="true" type="q2:ArrayOfReceiptResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+        <xs:element minOccurs="0" name="str" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="C_RecCompleteList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q3:ReceiptSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="C_RecCompleteListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="C_RecCompleteListResult" nillable="true" type="q4:ArrayOfReceiptDetailCompleteResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+        <xs:element minOccurs="0" name="str" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FrozenEditList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="idArr" nillable="true" type="q5:ArrayOfstring" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="holdReason" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FrozenEditListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FrozenEditListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FrozenDeleteList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="idArr" nillable="true" type="q6:ArrayOfstring" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FrozenDeleteListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FrozenDeleteListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LotFlagEditList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="idArr" nillable="true" type="q7:ArrayOfstring" />
+        <xs:element minOccurs="0" name="lotFlag" type="xs:int" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LotFlagEditListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LotFlagEditListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEditRegTransportType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="receiptId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="transportType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="transportTypeExtend" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEditRegTransportTypeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReceiptEditRegTransportTypeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEdit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q8:Receipt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEditResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReceiptEditResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEditDetailCustom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q9:Receipt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptEditDetailCustomResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReceiptEditDetailCustomResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HoldMasterListByRec">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q10:HoldMasterSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HoldMasterListByRecResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="HoldMasterListByRecResult" nillable="true" type="q11:ArrayOfHoldMaster" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptInsert">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="entity" nillable="true" type="q12:ReceiptInsert" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiptInsertResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReceiptInsertResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRecInfoEcl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Receipt" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRecInfoEclResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GetRecInfoEclResult" nillable="true" type="q13:ArrayOfEclRecModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckRecComplete1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReceiptId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckRecComplete1Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CheckRecComplete1Result" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LotFlagListSelect">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LotFlagListSelectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="LotFlagListSelectResult" nillable="true" type="q14:ArrayOfLookUp" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnHeadList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="search" nillable="true" type="q15:GrnHeadSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnHeadListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="GrnHeadListResult" nillable="true" type="q16:ArrayOfGrnHeadResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnSOList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="search" nillable="true" type="q17:GrnHeadSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnSOListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="GrnSOListResult" nillable="true" type="q18:ArrayOfDamcoGRNDetail" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateGrnWmsData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sonumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="clientcode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="whcode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateGrnWmsDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateGrnWmsDataResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnAutoUpdate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sonumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Whcode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GrnAutoUpdateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GrnAutoUpdateResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendGRN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="sonumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Whcode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ClientCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="user" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendGRNResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendGRNResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AutoSendGRN">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="receiptid" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Whcode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="user" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AutoSendGRNResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AutoSendGRNResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateGrnDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="detailId" type="xs:int" />
+        <xs:element minOccurs="0" name="GRN_ReceiptDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="GRN_Qty" type="xs:int" />
+        <xs:element minOccurs="0" name="GRN_Cbm" nillable="true" type="xs:double" />
+        <xs:element minOccurs="0" name="GRN_Kgs" nillable="true" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateGrnDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateGrnDetailResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q19:RecLossTypeSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="RecLossTypeListResult" nillable="true" type="q20:ArrayOfRecLossType" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeAdd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q21:RecLossType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeAddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="RecLossTypeAddResult" nillable="true" type="q22:RecLossType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeEdit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q23:RecLossType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeEditResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RecLossTypeEditResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="searchEntity" nillable="true" type="q24:RecLossSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WMS.BLLClass" minOccurs="0" name="RecLossListResult" nillable="true" type="q25:ArrayOfRecLossResult" />
+        <xs:element minOccurs="0" name="total" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossAdd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q26:RecLoss" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossAddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="RecLossAddResult" nillable="true" type="q27:RecLoss" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossEdit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="entity" nillable="true" type="q28:RecLoss" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossEditResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RecLossEditResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeListSelect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="whCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecLossTypeListSelectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" minOccurs="0" name="RecLossTypeListSelectResult" nillable="true" type="q29:ArrayOfRecLossType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

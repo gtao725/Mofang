@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WMS.BLLClass" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:45936/AdminService/AdminService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfWhInfoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhInfoResult" nillable="true" type="tns:WhInfoResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhInfoResult" nillable="true" type="tns:ArrayOfWhInfoResult" />
+  <xs:complexType name="WhInfoResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhInfoResult" nillable="true" type="tns:WhInfoResult" />
+  <xs:complexType name="WhUserSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WhCodeName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhUserSearch" nillable="true" type="tns:WhUserSearch" />
+  <xs:complexType name="BaseSearch">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="OrderByColumn" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Sort" nillable="true" type="q2:ArrayOfboolean" />
+      <xs:element minOccurs="0" name="pageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="pageSize" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseSearch" nillable="true" type="tns:BaseSearch" />
+  <xs:complexType name="ArrayOfWhUserResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhUserResult" nillable="true" type="tns:WhUserResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhUserResult" nillable="true" type="tns:ArrayOfWhUserResult" />
+  <xs:complexType name="WhUserResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CheckFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreateUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PassWord" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserNameCN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhCodeId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WhName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhUserResult" nillable="true" type="tns:WhUserResult" />
+  <xs:complexType name="WhPositionSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhPositionSearch" nillable="true" type="tns:WhPositionSearch" />
+  <xs:complexType name="ArrayOfWhPositionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhPositionResult" nillable="true" type="tns:WhPositionResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhPositionResult" nillable="true" type="tns:ArrayOfWhPositionResult" />
+  <xs:complexType name="WhPositionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhPositionResult" nillable="true" type="tns:WhPositionResult" />
+  <xs:complexType name="WhUserWhPositionSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserNameCN" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhUserWhPositionSearch" nillable="true" type="tns:WhUserWhPositionSearch" />
+  <xs:complexType name="ArrayOfWhUserWhPositionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhUserWhPositionResult" nillable="true" type="tns:WhUserWhPositionResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhUserWhPositionResult" nillable="true" type="tns:ArrayOfWhUserWhPositionResult" />
+  <xs:complexType name="WhUserWhPositionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserNameCN" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhUserWhPositionResult" nillable="true" type="tns:WhUserWhPositionResult" />
+  <xs:complexType name="WhInfoSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhInfoSearch" nillable="true" type="tns:WhInfoSearch" />
+  <xs:complexType name="ArrayOfWhInfoWhUserResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhInfoWhUserResult" nillable="true" type="tns:WhInfoWhUserResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhInfoWhUserResult" nillable="true" type="tns:ArrayOfWhInfoWhUserResult" />
+  <xs:complexType name="WhInfoWhUserResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhInfoWhUserResult" nillable="true" type="tns:WhInfoWhUserResult" />
+  <xs:complexType name="WhPowerSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhPowerSearch" nillable="true" type="tns:WhPowerSearch" />
+  <xs:complexType name="ArrayOfWhPowerResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhPowerResult" nillable="true" type="tns:WhPowerResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhPowerResult" nillable="true" type="tns:ArrayOfWhPowerResult" />
+  <xs:complexType name="WhPowerResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PowerDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhPowerResult" nillable="true" type="tns:WhPowerResult" />
+  <xs:complexType name="WhPositionWhPowerSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhPositionWhPowerSearch" nillable="true" type="tns:WhPositionWhPowerSearch" />
+  <xs:complexType name="ArrayOfWhPositionWhPowerResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhPositionWhPowerResult" nillable="true" type="tns:WhPositionWhPowerResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhPositionWhPowerResult" nillable="true" type="tns:ArrayOfWhPositionWhPowerResult" />
+  <xs:complexType name="WhPositionWhPowerResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PositionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PositionNameCN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhPositionWhPowerResult" nillable="true" type="tns:WhPositionWhPowerResult" />
+  <xs:complexType name="WhPositionPowerMVCSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AreaName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PowerId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhPositionPowerMVCSearch" nillable="true" type="tns:WhPositionPowerMVCSearch" />
+  <xs:complexType name="ArrayOfWhPositionPowerMVCResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhPositionPowerMVCResult" nillable="true" type="tns:WhPositionPowerMVCResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhPositionPowerMVCResult" nillable="true" type="tns:ArrayOfWhPositionPowerMVCResult" />
+  <xs:complexType name="WhPositionPowerMVCResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AreaName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ControllerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HttpMethod" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PowerId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhPositionPowerMVCResult" nillable="true" type="tns:WhPositionPowerMVCResult" />
+  <xs:complexType name="WhMenuSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="MenuId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="MenuNameCN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PowerType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhMenuSearch" nillable="true" type="tns:WhMenuSearch" />
+  <xs:complexType name="ArrayOfWhMenuResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhMenuResult" nillable="true" type="tns:WhMenuResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhMenuResult" nillable="true" type="tns:ArrayOfWhMenuResult" />
+  <xs:complexType name="WhMenuResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreateUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuIcon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MenuName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MenuNameCN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MenuSort" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="MenuUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentMenuId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentMenuName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PositionPowerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PowerId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PowerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhMenuResult" nillable="true" type="tns:WhMenuResult" />
+  <xs:complexType name="BusinessObjectSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ObjectDes" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ObjectName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ObjectType" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BusinessObjectSearch" nillable="true" type="tns:BusinessObjectSearch" />
+  <xs:complexType name="ArrayOfBusinessObjectResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessObjectResult" nillable="true" type="tns:BusinessObjectResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessObjectResult" nillable="true" type="tns:ArrayOfBusinessObjectResult" />
+  <xs:complexType name="BusinessObjectResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ObjectDes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObjectType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessObjectResult" nillable="true" type="tns:BusinessObjectResult" />
+  <xs:complexType name="BusinessObjectItemSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ObjectId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BusinessObjectItemSearch" nillable="true" type="tns:BusinessObjectItemSearch" />
+  <xs:complexType name="RFFlowRuleSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FunctionName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RFFlowRuleSearch" nillable="true" type="tns:RFFlowRuleSearch" />
+  <xs:complexType name="ArrayOfRFFlowRuleResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RFFlowRuleResult" nillable="true" type="tns:RFFlowRuleResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRFFlowRuleResult" nillable="true" type="tns:ArrayOfRFFlowRuleResult" />
+  <xs:complexType name="RFFlowRuleResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BusinessObjectHeadId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FunctionFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="FunctionId" type="xs:int" />
+      <xs:element minOccurs="0" name="FunctionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="RelyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RequiredFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RuleType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SelectRuleDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RFFlowRuleResult" nillable="true" type="tns:RFFlowRuleResult" />
+  <xs:complexType name="FlowRuleSearch">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FunctionName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FlowRuleSearch" nillable="true" type="tns:FlowRuleSearch" />
+  <xs:complexType name="ArrayOfFlowRuleResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FlowRuleResult" nillable="true" type="tns:FlowRuleResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFlowRuleResult" nillable="true" type="tns:ArrayOfFlowRuleResult" />
+  <xs:complexType name="FlowRuleResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BusinessObjectGroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FlowName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FunctionFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="FunctionId" type="xs:int" />
+      <xs:element minOccurs="0" name="FunctionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GroupId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RelyId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RequiredFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RollbackFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RollbackFlagShow" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RuleType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SelectRuleDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FlowRuleResult" nillable="true" type="tns:FlowRuleResult" />
+  <xs:complexType name="ArrayOfBusinessFlowGroupResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessFlowGroupResult" nillable="true" type="tns:BusinessFlowGroupResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessFlowGroupResult" nillable="true" type="tns:ArrayOfBusinessFlowGroupResult" />
+  <xs:complexType name="BusinessFlowGroupResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreateUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FlowName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Remark" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdateUser" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessFlowGroupResult" nillable="true" type="tns:BusinessFlowGroupResult" />
+  <xs:complexType name="WhInfoSearch1">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseSearch">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="WhName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WhInfoSearch1" nillable="true" type="tns:WhInfoSearch1" />
+  <xs:complexType name="ArrayOfWhInfoResult1">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WhInfoResult1" nillable="true" type="tns:WhInfoResult1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWhInfoResult1" nillable="true" type="tns:ArrayOfWhInfoResult1" />
+  <xs:complexType name="WhInfoResult1">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="NoHuIdFlag" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="NoHuIdFlagShow" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WhInfoResult1" nillable="true" type="tns:WhInfoResult1" />
+</xs:schema>

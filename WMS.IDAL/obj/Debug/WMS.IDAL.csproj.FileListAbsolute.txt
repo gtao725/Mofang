@@ -1,0 +1,5 @@
+D:\work2022\wms\WMS.WCFServices\bin\WMS.IDAL.dll
+D:\work2022\wms\WMS.WCFServices\bin\WMS.IDAL.pdb
+D:\work2022\wms\WMS.IDAL\obj\Debug\WMS.IDAL.dll
+D:\work2022\wms\WMS.IDAL\obj\Debug\WMS.IDAL.pdb
+D:\work2022\wms\WMS.IDAL\obj\Debug\WMS.IDAL.csprojResolveAssemblyReference.cache

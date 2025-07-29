@@ -1,0 +1,636 @@
+﻿@model WMS.UI.Controllers.Model.CycleCountMasterModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="TaskNumber" hint="任务号码" />
+        <select name="cType" left="90" hint="盘点模式"><option></option><option value="锁定模式">锁定模式</option><option value="非锁定模式">非锁定模式</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" left="90" hint="盘点类型" name="createType"><option value='1'>ByPoSku盘点</option><option value='2' selected>BySku盘点</option></select>
+
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" left="90" hint="盘点状态" name="Status"><option></option><option value='未盘点'>未盘点</option><option value='正在盘点'>正在盘点</option><option value='完成盘点'>完成盘点</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    <select name="sel_Type" hint="任务类型" left="140"><option value="B">锁定模式</option><option value="L" selected>非锁定模式</option></select>
+    <select name="sel_LocationNullFlag" hint="是否去掉空库位" left="140"><option value="0">否</option><option value="1" selected>是</option></select>
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="是否逐件扫描" name="oneByoneScan"><option value='1'>是</option><option value='0' selected>否</option></select>
+
+    <input type="text" left="140" name="description" hint="描述" />
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点类型" name="createType"><option value='1'>ByPoSku盘点</option><option value='2' selected>BySku盘点</option></select>
+
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点比对" name="compareStorage"><option value='0' selected>比对托盘</option><option value='1' >忽略托盘</option></select>
+
+    <input type="text" left="140" name="location" hint="库区" />
+    <input type="text" left="140" name="locationColumn" hint="通道" />
+    <input type="text" left="140" name="locationRowBegin" hint="起始列" />
+    <input type="text" left="140" name="locationRowEnd" hint="结束列" />
+</div>
+
+<div id='form33' style="display:none">
+    <select name="sel_Type" hint="任务类型" left="140"><option value="B">锁定模式</option><option value="L" selected>非锁定模式</option></select>
+    <select name="sel_LocationNullFlag" hint="是否去掉空库位" left="140"><option value="0">否</option><option value="1" selected>是</option></select>
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="是否逐件扫描" name="oneByoneScan"><option value='1'>是</option><option value='0' selected>否</option></select>
+
+    <input type="text" left="140" name="description" hint="描述" />
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点类型" name="createType"><option value='1'>ByPoSku盘点</option><option value='2' selected>BySku盘点</option></select>
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点比对" name="compareStorage"><option value='0' selected>比对托盘</option><option value='1'>忽略托盘</option></select>
+
+    @Html.EipInputFor(model => model.BeginLocationId, new { @left = "140" })
+    @Html.EipInputFor(model => model.EndLocationId, new { @left = "140" })
+</div>
+
+<div id='form44' style="display:none">
+    <select name="sel_Type" hint="任务类型" left="140"><option value="B">锁定模式</option><option value="L" selected>非锁定模式</option></select>
+    <select name="sel_LocationNullFlag" hint="是否去掉空库位" left="140"><option value="0">否</option><option value="1" selected>是</option></select>
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="是否逐件扫描" name="oneByoneScan"><option value='1'>是</option><option value='0' selected>否</option></select>
+    <input type="text" left="140" name="description" hint="描述" />
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点类型" name="createType"><option value='1'>ByPoSku盘点</option><option value='2' selected>BySku盘点</option></select>
+
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点比对" name="compareStorage"><option value='0' selected>比对托盘</option><option value='1'>忽略托盘</option></select>
+
+    @Html.EipGetSelectFor(model => model.WhClientList, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140" })
+    <textarea hint="款号" left="140" name="sku_area" rows="6" cols="10"></textarea><span left="3" hint="">多个款号请以逗号隔开</span>
+</div>
+
+<div id='form55' style="display:none">
+    <select name="sel_Type" hint="任务类型" left="140"><option value="B">锁定模式</option><option value="L" selected>非锁定模式</option></select>
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="是否逐件扫描" name="oneByoneScan"><option value='1'>是</option><option value='0' selected>否</option></select>
+    <input type="text" left="140" name="description" hint="描述" />
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点类型" name="createType"><option value='1'>ByPoSku盘点</option><option value='2' selected>BySku盘点</option></select>
+
+    <select class="easyui-vhuo'xia'alidatebox" left="140" hint="盘点比对" name="compareStorage"><option value='0' selected>比对托盘</option><option value='1'>忽略托盘</option></select>
+
+    <input type="text" name="BeginLocationChangeTime" left="90" hint="库位变更时间" date='Y' value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+    <input type="text" name="EndLocationChangeTime" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var cost_dlg5, cost_dlg5Html;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "新增盘点任务(按库位属性)", icon: "add", click: function () {
+                            var dlg = eip.dialog.create("新增盘点任务(按库位属性)", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 360)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                if ($("[name=createType]", $("#layout1")).val() == "") {
+                                                    $.eipMsg.alert("盘点类型必须选择！");
+                                                    return;
+                                                }
+                                                if ($("[name=location]", $("#layout1")).val() == "") {
+                                                    $.eipMsg.alert("库区必须输入！");
+                                                    return;
+                                                }
+                                                if ($("[name=locationColumn]", $("#layout1")).val() == "") {
+                                                    $.eipMsg.alert("通道必须输入！");
+                                                    return;
+                                                }
+
+                                                var typeDescription = $("[name=createType]", $("#layout1")).find("option:selected").text();
+                                                eip.get("/Warehouse/C_CycleCount/CycleCountMasterAdd?typeDescription=" + eip.utf8(typeDescription), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                    $.procAjaxData(jsonObj, function () {
+                                                        eip.dialog.close(dlg);
+                                                        eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                    }, function () { });
+                                                }, null, true)
+
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+
+                        }
+                    }
+                    , {
+                        text: "新增盘点任务(按起始库位)", icon: "add", click: function () {
+                            var dlg = eip.dialog.create("新增盘点任务(按起始库位)", "<div id=layout11 ><div form='Y' id='form3' >" + $("#form33").html() + "</div></div>"
+                               , 500, 310)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout11'), [{
+                                obj: $('#form3'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                if ($("[name=createType]", $("#layout11")).val() == "") {
+                                                    $.eipMsg.alert("盘点类型必须选择！");
+                                                    return;
+                                                }
+                                                if (!$("#form3").form('validate')) {
+                                                    return false;
+                                                }
+
+                                                var typeDescription = $("[name=createType]", $("#layout11")).find("option:selected").text();
+                                                eip.get("/Warehouse/C_CycleCount/CycleCountMasterAddByLocationId?typeDescription=" + eip.utf8(typeDescription), eip.para.create($("input,select", $("#layout11"))), function (jsonObj) {
+                                                    $.procAjaxData(jsonObj, function () {
+                                                        eip.dialog.close(dlg);
+                                                        eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                    }, function () { });
+                                                }, null, true)
+
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+
+                        },
+                    },
+                     , {
+                         text: "新增盘点任务(按客户和款号)", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("新增盘点任务(按客户和款号)", "<div id=layout44 ><div form='Y' id='form4' >" + $("#form44").html() + "</div></div>"
+                                , 500, 310)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout44'), [{
+                                 obj: $('#form4'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=createType]", $("#layout44")).val() == "") {
+                                                     $.eipMsg.alert("盘点类型必须选择！");
+                                                     return;
+                                                 }
+                                                 if ($("[name=sku_area]", $("#layout44")).val() == "") {
+                                                     $.eipMsg.alert("款号必须输入！");
+                                                     return;
+                                                 }
+                                                 if (!$("#form4").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 var typeDescription = $("[name=createType]", $("#layout44")).find("option:selected").text();
+                                                 eip.get("/Warehouse/C_CycleCount/CycleCountMasterAddByClientCodeSku?typeDescription=" + eip.utf8(typeDescription), eip.para.create($("input,select,textarea", $("#layout44"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                         },
+                     }
+                     , {
+                         text: "新增盘点任务(动态盘点)", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("新增盘点任务(动态盘点)", "<div id=layout55 ><div form='Y' id='form5' >" + $("#form55").html() + "</div></div>"
+                                , 500, 250)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout55'), [{
+                                 obj: $('#form5'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=BeginLocationChangeTime]", $("#layout55")).val() == "") {
+                                                     $.eipMsg.alert("库位变更起始时间必须选择！");
+                                                     return;
+                                                 }
+                                                 if ($("[name=EndLocationChangeTime]", $("#layout55")).val() == "") {
+                                                     $.eipMsg.alert("库位变更结束时间必须选择！");
+                                                     return;
+                                                 }
+
+                                                 var typeDescription = $("[name=createType]", $("#layout55")).find("option:selected").text();
+                                                 eip.get("/Warehouse/C_CycleCount/CycleCountMasterAddByLocationChangeTime?typeDescription=" + eip.utf8(typeDescription), eip.para.create($("input,select,textarea", $("#layout55"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                         },
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["仓库", "盘点类型"],
+            //showOrderBtns: true,
+            muledit: false,
+            lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick=\"CycleCountDetailList(this)\" title='查看明细' ></a>";
+                        if (row["状态"] != "完成盘点") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='CycleCountMasterDel(this)' title='确认盘点完成' ></a>";
+                        }
+                        //if (row["状态"] == "完成盘点") {
+                        //    retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='DM打印盘点报表' ></a>";
+                        //}
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "代理名": {
+                    editor: { type: "text", name: "edit_AgentName" }
+                },
+                "代理Code": {
+                    editor: { type: "text", name: "edit_AgentCode" }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //删除盘点任务
+    function CycleCountMasterDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var taskNumber = row["任务号码"];
+
+        $.eipMsg.confirm("确定完成盘点任务号：" + taskNumber + "吗？", function () {
+            eip.get("/Warehouse/C_CycleCount/CycleCountMasterDel?taskNumber=" + taskNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+
+
+    //查看盘点任务明细
+    function CycleCountDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看盘点任务明细，当前任务号码：" + row["任务号码"],
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+            + "<input type=\"text\" name=\"detail_locationId\" hint=\"库位\" />"
+              + " <select name=\"sel_ResultStatus\" hint=\"盘点状态\" left=\"100\"><option value=\"\"></option><option value=\"已盘点\">已盘点</option><option value=\"未盘点\">未盘点</option></select>"
+            + " <select name=\"sel_ResultAction\" hint=\"盘点结果\" left=\"100\"><option value=\"\"></option><option value=\"正常\">正常</option><option value=\"有差异\">有差异</option></select>"
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 1100, 600)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "仓库"],
+            columns: {
+                "查看盘点结果": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] != "未盘点") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='CycleCountCheckList(this)' title='查看盘点结果' ></a>";
+                        }
+                        return retHtml;
+                    }
+                },
+                "盘点结果": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] != "未盘点") {
+                            if (row["盘点结果"] != "正常") {
+                                retHtml += "<span style='color:#FF0000'>" + row["盘点结果"] + "</span>";
+                            }
+                            else {
+                                retHtml += "<span style='color:#00FF00'>" + row["盘点结果"] + "</span>";
+                            }
+                        }
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountDetailList?taskNumber=" + row["任务号码"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+                       }
+                },
+                {
+                    text: "当前盘点差异EAN转换款号", icon: "add", click:
+                       function () {
+                           $.eipMsg.confirm("确定当前盘点差异EAN转换款号吗？", function () {
+
+                               eip.post("/Warehouse/C_CycleCount/CheckCycleResultSkuByEAN?taskNumber=" + row["任务号码"], eip.para.create($("input,select", $("#layout_Detail"))), function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountDetailList?taskNumber=" + row["任务号码"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+
+                                   }, function () { });
+                               }, null, true)
+
+                               
+                           })
+                       }
+                },
+                 {
+                     text: "当前盘点差异再次生成任务", icon: "add", click:
+                        function () {
+                            $.eipMsg.confirm("确定当前盘点差异再次生成盘点任务吗？", function () {
+
+                                eip.post("/Warehouse/C_CycleCount/CycleCountMasterAddAgain?taskNumber=" + row["任务号码"], eip.para.create($("input,select", $("#layout_Detail"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.dialog.close(dlg_Pos);
+                                        eip.datagrid.load("/Warehouse/C_CycleCount/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                    }, function () { });
+                                }, null, true)
+
+
+                            })
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountDetailList?taskNumber=" + row["任务号码"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+
+    //查看库存盘点结果
+    function CycleCountCheckList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看盘点结果，当前任务号码：" + row["任务号码"],
+            "<div id=layout_CheckDetail><div form=\"Y\" id=\"form_CheckDetail\">"
+            + "</div>"
+            + "<table id=\"grid_Checkdetail\"></table></div>", 1050, 560)
+
+        eip.datagrid.create({
+            obj: $("#grid_Checkdetail"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='AddCycleCheckDetail(this)' title='添加实盘信息' ></a>";
+
+                        if (row["实盘托盘"] != "") {
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditCycleCheckDetail(this)' title='修改信息' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelCycleCheckDetail(this)' title='删除' ></a>";
+
+                        }
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_CheckDetail'), [{
+            obj: $('#form_CheckDetail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountCheckList?taskNumber=" + row["任务号码"] + "&locationId=" + row["库位"], $("#grid_Checkdetail"), eip.para.create($("input,select", $("#layout_CheckDetail"))));
+    }
+
+
+    function EditCycleCheckDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var taskNumber = row["任务号码"];
+        var locationId = row["库位"];
+        var huId = row["实盘托盘"];
+        var poNumber = row["实盘PO"];
+        var itemNumber = row["实盘款号"];
+        var qty = row["实盘数量"];
+
+        var dlg = eip.dialog.create("修改实际盘点信息", "<div id=layout4 ><div form='Y' id='form4'>"
+                                    + "<span left=\"140\" hint=\"盘点任务号：\">" + row["任务号码"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库位：\">" + row["库位"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库存托盘：\">" + row["库存托盘"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库存PO：\">" + row["库存PO"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库存款号：\">" + row["库存款号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库存数量：\">" + row["库存数量"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_HuId\" value=\"" + row["实盘托盘"] + "\" hint=\"实盘托盘\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_PO\" value=\"" + row["实盘PO"] + "\" hint=\"实盘PO\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Item\" value=\"" + row["实盘款号"] + "\" hint=\"实盘款号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Qty\" value=\"" + row["实盘数量"] + "\" hint=\"实盘数量\" />"
+
+                                    + "</div></div>", 500, 450)
+
+        eip.layout.create($('#layout4'), [{
+            obj: $('#form4'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            eip.get("/Warehouse/C_CycleCount/EditCycleCheckDetail?taskNumber=" + taskNumber + "&locationId=" + locationId + "&huId=" + huId + "&poNumber=" + poNumber + "&itemNumber=" + itemNumber + "&qty=" + qty, eip.para.create($("input,select", $("#layout4"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountCheckList?taskNumber=" + taskNumber + "&locationId=" + locationId, $("#grid_Checkdetail"), eip.para.create($("input,select", $("#layout_CheckDetail"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+    }
+
+    //删除实盘信息
+    function DelCycleCheckDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var taskNumber = row["任务号码"];
+        var locationId = row["库位"];
+        var huId = row["实盘托盘"];
+        var poNumber = row["实盘PO"];
+        var itemNumber = row["实盘款号"];
+        var qty = row["实盘数量"];
+
+        $.eipMsg.confirm("确定删除实盘信息：托盘:" + huId + "款号:" + itemNumber + "数量:" + qty + "吗？", function () {
+            eip.get("/Warehouse/C_CycleCount/DelCycleCheckDetail?taskNumber=" + taskNumber + "&locationId=" + locationId + "&huId=" + huId + "&poNumber=" + poNumber + "&itemNumber=" + itemNumber + "&qty=" + qty, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountCheckList?taskNumber=" + taskNumber + "&locationId=" + locationId, $("#grid_Checkdetail"), eip.para.create($("input,select", $("#layout_CheckDetail"))));
+
+                }, function () { });
+            })
+        })
+
+    }
+
+    //添加实盘信息
+    function AddCycleCheckDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var taskNumber = row["任务号码"];
+        var locationId = row["库位"];
+
+        var dlg = eip.dialog.create("添加实际盘点信息", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"盘点任务号：\">" + row["任务号码"] + "</span>"
+                                    + "<span left=\"140\" hint=\"库位：\">" + row["库位"] + "</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_HuId\" hint=\"实盘托盘\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_PO1\" hint=\"实盘PO\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Item1\" hint=\"实盘款号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Qty1\"  hint=\"实盘数量\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_PO2\" hint=\"实盘PO\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Item2\"  hint=\"实盘款号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Qty2\"  hint=\"实盘数量\" />"
+
+                                    + "</div></div>", 500, 450)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_HuId]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("请输入实盘托盘!");
+                                return;
+                            }
+                            if ($("[name=edit_Qty1]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("请输入实盘数量!");
+                                return;
+                            }
+
+                            eip.get("/Warehouse/C_CycleCount/AddCycleCheckDetail?taskNumber=" + taskNumber + "&locationId=" + locationId, eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Warehouse/C_CycleCount/CycleCountCheckList?taskNumber=" + taskNumber + "&locationId=" + locationId, $("#grid_Checkdetail"), eip.para.create($("input,select", $("#layout_CheckDetail"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    //打印出货操作单
+    function PrintReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["任务号码"];
+
+        window.open("https://@Html.Raw(ViewBag.CrSaveAddress)/WMS_DM_CycleReport.aspx?load_id=" + Id);
+
+    }
+
+</script>

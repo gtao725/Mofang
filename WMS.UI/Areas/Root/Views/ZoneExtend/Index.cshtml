@@ -1,0 +1,303 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="100" name="zone_name" hint="区域" value="" />  
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneSelect"], "txt_zone_name", "区域", "", "left='140' ")
+    <input type="text" left="140" name="txt_zoneOrderBy" hint="排列号" value="0" />    
+    <select name="sel_OnlySkuFlag" hint="是否混合区" left="140"><option value="0" selected>否</option><option value="1">是</option></select>
+    <input type="text" left="140" name="txt_maxLocationIdQty" hint="最大库位数" value="0" />    
+    <input type="text" left="140" name="txt_maxPallateQty" hint="最大托盘数" value="0" />    
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () { 
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "新增区域扩展信息", icon: "add", click:
+                             function () {
+                                 var dlg = eip.dialog.create("新增区域扩展信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                     + $("#form22").html()
+                                     + "</div></div>", 500, 300)
+
+                                 //窗体工具栏按钮 begin
+                                 eip.layout.create($('#layout1'), [{
+                                     obj: $('#form2'),
+                                     buttons: [
+                                         {
+                                             text: "保存", icon: "save", click:
+                                                 function () {
+                                                     if (!$("#form2").form('validate')) {
+                                                         return false;
+                                                     }
+
+                                                     var reg2 = /^[0-9]+$/;
+                                                     if ($("[name=txt_zoneOrderBy]").val() != "") {
+                                                         if (!reg2.test($("[name=txt_zoneOrderBy]").val())) {
+                                                             alert("排位号必须为数字！");
+                                                             $("[name=txt_zoneOrderBy]").focus();
+                                                             return;
+                                                         }
+                                                     } 
+
+                                                     if ($("[name=txt_maxLocationIdQty]").val() != "") {
+                                                         if (!reg2.test($("[name=txt_maxLocationIdQty]").val())) {
+                                                             alert("最大库位数必须为数字！");
+                                                             $("[name=txt_maxLocationIdQty]").focus();
+                                                             return;
+                                                         }
+                                                     }
+
+                                                     if ($("[name=txt_maxPallateQty]").val() != "") {
+                                                         if (!reg2.test($("[name=txt_maxPallateQty]").val())) {
+                                                             alert("最大托盘数必须为数字！");
+                                                             $("[name=txt_maxPallateQty]").focus();
+                                                             return;
+                                                         }
+                                                     }
+
+                                                     eip.get("/Root/ZoneExtend/AddZonesExtendAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                         $.procAjaxData(jsonObj, function () {
+                                                             $("[name=txt_zoneOrderBy]").val("");
+                                                             $("[name=txt_maxLocationIdQty]").val("");
+                                                             $("[name=txt_maxPallateQty]").val("");
+
+                                                             eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                         }, function () { });
+                                                     })
+                                                 }
+                                         },
+                                        {
+                                            text: "关闭窗口", icon: "no", click:
+                                               function () {
+                                                   eip.dialog.close(dlg);
+                                               }
+                                        }
+                                     ]
+                                 }])
+                                 //end
+
+                                 $("[name=txt_zone]").focus();
+                             }
+                    },
+                     {
+                         text: "批量导入区域扩展信息", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/ZoneExtend/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+
+                                          eip.dialog.close($('#imports-layout').parent());
+
+                                          eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '区域',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '排列号',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '是否混合区',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '最大库位数',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '最大托盘数',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      }
+
+                                  ]
+                              });
+                          }
+                     }
+                    , {
+                        text: "批量删除区域扩展信息", icon: "cancel", click:
+                           function () {
+                               if ($("[name=get_id]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=get_id]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'idarr', value: $(this).val() });
+                               })
+
+                               eip.post("/Root/ZoneExtend/BatchDelZoneExtend", arr_list, function (jsonObj) {
+                                   $.procAjaxData(jsonObj, function () {
+
+                                       eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                   }, function () {
+                                   });
+                               }, null, true)
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["ZoneId", "OnlySkuFlag"],
+            muledit: false,
+            checkbox: function (row) {
+
+                return "<input type=checkbox name=get_id  value=\"" + row["操作"] + "\"   >";
+
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditZoneExtend(this)' title='修改' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelZoneExtend(this)' title='删除' ></a>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+    });
+
+    //删除
+    function DelZoneExtend(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除所选行的信息吗？", function () {
+            eip.get("/Root/ZoneExtend/DelZoneExtend?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    function EditZoneExtend(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("修改区域扩展信息", "<div id=layout9 ><div form='Y' id='form9'>"
+                                    + "<span left=\"140\" hint=\"区域\">" + row["区域"] + "</span>"
+                                    + "<input type=\"text\"  left=\"140\"  name=\"edit_ZoneOrderBy\"  value=\"" + row["排列号"] + "\" hint=\"排列号\" />"
+                                    + "<select class=\"easyui-validatebox\" hint=\"是否混合区\"  left=\"140\" name=\"edit_OnlySkuFlag\"><option value='0'>否</option><option value='1'>是</option></select>"
+                                     + "<input type=\"text\"  left=\"140\"  name=\"edit_MaxLocationIdQty\"  value=\"" + row["最大库位数"] + "\" hint=\"最大库位数\" />"
+                                     + "<input type=\"text\"  left=\"140\"   name=\"edit_MaxPallateQty\"  value=\"" + row["最大托盘数"] + "\" hint=\"最大托盘数\" />"
+
+                                    + "</div></div>", 500, 238)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "确认修改", icon: "save", click:
+                        function () {
+
+                            var reg2 = /^[0-9]+$/;
+                            if ($("[name=edit_ZoneOrderBy]").val() != "") {
+                                if (!reg2.test($("[name=edit_ZoneOrderBy]").val())) {
+                                    alert("排位号必须为数字！");
+                                    $("[name=edit_ZoneOrderBy]").focus();
+                                    return;
+                                }
+                            }
+
+                            if ($("[name=edit_MaxLocationIdQty]").val() != "") {
+                                if (!reg2.test($("[name=edit_MaxLocationIdQty]").val())) {
+                                    alert("最大库位数必须为数字！");
+                                    $("[name=edit_MaxLocationIdQty]").focus();
+                                    return;
+                                }
+                            }
+
+                            if ($("[name=edit_MaxPallateQty]").val() != "") {
+                                if (!reg2.test($("[name=edit_MaxPallateQty]").val())) {
+                                    alert("最大托盘数必须为数字！");
+                                    $("[name=edit_MaxPallateQty]").focus();
+                                    return;
+                                }
+                            }
+
+
+                            eip.get("/Root/ZoneExtend/EditZoneExtend?id=" + id, eip.para.create($("input,select,textarea", $("#layout9"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Root/ZoneExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_ZoneOrderBy]").focus();
+        $("[name=edit_OnlySkuFlag]").val(row["OnlySkuFlag"]);
+    }
+
+</script>

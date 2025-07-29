@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="GMSService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WMS.BLLClass" />
+      <xsd:import schemaLocation="http://localhost:45936/GMSService/GMSService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/MODEL_MSSQL" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IGMSService_ReleaseTruck_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseTruck" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_ReleaseTruck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseTruckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_DeleteTruckInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTruckInfo" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_DeleteTruckInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTruckInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_DeleteTruckDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTruckDetail" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_DeleteTruckDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteTruckDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_AddTruckQueueHead_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTruckQueueHead" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_AddTruckQueueHead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTruckQueueHeadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_BookChannelSelect_InputMessage">
+    <wsdl:part name="parameters" element="tns:BookChannelSelect" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_BookChannelSelect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BookChannelSelectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_AddTruckQueueDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTruckQueueDetail" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_AddTruckQueueDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTruckQueueDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_UpdateTruckQueueHeader_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTruckQueueHeader" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_UpdateTruckQueueHeader_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTruckQueueHeaderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_UpdateTruckQueueDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTruckQueueDetail" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_UpdateTruckQueueDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTruckQueueDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_unlockTruck_InputMessage">
+    <wsdl:part name="parameters" element="tns:unlockTruck" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_unlockTruck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:unlockTruckResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_getInGate_InputMessage">
+    <wsdl:part name="parameters" element="tns:getInGate" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_getInGate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getInGateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_leaveGate_InputMessage">
+    <wsdl:part name="parameters" element="tns:leaveGate" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_leaveGate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:leaveGateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_GetSmallLoadAreaList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSmallLoadAreaList" />
+  </wsdl:message>
+  <wsdl:message name="IGMSService_GetSmallLoadAreaList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSmallLoadAreaListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IGMSService">
+    <wsdl:operation name="ReleaseTruck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/ReleaseTruck" message="tns:IGMSService_ReleaseTruck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/ReleaseTruckResponse" message="tns:IGMSService_ReleaseTruck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTruckInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/DeleteTruckInfo" message="tns:IGMSService_DeleteTruckInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/DeleteTruckInfoResponse" message="tns:IGMSService_DeleteTruckInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTruckDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/DeleteTruckDetail" message="tns:IGMSService_DeleteTruckDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/DeleteTruckDetailResponse" message="tns:IGMSService_DeleteTruckDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTruckQueueHead">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/AddTruckQueueHead" message="tns:IGMSService_AddTruckQueueHead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/AddTruckQueueHeadResponse" message="tns:IGMSService_AddTruckQueueHead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BookChannelSelect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/BookChannelSelect" message="tns:IGMSService_BookChannelSelect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/BookChannelSelectResponse" message="tns:IGMSService_BookChannelSelect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTruckQueueDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/AddTruckQueueDetail" message="tns:IGMSService_AddTruckQueueDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/AddTruckQueueDetailResponse" message="tns:IGMSService_AddTruckQueueDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTruckQueueHeader">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/UpdateTruckQueueHeader" message="tns:IGMSService_UpdateTruckQueueHeader_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/UpdateTruckQueueHeaderResponse" message="tns:IGMSService_UpdateTruckQueueHeader_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTruckQueueDetail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/UpdateTruckQueueDetail" message="tns:IGMSService_UpdateTruckQueueDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/UpdateTruckQueueDetailResponse" message="tns:IGMSService_UpdateTruckQueueDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="unlockTruck">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/unlockTruck" message="tns:IGMSService_unlockTruck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/unlockTruckResponse" message="tns:IGMSService_unlockTruck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getInGate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/getInGate" message="tns:IGMSService_getInGate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/getInGateResponse" message="tns:IGMSService_getInGate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="leaveGate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/leaveGate" message="tns:IGMSService_leaveGate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/leaveGateResponse" message="tns:IGMSService_leaveGate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSmallLoadAreaList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGMSService/GetSmallLoadAreaList" message="tns:IGMSService_GetSmallLoadAreaList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGMSService/GetSmallLoadAreaListResponse" message="tns:IGMSService_GetSmallLoadAreaList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IGMSService" type="tns:IGMSService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReleaseTruck">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/ReleaseTruck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTruckInfo">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/DeleteTruckInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTruckDetail">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/DeleteTruckDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTruckQueueHead">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/AddTruckQueueHead" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BookChannelSelect">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/BookChannelSelect" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTruckQueueDetail">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/AddTruckQueueDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTruckQueueHeader">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/UpdateTruckQueueHeader" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTruckQueueDetail">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/UpdateTruckQueueDetail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="unlockTruck">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/unlockTruck" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInGate">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/getInGate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="leaveGate">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/leaveGate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmallLoadAreaList">
+      <soap:operation soapAction="http://tempuri.org/IGMSService/GetSmallLoadAreaList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GMSService">
+    <wsdl:port name="BasicHttpBinding_IGMSService" binding="tns:BasicHttpBinding_IGMSService">
+      <soap:address location="http://localhost:45936/GMSService/GMSService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

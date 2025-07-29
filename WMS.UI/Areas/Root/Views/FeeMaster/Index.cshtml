@@ -1,0 +1,1191 @@
+﻿@model WMS.UI.Controllers.Model.ReceiptModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" left="90" name="FeeNumber" hint="系统编号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="类型" name="type"><option></option><option value='TCR'>TCR</option><option value='现场操作'>现场操作</option><option value='出货提货'>出货提货</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="status"><option></option><option value='未预收款'>未预收款</option><option value='已预收款'>已预收款</option><option value='未结算'>未结算</option><option value='完成'>完成</option><option value='已作废'>已作废</option></select>
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="创建人" name="createUser"><option value='当前用户' selected>当前用户</option><option></option></select>
+        <textarea name="soNumber" left="60" hint="SO号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "178", @seq = "1", @onchange = "onChangeGetFlowName()", @onkeypress = "onkeynext(this)" })
+    <input type="text" name="txt_SoNumber" hint="SO号" seq="2" left="178" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_Load" hint="Load号(填后道口可直打备货单)" seq2="3" left="178" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_Description" hint="备注" seq="4" left="178" onkeypress="onkeyCheck()" />
+    <select left="178" name="txt_recZone" hint="收货区域"><option value=""></option></select>
+
+</div>
+
+<div id='form88' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient1, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "150", @seq1 = "1", @onchange = "onChangeGetFlowName1()", @onkeypress = "onkeynext1(this)" })
+    <input type="text" name="txt_ReceiptId1" hint="收货批次号*" seq1="2" left="150" onkeypress="onkeynext1(this)" />
+    <input type="text" name="txt_LuruFee1" hint="收货现场操作费(无需含税)*" seq1="3" left="150" onkeypress="onkeynext1(this)" />
+    <input type="text" name="txt_Description1" hint="备注" seq1="4" left="150" onkeypress="onkeyCheck1()" />
+    <select left="150" name="txt_recZone1" hint="收货区域"><option value=""></option></select>
+
+</div>
+
+<div id='form188' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient2, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "150", @seq2 = "1", @onchange = "onChangeGetFlowName2()", @onkeypress = "onkeynext2(this)" })
+    <input type="text" name="txt_Load_load" hint="Load号*" seq2="2" left="150" onkeypress="onkeynext2(this)" />
+    <input type="text" name="txt_LuruFee_load" hint="出货提货费用(无需含税)*" seq2="3" left="150" onkeypress="onkeynext2(this)" />
+    <input type="text" name="txt_Description_load" hint="备注" seq2="4" left="150" onkeypress="onkeyCheck2()" />
+    <select left="150" name="txt_recZone_load" hint="卸货区域"><option value=""></option></select>
+
+</div>
+
+
+<div id='form9' style="display:none">
+    <input type="text" left="120" name="add_TCRProcessMode" hint="TCR处理方式" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "新增TCR费用", icon: "add", click: function () {
+                            dlg = eip.dialog.create("新增TCR费用", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 220)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                addReg();
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $("[name=txt_WhClient]").focus();
+
+                        }
+                    }
+                     , {
+                         text: "新增现场收货特殊费用", icon: "add", click: function () {
+                             dlg = eip.dialog.create("新增现场收货特殊费用", "<div id=layout8 ><div form='Y' id='form8' >" + $("#form88").html() + "</div></div>"
+                                , 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout8'), [{
+                                 obj: $('#form8'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 addReg1();
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+                             $("[name=txt_WhClient1]").focus();
+
+                         }
+                     }, {
+                         text: "新增出货提货特殊费用", icon: "add", click: function () {
+                             dlg = eip.dialog.create("新增出货提货特殊费用", "<div id=layout18 ><div form='Y' id='form18' >" + $("#form188").html() + "</div></div>"
+                                , 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout18'), [{
+                                 obj: $('#form18'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+
+                                                 addload();
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             //end
+                             $("[name=txt_WhClient2]").focus();
+
+                         }
+                     },
+                      {
+                          text: "新增TCR处理方式", icon: "add", click:
+                          function () {
+                              TCRProcessModeAdd();
+                          }
+                      }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+                "系统编号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"showFeeDetail(this)\" >" + row["系统编号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "草稿" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"FeeDetailList('" + row["系统编号"] + "','" + row["客户名"] + "','" + row["SO号"] + "')\" title='添加费用明细' ></a>";
+                        }
+
+                      
+
+                        if (row["状态"] == "草稿") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelFeeMaster(this)' title='删除费用' ></a>";
+                        }
+
+                        if (row["状态"] == "草稿" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-redo' plain=true onclick='EditFeeMasterStatus(this)' title='确认录入完成' ></a>";
+                        }
+
+                        if (row["状态"] == "未预收款") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='EditFeeMasterStatus1(this)' title='撤销' ></a>";
+                        }
+
+                        if (row["状态"] == "已预收款" || row["状态"] == "未结算") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-back' plain=true onclick='EditFeeMasterStatus2(this)' title='确认作废' ></a>";
+                        }
+
+                        if ((row["状态"] == "草稿" || row["状态"] == "未预收款") && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditFeeMaster(this)' title='修改SO备注' ></a>";
+                        }
+
+                        if (row["状态"] == "未预收款" && row["类型"] == "出货提货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditFeeMasterRemark(this)' title='编辑费用及备注' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+        });
+
+
+        $("[name=soNumber]").css("height", "25px").css("width", "185px");
+        $("[name=soNumber]").parent().css("height", "30px").css("width", "280px");
+    });
+
+
+    //修改备注
+    function EditFeeMasterRemark(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var so = eip.utf8(row["SO号"]);
+        var feenumber = row["系统编号"];
+
+        var dlg = eip.dialog.create("修改备注", "<div id=layout6 ><div form='Y' id='form6'>"
+                                     + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" />"
+                                    + "<span left=\"140\" hint=\"类型\">" + row["类型"] + "</span>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号\">" + row["SO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"Load号\">" + row["Load号"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_luruFee\" value=\"" + row["录入总价"] + "\" hint=\"录入总价\" />"
+                                    + "<textarea rows=\"3\" cols=\"20\"  left=\"140\" name=\"edit_remark\" hint=\"备注\" >" + row["备注"] + "</textarea>"
+
+                                    + "</div></div>", 520, 280)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            eip.get("/Root/FeeMaster/EditFeeMasterRemark?id=" + id, eip.para.create($("input,select,textarea", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_remark]").focus();
+    }
+
+    //新增TCR处理方式
+    function TCRProcessModeAdd() {
+
+        var dlg_PosLoadHuId = eip.dialog.create("处理方式列表",
+             "<div id=layout_DetailLoadHuId><div form=\"Y\" id=\"form_DetailLoadHuId\">"
+             + "</div>"
+             + "<table id=\"grid_detailLoadHuId\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detailLoadHuId"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"TCRProcessModeDel(this)\" title='删除' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+
+        var btn = [
+                {
+                    text: "新增TCR处理方式", icon: "add", click:
+                       function () {
+                           var dlg = eip.dialog.create("新增TCR处理方式", "<div id=layout9 ><div form='Y' id='form9' >" + $("#form9").html() + "</div></div>"
+                                       , 500, 200)
+
+                           //窗体工具栏按钮 begin
+                           eip.layout.create($('#layout9'), [{
+                               obj: $('#form9'),
+                               buttons: [
+                                   {
+                                       text: "保存", icon: "save", click:
+                                           function () {
+                                               if ($("[name=add_TCRProcessMode]", $("#form9")).val() == "") {
+                                                   $.eipMsg.alert("处理方式必须填写!");
+                                                   return;
+                                               }
+
+                                               eip.get("/Root/InCFSPhotoK/TCRProcessModeAdd", eip.para.create($("input,select", $("#layout9"))), function (jsonObj) {
+                                                   $.procAjaxData(jsonObj, function () {
+
+                                                       $("[name=add_TCRProcessMode]", $("#form9")).val("");
+                                                       eip.datagrid.load("/Root/InCFSPhotoK/TCRProcessModeSearch", $("#grid_detailLoadHuId"), eip.para.create($("input,select", $("#layout_DetailLoadHuId"))));
+
+                                                   }, function () { });
+                                               }, null, true)
+                                           }
+                                   },
+                                  {
+                                      text: "关闭窗口", icon: "no", click:
+                                         function () {
+                                             eip.dialog.close(dlg);
+                                         }
+                                  }
+                               ]
+                           }])
+                           //end
+
+                           $("[name=add_TCRProcessMode]").focus();
+                       }
+                }
+                 , {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_PosLoadHuId);
+                        }
+                 }
+        ]
+
+        eip.layout.create($('#layout_DetailLoadHuId'), [{
+            obj: $('#form_DetailLoadHuId'),
+            buttons: btn
+        }]);
+
+        eip.datagrid.load("/Root/InCFSPhotoK/TCRProcessModeSearch", $("#grid_detailLoadHuId"), eip.para.create($("input,select", $("#layout_DetailLoadHuId"))));
+    }
+
+    function EditFeeMaster(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("修改SO备注", "<div id=layout5 ><div form='Y' id='form5'>"
+                                     + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" />"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_soNumber\" value=\"" + row["SO号"] + "\" hint=\"SO号\" />"
+                                    + "<textarea rows=\"3\" cols=\"20\"  left=\"140\" name=\"edit_description\" hint=\"备注\" >" + row["备注"] + "</textarea>"
+
+
+                                    + "</div></div>", 500, 200)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_soNumber]").val() == "") {
+                                $.eipMsg.alert("请先输入SO号！");
+                                return;
+                            }
+
+                            eip.get("/Root/FeeMaster/EditFeeMaster?id=" + id, eip.para.create($("input,select,textarea", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    function EditFeeMasterStatus2(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var feeNumber = row["系统编号"];
+
+        var dlg = eip.dialog.create("TCR订单费用确认作废", "<div id=layout10 ><div form='Y' id='form10'>"
+                                    + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" />"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<textarea  left=\"140\" name=\"edit_description_status\" hint=\"作废原因\" ></textarea>"
+
+                                    + "</div></div>", 500, 200)
+
+        eip.layout.create($('#layout10'), [{
+            obj: $('#form10'),
+            buttons: [
+                {
+                    text: "订单确认作废", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_description_status]").val() == "") {
+                                $.eipMsg.alert("请先填写作废原因！");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定系统编号：" + feeNumber + "的费用信息作废吗？系统将记录本次操作！作废后订单无法恢复！", function () {
+                                eip.get("/Root/FeeMaster/EditFeeMasterStatus2?id=" + id, eip.para.create($("input,select,textarea", $("#layout10"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+
+                                        var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                        eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                    }, function () { });
+                                })
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    //通过选择的客户得到收货门区
+    function onChangeGetFlowName() {
+        if ($("[name=txt_WhClient]", $("#layout1")).val() != "") {
+            eip.post("/Root/FeeMaster/GetRecZoneNameList?txt_WhClient=" + $("[name=txt_WhClient]", $("#layout1")).val(), eip.para.create($("input,select,textarea", $("#layout1"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone]"), val, true);
+                }
+            })
+        }
+    }
+
+    function onChangeGetFlowName1() {
+        if ($("[name=txt_WhClient1]", $("#layout8")).val() != "") {
+            eip.post("/Root/FeeMaster/GetRecZoneNameList?txt_WhClient=" + $("[name=txt_WhClient1]", $("#layout8")).val(), eip.para.create($("input,select,textarea", $("#layout8"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone1]"), val, true);
+                }
+            })
+        }
+    }
+
+    function onChangeGetFlowName2() {
+        if ($("[name=txt_WhClient2]", $("#layout18")).val() != "") {
+            eip.post("/Root/FeeMaster/GetRecZoneNameList?txt_WhClient=" + $("[name=txt_WhClient2]", $("#layout18")).val(), eip.para.create($("input,select,textarea", $("#layout18"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone_load]"), val, true);
+                }
+            })
+        }
+    }
+
+    //新增TCR正常费用
+    function addReg() {
+        if (!$("#form2").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=txt_recZone]").val() == "") {
+            $.eipMsg.alert("收货区域不能为空!");
+            return;
+        }
+
+        var clientCode = $("[name=txt_WhClient]").find("option:selected").text();
+        eip.get("/Root/FeeMaster/AddFeeMaster?clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+            $.procAjaxData(jsonObj, function () {
+                eip.dialog.close(dlg);
+                if (jsonObj.Data) {
+                    FeeDetailList(jsonObj.Data["FeeNumber"], jsonObj.Data["ClientCode"], jsonObj.Data["SoNumber"]);    //显示添加明细
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                } else {
+                    $.eipMsg.alert("保存出错了!");
+                }
+
+            })
+        })
+    }
+
+    //费用明细列表
+    function showFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var obj = row["系统编号"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("费用明细列表",
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "<input type=hidden name=hid_receiptId value='" + obj + "'><span left=\"80\" hint=\"系统编号：\">" + obj + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + obj, $("#grid_detail_detailSearch"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+    }
+
+    //删除费用
+    function DelFeeMaster(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["系统编号"];
+
+        $.eipMsg.confirm("确定删除编号：" + ReceiptId + "下的费用信息吗？系统将记录本次操作！", function () {
+            eip.get("/Root/FeeMaster/DelFeeMaster?feeNumber=" + ReceiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //确认订单完成
+    function EditFeeMasterStatus(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["系统编号"];
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确认订单：" + ReceiptId + "已完成录入吗？", function () {
+            eip.get("/Root/FeeMaster/EditFeeMasterStatus?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    //撤销确认完成
+    function EditFeeMasterStatus1(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["系统编号"];
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确认撤销订单：" + ReceiptId + "吗？撤销后将无法预收款！", function () {
+            eip.get("/Root/FeeMaster/EditFeeMasterStatus1?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    var dlg_Pos
+    //费用明细列表
+    function FeeDetailList(obj, obj1, obj2) {
+        dlg_Pos = eip.dialog.create("费用明细列表",
+            "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "<span  hint=\"系统编号\">" + obj + "</span>"
+             + "<span  hint=\"客户名\">" + obj1 + "</span>"
+
+             + "<input type=\"text\"  name=\"searchDetail_soNumber\" value=\"\" hint=\"SO号\" />"
+             + "<input type=\"text\"  name=\"searchDetail_poNumber\" value=\"\" hint=\"PO号\" />"
+             + "<input type=\"text\"  name=\"searchDetail_huId\" value=\"\" hint=\"托盘\" />"
+             + "<input type=\"text\"  name=\"searchDetail_locationId\" value=\"\" hint=\"库位\" />"
+
+            + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditFeeDetail(this)' title='修改明细' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelFeeDetail(this)' title='删除明细' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            }
+
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + obj, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "添加费用明细", icon: "add", click:
+                        function () {
+
+                            AddFeeDetail(obj, obj1);
+                        }
+                 },
+                 {
+                     text: "批量添加费用明细", icon: "add", click:
+                        function () {
+
+                            AddFeeDetailList(obj, obj1);
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+
+                            eip.dialog.close(dlg_Pos);
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                 }
+            ]
+        }])
+
+        eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + obj, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+    }
+
+    //添加费用明细
+    function AddFeeDetail(obj, obj1) {
+        var dlg = eip.dialog.create("添加费用明细", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + obj1 + "</span><input type=hidden name=hid_clientCode value='" + obj1 + "'>"
+
+                                    + "<select left=\"140\" name=\"detail_TCRProcessMode\" hint=\"TCR处理方式*\"><option value=\"\" ></option></select>"
+
+                                    + "<input type=\"text\" left=\"70\" name=\"detail_huid\" value=\"\" hint=\"托盘*\" />"
+                                    + " <span left=\"70\" hint=\"\"><a href=\"#\" class=\"easyui-linkbutton\" onclick=\"onkeyGetHuDetail();\">&nbsp;&nbsp;检索库存&nbsp;&nbsp;</a></span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_locationId\" value=\"\" hint=\"库位*\" />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_soNumber\" value=\"\" hint=\"SO号*\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_poNumber\" value=\"\" hint=\"PO号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_altNumber\" value=\"\" hint=\"款号\" />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_price\" value=\"\" hint=\"单价*\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_qty\" value=\"\" hint=\"数量*\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"detail_changDiFee\" value=\"\" hint=\"场地费\" />"
+                                    + "<select left=\"80\" name=\"sel_ChangdiHours\" id=\"sel_ChangdiHours\" hint=\"场地预估小时\"><option value=\"1\" >每1小时</option><option value=\"4\" >每4小时</option></select>"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_peopleFee\" value=\"\" hint=\"人员监管费(每1小时)\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_truckFee\" value=\"\" hint=\"车辆管理费\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"detail_daDanFee\" value=\"\" hint=\"打单费\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"detail_otherFee\" value=\"\" hint=\"其它费用\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"detail_description\" value=\"\" hint=\"备注\" />"
+
+                                    + "</div></div>", 480, 500)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=detail_TCRProcessMode]").val() == "") {
+                                $("[name=detail_TCRProcessMode]").focus();
+                                $.eipMsg.alert("请先选择TCR处理方式！");
+                                return;
+                            }
+                            if ($("[name=detail_huid]").val() == "") {
+                                $("[name=detail_huid]").focus();
+                                $.eipMsg.alert("请先填写托盘号！");
+
+                                return;
+                            }
+                            if ($("[name=detail_locationId]").val() == "") {
+                                $("[name=detail_locationId]").focus();
+                                $.eipMsg.alert("请先填写库位！");
+
+                                return;
+                            }
+                            if ($("[name=detail_soNumber]").val() == "") {
+                                $("[name=detail_soNumber]").focus();
+                                $.eipMsg.alert("请先填写SO号！");
+
+                                return;
+                            }
+                            if ($("[name=sel_ChangdiHours]").val() == "") {
+                                $("[name=sel_ChangdiHours]").focus();
+                                $.eipMsg.alert("请先选择场地预估小时！");
+
+                                return;
+                            }
+                            if ($("[name=detail_price]").val() == "") {
+                                $("[name=detail_price]").focus();
+                                $.eipMsg.alert("请先填写单价！");
+
+                                return;
+                            }
+                            if ($("[name=detail_qty]").val() == "") {
+                                $("[name=detail_qty]").focus();
+                                $.eipMsg.alert("请先填写数量！");
+
+                                return;
+                            }
+
+                            eip.get("/Root/FeeMaster/AddFeeDetail?feeNumber=" + obj, eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+                                    $("[name=detail_huid]").val("");
+                                    $("[name=detail_locationId]").val("");
+                                    $("[name=detail_soNumber]").val("");
+                                    $("[name=detail_poNumber]").val("");
+                                    $("[name=detail_altNumber]").val("");
+                                    $("[name=detail_price]").val("");
+                                    $("[name=detail_qty]").val("");
+                                    $("[name=detail_changDiFee]").val("");
+                                    $("[name=detail_peopleFee]").val("");
+                                    $("[name=detail_truckFee]").val("");
+                                    $("[name=detail_daDanFee]").val("");
+                                    $("[name=detail_otherFee]").val("");
+                                    $("[name=detail_description]").val("");
+
+                                    eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + obj, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                    $("[name=detail_TCRProcessMode]").focus();
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=detail_TCRProcessMode]").focus();
+
+        eip.post("/Root/InCFSPhotoK/TCRProcessModeSelect", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=detail_TCRProcessMode]"), val, true);
+            }
+        });
+    }
+
+
+    var dlg_Pos_ByPO;
+    //批量添加费用明细
+    function AddFeeDetailList(obj, obj1) {
+        dlg_Pos_ByPO = eip.dialog.create("批量添加费用明细，系统编号：" + obj + "，客户名：" + obj1,
+           "<div id=layout_Detail_byposku><div form=\"Y\" id=\"form_Detail_byposku\">"
+            + "<textarea hint=\"SO号\"  name=\"so_area\" ></textarea><input type=hidden name=txt_clientCode value='" + obj1 + "'>"
+            + "<textarea hint=\"PO\"  name=\"po_area\" ></textarea>"
+            + "<textarea hint=\"款号\"  name=\"sku_area\" ></textarea>"
+            + "<textarea hint=\"托盘号\"  name=\"huid_area\" ></textarea>"
+            + "<input type=\"text\"  name=\"byposku_receiptId\" hint=\"收货批次号\" />"
+
+           + "</div>"
+           + "<table id=\"grid_detail_byposku\"></table></div>", 1000, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_byposku"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+            , checkbox: function (row) {
+                if (row["库存数量"] > 0) {
+                    return "<input type=checkbox name=check_to  value=\"" + row["SO号"] + "\" poNumber=\"" + row["PO"] + "\" altNumber=\"" + row["款号"] + "\" qty='" + row["库存数量"] + "' huid='" + row["托盘"] + "' locationId='" + row["库位"] + "'  >";
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_byposku'), [{
+            obj: $('#form_Detail_byposku'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/Root/FeeMaster/SelectHuDetailList", $("#grid_detail_byposku"), eip.para.create($("input,select,textarea", $("#form_Detail_byposku"))));
+                       }
+                },
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail_byposku")).length == 0) {
+                                $.eipMsg.alert("请先选择信息!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail_byposku")).each(function () {
+                                arr_list.push({ name: 'soNumber', value: $(this).val() });
+                                arr_list.push({ name: 'poNumber', value: $(this).attr("poNumber") });
+                                arr_list.push({ name: 'altNumber', value: $(this).attr("altNumber") });
+                                arr_list.push({ name: 'qty', value: $(this).attr("qty") });
+                                arr_list.push({ name: 'huid', value: $(this).attr("huid") });
+                                arr_list.push({ name: 'locationId', value: $(this).attr("locationId") });
+                            })
+
+                            SelectTCRProcessModeShow(arr_list, obj);
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_ByPO);
+                        }
+                 }
+            ]
+        }])
+
+        $("[name=so_area]").css("height", "25px").css("width", "185px");
+        $("[name=so_area]").parent().css("height", "30px").css("width", "280px");
+
+        $("[name=po_area]").css("height", "25px").css("width", "185px");
+        $("[name=po_area]").parent().css("height", "30px").css("width", "280px");
+
+        $("[name=sku_area]").css("height", "25px").css("width", "185px");
+        $("[name=sku_area]").parent().css("height", "30px").css("width", "280px");
+
+        $("[name=huid_area]").css("height", "25px").css("width", "185px");
+        $("[name=huid_area]").parent().css("height", "30px").css("width", "280px");
+
+        eip.hint.fit($("#layout_Detail"));
+
+    }
+
+    //通过输入的托盘得到库存信息
+    function onkeyGetHuDetail() {
+
+        if ($("[name=detail_huid]").val() != "") {
+            eip.post("/Root/FeeMaster/onkeyGetHuDetail", eip.para.create($("input,select,textarea", $("#layout5"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    if (jsonObj.Data) {
+
+                        $("[name=detail_locationId]").val(jsonObj.Data["LocationId"]);
+                        $("[name=detail_soNumber]").val(jsonObj.Data["SoNumber"]);
+                        $("[name=detail_poNumber]").val(jsonObj.Data["CustomerPoNumber"]);
+                        $("[name=detail_altNumber]").val(jsonObj.Data["AltItemNumber"]);
+                        $("[name=detail_qty]").val(jsonObj.Data["Qty"]);
+
+                    } else {
+                        $.eipMsg.alert(jsonObj.Data);
+                    }
+                })
+            })
+        }
+    }
+
+    //选择TCR处理方式
+    function SelectTCRProcessModeShow(arr_list, val) {
+        var dlg_Pos_Rule = eip.dialog.create("选择TCR处理方式",
+            "<div id=layout_ruleDetail><div form=\"Y\" id=\"form_ruleDetail\">"
+            + "<select left=\"140\" name=\"show_sel_TCRProcessMode\" hint=\"TCR处理方式*：\"><option value=\"\" ></option></select>"
+            + "<input type=\"text\" left=\"140\" name=\"show_txt_price\" value=\"\" hint=\"单价*\" />"
+            + "</div>"
+            + "</div>", 450, 200)
+
+        eip.layout.create($('#layout_ruleDetail'), [{
+            obj: $('#form_ruleDetail'),
+            buttons: [
+                 {
+                     text: "确认添加", icon: "save", click:
+                        function () {
+
+                            var processName = $("[name=show_sel_TCRProcessMode]", $("#form_ruleDetail")).find("option:selected").text();
+
+                            if (processName == "") {
+                                $.eipMsg.alert("TCR处理方式必须选择！");
+                                return;
+                            }
+
+                            eip.post("/Root/FeeMaster/AddFeeDetailList?feeNumber=" + val + "&TCRProcessMode=" + eip.utf8($("[name=show_sel_TCRProcessMode]", $("#form_ruleDetail")).val()) + "&price=" + eip.utf8($("[name=show_txt_price]", $("#form_ruleDetail")).val()), arr_list, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+
+                                    eip.dialog.close(dlg_Pos_Rule);
+
+                                    eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + val, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                    eip.datagrid.load("/Root/FeeMaster/SelectHuDetailList", $("#grid_detail_byposku"), eip.para.create($("input,select,textarea", $("#form_Detail_byposku"))));
+
+                                }, function () { });
+                            }, null, true)
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_Rule);
+                        }
+                 }
+            ]
+        }])
+
+        $("[name=show_sel_TCRProcessMode]").focus();
+
+        eip.post("/Root/InCFSPhotoK/TCRProcessModeSelect", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=show_sel_TCRProcessMode]"), val, true);
+            }
+        });
+    }
+
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg();
+        }
+    }
+
+    function onkeynext1(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq1")) + 1;
+            $("input[seq1=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck1() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg1();
+        }
+    }
+
+    function onkeynext2(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq2")) + 1;
+            $("input[seq2=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck2() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addload();
+        }
+    }
+
+
+    //新增TCR收货特殊操作费用
+    function addReg1() {
+        if (!$("#form8").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=txt_ReceiptId1]", $("#layout8")).val() == "") {
+            $.eipMsg.alert("收货批次号不能为空!");
+            return;
+        }
+
+        if ($("[name=txt_LuruFee1]", $("#layout8")).val() == "") {
+            $.eipMsg.alert("特殊操作费用不能为空!");
+            return;
+        }
+
+        var clientCode = $("[name=txt_WhClient1]", $("#layout8")).find("option:selected").text();
+        eip.get("/Root/FeeMaster/AddFeeMasterSpecial?clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout8"))), function (jsonObj) {
+            if (jsonObj == "Y") {
+                eip.dialog.close(dlg);
+                var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+            } else {
+                $.eipMsg.alert(jsonObj);
+            }
+
+        })
+    }
+
+
+    //新增TCR出货提箱费用
+    function addload() {
+        if (!$("#form18").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=txt_Load_load]", $("#layout18")).val() == "") {
+            $.eipMsg.alert("Load号不能为空!");
+            return;
+        }
+
+        if ($("[name=txt_LuruFee_load]", $("#layout18")).val() == "") {
+            $.eipMsg.alert("出货提货费用不能为空!");
+            return;
+        }
+
+        var clientCode = $("[name=txt_WhClient2]", $("#layout18")).find("option:selected").text();
+        eip.get("/Root/FeeMaster/AddFeeMasterOutLoad?clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout18"))), function (jsonObj) {
+            if (jsonObj == "Y") {
+                eip.dialog.close(dlg);
+                var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+            } else {
+                $.eipMsg.alert(jsonObj);
+            }
+
+        })
+    }
+
+    //编辑费用明细
+    function EditFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var feeNumber = row["系统编号"];
+
+        var dlg = eip.dialog.create("修改费用明细", "<div id=layout6 ><div form='Y' id='form6'>"
+                                    + "<span left=\"140\" hint=\"系统编号\">" + feeNumber + "</span>"
+                                    + "<span left=\"140\" hint=\"TCR处理方式\">" + row["TCR处理方式"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_huid\" value=\"" + row["托盘"] + "\" hint=\"托盘\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_locationId\" value=\"" + row["库位"] + "\" hint=\"库位\" />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_soNumber\" value=\"" + row["SO号"] + "\" hint=\"SO号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_poNumber\" value=\"" + row["PO号"] + "\" hint=\"PO号\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_altNumber\" value=\"" + row["款号"] + "\" hint=\"款号\" />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_price\" value=\"" + row["单价"] + "\" hint=\"单价*\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_qty\" value=\"" + row["数量"] + "\" hint=\"数量*\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"Editdetail_changDiFee\" value=\"" + row["场地费"] + "\" hint=\"场地费\" />"
+                                    + "<select left=\"80\" name=\"Editdetail_ChangdiHours\" id=\"Editdetail_ChangdiHours\" hint=\"场地预估小时\"><option value=\"1\" >每1小时</option><option value=\"4\" >每4小时</option></select>"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_peopleFee\" value=\"" + row["人员监管费"] + "\" hint=\"人员监管费(每1小时)\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_truckFee\" value=\"" + row["车辆管理费"] + "\" hint=\"车辆管理费\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"Editdetail_daDanFee\" value=\"" + row["打单费"] + "\" hint=\"打单费\" />"
+                                    + "<input type=\"text\" left=\"70\" name=\"Editdetail_otherFee\" value=\"" + row["其他费"] + "\" hint=\"其它费用\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"Editdetail_description\" value=\"" + row["备注"] + "\" hint=\"备注\" />"
+
+                                     + "</div></div>", 480, 500)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=Editdetail_huid]").val() == "") {
+                                $("[name=Editdetail_huid]").focus();
+                                $.eipMsg.alert("请先填写托盘号！");
+
+                                return;
+                            }
+                            if ($("[name=Editdetail_locationId]").val() == "") {
+                                $("[name=Editdetail_locationId]").focus();
+                                $.eipMsg.alert("请先填写库位！");
+
+                                return;
+                            }
+                            if ($("[name=Editdetail_soNumber]").val() == "") {
+                                $("[name=Editdetail_soNumber]").focus();
+                                $.eipMsg.alert("请先填写SO号！");
+
+                                return;
+                            }
+                            if ($("[name=Editdetail_price]").val() == "") {
+                                $("[name=Editdetail_price]").focus();
+                                $.eipMsg.alert("请先填写单价！");
+
+                                return;
+                            }
+                            if ($("[name=Editdetail_qty]").val() == "") {
+                                $("[name=Editdetail_qty]").focus();
+                                $.eipMsg.alert("请先填写数量！");
+
+                                return;
+                            }
+                            if ($("[name=Editdetail_ChangdiHours]").val() == "") {
+                                $("[name=Editdetail_ChangdiHours]").focus();
+                                $.eipMsg.alert("请先选择场地预估小时！");
+
+                                return;
+                            }
+
+                            eip.get("/Root/FeeMaster/EditFeeDetail?id=" + id, eip.para.create($("input,select,textarea", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + feeNumber, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=Editdetail_ChangdiHours]").val(row["场地预估小时"]);
+    }
+
+    //删除费用明细
+    function DelFeeDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到ID
+        var feeNumber = row["系统编号"];
+
+        $.eipMsg.confirm("确定删除这条明细吗？", function () {
+            eip.get("/Root/FeeMaster/FeeDetailDel?id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + feeNumber, $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+</script>

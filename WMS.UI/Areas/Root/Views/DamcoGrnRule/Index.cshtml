@@ -1,0 +1,248 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientCode", "客户名", "", "")
+        <input type="text" left="150" name="MailTo" hint="收件人(模糊匹配)" />
+    </div>
+    <table id="grid"></table>
+</div>
+ 
+<div id='form22' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientCodeList"], "txt_WhClientCode", "客户名", "", "  left=\"140\" ")
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="是否自动发送" name="txt_AutoSend"><option value='0'>否</option><option value='1' selected>是</option></select>
+    <input type="text" left="140" name="txt_DifferenceRate" hint="差异率" />
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="是否拦截差异发送" name="txt_DifferentialInterceptionFlag"><option value='0'>否</option><option value='1' selected>是</option></select>
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="是否发送差异Mail" name="txt_DifferentialMailFlag"><option value='0'>否</option><option value='1' selected>是</option></select>
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="是否验证总数" name="txt_TotalCheck"><option value='0'>否</option><option value='1' selected>是</option></select>
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="Cbm来源" name="txt_CbmSource"><option value='WMS' selected>WMS</option><option value='GWI' Checked>GWI</option></select>
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="Kgs来源" name="txt_KgsSource"><option value='WMS' selected>WMS</option><option value='GWI' Checked>GWI</option></select>
+    <input type="text" left="140" name="txt_MailTo" hint="收件人" /><span left="70" hint="以逗号，隔开"></span>
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/DamcoGrnRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增DamcoGrnRule", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增DamcoGrnRule", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 330)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 if ($("[name=txt_WhClientCode]", $("#layout1")).val() == "") {
+                                                     $.eipMsg.alert("客户名必须选择!");
+                                                     return;
+                                                 }
+
+                                                 if ($("[name=txt_DifferenceRate]", $("#layout1")).val() == "") {
+                                                     $.eipMsg.alert("差异率必须填写!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=txt_TotalCheck]", $("#layout1")).val() == "") {
+                                                     $.eipMsg.alert("是否验证总数必须选择!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=txt_DifferentialInterceptionFlag]", $("#layout1")).val() == "") {
+                                                     $.eipMsg.alert("是否拦截差异发送必须选择!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=txt_DifferentialMailFlag]", $("#layout1")).val() == "") {
+                                                     $.eipMsg.alert("是否发送差异必须选择!");
+                                                     return;
+                                                 }
+
+                                                 eip.get("/root/DamcoGrnRule/AddDamcoGrnRule", eip.para.create($("input,select,textarea", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+
+                                                         $("[name=txt_DifferenceRate]").val("");
+                                                         $("[name=txt_TotalCheck]").val("");
+                                                         $("[name=txt_MailTo]").val("");
+                                                         
+                                                         $("[name=txt_WhClientCode]").focus();
+
+                                                         eip.datagrid.load("/root/DamcoGrnRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_WhClientCode]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelNightTime(this)' title='删除' ></a>";
+
+                        return retHtml;
+                    },
+
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                if ($("[name=edit_DifferenceRate]").val() == "") {
+                                    $.eipMsg.alert("差异率必须填写!");
+                                    return;
+                                }
+                                if ($("[name=edit_TotalCheck]").val() == "") {
+                                    $.eipMsg.alert("是否验证总数必须选择!");
+                                    return;
+                                }
+
+
+                                var url = "/root/DamcoGrnRule/DamcoGrnRuleEdit?Id=" + Id;
+                             
+                                eip.get(url, eip.para.create($("input,select", $("#grid"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/root/DamcoGrnRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "是否自动发送": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_AutoSend'></select>"), [{ val: "0", txt: "否" }, { val: "1", txt: "是" }], true));
+                        }
+                    }
+                },
+                "差异率": {
+                    editor: { type: "text", name: "edit_DifferenceRate" }
+                },
+
+
+
+                "是否拦截差异发送": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_DifferentialInterceptionFlag'></select>"), [{ val: "0", txt: "否" }, { val: "1", txt: "是" }], true));
+                        }
+                    }
+                },
+                "是否发送差异Mail": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_DifferentialMailFlag'></select>"), [{ val: "0", txt: "否" }, { val: "1", txt: "是" }], true));
+                        }
+                    }
+                },
+
+                "是否验证总数": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_TotalCheck'></select>"), [{ val: "0", txt: "否" }, { val: "1", txt: "是" }], true));
+                        }
+                    }
+                },
+                "Cbm来源": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_CBMSource'></select>"), [{ val: "WMS" }, { val: "GWI" }], true));
+                        }
+                    }
+                },
+                "Kgs来源": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_KgsSource'></select>"), [{ val: "WMS" }, { val: "GWI" }], true));
+                        }
+                    }
+                },
+                "收件人": {
+                    editor: { type: "text", name: "edit_MailTo" }
+                }
+
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+   
+    //删除
+    function DelNightTime(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+
+        $.eipMsg.confirm("确定删除选择的信息吗？", function () {
+            eip.get("/root/DamcoGrnRule/DamcoGrnRuledel?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/DamcoGrnRule/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+   
+
+</script>

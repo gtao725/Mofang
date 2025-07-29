@@ -1,0 +1,79 @@
+﻿@model WMS.UI.Controllers.Model.RecModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        <input type="text" name="TruckNumber" hint="车牌号：" />
+        <input type="text" name="PhoneNumber" hint="手机号：" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+var dlg;
+$(function () {
+    //页面布局
+    var layout = eip.layout.create(
+        $("#layout"),
+        [{
+            obj: $('#form1'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click: function () {
+                        eip.datagrid.load("/Reports/GMSReport/GMSLockList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                    }
+                }
+            ]
+        }]);
+
+    //客制化
+    eip.datagrid.create({
+        obj: $("#grid"),
+        pagesize: 200,
+        sort: true,
+        sorts: { "创建时间": "ASC", "操作": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+        ajaxType: 'post',
+        hiddencolumns: ["HeadId"],
+        //showOrderBtns: true,
+        muledit: false,
+        columns: {
+            "操作": {
+                formatter: function (row) {
+                    var retHtml = " ";
+                    retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='unlockTruck(this)' title='解锁' ></a>";
+                    return retHtml;
+                }
+            }
+        },
+        dofunc: function (grid, trs) {
+            for (i in trs)  //列 格式化增加颜色显示
+                $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+        },
+        //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+        setup: { lock: ['UserNameCN'] }
+
+    });
+
+    $("[name=packNumber]").focus();
+    //开始查询list
+    //eip.toolbar.getBtn(layout, '查询').click();
+
+});
+    
+//解锁
+function unlockTruck(obj) {
+    var tr = eip.datagrid.getTr(obj);
+    var row = eip.datagrid.getData(tr);
+    var TruckNumber = row["车牌号码"];
+    var WhCode = row["WhCode"];
+    var Id = row["操作"];
+    eip.get("/GMS/QueueList/unlockTruck?TruckNumber=" + TruckNumber + "&WhCode=" + WhCode + "&Id=" + row["操作"], null, function (jsonObj) {
+        $.eipMsg.alert(jsonObj);
+        eip.datagrid.load("/Reports/GMSReport/GMSLockList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+    });
+}
+</script>

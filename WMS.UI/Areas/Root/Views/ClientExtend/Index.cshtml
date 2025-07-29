@@ -1,0 +1,197 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "search_WhClient", "客户名", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_WhClient", "客户名", "", "left='140' ")
+    <input type="text" left="140" name="txt_InvClearUpSkuMaxQty" hint="库存SKU警戒数" value="0" />
+    <input type="text" left="140" name="txt_NotOnlySkuPutawayQty" hint="混合区上架SKU警戒数" value="0" />
+    <input type="text" left="140" name="txt_RegularExpression" hint="SN验证规则正则" value="" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/ClientExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增客户信息扩展", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增客户信息扩展", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+
+                                                 var reg2 = /^[0-9]+$/;
+                                                 if ($("[name=txt_InvClearUpSkuMaxQty]").val() != "") {
+                                                     if (!reg2.test($("[name=txt_InvClearUpSkuMaxQty]").val())) {
+                                                         alert("库存SKU警戒数必须为数字！");
+                                                         $("[name=txt_InvClearUpSkuMaxQty]").focus();
+                                                         return;
+                                                     }
+                                                 }
+
+                                                 if ($("[name=txt_NotOnlySkuPutawayQty]").val() != "") {
+                                                     if (!reg2.test($("[name=txt_NotOnlySkuPutawayQty]").val())) {
+                                                         alert("混合区上架SKU警戒数！");
+                                                         $("[name=txt_NotOnlySkuPutawayQty]").focus();
+                                                         return;
+                                                     }
+                                                 }
+
+                                                 eip.get("/root/ClientExtend/AddClientExtend", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_InvClearUpSkuMaxQty]").val("0");
+                                                         $("[name=txt_NotOnlySkuPutawayQty]").val("0");
+                                                         $("[name=txt_RegularExpression]").val("");
+
+                                                         eip.datagrid.load("/root/ClientExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["ClientId"],
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditWhClientExtend(this)' title='编辑客户' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelWhClientExtend(this)' title='删除' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            }
+
+        });
+
+    });
+
+    //删除
+    function DelWhClientExtend(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确定删除所选行的信息吗？", function () {
+            eip.get("/Root/ClientExtend/DelWhClientExtend?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/ClientExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    function EditWhClientExtend(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("修改客户扩展信息", "<div id=layout9 ><div form='Y' id='form9'>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<input type=\"text\"  left=\"140\"  name=\"edit_InvClearUpSkuMaxQty\"  value=\"" + row["库存SKU警戒数"] + "\" hint=\"库存SKU警戒数\" />"
+                                     + "<input type=\"text\"  left=\"140\"  name=\"edit_NotOnlySkuPutawayQty\"  value=\"" + row["混合区上架SKU警戒数"] + "\" hint=\"混合区上架SKU警戒数\" />"
+                                     + "<input type=\"text\"  left=\"140\"   name=\"edit_RegularExpression\"  value=\"" + row["SN验证规则正则"] + "\" hint=\"SN验证规则正则\" />"
+
+                                    + "</div></div>", 500, 218)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "确认修改", icon: "save", click:
+                        function () {
+
+                            var reg2 = /^[0-9]+$/;
+                            if ($("[name=edit_InvClearUpSkuMaxQty]").val() != "") {
+                                if (!reg2.test($("[name=edit_InvClearUpSkuMaxQty]").val())) {
+                                    alert("库存SKU警戒数必须为数字！");
+                                    $("[name=edit_InvClearUpSkuMaxQty]").focus();
+                                    return;
+                                }
+                            }
+
+                            if ($("[name=edit_NotOnlySkuPutawayQty]").val() != "") {
+                                if (!reg2.test($("[name=edit_NotOnlySkuPutawayQty]").val())) {
+                                    alert("混合区上架SKU警戒数！");
+                                    $("[name=edit_NotOnlySkuPutawayQty]").focus();
+                                    return;
+                                }
+                            }
+
+
+                            eip.get("/Root/ClientExtend/EditWhClientExtend?id=" + id, eip.para.create($("input,select,textarea", $("#layout9"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/root/ClientExtend/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_InvClearUpSkuMaxQty]").focus();
+    }
+
+</script>

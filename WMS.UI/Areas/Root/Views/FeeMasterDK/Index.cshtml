@@ -1,0 +1,637 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" left="90" name="FeeNumber" hint="系统编号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="类型" name="type"><option></option><option value='TCR'>TCR</option><option value='现场操作'>现场操作</option><option value='出货提货'>出货提货</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="status"><option></option><option value='未预收款'>未预收款</option><option value='已预收款'>已预收款</option><option value='未结算'>未结算</option><option value='完成'>完成</option><option value='已作废'>已作废</option></select>
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <input type="text" name="BeginFeeCreateDate" left="90" hint="收费时间" datetime='Y' />
+        <input type="text" name="EndFeeCreateDate" left="20" hint="-" datetime='Y' />
+
+        <textarea name="soNumber" left="60" hint="SO号"></textarea>
+
+        <select class="easyui-vhuo'xia'alidatebox" left="120" hint="发票号码排序" name="InvoiceNumberOrderBy"><option></option><option value='发票号码排序'>发票号码排序</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            lockcolumns: 1,
+            columns: {
+                "系统编号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"showFeeDetail(this)\" >" + row["系统编号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        if (row["状态"] == "未预收款" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-save' plain=true onclick='EditFeeMaster(this)' title='确认预收款' ></a>";
+                        }
+
+                        if (row["状态"] == "已预收款" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='打印特操单' ></a>";
+                        }
+
+                        if (row["状态"] == "未预收款" && row["类型"] == "出货提货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick=\"confirmOutLoadFee(this)\" title='出货提箱结算确认' ></a>";
+                        }
+                        if (row["类型"] == "出货提货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintLoad(this)' title='打印备货操作单' ></a>";
+                        }
+
+                        if (row["状态"] == "未结算" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick=\"EditFeeDetail(this)\" title='结算确认' ></a>";
+                        }
+
+                        if (row["状态"] == "完成") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-back' plain=true onclick='EditFeeMasterInvoice(this)' title='修改发票信息' ></a>";
+
+                            if (row["类型"] == "TCR") {
+                                retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick=\"onkeySearchFeeResult('" + row["系统编号"] + "')\" title='查看费用计算' ></a>";
+                            }
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+        });
+
+
+        $("[name=soNumber]").css("height", "25px").css("width", "185px");
+        $("[name=soNumber]").parent().css("height", "30px").css("width", "280px");
+    });
+
+
+    function EditFeeMasterInvoice(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var lurufee = row["录入总价"];
+
+        var dlg = eip.dialog.create("修改发票信息", "<div id=layout9 ><div form='Y' id='form9'>"
+                                   + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" />"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"开票类型\" seq1=\"1\"  onkeypress=\"onkeynext1(this)\" left=\"140\" name=\"edit_BillingType\"><option value=''></option><option value='专用'>专用</option><option value='普通'>普通</option><option value='收据'>收据</option><option value='月结'>月结</option></select>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"发票机号\" seq1=\"2\"  onkeypress=\"onkeynext1(this)\" left=\"140\" name=\"edit_InvoiceType\"><option value=''></option><option value='道口1'>道口1</option><option value='道口2'>道口2</option></select>"
+                                     + "<input type=\"text\"  left=\"140\" seq1=\"3\" onkeypress=\"onkeynext1(this)\" name=\"edit_NoNumber\"  value=\"" + row["发票代码"] + "\" hint=\"发票代码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq1=\"4\" onkeypress=\"onkeynext1(this)\" name=\"edit_InvoiceNumber\"  value=\"" + row["发票号码"] + "\" hint=\"发票号码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq1=\"5\"  name=\"edit_InvoiceTopContent\"  value=\"" + row["开票抬头"] + "\" hint=\"开票抬头\" />"
+
+                                    + "</div></div>", 500, 350)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "确认修改", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_BillingType]").val() == "") {
+                                $.eipMsg.alert("开票类型不能为空！");
+                                return;
+                            }
+
+                            if ($("[name=edit_BillingType]").val() != "月结") {
+                                if ($("[name=edit_InvoiceType]").val() == "") {
+                                    $.eipMsg.alert("发票机号不能为空！");
+                                    return;
+                                }
+                                if ($("[name=edit_NoNumber]").val() == "") {
+                                    $.eipMsg.alert("发票代码不能为空！");
+                                    return;
+                                }
+                                if ($("[name=edit_InvoiceNumber]").val() == "") {
+                                    $.eipMsg.alert("发票号码不能为空！");
+                                    return;
+                                }
+                                if ($("[name=edit_InvoiceTopContent]").val() == "") {
+                                    $.eipMsg.alert("开票抬头不能为空！");
+                                    return;
+                                }
+                            } else {
+                                if (lurufee != "0") {
+                                    $.eipMsg.alert("总价为0时才能选择月结！");
+                                    return;
+                                }
+                            }
+
+
+                            eip.get("/Root/FeeMasterDK/EditFeeMasterInvoice?id=" + id, eip.para.create($("input,select,textarea", $("#layout9"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                    eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_BillingType]").focus();
+        $("[name=edit_BillingType]").val(row["开票类型"]);
+        $("[name=edit_InvoiceType]").val(row["发票机号"]);
+    }
+
+
+    function EditFeeMaster(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+
+        var dlg = eip.dialog.create("确认预收款", "<div id=layout5 ><div form='Y' id='form5'>"
+                                   + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" />"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"录入总价\">" + row["录入总价"] + "</span>"
+                                    + " <input type=\"hidden\" name=\"Hid_luruFee\" value=\"" + row["录入总价"] + "\"> "
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_yushouFee\" value=\"\" hint=\"预收款\" />"
+
+                                    + "</div></div>", 500, 200)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_yushouFee]").val() == "") {
+                                $.eipMsg.alert("请先输入预收款！");
+                                return;
+                            }
+                            if ($("[name=edit_yushouFee]").val() != row["录入总价"]) {
+
+                                $.eipMsg.confirm("当前预收款与录入总价有差异！\r\n确定：" + row["系统编号"] + "进行预收款吗？", function () {
+
+                                    eip.get("/Root/FeeMasterDK/EditFeeMaster?id=" + id, eip.para.create($("input,select,textarea", $("#layout5"))), function (jsonObj) {
+                                        $.procAjaxData(jsonObj, function () {
+                                            eip.dialog.close(dlg);
+
+                                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                            eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                        }, function () { });
+                                    })
+
+                                })
+                            } else {
+                                $.eipMsg.confirm("当前预收款为：" + $("[name=edit_yushouFee]").val() + "\r\n确定：" + row["系统编号"] + "进行预收款吗？", function () {
+
+                                    eip.get("/Root/FeeMasterDK/EditFeeMaster?id=" + id, eip.para.create($("input,select,textarea", $("#layout5"))), function (jsonObj) {
+                                        $.procAjaxData(jsonObj, function () {
+                                            eip.dialog.close(dlg);
+
+                                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                            eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                        }, function () { });
+                                    })
+
+                                })
+                            }
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                          var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                          eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_yushouFee]").focus();
+    }
+
+
+    //费用明细列表
+    function showFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var obj = row["系统编号"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("费用明细列表",
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "<input type=hidden name=hid_receiptId value='" + obj + "'><span left=\"80\" hint=\"系统编号：\">" + obj + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/FeeMasterDK/FeeDetailList?feeNumber=" + obj, $("#grid_detail_detailSearch"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+    }
+
+
+    var dlg1;
+    //结算确认
+    function EditFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var feeNumber = row["系统编号"];
+        var yushoufee = row["预收款"];
+        var luru = row["录入总价"] * 1.06;
+
+        var dlg1 = eip.dialog.create("结算确认", "<div id=layout6 ><div form='Y' id='form6'>"
+                                  + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" /><input type=\"hidden\" name=\"Hid_feeNumber\" value=\"" + row["系统编号"] + "\">"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"录入总价\">" + row["录入总价"] + "</span>"
+                                    + "<span left=\"140\" hint=\"预收款\">" + row["预收款"] + "<input type=hidden name=hid_yushoufee value='" + row["预收款"] + "'></span>"
+                                    + "<input type=\"text\"  left=\"140\" name=\"OperationFee\" readonly=\"readonly\" value=\"\" hint=\"实际操作费用\" />"
+                                    + " <span left=\"70\" hint=\"\"><a href=\"#\" class=\"easyui-linkbutton\" onclick=\"onkeyAddTen();\">&nbsp;&nbsp;费用+10&nbsp;&nbsp;</a></span>"
+
+                                    + "<input type=\"text\"  left=\"140\" name=\"feeChayi\" readonly=\"readonly\" value=\"\" hint=\"费用差异\" />"
+                                    + " <span left=\"70\" hint=\"\"><a href=\"#\" class=\"easyui-linkbutton\" onclick=\"onkeySearchFeeResult('" + row["系统编号"] + "');\">&nbsp;&nbsp;查看费用计算&nbsp;&nbsp;</a></span>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"开票类型\" seq=\"1\"  onkeypress=\"onkeynext(this)\" left=\"140\" name=\"BillingType\"><option value=''></option><option value='专用'>专用</option><option value='普通'>普通</option><option value='收据'>收据</option></select>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"发票机号\" seq=\"2\"  onkeypress=\"onkeynext(this)\" left=\"140\" name=\"InvoiceType\"><option value=''></option><option value='道口1'>道口1</option><option value='道口2'>道口2</option></select>"
+                                     + "<input type=\"text\"  left=\"140\" seq=\"3\" onkeypress=\"onkeynext(this)\" name=\"NoNumber\"  value=\"\" hint=\"发票代码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq=\"4\" onkeypress=\"onkeynext(this)\" name=\"InvoiceNumber\"  value=\"\" hint=\"发票号码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq=\"5\"  name=\"InvoiceTopContent\"  value=\"\" hint=\"开票抬头\" />"
+
+                                    + "</div></div>", 550, 450)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "重新计算费用并查询", icon: "save", click:
+                        function () {
+
+                            eip.post("/Root/FeeMasterDK/getOperationFee?feeNumber=" + feeNumber, null, function (jsonObj) {
+                                $("[name=OperationFee]").val(jsonObj);
+
+                                var fee = Number($("[name=OperationFee]").val()) - Number(yushoufee);
+                                if (Number(fee) == 0) {
+                                    $("[name=feeChayi]").val(fee + " 元");
+                                }
+                                else if (Number(fee) < 0) {
+                                    $("[name=feeChayi]").val("需退：" + fee + " 元");
+                                } else {
+                                    $("[name=feeChayi]").val("还需收款：" + fee + " 元");
+                                }
+                            })
+
+                        }
+                },
+                {
+                    text: "确认结算并保存", icon: "save", click:
+                        function () {
+                            if ($("[name=BillingType]").val() == "") {
+                                $.eipMsg.alert("开票类型不能为空！");
+                                return;
+                            }
+                            if ($("[name=InvoiceType]").val() == "") {
+                                $.eipMsg.alert("发票机号不能为空！");
+                                return;
+                            }
+                            if ($("[name=NoNumber]").val() == "") {
+                                $.eipMsg.alert("发票代码不能为空！");
+                                return;
+                            }
+                            if ($("[name=InvoiceNumber]").val() == "") {
+                                $.eipMsg.alert("发票号码不能为空！");
+                                return;
+                            }
+                            if ($("[name=InvoiceTopContent]").val() == "") {
+                                $.eipMsg.alert("开票抬头不能为空！");
+                                return;
+                            }
+
+
+                            $.eipMsg.confirm("将按照实际操作费用进行结算：" + $("[name=OperationFee]").val() + "元！\r\n确认结算吗？", function () {
+                                eip.get("/Root/FeeMasterDK/EditFeeMasterDK?feeNumber=" + feeNumber, eip.para.create($("input,select,textarea", $("#layout6"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg1);
+
+                                        var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                        eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                    }, function () { });
+                                })
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg1);
+                      }
+               }
+            ]
+        }])
+
+        eip.post("/Root/FeeMasterDK/getOperationFee?feeNumber=" + feeNumber, null, function (jsonObj) {
+            $("[name=OperationFee]").val(jsonObj);
+
+            var fee = Number($("[name=OperationFee]").val()) - Number(yushoufee);
+            if (Number(fee) == 0) {
+                $("[name=feeChayi]").val(fee + " 元");
+            }
+            else if (Number(fee) < 0) {
+                $("[name=feeChayi]").val("需退：" + fee + " 元");
+            } else {
+                $("[name=feeChayi]").val("还需收款：" + fee + " 元");
+            }
+        })
+
+        $("[name=BillingType]").focus();
+
+    }
+
+
+    ////出货提箱结算确认
+    function confirmOutLoadFee(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var feeNumber = row["系统编号"];
+
+        var fee = Math.ceil((parseFloat(row["录入总价"]) * 1.06).toFixed(2));
+        fee = fee + "";
+
+        var feegw = fee.substr(fee.length - 1, 1);
+        if (parseInt(feegw) < 5 && parseInt(feegw) != 0) {
+            feegw = fee.substr(0, fee.length - 1) + "5";
+        }
+        else if (parseInt(feegw) > 5) {
+            feegw = fee.substr(0, fee.length - 1) + "0";
+            feegw = parseInt(feegw) + 10;
+        }
+        else { feegw = fee; }
+
+        var dlg16 = eip.dialog.create("出货提货结算确认", "<div id=layout16 ><div form='Y' id='form16'>"
+                                   + "<input type=\"text\" left=\"140\" readonly value=\"" + row["系统编号"] + "\" hint=\"系统编号\" /> <input type=\"hidden\" name=\"Hid_feeNumber_load\" value=\"" + row["系统编号"] + "\">"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"提箱总价\">" + row["录入总价"] + "</span>"
+
+                                    + "<input type=\"text\"  left=\"140\" name=\"OperationFee_load\" readonly=\"readonly\" value=\"" + feegw + "\" hint=\"实际操作费用\" />"
+                                    + " <span left=\"70\" hint=\"\"><a href=\"#\" class=\"easyui-linkbutton\" onclick=\"onkeyLoadAddTen();\">&nbsp;&nbsp;费用+10&nbsp;&nbsp;</a></span>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"开票类型\" seq2=\"1\"  onkeypress=\"onkeynext2(this)\" left=\"140\" name=\"BillingType_load\"><option value=''></option><option value='专用'>专用</option><option value='普通'>普通</option><option value='收据'>收据</option><option value='月结'>月结</option></select>"
+                                    + " <select class=\"easyui-validatebox\" hint=\"发票机号\" seq2=\"2\"  onkeypress=\"onkeynext2(this)\" left=\"140\" name=\"InvoiceType_load\"><option value=''></option><option value='道口1'>道口1</option><option value='道口2'>道口2</option></select>"
+                                     + "<input type=\"text\"  left=\"140\" seq2=\"3\" onkeypress=\"onkeynext2(this)\" name=\"NoNumber_load\"  value=\"\" hint=\"发票代码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq2=\"4\" onkeypress=\"onkeynext2(this)\" name=\"InvoiceNumber_load\"  value=\"\" hint=\"发票号码\" />"
+                                     + "<input type=\"text\"  left=\"140\" seq2=\"5\"  name=\"InvoiceTopContent_load\"  value=\"\" hint=\"开票抬头\" />"
+
+                                    + "</div></div>", 550, 450)
+
+        eip.layout.create($('#layout16'), [{
+            obj: $('#form16'),
+            buttons: [
+                {
+                    text: "确认结算", icon: "save", click:
+                        function () {
+                            if ($("[name=BillingType_load]").val() == "") {
+                                $.eipMsg.alert("开票类型不能为空！");
+                                return;
+                            }
+                            if ($("[name=BillingType_load]").val() != "月结") {
+                                if ($("[name=InvoiceType_load]").val() == "") {
+                                    $.eipMsg.alert("发票机号不能为空！");
+                                    return;
+                                }
+                                if ($("[name=NoNumber_load]").val() == "") {
+                                    $.eipMsg.alert("发票代码不能为空！");
+                                    return;
+                                }
+                                if ($("[name=InvoiceNumber_load]").val() == "") {
+                                    $.eipMsg.alert("发票号码不能为空！");
+                                    return;
+                                }
+                                if ($("[name=InvoiceTopContent_load]").val() == "") {
+                                    $.eipMsg.alert("开票抬头不能为空！");
+                                    return;
+                                }
+                            } else {
+                                if ($("[name=OperationFee_load]").val() != "0") {
+                                    $.eipMsg.alert("实际操作费用为0时才能选择月结！");
+                                    return;
+                                }
+                            }
+
+                            eip.get("/Root/FeeMasterDK/confirmOutLoadFee?feeNumber=" + feeNumber, eip.para.create($("input,select,textarea", $("#layout16"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg16);
+
+                                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                    eip.datagrid.load("/Root/FeeMasterDK/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg16);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=BillingType_load]").focus();
+
+    }
+
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeynext1(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq1")) + 1;
+            $("input[seq1=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeynext2(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq2")) + 1;
+            $("input[seq2=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyAddTen() {
+        var fee = Math.ceil($("[name=OperationFee]").val());
+        fee = fee + "";
+        var feegw = fee.substr(fee.length - 1, 1);
+
+        if (parseInt(feegw) != 0) {
+            feegw = fee.substr(0, fee.length - 1) + "0";
+            feegw = parseInt(feegw) + 10;
+        }
+        else { feegw = fee; }
+
+        $("[name=OperationFee]").val(feegw);
+
+        var fee = Number($("[name=OperationFee]").val()) - Number($("[name=hid_yushoufee]").val());
+        if (Number(fee) == 0) {
+            $("[name=feeChayi]").val(fee + " 元");
+        }
+        else if (Number(fee) < 0) {
+            $("[name=feeChayi]").val("需退：" + fee + " 元");
+        } else {
+            $("[name=feeChayi]").val("还需收款：" + fee + " 元");
+        }
+    }
+
+    function onkeyLoadAddTen() {
+        var fee = Math.ceil($("[name=OperationFee_load]").val());
+        fee = fee + "";
+        var feegw = fee.substr(fee.length - 1, 1);
+
+        if (parseInt(feegw) != 0) {
+            feegw = fee.substr(0, fee.length - 1) + "0";
+            feegw = parseInt(feegw) + 10;
+        }
+        else { feegw = fee; }
+
+        $("[name=OperationFee_load]").val(feegw);
+
+    }
+
+    function onkeySearchFeeResult(obj) {
+        var dlg_Pos_detailSearch1 = eip.dialog.create("费用计算列表",
+           "<div id=layout_Detail_detailSearch1><div form=\"Y\" id=\"form_Detail_detailSearch1\">"
+           + "<input type=hidden name=hid_receiptId1 value='" + obj + "'><span left=\"80\" hint=\"系统编号：\">" + obj + "</span>"
+           + "</div>"
+           + "<table id=\"grid_detail_detailSearch1\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch1"),
+            pagesize: 200
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch1'), [{
+            obj: $('#form_Detail_detailSearch1'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch1);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/FeeMasterDK/JSFeeDetailList?feeNumber=" + obj, $("#grid_detail_detailSearch1"), eip.para.create($("input,select,textarea", $("#form_Detail_detailSearch1"))));
+    }
+
+    //打印特操单
+    function PrintReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["系统编号"];
+        var loadid = row["Load号"];
+
+        if (loadid != null) {
+            $.eipMsg.alert("请注意！该行TCR有Load号存在，本次需打印特操单及备货操作单！");
+            eip.get("/OutBound/Load/PrintLoadId?LoadId=" + loadid, null, function (val) {
+            window.open(val + "?load_id=" + Id);})
+        }
+
+        window.open("https://@Html.Raw(ViewBag.CrSaveAddress)/WMS_TCRFee.aspx?id=" + Id);
+    }
+
+    //打印出货操作单
+    function PrintLoad(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Load号"];
+
+        eip.get("/OutBound/Load/PrintLoadId?LoadId=" + Id, null, function (val) {
+
+            window.open(val + "?load_id=" + Id);
+
+        })
+
+    }
+
+
+</script>

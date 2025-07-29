@@ -1,0 +1,892 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25456598-95F4-4DA9-B65B-37FC70074FE2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS.UI</RootNamespace>
+    <AssemblyName>WMS.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WMS.Report.Controllers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WMS.Report.Controllers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.PowerMaster.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhMenu.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhPosition.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhPositionPower.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhPositionWhPowerResult.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhPower.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhUser.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhUserPosition.datasource" />
+    <Content Include="Properties\DataSources\WMS.UI.Controllers.WCF.AdminService.WhUserWhPositionResult.datasource" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Power\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Agent\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Location\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Pallate\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Zone\Index.cshtml" />
+    <Content Include="Areas\Root\web.config" />
+    <Content Include="Areas\Root\Views\Item\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrder\AddIndex.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrder\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrderCFS\AddIndex.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrder\EditIndex.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrderCFS\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrderDC\AddIndex.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrderDC\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\RegInBoundOrder\IndexAll.cshtml" />
+    <Content Include="Areas\InBound\Views\RegInBoundOrder\IndexPart.cshtml" />
+    <Content Include="Areas\InBound\Views\web.config" />
+    <Content Include="Areas\RecReport\Views\web.config" />
+    <Content Include="Areas\RecReport\Views\C_ReceiveSearch\Index.cshtml" />
+    <Content Include="Areas\InVentory\Views\C_InVentory\Index.cshtml" />
+    <Content Include="Areas\InVentory\Views\web.config" />
+    <Content Include="Areas\Warehouse\Views\C_RecQuestion\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\web.config" />
+    <Content Include="Areas\Warehouse\Views\C_InVentoryQuestion\Index.cshtml" />
+    <Content Include="Areas\Rec\Views\web.config" />
+    <Content Include="Areas\Rec\Views\C_RecWeb\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_HoldReason\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_AddInventory\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_SerialNumberIn\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WinCE\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_CycleCount\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Unit\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\RegInBoundOrder\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\RFFlowRule\Index.cshtml" />
+    <Content Include="Areas\Root\Views\ClientRFFlow\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\web.config" />
+    <Content Include="Areas\OutBound\Views\OutBoundOrder\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\OutBoundOrder\AddIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\FlowRule\Index.cshtml" />
+    <Content Include="Areas\Root\Views\ClientFlowRule\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\Load\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\web.config" />
+    <Content Include="Areas\Reports\Views\InventoryReport\Inventory.cshtml" />
+    <Content Include="Areas\Reports\Views\InBoundReport\InBound.cshtml" />
+    <Content Include="Areas\Pack\Views\PackTask\Index.cshtml" />
+    <Content Include="Areas\Pack\Views\web.config" />
+    <Content Include="Areas\OutBound\Views\InterceptOrder\Index.cshtml" />
+    <Content Include="Areas\Root\Views\LoadCreateRule\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_Supplement\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_SupplementTask\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_Loss\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_SupplementLocation\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\LoadContainer\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\Receipt.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\ReceiptDetail.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\ReceiptStatus.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\Load.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\LoadProcedure.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\PackTask.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\PickDetailTask.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\ReleaseLoad.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\ReleaseLoad1.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\TransferHead.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\CycleCount.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\RecOutDyanmic.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\Tranlog.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WorkAccount.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\ReceiptScanNumber.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\OutScanNumber.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\EveryDayRecOut.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\OutChaoQi.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WarhouseRecWorkAccount.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WarhouseOutWorkAccount.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WorkAccountChucangfangshi.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WorkAccountRecJixiao.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\ClientDuicunqi.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\Load_Status.cshtml" />
+    <Content Include="Areas\Root\Views\InCFSPhotoC\Index.cshtml" />
+    <Content Include="Areas\Root\Views\InCFSPhotoK\Index.cshtml" />
+    <Content Include="Areas\Root\Views\OutCFSPhotoC\Index.cshtml" />
+    <Content Include="Areas\Root\Views\OutCFSPhotoK\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\InBoundReport\DaoKouWork.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundClientCode\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\Cabinets.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\NoCabinets.cshtml" />
+    <Content Include="Areas\Reports\Views\InventoryReport\InventoryOutOfTime.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\Load1.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_WorkloadAccount\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_WorkloadAccount\Index1.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundSoNumber\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundCustomerPo\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundAltItemNumber\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_EditProcessName\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_EditProcessName\Index1.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\LoadContainer.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\Load2.cshtml" />
+    <Content Include="Areas\InBound\Views\EditUnitName\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditClientZone\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\MlogMonth.cshtml" />
+    <Content Include="Areas\Rec\Views\TruckQuery\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundCustPoByHu\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundAltItemByHu\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_SerialNumberOut\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_RecComplete\Index.cshtml" />
+    <Content Include="Areas\Root\Views\CrystalReport\Index.cshtml" />
+    <Content Include="Areas\Root\Views\UrlEdi\Index.cshtml" />
+    <Content Include="Areas\Rec\Views\TruckQuery\IndexDaoKou.cshtml" />
+    <Content Include="Areas\Admin\Views\Common\highcharts.cshtml" />
+    <Content Include="Areas\Admin\Views\Common\highcharts1.cshtml" />
+    <Content Include="Areas\Admin\Views\Common\downApp.cshtml" />
+    <Content Include="Areas\Root\Views\ClientType\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundSoNumberByHu\Index.cshtml" />
+    <Content Include="Areas\Root\Views\NightTime\Index.cshtml" />
+    <Content Include="Areas\Root\Views\Holiday\Index.cshtml" />
+    <Content Include="Areas\Root\Views\ContractForm\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\EditInBoundAltItemStyleByHu\Index.cshtml" />
+    <Content Include="Areas\Root\Views\FeeMaster\Index.cshtml" />
+    <Content Include="Areas\Root\Views\FeeMasterCK\Index.cshtml" />
+    <Content Include="Areas\Root\Views\FeeMasterDK\Index.cshtml" />
+    <Content Include="Areas\Root\Views\FeeHoliday\Index.cshtml" />
+    <Content Include="Areas\Root\Views\FeeMaster\IndexDK.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_RecQuestion\Index1.cshtml" />
+    <Content Include="Areas\OutBound\Views\Grn\Index.cshtml" />
+    <Content Include="Areas\Root\Views\DamcoGrnRule\Index.cshtml" />
+    <Content Include="Areas\Rec\Views\C_RecLoss\Index.cshtml" />
+    <Content Include="Areas\Rec\Views\C_RecLossType\Index.cshtml" />
+    <Content Include="Areas\Root\Views\ContractFormOut\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\LoadContainerWarehouse\Index.cshtml" />
+    <Content Include="Areas\Root\Views\BillMaster\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WorkScanNumber.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_InVentoryQuestion\Index1.cshtml" />
+    <Content Include="Areas\Admin\Views\Common\highcharts2.cshtml" />
+    <Content Include="Areas\Root\Views\ClientExtend\Index.cshtml" />
+    <Content Include="Areas\Root\Views\ZoneExtend\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\InBoundOrderExtend\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_InVentoryExtend\Index.cshtml" />
+    <Content Include="Areas\OutBound\Views\LoadContainerExtendBySN\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\InventoryReport\InventoryLocationCompare.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_InVentoryExtend\IndexCreateInvMove.cshtml" />
+    <Content Include="Areas\Reports\Views\InventoryReport\WarehouseInventory.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\WarehouseLoad.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\WarehouseReceipt.cshtml" />
+    <Content Include="Areas\Admin\Views\WhInfo\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\SupplementTaskDetail.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\WorkContainerChaoZhong.cshtml" />
+    <Content Include="Areas\Reports\Views\WarhouseReport\C_SerialNumberInDiff.cshtml" />
+    <Content Include="Areas\Reports\Views\InventoryReport\InventoryClientCBM.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_SerialNumberInHeport\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\ForecastOrder\Index.cshtml" />
+    <Content Include="Areas\Kmart\Views\ReceiptDelay\Index2.cshtml" />
+    <Content Include="Areas\Kmart\Views\web.config" />
+    <Content Include="Areas\Reports\Views\KmartReport\ReceiptExcept.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\Receipt.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\Inventory.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\UnReceipt.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\ReceiptWait.cshtml" />
+    <Content Include="Areas\InBound\Views\ForecastOrder\UnReceipt.cshtml" />
+    <Content Include="Areas\Kmart\Views\ReceiptDelay\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\ReceiptExceptStatus.cshtml" />
+    <Content Include="Areas\Kmart\Views\HeavyPallet\Index.cshtml" />
+    <Content Include="Areas\Root\Views\InCFSPhotoC\Index1.cshtml" />
+    <Content Include="Areas\Root\Views\OutCFSPhotoC\Index1.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\CargoDamage.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\InventoryReleaseStatus.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\LabelingCost.cshtml" />
+    <Content Include="Areas\Root\Views\ReceiptPartialRegister\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\KmartReport\InventoryWeight.cshtml" />
+    <Content Include="Areas\Root\Views\ContractFormExtend\Index.cshtml" />
+    <Content Include="Areas\Rec\Views\HuAllWeight\Index.cshtml" />
+    <Content Include="Areas\InBound\Views\ForecastOrder\CottonIndex.cshtml" />
+    <Content Include="Areas\OutBound\Views\ForecastOutBound\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\RecReport\ReceiptCottonOn.cshtml" />
+    <Content Include="Areas\GMS\Views\QueueList\Index.cshtml" />
+    <Content Include="Areas\GMS\Views\web.config" />
+    <Content Include="Areas\InBound\Views\ForecastOrder\MosaicIndex.cshtml" />
+    <Content Include="Areas\Root\Views\ItemColorCode\Index.cshtml" />
+    <Content Include="Areas\GMS\Views\QueueList\LockIndex.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_ReturnGoodLocation\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\C_ReturnGoodLocation\Index1.cshtml" />
+    <Content Include="Areas\GMS\Views\QueueList\Index1.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\LoadContainerDetail.cshtml" />
+    <Content Include="Areas\Reports\Views\OutReport\OutChaoQiDetail.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Share\favicon.ico" />
+    <Content Include="Share\help\test\rain\model\form.html" />
+    <Content Include="Share\images\app.png" />
+    <Content Include="Share\images\attach.gif" />
+    <Content Include="Share\images\bg.png" />
+    <Content Include="Share\images\EIP-main.jpg" />
+    <Content Include="Share\images\file_ico.png" />
+    <Content Include="Share\images\l1.jpg" />
+    <Content Include="Share\images\l2.jpg" />
+    <Content Include="Share\images\lan.jpg" />
+    <Content Include="Share\images\lan2.jpg" />
+    <Content Include="Share\images\lan3.jpg" />
+    <Content Include="Share\images\lan4.jpg" />
+    <Content Include="Share\images\left_01.jpg" />
+    <Content Include="Share\images\loading.gif" />
+    <Content Include="Share\images\logo.png" />
+    <Content Include="Share\images\LOGO2.jpg" />
+    <Content Include="Share\images\lv.jpg" />
+    <Content Include="Share\images\lv1.jpg" />
+    <Content Include="Share\images\map.png" />
+    <Content Include="Share\images\MfyEjaq.png" />
+    <Content Include="Share\images\product_logo.png" />
+    <Content Include="Share\images\product_logo1.jpg" />
+    <Content Include="Share\images\right_b_01.jpg" />
+    <Content Include="Share\images\right_t_01.jpg" />
+    <Content Include="Share\images\titleLogin.jpg" />
+    <Content Include="Share\includes\calendar2_utf8.js" />
+    <Content Include="Share\includes\calendar\calendar.js" />
+    <Content Include="Share\includes\calendar\lang\en.js" />
+    <Content Include="Share\includes\calendar\lang\zh-cn.js" />
+    <Content Include="Share\includes\calendar\lang\zh-tw.js" />
+    <Content Include="Share\includes\calendar\skin\datePicker.gif" />
+    <Content Include="Share\includes\calendar\skin\default\datepicker.css" />
+    <Content Include="Share\includes\calendar\skin\default\img.gif" />
+    <Content Include="Share\includes\calendar\skin\WdatePicker.css" />
+    <Content Include="Share\includes\calendar\skin\whyGreen\bg.jpg" />
+    <Content Include="Share\includes\calendar\skin\whyGreen\datepicker.css" />
+    <Content Include="Share\includes\calendar\skin\whyGreen\img.gif" />
+    <Content Include="Share\includes\calendar\WdatePicker.js" />
+    <Content Include="Share\includes\ckeditor\adapters\jquery.js" />
+    <Content Include="Share\includes\ckeditor\build-config.js" />
+    <Content Include="Share\includes\ckeditor\ckeditor.js" />
+    <Content Include="Share\includes\ckeditor\config.js" />
+    <Content Include="Share\includes\ckeditor\contents.css" />
+    <Content Include="Share\includes\ckeditor\lang\af.js" />
+    <Content Include="Share\includes\ckeditor\lang\ar.js" />
+    <Content Include="Share\includes\ckeditor\lang\bg.js" />
+    <Content Include="Share\includes\ckeditor\lang\bn.js" />
+    <Content Include="Share\includes\ckeditor\lang\bs.js" />
+    <Content Include="Share\includes\ckeditor\lang\ca.js" />
+    <Content Include="Share\includes\ckeditor\lang\cs.js" />
+    <Content Include="Share\includes\ckeditor\lang\cy.js" />
+    <Content Include="Share\includes\ckeditor\lang\da.js" />
+    <Content Include="Share\includes\ckeditor\lang\de.js" />
+    <Content Include="Share\includes\ckeditor\lang\el.js" />
+    <Content Include="Share\includes\ckeditor\lang\en-au.js" />
+    <Content Include="Share\includes\ckeditor\lang\en-ca.js" />
+    <Content Include="Share\includes\ckeditor\lang\en-gb.js" />
+    <Content Include="Share\includes\ckeditor\lang\en.js" />
+    <Content Include="Share\includes\ckeditor\lang\eo.js" />
+    <Content Include="Share\includes\ckeditor\lang\es.js" />
+    <Content Include="Share\includes\ckeditor\lang\et.js" />
+    <Content Include="Share\includes\ckeditor\lang\eu.js" />
+    <Content Include="Share\includes\ckeditor\lang\fa.js" />
+    <Content Include="Share\includes\ckeditor\lang\fi.js" />
+    <Content Include="Share\includes\ckeditor\lang\fo.js" />
+    <Content Include="Share\includes\ckeditor\lang\fr-ca.js" />
+    <Content Include="Share\includes\ckeditor\lang\fr.js" />
+    <Content Include="Share\includes\ckeditor\lang\gl.js" />
+    <Content Include="Share\includes\ckeditor\lang\gu.js" />
+    <Content Include="Share\includes\ckeditor\lang\he.js" />
+    <Content Include="Share\includes\ckeditor\lang\hi.js" />
+    <Content Include="Share\includes\ckeditor\lang\hr.js" />
+    <Content Include="Share\includes\ckeditor\lang\hu.js" />
+    <Content Include="Share\includes\ckeditor\lang\id.js" />
+    <Content Include="Share\includes\ckeditor\lang\is.js" />
+    <Content Include="Share\includes\ckeditor\lang\it.js" />
+    <Content Include="Share\includes\ckeditor\lang\ja.js" />
+    <Content Include="Share\includes\ckeditor\lang\ka.js" />
+    <Content Include="Share\includes\ckeditor\lang\km.js" />
+    <Content Include="Share\includes\ckeditor\lang\ko.js" />
+    <Content Include="Share\includes\ckeditor\lang\ku.js" />
+    <Content Include="Share\includes\ckeditor\lang\lt.js" />
+    <Content Include="Share\includes\ckeditor\lang\lv.js" />
+    <Content Include="Share\includes\ckeditor\lang\mk.js" />
+    <Content Include="Share\includes\ckeditor\lang\mn.js" />
+    <Content Include="Share\includes\ckeditor\lang\ms.js" />
+    <Content Include="Share\includes\ckeditor\lang\nb.js" />
+    <Content Include="Share\includes\ckeditor\lang\nl.js" />
+    <Content Include="Share\includes\ckeditor\lang\no.js" />
+    <Content Include="Share\includes\ckeditor\lang\pl.js" />
+    <Content Include="Share\includes\ckeditor\lang\pt-br.js" />
+    <Content Include="Share\includes\ckeditor\lang\pt.js" />
+    <Content Include="Share\includes\ckeditor\lang\ro.js" />
+    <Content Include="Share\includes\ckeditor\lang\ru.js" />
+    <Content Include="Share\includes\ckeditor\lang\si.js" />
+    <Content Include="Share\includes\ckeditor\lang\sk.js" />
+    <Content Include="Share\includes\ckeditor\lang\sl.js" />
+    <Content Include="Share\includes\ckeditor\lang\sq.js" />
+    <Content Include="Share\includes\ckeditor\lang\sr-latn.js" />
+    <Content Include="Share\includes\ckeditor\lang\sr.js" />
+    <Content Include="Share\includes\ckeditor\lang\sv.js" />
+    <Content Include="Share\includes\ckeditor\lang\th.js" />
+    <Content Include="Share\includes\ckeditor\lang\tr.js" />
+    <Content Include="Share\includes\ckeditor\lang\tt.js" />
+    <Content Include="Share\includes\ckeditor\lang\ug.js" />
+    <Content Include="Share\includes\ckeditor\lang\uk.js" />
+    <Content Include="Share\includes\ckeditor\lang\vi.js" />
+    <Content Include="Share\includes\ckeditor\lang\zh-cn.js" />
+    <Content Include="Share\includes\ckeditor\lang\zh.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\af.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Share\includes\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Share\includes\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Share\includes\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Share\includes\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Share\includes\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Share\includes\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Share\includes\ckeditor\plugins\icons.png" />
+    <Content Include="Share\includes\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Share\includes\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Share\includes\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Share\includes\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Share\includes\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Share\includes\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Share\includes\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Share\includes\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="Share\includes\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Share\includes\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="Share\includes\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Share\includes\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Share\includes\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Share\includes\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\da.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\lt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Share\includes\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Share\includes\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Share\includes\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Share\includes\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Share\includes\ckeditor\skins\moono\icons.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Share\includes\ckeditor\skins\moono\images\spinner.gif" />
+    <Content Include="Share\includes\ckeditor\styles.js" />
+    <Content Include="Share\includes\common.js" />
+    <Content Include="Share\includes\easyui\easyloader.js" />
+    <Content Include="Share\includes\easyui\jquery-1.11.3.js" />
+    <Content Include="Share\includes\easyui\jquery.easyui.min.js" />
+    <Content Include="Share\includes\easyui\jquery.easyui.mobile.js" />
+    <Content Include="Share\includes\easyui\jquery.min.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-af.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-am.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-ar.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-bg.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-ca.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-cs.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-cz.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-da.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-de.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-el.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-en.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-es.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-fr.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-it.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-jp.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-nl.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-pl.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-pt_BR.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-ru.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-sv_SE.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-tr.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-zh_CN.js" />
+    <Content Include="Share\includes\easyui\locale\easyui-lang-zh_TW.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.accordion.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.calendar.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.combo.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.combobox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.combogrid.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.combotree.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.datagrid.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.datalist.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.datebox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.datetimebox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.datetimespinner.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.dialog.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.draggable.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.droppable.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.filebox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.form.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.layout.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.linkbutton.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.menu.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.menubutton.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.messager.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.mobile.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.numberbox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.numberspinner.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.pagination.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.panel.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.parser.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.progressbar.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.propertygrid.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.resizable.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.searchbox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.slider.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.spinner.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.splitbutton.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.switchbutton.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.tabs.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.textbox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.timespinner.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.tooltip.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.tree.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.treegrid.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.validatebox.js" />
+    <Content Include="Share\includes\easyui\plugins\jquery.window.js" />
+    <Content Include="Share\includes\easyui\src\easyloader.js" />
+    <Content Include="Share\includes\easyui\src\jquery.accordion.js" />
+    <Content Include="Share\includes\easyui\src\jquery.calendar.js" />
+    <Content Include="Share\includes\easyui\src\jquery.combobox.js" />
+    <Content Include="Share\includes\easyui\src\jquery.datebox.js" />
+    <Content Include="Share\includes\easyui\src\jquery.draggable.js" />
+    <Content Include="Share\includes\easyui\src\jquery.droppable.js" />
+    <Content Include="Share\includes\easyui\src\jquery.form.js" />
+    <Content Include="Share\includes\easyui\src\jquery.linkbutton.js" />
+    <Content Include="Share\includes\easyui\src\jquery.menu.js" />
+    <Content Include="Share\includes\easyui\src\jquery.parser.js" />
+    <Content Include="Share\includes\easyui\src\jquery.progressbar.js" />
+    <Content Include="Share\includes\easyui\src\jquery.propertygrid.js" />
+    <Content Include="Share\includes\easyui\src\jquery.resizable.js" />
+    <Content Include="Share\includes\easyui\src\jquery.slider.js" />
+    <Content Include="Share\includes\easyui\src\jquery.tabs.js" />
+    <Content Include="Share\includes\easyui\src\jquery.window.js" />
+    <Content Include="Share\includes\easyui\themes\color.css" />
+    <Content Include="Share\includes\easyui\themes\default\accordion.css" />
+    <Content Include="Share\includes\easyui\themes\default\calendar.css" />
+    <Content Include="Share\includes\easyui\themes\default\combo.css" />
+    <Content Include="Share\includes\easyui\themes\default\combobox.css" />
+    <Content Include="Share\includes\easyui\themes\default\datagrid.css" />
+    <Content Include="Share\includes\easyui\themes\default\datalist.css" />
+    <Content Include="Share\includes\easyui\themes\default\datebox.css" />
+    <Content Include="Share\includes\easyui\themes\default\dialog.css" />
+    <Content Include="Share\includes\easyui\themes\default\easyui.css" />
+    <Content Include="Share\includes\easyui\themes\default\filebox.css" />
+    <Content Include="Share\includes\easyui\themes\default\images\accordion_arrows.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\blank.gif" />
+    <Content Include="Share\includes\easyui\themes\default\images\calendar_arrows.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\combo_arrow.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\datagrid_icons.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\datebox_arrow.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\layout_arrows.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\linkbutton_bg.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\loading.gif" />
+    <Content Include="Share\includes\easyui\themes\default\images\menu_arrows.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\messager_icons.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\pagination_icons.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\panel_tools.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\searchbox_button.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\slider_handle.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\spinner_arrows.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\tabs_icons.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\tree_icons.png" />
+    <Content Include="Share\includes\easyui\themes\default\images\validatebox_warning.png" />
+    <Content Include="Share\includes\easyui\themes\default\layout.css" />
+    <Content Include="Share\includes\easyui\themes\default\linkbutton.css" />
+    <Content Include="Share\includes\easyui\themes\default\menu.css" />
+    <Content Include="Share\includes\easyui\themes\default\menubutton.css" />
+    <Content Include="Share\includes\easyui\themes\default\messager.css" />
+    <Content Include="Share\includes\easyui\themes\default\numberbox.css" />
+    <Content Include="Share\includes\easyui\themes\default\pagination.css" />
+    <Content Include="Share\includes\easyui\themes\default\panel.css" />
+    <Content Include="Share\includes\easyui\themes\default\progressbar.css" />
+    <Content Include="Share\includes\easyui\themes\default\propertygrid.css" />
+    <Content Include="Share\includes\easyui\themes\default\searchbox.css" />
+    <Content Include="Share\includes\easyui\themes\default\slider.css" />
+    <Content Include="Share\includes\easyui\themes\default\spinner.css" />
+    <Content Include="Share\includes\easyui\themes\default\splitbutton.css" />
+    <Content Include="Share\includes\easyui\themes\default\switchbutton.css" />
+    <Content Include="Share\includes\easyui\themes\default\tabs.css" />
+    <Content Include="Share\includes\easyui\themes\default\textbox.css" />
+    <Content Include="Share\includes\easyui\themes\default\tooltip.css" />
+    <Content Include="Share\includes\easyui\themes\default\tree.css" />
+    <Content Include="Share\includes\easyui\themes\default\validatebox.css" />
+    <Content Include="Share\includes\easyui\themes\default\window.css" />
+    <Content Include="Share\includes\easyui\themes\icon.css" />
+    <Content Include="Share\includes\easyui\themes\icons\active.png" />
+    <Content Include="Share\includes\easyui\themes\icons\back.png" />
+    <Content Include="Share\includes\easyui\themes\icons\blank.gif" />
+    <Content Include="Share\includes\easyui\themes\icons\bottom.png" />
+    <Content Include="Share\includes\easyui\themes\icons\cancel.png" />
+    <Content Include="Share\includes\easyui\themes\icons\clear.png" />
+    <Content Include="Share\includes\easyui\themes\icons\column_set.png" />
+    <Content Include="Share\includes\easyui\themes\icons\cust.png" />
+    <Content Include="Share\includes\easyui\themes\icons\cut.png" />
+    <Content Include="Share\includes\easyui\themes\icons\delete.png" />
+    <Content Include="Share\includes\easyui\themes\icons\down.png" />
+    <Content Include="Share\includes\easyui\themes\icons\editor.png" />
+    <Content Include="Share\includes\easyui\themes\icons\edit_add.png" />
+    <Content Include="Share\includes\easyui\themes\icons\edit_remove.png" />
+    <Content Include="Share\includes\easyui\themes\icons\email.png" />
+    <Content Include="Share\includes\easyui\themes\icons\error.png" />
+    <Content Include="Share\includes\easyui\themes\icons\excel.gif" />
+    <Content Include="Share\includes\easyui\themes\icons\filesave.png" />
+    <Content Include="Share\includes\easyui\themes\icons\filter.png" />
+    <Content Include="Share\includes\easyui\themes\icons\help.png" />
+    <Content Include="Share\includes\easyui\themes\icons\imports.png" />
+    <Content Include="Share\includes\easyui\themes\icons\inactive.png" />
+    <Content Include="Share\includes\easyui\themes\icons\large_chart.png" />
+    <Content Include="Share\includes\easyui\themes\icons\large_clipart.png" />
+    <Content Include="Share\includes\easyui\themes\icons\large_picture.png" />
+    <Content Include="Share\includes\easyui\themes\icons\large_shapes.png" />
+    <Content Include="Share\includes\easyui\themes\icons\large_smartart.png" />
+    <Content Include="Share\includes\easyui\themes\icons\lock.png" />
+    <Content Include="Share\includes\easyui\themes\icons\man.png" />
+    <Content Include="Share\includes\easyui\themes\icons\menu.png" />
+    <Content Include="Share\includes\easyui\themes\icons\merge.png" />
+    <Content Include="Share\includes\easyui\themes\icons\mini_add.png" />
+    <Content Include="Share\includes\easyui\themes\icons\mini_edit.png" />
+    <Content Include="Share\includes\easyui\themes\icons\mini_refresh.png" />
+    <Content Include="Share\includes\easyui\themes\icons\more.png" />
+    <Content Include="Share\includes\easyui\themes\icons\more1.png" />
+    <Content Include="Share\includes\easyui\themes\icons\move-next.gif" />
+    <Content Include="Share\includes\easyui\themes\icons\no.png" />
+    <Content Include="Share\includes\easyui\themes\icons\ok.png" />
+    <Content Include="Share\includes\easyui\themes\icons\pencil.png" />
+    <Content Include="Share\includes\easyui\themes\icons\preview.png" />
+    <Content Include="Share\includes\easyui\themes\icons\print.png" />
+    <Content Include="Share\includes\easyui\themes\icons\redo.png" />
+    <Content Include="Share\includes\easyui\themes\icons\reload.png" />
+    <Content Include="Share\includes\easyui\themes\icons\run.png" />
+    <Content Include="Share\includes\easyui\themes\icons\scissors.png" />
+    <Content Include="Share\includes\easyui\themes\icons\search.png" />
+    <Content Include="Share\includes\easyui\themes\icons\sum.png" />
+    <Content Include="Share\includes\easyui\themes\icons\tab.png" />
+    <Content Include="Share\includes\easyui\themes\icons\tip.png" />
+    <Content Include="Share\includes\easyui\themes\icons\top.png" />
+    <Content Include="Share\includes\easyui\themes\icons\undo.png" />
+    <Content Include="Share\includes\easyui\themes\icons\up.png" />
+    <Content Include="Share\includes\easyui\themes\icons\upload.png" />
+    <Content Include="Share\includes\easyui\themes\icons\vendor.png" />
+    <Content Include="Share\includes\easyui\themes\icons\warning.png" />
+    <Content Include="Share\includes\easyui\themes\mobile.css" />
+    <Content Include="Share\includes\button.css" />
+    <Content Include="Share\includes\eip.css" />
+    <Content Include="Share\includes\eip.js" />
+    <Content Include="Share\includes\highcharts-more.js" />
+    <Content Include="Share\includes\highcharts.js" />
+    <Content Include="Share\includes\highcharts.src.js" />
+    <Content Include="Share\includes\LANG.JS" />
+    <Content Include="Share\includes\upload\ajaxupload.js" />
+    <Content Include="Share\includes\upload\file_ico.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Common\MVCErrorHandleAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Common\Index.cshtml" />
+    <Content Include="Share\includes\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="Share\includes\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Share\includes\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Share\includes\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Share\includes\ckeditor\skins\moono\readme.md" />
+    <Content Include="Areas\Admin\Views\UserInfo\Index.cshtml" />
+    <Content Include="Views\head.cshtml" />
+    <Content Include="Areas\Admin\Views\Position\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Share\includes\upload\upload.ashx" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\GMS\Views\Shared\" />
+    <Folder Include="Areas\InBound\Views\Shared\" />
+    <Folder Include="Areas\InVentory\Views\Shared\" />
+    <Folder Include="Areas\OutBound\Views\Shared\" />
+    <Folder Include="Areas\Pack\Views\Shared\" />
+    <Folder Include="Areas\RecReport\Views\Shared\" />
+    <Folder Include="Areas\Rec\Views\Shared\" />
+    <Folder Include="Areas\Root\Views\Shared\" />
+    <Folder Include="Areas\Warehouse\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WMS.UI.Controllers\WMS.UI.Controllers.csproj">
+      <Project>{b0ecf758-2f8d-4ced-ae0a-1cafaf52911d}</Project>
+      <Name>WMS.UI.Controllers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58105</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58105</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:58105/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此项目引用这台计算机上缺少的 NuGet 程序包。使用 NuGet 程序包还原可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+</head>
+<body >
+   
+    <script type="text/javascript">
+
+        window.onload = function () {
+
+            jumpToapp()
+        }
+        var browser = {
+            isAndroid: function () {
+                return navigator.userAgent.match(/Android/i) ? true : false;
+            },
+            isMobileQQ: function () {
+                var ua = navigator.userAgent;
+                return /(iPad|iPhone|iPod).*? (IPad)?QQ\/([\d\.]+)/.test(ua) ||
+                /\bV1_AND_SQI?_([\d\.]+)(.*? QQ\/([\d\.]+))?/.test(ua);
+            },
+            isIOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+            },
+            isWx: function () {
+                return navigator.userAgent.match(/micromessenger/i) ? true : false;
+            },
+            isChrome: function () {
+                return navigator.userAgent.match(/chrome/i) ? true : false;
+            }
+        };
+
+
+        var jumpToapp = function () {
+
+            var isAndroid = function () {
+                return navigator.userAgent.match(/Android/i) ? true : false;
+            }
+            var isIOS = function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+            }
+            if (isIOS()) {
+                window.location.href = "sxz://sxz.com";//伪协议scheme
+            } else if (isAndroid()) {
+                var ifr = document.createElement('iframe');
+                ifr.src = "sxz://sxz.com";//伪协议scheme
+                ifr.style.display = 'none';
+                document.body.appendChild(ifr);
+            }
+            openApp();
+        }
+        //$('#open_app').click(function () {
+        //    openApp();
+        //})
+
+        var openApp = function () {
+            if (browser.isIOS()) {
+                alert("IOS版本敬请期待!")
+               // window.location.href = "ios下载地址";
+            } else if (browser.isAndroid()) {
+         
+                window.location.href = "https://api.oceaneast-logistics.com/app-debug.apk";
+            } else {
+
+                alert("暂时不支持windows版本!")
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>

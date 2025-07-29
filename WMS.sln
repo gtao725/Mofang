@@ -1,0 +1,232 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.IBLL", "WMS.IBLL\WMS.IBLL.csproj", "{19650D41-33CD-48CB-8AA0-632085075680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.BLL", "WMS.BLL\WMS.BLL.csproj", "{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01UI", "01UI", "{34D6B99E-C034-4F7A-9D3A-1BDC42E65126}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02Service", "02Service", "{D51C85A9-88AC-4E34-98DA-EE56F466A544}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03BLL", "03BLL", "{1293A2F9-8F84-4ADB-BFD0-E5C2DE11937E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04DAL", "04DAL", "{759DBD81-9AE1-49B7-B72B-052176D80BC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05Common", "05Common", "{997D6BD1-32F8-47B8-9B52-85EFAB924081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.DI", "WMS.DI\WMS.DI.csproj", "{3842087B-8BF1-4694-81F1-7792D1785DF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.IDAL", "WMS.IDAL\WMS.IDAL.csproj", "{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.DAL", "WMS.DAL\WMS.DAL.csproj", "{3C24F792-4EE6-4328-9A6E-EF627A9E406D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MODEL_MSSQL", "MODEL_MSSQL\MODEL_MSSQL.csproj", "{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.WCFServices", "WMS.WCFServices\WMS.WCFServices.csproj", "{9BAB820E-43FE-43A5-A8B7-D4DE02162543}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D} = {3C24F792-4EE6-4328-9A6E-EF627A9E406D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.BLLClass", "WMS.BLLClass\WMS.BLLClass.csproj", "{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.UI", "WMS.UI\WMS.UI.csproj", "{25456598-95F4-4DA9-B65B-37FC70074FE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543} = {9BAB820E-43FE-43A5-A8B7-D4DE02162543}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.UI.Controllers", "WMS.UI.Controllers\WMS.UI.Controllers.csproj", "{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543} = {9BAB820E-43FE-43A5-A8B7-D4DE02162543}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.EIP", "WMS.EIP\WMS.EIP.csproj", "{B6D49775-75BC-4BB8-B688-C292C07AFD2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06Print", "06Print", "{6AA99DF7-EBC0-475A-A159-4D0F61A818E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.WebApi", "WMS.WebApi\WMS.WebApi.csproj", "{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.BLLTEST", "WMS.BLLTEST\WMS.BLLTEST.csproj", "{38494BE1-FEE3-45F0-9A23-06A4E5D6F271}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.Report.Controllers", "WMS.Report.Controllers\WMS.Report.Controllers.csproj", "{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.Reports.Services", "WMS.Reports.Services\WMS.Reports.Services.csproj", "{29A32790-3F7D-48D0-A6B7-416637CD98FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.Express", "WMS.Express\WMS.Express.csproj", "{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCrystalReports", "WebCrystalReports\WebCrystalReports.csproj", "{C71A9372-6290-41C8-AC35-B503B10E6A0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19650D41-33CD-48CB-8AA0-632085075680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19650D41-33CD-48CB-8AA0-632085075680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19650D41-33CD-48CB-8AA0-632085075680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19650D41-33CD-48CB-8AA0-632085075680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3842087B-8BF1-4694-81F1-7792D1785DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3842087B-8BF1-4694-81F1-7792D1785DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3842087B-8BF1-4694-81F1-7792D1785DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3842087B-8BF1-4694-81F1-7792D1785DF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9EFD309-0335-4BE3-8E81-6CE41BE77E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25456598-95F4-4DA9-B65B-37FC70074FE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25456598-95F4-4DA9-B65B-37FC70074FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25456598-95F4-4DA9-B65B-37FC70074FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25456598-95F4-4DA9-B65B-37FC70074FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D49775-75BC-4BB8-B688-C292C07AFD2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D49775-75BC-4BB8-B688-C292C07AFD2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D49775-75BC-4BB8-B688-C292C07AFD2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D49775-75BC-4BB8-B688-C292C07AFD2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38494BE1-FEE3-45F0-9A23-06A4E5D6F271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38494BE1-FEE3-45F0-9A23-06A4E5D6F271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38494BE1-FEE3-45F0-9A23-06A4E5D6F271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38494BE1-FEE3-45F0-9A23-06A4E5D6F271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29A32790-3F7D-48D0-A6B7-416637CD98FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A32790-3F7D-48D0-A6B7-416637CD98FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A32790-3F7D-48D0-A6B7-416637CD98FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A32790-3F7D-48D0-A6B7-416637CD98FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71A9372-6290-41C8-AC35-B503B10E6A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71A9372-6290-41C8-AC35-B503B10E6A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71A9372-6290-41C8-AC35-B503B10E6A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71A9372-6290-41C8-AC35-B503B10E6A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19650D41-33CD-48CB-8AA0-632085075680} = {1293A2F9-8F84-4ADB-BFD0-E5C2DE11937E}
+		{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD} = {1293A2F9-8F84-4ADB-BFD0-E5C2DE11937E}
+		{3842087B-8BF1-4694-81F1-7792D1785DF8} = {997D6BD1-32F8-47B8-9B52-85EFAB924081}
+		{50D1C1EF-D0AB-4FB2-891B-505B26DCFC76} = {759DBD81-9AE1-49B7-B72B-052176D80BC5}
+		{3C24F792-4EE6-4328-9A6E-EF627A9E406D} = {759DBD81-9AE1-49B7-B72B-052176D80BC5}
+		{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287} = {997D6BD1-32F8-47B8-9B52-85EFAB924081}
+		{9BAB820E-43FE-43A5-A8B7-D4DE02162543} = {D51C85A9-88AC-4E34-98DA-EE56F466A544}
+		{F9EFD309-0335-4BE3-8E81-6CE41BE77E25} = {997D6BD1-32F8-47B8-9B52-85EFAB924081}
+		{25456598-95F4-4DA9-B65B-37FC70074FE2} = {34D6B99E-C034-4F7A-9D3A-1BDC42E65126}
+		{B0ECF758-2F8D-4CED-AE0A-1CAFAF52911D} = {34D6B99E-C034-4F7A-9D3A-1BDC42E65126}
+		{B6D49775-75BC-4BB8-B688-C292C07AFD2E} = {34D6B99E-C034-4F7A-9D3A-1BDC42E65126}
+		{10B4EEB0-9CCF-4F57-B0A1-8D5097DCA506} = {D51C85A9-88AC-4E34-98DA-EE56F466A544}
+		{38494BE1-FEE3-45F0-9A23-06A4E5D6F271} = {1293A2F9-8F84-4ADB-BFD0-E5C2DE11937E}
+		{AF5D1BF1-CEE3-4F55-9A1C-5E19D71A8F6D} = {34D6B99E-C034-4F7A-9D3A-1BDC42E65126}
+		{29A32790-3F7D-48D0-A6B7-416637CD98FE} = {D51C85A9-88AC-4E34-98DA-EE56F466A544}
+		{DEBA7B85-6C59-4E6A-A5F3-BB5352DB287B} = {1293A2F9-8F84-4ADB-BFD0-E5C2DE11937E}
+		{C71A9372-6290-41C8-AC35-B503B10E6A0D} = {6AA99DF7-EBC0-475A-A159-4D0F61A818E1}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 18
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://oe-srv-devcode:8080/tfs/wms
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MODEL_MSSQL\\MODEL_MSSQL.csproj
+		SccProjectTopLevelParentUniqueName1 = WMS.sln
+		SccProjectName1 = MODEL_MSSQL
+		SccLocalPath1 = MODEL_MSSQL
+		SccProjectUniqueName2 = WebCrystalReports\\WebCrystalReports.csproj
+		SccProjectTopLevelParentUniqueName2 = WMS.sln
+		SccProjectName2 = WebCrystalReports
+		SccLocalPath2 = WebCrystalReports
+		SccProjectUniqueName3 = WMS.BLL\\WMS.BLL.csproj
+		SccProjectTopLevelParentUniqueName3 = WMS.sln
+		SccProjectName3 = WMS.BLL
+		SccLocalPath3 = WMS.BLL
+		SccProjectUniqueName4 = WMS.BLLClass\\WMS.BLLClass.csproj
+		SccProjectTopLevelParentUniqueName4 = WMS.sln
+		SccProjectName4 = WMS.BLLClass
+		SccLocalPath4 = WMS.BLLClass
+		SccProjectUniqueName5 = WMS.BLLTEST\\WMS.BLLTEST.csproj
+		SccProjectTopLevelParentUniqueName5 = WMS.sln
+		SccProjectName5 = WMS.BLLTEST
+		SccLocalPath5 = WMS.BLLTEST
+		SccProjectUniqueName6 = WMS.DAL\\WMS.DAL.csproj
+		SccProjectTopLevelParentUniqueName6 = WMS.sln
+		SccProjectName6 = WMS.DAL
+		SccLocalPath6 = WMS.DAL
+		SccProjectUniqueName7 = WMS.DI\\WMS.DI.csproj
+		SccProjectTopLevelParentUniqueName7 = WMS.sln
+		SccProjectName7 = WMS.DI
+		SccLocalPath7 = WMS.DI
+		SccProjectUniqueName8 = WMS.EIP\\WMS.EIP.csproj
+		SccProjectTopLevelParentUniqueName8 = WMS.sln
+		SccProjectName8 = WMS.EIP
+		SccLocalPath8 = WMS.EIP
+		SccProjectUniqueName9 = WMS.Express\\WMS.Express.csproj
+		SccProjectTopLevelParentUniqueName9 = WMS.sln
+		SccProjectName9 = WMS.Express
+		SccLocalPath9 = WMS.Express
+		SccProjectUniqueName10 = WMS.IBLL\\WMS.IBLL.csproj
+		SccProjectTopLevelParentUniqueName10 = WMS.sln
+		SccProjectName10 = WMS.IBLL
+		SccLocalPath10 = WMS.IBLL
+		SccProjectUniqueName11 = WMS.IDAL\\WMS.IDAL.csproj
+		SccProjectTopLevelParentUniqueName11 = WMS.sln
+		SccProjectName11 = WMS.IDAL
+		SccLocalPath11 = WMS.IDAL
+		SccProjectUniqueName12 = WMS.Report.Controllers\\WMS.Report.Controllers.csproj
+		SccProjectTopLevelParentUniqueName12 = WMS.sln
+		SccProjectName12 = WMS.Report.Controllers
+		SccLocalPath12 = WMS.Report.Controllers
+		SccProjectUniqueName13 = WMS.Reports.Services\\WMS.Reports.Services.csproj
+		SccProjectTopLevelParentUniqueName13 = WMS.sln
+		SccProjectName13 = WMS.Reports.Services
+		SccLocalPath13 = WMS.Reports.Services
+		SccProjectUniqueName14 = WMS.UI.Controllers\\WMS.UI.Controllers.csproj
+		SccProjectTopLevelParentUniqueName14 = WMS.sln
+		SccProjectName14 = WMS.UI.Controllers
+		SccLocalPath14 = WMS.UI.Controllers
+		SccProjectUniqueName15 = WMS.UI\\WMS.UI.csproj
+		SccProjectTopLevelParentUniqueName15 = WMS.sln
+		SccProjectName15 = WMS.UI
+		SccLocalPath15 = WMS.UI
+		SccProjectUniqueName16 = WMS.WCFServices\\WMS.WCFServices.csproj
+		SccProjectTopLevelParentUniqueName16 = WMS.sln
+		SccProjectName16 = WMS.WCFServices
+		SccLocalPath16 = WMS.WCFServices
+		SccProjectUniqueName17 = WMS.WebApi\\WMS.WebApi.csproj
+		SccProjectTopLevelParentUniqueName17 = WMS.sln
+		SccProjectName17 = WMS.WebApi
+		SccLocalPath17 = WMS.WebApi
+	EndGlobalSection
+EndGlobal

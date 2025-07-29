@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+
+        <input type="text" left="100" name="ReceiptId" hint="收货批次号" />
+        <input type="text" name="SoNumber" hint="SO" />
+        <input type="text" name="PoNumber" hint="PO" />
+        <input type="text" name="ItemNumber" hint="SKU" />
+
+        <input type="text" name="ReceiptDateBegin" hint="收货时间" date='Y' />
+        <input type="text" name="ReceiptDateEnd" left="20" hint="-" date='Y' />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/RecReport/ReceiptCottonOnList", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: ["pz"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+                 
+                dofunc: function (grid, trs) {
+                    //for (i in trs)  //列 格式化增加颜色显示
+                    //    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+                }
+            }
+        });
+
+    });
+
+    
+</script>

@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7DA3A2EF-6B45-4DBA-8AB6-90E89F803287}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MODEL_MSSQL</RootNamespace>
+    <AssemblyName>MODEL_MSSQL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\WMS.WCFServices\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddValueService.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BillDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BillMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessFlowGroup.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessFlowHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObject.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjectDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjectHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjectItem.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class1.cs" />
+    <Compile Include="ContractForm.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractFormExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContractFormOut.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRTemplate.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CycleCountCheck.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CycleCountDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CycleCountInventory.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CycleCountMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DamcoGRNDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DamcoGRNHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DamcoGrnRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DcReturnException.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DcShipingException.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelImportInBound.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelImportInBoundCom.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelImportInBoundCotton.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelImportOutBound.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeHoliday.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FeeMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FieldOrderBy.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FlowDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FlowHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FlowRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HeportSerialNumberIn.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Heport_R_SerialNumberInOut.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoldMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Holiday.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HuDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HuMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InBoundOrder.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InBoundOrderDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InBoundSO.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvMove.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvMoveDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemMasterColorCode.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemMasterExtendOM.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KmartWaitingReason.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadCharge.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadChargeDaiDian.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadChargeDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadChargeRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadContainerDetailExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadContainerExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadContainerExtendHuDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadContainerType.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadCreateRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadHuIdExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoadMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocationType.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocationTypesDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginLog.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookUp.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Loss.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_MsSql.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_MsSql.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_MsSql.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_MsSql.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_MsSql.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="NightTime.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OMSInvChange.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OutBoundOrder.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OutBoundOrderDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackHeadJson.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackScanNumber.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackTask.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackTaskJson.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pallate.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PallateType.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoMaster.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PickTaskDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlatformUserInfo.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipt.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptCharge.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptChargeDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptPartialRegister.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptPartialRegisterDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptRegister.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptRegisterDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptRegisterExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptTruck.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecLoss.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecLossType.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleaseLoadDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RFFlowRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_Client_FlowRule.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_LoadRule_FlowHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_Location_Item.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_Location_Item_RG.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_SerialNumberInOut.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_WhClient_WhAgent.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="R_WhInfo_WhUser.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SerialNumberDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SerialNumberIn.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SerialNumberInOutExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SerialNumberOut.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SortTask.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SortTaskDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StringrRgular.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplementTask.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplementTaskDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TCRProcess.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TranLog.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransferDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransferHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransferScanNumber.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransferTask.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TruckQueueDetail.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TruckQueueHead.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="truckQueueView.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Unit.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitDefault.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UrlEdi.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UrlEdiTask.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserPriceT.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserShenT.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhAgent.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhClient.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhClientExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhClientType.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhCompany.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhInfo.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhLevel.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhLocation.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhMenu.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhPosition.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhPositionPower.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhPositionPowerMVC.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhPower.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhUser.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WhUserPosition.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkloadAccount.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zone.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZoneLocation.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZonesExtend.cs">
+      <DependentUpon>Model_MsSql.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model_MsSql.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_MsSql.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Model_MsSql.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_MsSql.edmx</DependentUpon>
+      <LastGenOutput>Model_MsSql.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model_MsSql.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_MsSql.edmx</DependentUpon>
+      <LastGenOutput>Model_MsSql.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

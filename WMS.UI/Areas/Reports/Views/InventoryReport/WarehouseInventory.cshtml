@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="UserName" value="@ViewBag.UserName" />
+        <input type="hidden" name="CompanyId" value="@ViewBag.CompanyId" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["whInfoCode"], "whCode", "仓库名", "", "")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "ClientCode", "客户名", "", "")
+        <input type="text" left="90" name="ReceiptId" hint="收货批次号" />
+        <input type="text" name="PoNumber" hint="PO" />
+        <input type="text" name="ALtItemNumber" hint="SKU" />
+        <input type="text" name="LotNumber1" hint="Lot1" />
+        <input type="text" name="BeginReceiptDate" left="90" hint="收货时间" date='Y'  />
+        <input type="text" name="EndReceiptDate" left="20" hint="-" date='Y'  />
+        <input type="text" name="locationId" hint="库位" />
+        <input type="text" left="90" name="locationId1" hint="库位模糊匹配" />
+        <select left="90" name="holdReason" hint="是否冻结"><option></option><option value="0" >否</option><option value="1">是</option></select>
+        <select left="90" name="locationTypeId" hint="库位类型"><option></option><option value="1">正常库位</option><option value="2">收货门区</option><option value="3">备货门区</option><option value="5">货损库位</option></select>
+
+        <input type="text" left="100" name="so_like" hint="SO号模糊匹配" />
+        <textarea name="so_number" left="60" hint="SO号"></textarea>
+        <textarea name="hu_id" left="60" hint="托盘号"></textarea>
+
+        <input name="hebingWhere" left="100" hint="无托盘库位" type="checkbox" value="1"> 
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/InventoryReport/WarehouseInventoryList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+        $("[name=so_number]").css("height", "30px").css("width", "185px");
+        $("[name=so_number]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=hu_id]").css("height", "30px").css("width", "185px");
+        $("[name=hu_id]").parent().css("height", "35px").css("width", "280px");
+    });
+
+</script>

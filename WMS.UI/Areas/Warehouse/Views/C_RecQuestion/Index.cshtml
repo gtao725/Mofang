@@ -1,0 +1,445 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户名", "", "")
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" />
+        <input type="text" left="90" name="hu_id" hint="托盘号" />
+        <input type="text" left="90" name="so_number" hint="SO号" />
+        <input type="text" left="90" name="customer_po" hint="PO号" />
+        <input type="text" left="90" name="altItemNumber" hint="款号" />
+        <input type="text" name="ReceiptDateBegin" hint="收货时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="ReceiptDateEnd" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "批量修改TCR异常原因", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要修改的信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=check_to]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'id', value: $(this).val() });
+                                   arr_list.push({ name: 'clientCode', value: $(this).attr("clientCode") });
+                               })
+
+                               eip.post("/Warehouse/C_RecQuestion/CheckClientCode", arr_list, function (jsonObj) {
+                                   if (jsonObj.split("$")[0] == "Y") {
+                                       EditHoldReason(jsonObj.split("$")[1]);
+                                   } else {
+                                       $.eipMsg.alert("TCR异常原因修改时只能选择一个客户！");
+                                   }
+                               })
+
+                           }
+                    },
+                    {
+                        text: "批量清除TCR异常原因", icon: "cancel", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要清除的信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=check_to]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'id', value: $(this).val() });
+                               })
+
+                               $.eipMsg.confirm("确定批量清除所选托盘的异常原因吗？\r\n将会同时清除库存及TCR表中的异常原因！", function () {
+                                   eip.post("/Warehouse/C_RecQuestion/FrozenDeleteList", arr_list, function (jsonObj) {
+                                       $.procAjaxData(jsonObj, function () {
+
+                                           eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                       }, function () { });
+                                   }, null, true)
+
+                               })
+
+                           }
+                    },
+                    {
+                        text: "批量修改收货分票", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要修改的信息!");
+                                   return;
+                               }
+
+                               EditDetailLotFlag();
+
+                           }
+                    },
+                    {
+                        text: "批量清除收货分票", icon: "cancel", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要清除的信息!");
+                                   return;
+                               }
+
+                               var arr_list = [];
+                               $("[name=check_to]:checked", $("#grid")).each(function () {
+                                   arr_list.push({ name: 'id', value: $(this).val() });
+                               })
+
+                               $.eipMsg.confirm("确定批量清除收货信息的【分票】吗？\r\n清除后 收货凭证将没有分票信息！", function () {
+                                   eip.post("/Warehouse/C_RecQuestion/LotFlagDeleteList", arr_list, function (jsonObj) {
+                                       $.procAjaxData(jsonObj, function () {
+
+                                           eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                       }, function () { });
+                                   }, null, true)
+
+                               })
+                           }
+                    },
+                    {
+                        text: "修改车型", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要修改的信息!");
+                                   return;
+                               }
+
+                               if ($("[name=check_to]:checked", $("#grid")).length > 1) {
+                                   $.eipMsg.alert("修改车型只需选择一行信息，请重新选择!");
+                                   return;
+                               }
+
+                               EditRegTransportType();
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["仓库", "单位ID", "单位"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                return "<input type=checkbox name=check_to value=" + row["操作"] + " clientCode=" + row["客户"] + "  receiptId=" + row["收货批次号"] + " >";
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改收货明细' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetailCustom(this)' title='修改客户定制信息' ></a>";
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    //批量修改分票
+    function EditDetailLotFlag() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'id', value: $(this).val() });
+        })
+
+        var dlg = eip.dialog.create("修改分票类型", "<div id=layout7 ><div form='Y' id='form7'>"
+
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["LotFlagSelect"], "edit_lotFlag", "分票类型", " ", " left='140' ",false)"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout7'), [{
+            obj: $('#form7'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            var stringLotFlag = $("[name=edit_lotFlag]").text();
+                            $.eipMsg.confirm("确定批量修改分票吗？\r\n修改后 收货凭证将显示分票信息！", function () {
+                                eip.post("/Warehouse/C_RecQuestion/LotFlagEditList?lotFlag=" + eip.utf8($("[name=edit_lotFlag]").val()), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () { });
+                                }, null, true)
+
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    //修改车型
+    function EditRegTransportType() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'receiptId', value: $(this).attr("receiptId") });
+        })
+
+        var dlg = eip.dialog.create("修改车型-未完成收货也可修改", "<div id=layout9 ><div form='Y' id='form9'>"
+
+                                      + " <select class=\"easyui-validatebox\" hint=\"车型\"  left=\"140\" name=\"edit_TransportType\"><option value='厢式车'>厢式车</option><option value='平板车'>平板车</option><option value='集装箱'>集装箱</option></select>"
+                                       + " <select class=\"easyui-validatebox\" hint=\"是否超长\"  left=\"140\" name=\"edit_TransportTypeExtend\"><option value=''></option><option value='16.5'>16.5</option></select>"
+
+                                    + "</div></div>", 500, 150)
+
+        eip.layout.create($('#layout9'), [{
+            obj: $('#form9'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            $.eipMsg.confirm("确定修改车型吗？", function () {
+                                eip.post("/Warehouse/C_RecQuestion/EditRegTransportType?editTransportType=" + eip.utf8($("[name=edit_TransportType]").val()) + "&editTransportTypeExtend=" + eip.utf8($("[name=edit_TransportTypeExtend]").val()), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () { });
+                                }, null, true)
+
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var unitName = row["单位"];
+
+        var dlg = eip.dialog.create("修改收货信息", "<div id=layout4 ><div form='Y' id='form4'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号：\">" + row["SO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"PO号：\">" + row["PO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"款号：\">" + row["款号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"托盘：\">" + row["托盘"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"edit_id\" value=\"" + row["操作"] + "\" hint=\" \" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_qty\" value=\"" + row["实收数量"] + "\" hint=\"数量\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_length\" value=\"" + row["长"] + "\" hint=\"长\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_width\" value=\"" + row["宽"] + "\" hint=\"宽\" />"
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_height\" value=\"" + row["高"] + "\" hint=\"高\" />"
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_weight\" value=\"" + row["重量"] + "\" hint=\"重量\" />"
+                                     + "<select left=\"140\" name=\"edit_UnitName\" hint=\"单位\"><option></option></select>"
+                                     + "<lable>必须完成收货才可修改收货单位</lable>"
+                                    + "</div></div>", 500, 400)
+
+        eip.layout.create($('#layout4'), [{
+            obj: $('#form4'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_qty]", $("#layout4")).val() == "") {
+                                $.eipMsg.alert("请输入数量!");
+                                return;
+                            }
+
+                            eip.get("/Warehouse/C_RecQuestion/EditDetail", eip.para.create($("input,select", $("#layout4"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            }, null, true)
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        eip.post("/Warehouse/C_RecQuestion/GetUnitDefaultList", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_UnitName]", $("#layout4")), val, true);
+                $("[name=edit_UnitName]", $("#layout4")).val(unitName);
+            }
+        });
+
+        
+    }
+
+
+    function EditDetailCustom(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg = eip.dialog.create("修改客户定制信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号：\">" + row["SO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"PO号：\">" + row["PO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"款号：\">" + row["款号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"托盘：\">" + row["托盘"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"edit_id\" value=\"" + row["操作"] + "\" hint=\" \" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_custom1\" value=\"" + row["客户定制1"] + "\" hint=\"客户定制1\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_custom2\" value=\"" + row["客户定制2"] + "\" hint=\"客户定制2\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_custom3\" value=\"" + row["客户定制3"] + "\" hint=\"客户定制3\" />"
+                                    + "</div></div>", 500, 350)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            eip.get("/Warehouse/C_RecQuestion/EditDetailCustom", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    //批量修改TCR异常原因
+    function EditHoldReason(clientCode) {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'id', value: $(this).val() });
+        })
+
+        var dlg_add = eip.dialog.create("批量修改TCR异常原因", "<div id=layout5 ><div form='Y' id='form5'>"
+                               + "</div> <table id=\"gridFrozen\"></table></div>", 660, 400)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "确认批量修改TCR异常原因", icon: "save", click:
+                        function () {
+
+                            if ($("[name=chx_holdResoan]:checked", $("#gridFrozen")).length == 0) {
+                                $.eipMsg.alert("必须选择一个异常原因！");
+                                return;
+                            }
+
+                            var holdId = "";
+                            var holdReason = "";
+                            $("[name=chx_holdResoan]:checked", $("#gridFrozen")).each(function () {
+                                holdId = $(this).val(),
+                                holdReason += $(this).attr("holdReasonArr") + ",";
+                            })
+
+                            $.eipMsg.confirm("确定批量修改这些托盘的异常原因吗？\r\n将会同时调整库存及TCR表中的信息！", function () {
+                                eip.post("/Warehouse/C_RecQuestion/FrozenEditList?holdId=" + holdId + "&holdReason=" + eip.utf8(holdReason), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/Warehouse/C_RecQuestion/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                        eip.dialog.close(dlg_add);
+                                    }, function () { });
+                                }, null, true)
+
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg_add);
+                      }
+               }
+            ]
+        }])
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#gridFrozen"),
+            pagesize: 200,
+            hiddencolumns: ["客户ID", "操作"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_holdResoan value=" + row["操作"] + " holdReasonArr=\"" + row["异常原因"] + "\" >";
+            },
+            muledit: false,
+            columns: {
+
+            }
+        });
+
+        eip.datagrid.load("/Warehouse/C_RecQuestion/HoldMasterListByRec?clientCode=" + clientCode, $("#gridFrozen"), eip.para.create($("input,select", $("#form5"))));
+
+    }
+
+</script>

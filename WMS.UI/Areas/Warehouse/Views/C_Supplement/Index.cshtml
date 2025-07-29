@@ -1,0 +1,242 @@
+﻿@model WMS.UI.Controllers.Model.R_Location_ItemModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", " left=\"90\"")
+        <input type="text" left="90" name="locationId" hint="捡货库位" />
+        <input type="text" left="90" name="altItemNumber" hint="款号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="Status"><option></option><option value='Active'>启用</option><option value='UnActive'>未启用</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_clientCode, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_LocationId, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_AltItemNumber, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_MinQty, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_MaxQty, new { @left = "140" })
+    <input type="text" left="140" name="txt_LotNumber1" hint="Lot1" />
+    <input type="text" left="140" name="txt_LotNumber2" hint="Lot2" />
+    <input type="text" left="140" name="txt_LotDate" hint="LotDate" class='easyui-validatebox' data-options='validType:[&#39;datetime&#39;]' datetime='Y' />
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="状态" name="Status"><option value='Active' selected>启用</option><option value='UnActive'>未启用</option></select>
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_Supplement/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }, {
+                        text: "新增补货信息", icon: "add", click: function () {
+                            var dlg = eip.dialog.create("新增补货信息", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 400)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                if (!$("#form2").form('validate')) {
+                                                    return false;
+                                                }
+
+                                                eip.get("/Warehouse/C_Supplement/AddR_Location_Item", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                    $.procAjaxData(jsonObj, function () {
+                                                        $("[name=txt_LocationId]").val("");
+                                                        $("[name=txt_AltItemNumber]").val("");
+                                                        $("[name=txt_MinQty]").val("");
+                                                        $("[name=txt_MaxQty]").val("");
+
+                                                        eip.datagrid.load("/Warehouse/C_Supplement/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                                    }, function () { });
+                                                }, null, true)
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $("[name=txt_clientCode]").focus();
+
+                        }
+                    }, {
+                        text: "批量导入补货信息", icon: 'imports', click:
+                         function () {
+                             eip.imports({
+                                 url: '/Warehouse/C_Supplement/ImportsR_Location_Item', //若后台函数名为 imports，url就可以不传了
+                                 doFunc: function (jsonObj) {
+                                     $.procAjaxData(jsonObj, function () {
+                                         eip.datagrid.load("/Warehouse/C_Supplement/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                     }, function () { })
+                                 },
+                                 columns: [
+                                     {
+                                         column: '客户名',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     }
+                                     ,
+                                     {
+                                         column: '库位',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: '款号',
+                                         type: "string",
+                                         width: 100,
+                                         empty: false, //允许空值
+                                         optional: false //该列是否可选
+                                     },
+                                     {
+                                         column: 'lot1',
+                                         type: "string",
+                                         width: 100,
+                                         empty: true, //允许空值
+                                         optional: true //该列是否可选
+                                     },
+                                      {
+                                          column: '警戒数量',
+                                          type: "number",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                       {
+                                           column: '上限数量',
+                                           type: "number",
+                                           width: 100,
+                                           empty: false, //允许空值
+                                           optional: false //该列是否可选
+                                       }
+                                 ]
+                             });
+                         }
+                    }
+                    ,
+                    {
+                        text: "批量删除补货信息", icon: 'cancel', click:
+                         function () {
+                             SupplementLocationDel();
+                         }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["状态"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["操作"] + " >";   //得到职位ID
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑修改' ></a>";
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/Warehouse/C_Supplement/EditAddR_Location_Item?Id=" + Id + "&edit_MinQty=" + eip.utf8($("[name=edit_MinQty]").val()) + "&edit_MaxQty=" + eip.utf8($("[name=edit_MaxQty]").val()) + "&edit_Status=" + eip.utf8($("[name=edit_Status]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+
+                                        eip.datagrid.load("/Warehouse/C_Supplement/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "警戒数量": {
+                    editor: { type: "text", name: "edit_MinQty" }
+                },
+                "上限数量": {
+                    editor: { type: "text", name: "edit_MaxQty" }
+                },
+                "状态名": {
+                    editor: {
+                        type: 'select', field: "状态", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_Status'></select>"), [{ val: "Active", text: "启用" }, { val: "UnActive", text: "未启用" }], true));
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    function SupplementLocationDel() {
+        if ($("[name=chx_Pow]:checked", $("#grid")).length == 0) {
+            $.eipMsg.alert("请先勾选要删除的行!");
+            return;
+        }
+
+        var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid")));
+
+        $.eipMsg.confirm("确定批量删除勾选的补货信息吗？", function () {
+            eip.post("/Warehouse/C_Supplement/SupplementLocationDel", para, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_Supplement/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            }, null, true)
+        });
+    }
+
+
+
+</script>

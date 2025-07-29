@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+  
+        <input type="text" left="90" name="MoveNum" hint="整理单号" />
+        <input type="text" name="BeginDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" />
+ 
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_InVentoryExtend/ListInvMove", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    },
+                     {
+                         text: "新增库存整理单", icon: "add", click:
+                         function () {
+                             eip.get("/Warehouse/C_InVentoryExtend/InvMoveCreate",null, function (jsonObj) {
+                                 $.procAjaxData(jsonObj, function () {
+                                     eip.datagrid.load("/Warehouse/C_InVentoryExtend/ListInvMove", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                 }, function () { });
+                             },null,true)
+
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["仓库"],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+
+                "操作": {
+                    formatter: function (row) {
+
+
+                        var retHtml = "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintMoveNum(this)' title='打印库存整理单' ></a>";
+
+                        return retHtml;
+
+                    }
+                },
+                "整理单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"MoveDetail(this)\" >" + row["整理单号"] + "</span>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+    });
+
+
+
+    //明细列表
+    function MoveDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var MoveNum = row["操作"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("库存整理单明细列表",
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 950, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 50,
+            hiddencolumns: ["操作"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+
+        eip.datagrid.load("/Warehouse/C_InVentoryExtend/ListInvMove?DetailFlag=1&MoveNum=" + MoveNum, $("#grid_detail_detailSearch"));
+
+    }
+
+
+    //打印收货操作单
+    function PrintMoveNum(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var MoveNum = row["操作"];
+ 
+
+        window.open("https://@Html.Raw(ViewBag.CrSaveAddress)/extend/InvMove.aspx?MoveNum=" + MoveNum + "&WhCode=" + eip.utf8(@ViewBag.whCode));
+
+    }
+
+</script>

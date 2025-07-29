@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>
+            )ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="altItemNumber" hint="款号Code" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/ItemColorCode/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "批量导入款号Code", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/ItemColorCode/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          eip.datagrid.load("/Root/ItemColorCode/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '客户名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '款号Code',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '款号描述',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+
+
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑信息' ></a>";
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+                                var Id = row["操作"];
+
+                                var para = [{ name: "edit_description", value: $("[name=edit_description]").val() }, { name: "Id", value: Id }];
+
+                                eip.get("/Root/ItemColorCode/EditItemColorCode", para, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Root/ItemColorCode/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "款号描述": {
+                    editor: { type: "text", name: "edit_description" }
+                }
+            }
+        });
+
+    });
+
+</script>

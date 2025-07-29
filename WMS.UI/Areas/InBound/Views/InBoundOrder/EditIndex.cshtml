@@ -1,0 +1,188 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+
+        <input type="text" name="edit_customer_po" hint="PO" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <textarea name="edit_so_number" left="90" hint="进仓单(SO)"></textarea>
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/InBound/InBoundOrder/ListDetail?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }, {
+                        text: "SO批量修改客户名", icon: "save", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               EditClientCode();
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["OrderType", "客户ID", "仓库", "修改客户名"],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                if (row["进仓单"] != "" && row["登记数量"] == "0") {
+                    return "<input type=checkbox name=check_to  value=\"" + row["进仓单"] + "\" clientCode='" + row["客户名"] + "'  >";
+                }
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='NextAction(this)' title='编辑预录入' ></a>";
+
+                        if (row["登记数量"] == "0" || row["登记数量"] < 0) {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DeleteInBound(this)' title='删除预录入' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+                //,"修改客户名": {
+                //    formatter: function (row) {
+                //        var retHtml = " ";
+                //        if (row["进仓单"] != "" && row["登记数量"] == "0") {
+                //            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditClientCode(this)' title='修改客户名' ></a>";
+                //        }
+
+                //        return retHtml;
+                //    }
+                //}
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=edit_so_number]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+
+        $("[name=edit_so_number]").css("height", "25px").css("width", "185px");
+        $("[name=edit_so_number]").parent().css("height", "30px").css("width", "280px");
+    });
+
+
+    //修改客户名
+    function EditClientCode() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'soNumber', value: $(this).val() });
+            arr_list.push({ name: 'clientCode', value: $(this).attr("clientCode") });
+        })
+
+        var dlg = eip.dialog.create("SO批量修改客户名", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "edit_clientCode", "客户名", " ", " left='140' ",true)"
+                                    + "</div></div>", 500, 200)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            var clientCode = $("[name=edit_clientCode]").find("option:selected").text();
+                            if (clientCode == "") {
+                                $.eipMsg.alert("请先选择客户名!");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定批量修改SO的客户名吗？", function () {
+
+                                var clientCode = $("[name=edit_clientCode]").find("option:selected").text();
+
+                                eip.post("/InBound/InBoundOrder/InBoundOrderEditClientCode?clientCode=" + eip.utf8(clientCode) + "&clientId=" + $("[name=edit_clientCode]").val(), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+
+                                        var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                                        eip.datagrid.load("/InBound/InBoundOrder/ListDetail?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+
+                                    }, function () { });
+                                })
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_clientCode]").focus();
+    }
+
+    function NextAction(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var so_number = row["进仓单"];
+        if (so_number == null) {
+            so_number = "";
+        }
+        window.location = "/InBound/InBoundOrder/AddIndex?add_so=" + so_number + "&add_po=" + row["PO"] + "&clientId=" + row["客户ID"] + "&clientName=" + eip.utf8(row["客户名"]);
+    }
+
+    //删除预录入
+    function DeleteInBound(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var clientCode = row["客户名"];
+        var soNumber = row["进仓单"];
+        var customerPoNumber = row["PO"];
+        if (soNumber == null) {
+            soNumber = "";
+        }
+        $.eipMsg.confirm("确定删除预录入：<br/>客户名:" + clientCode + " SO:" + soNumber + " PO:" + customerPoNumber + "吗？", function () {
+            eip.get("/InBound/InBoundOrder/DeleteInBound?clientCode=" + eip.utf8(clientCode) + "&customerPoNumber=" + customerPoNumber + "&soNumber=" + soNumber, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/InBound/InBoundOrder/ListDetail?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+</script>

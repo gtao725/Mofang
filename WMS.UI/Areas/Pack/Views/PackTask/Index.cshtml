@@ -1,0 +1,215 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" name="packNumber" hint="分拣框号：" />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Pack/PackTask/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["packTaskId", "packHeadId"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditPackHead(this)' title='修改' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='PackDetailList(this)' title='查看明细' ></a>";
+
+                        if (row["快递状态"] != "Y") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DeletePackHead(this)' title='删除' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=packNumber]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //删除
+    function DeletePackHead(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除包装托盘：" + row["包装托盘"] + "的信息吗？", function () {
+            eip.get("/Pack/PackTask/DeletePackHead?Id=" + row["packHeadId"] + "&packTaskId=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Pack/PackTask/List", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                }, function () { });
+            })
+        })
+    }
+
+
+    //查看明细
+    function PackDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看明细，包装托盘：" + row["包装托盘"],
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: [""],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick=\"ScanNumberDetailList(this)\" title='查看扫描明细' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Pack/PackTask/PackDetailList?packHeadId=" + row["packHeadId"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+
+
+    //扫描明细
+    function ScanNumberDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看扫描明细，包装托盘：" + row["包装托盘"] + "，款号：" + row["款号"],
+            "<div id=layout_Detail1><div form=\"Y\" id=\"form_Detail1\">"
+            + "</div>"
+            + "<table id=\"grid_detail1\"></table></div>", 700, 450)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail1"),
+            hiddencolumns: ["packScanNumberId"],
+            pagesize: 200
+        });
+
+        eip.layout.create($('#layout_Detail1'), [{
+            obj: $('#form_Detail1'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Pack/PackTask/ScanNumberDetailList?PackDetailId=" + row["操作"], $("#grid_detail1"), eip.para.create($("input,select", $("#layout_Detail1"))));
+    }
+
+    //修改长宽高 包装耗材
+    function EditPackHead(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg = eip.dialog.create("修改", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"包装组号\">" + row["包装组号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"包装托盘\">" + row["包装托盘"] + "</span>"
+                                     + "<input type=\"hidden\" left=\"1\" name=\"edit_headId\" value=\"" + row["packHeadId"] + "\"  />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_packCarton\" value=\"" + row["包装耗材"] + "\" hint=\"包装耗材\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_weight\" value=\"" + row["重量"] + "\" hint=\"重量\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_length\" value=\"" + row["长"] + "\" hint=\"长\" />"
+
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_width\" value=\"" + row["宽"] + "\" hint=\"宽\" />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_height\" value=\"" + row["高"] + "\" hint=\"高\" />"
+
+                                    + "</div></div>", 520, 450)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_packCarton]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("包装耗材必须填写!");
+                                return;
+                            }
+                            if ($("[name=edit_weight]", $("#form5")).val() == "") {
+                                $.eipMsg.alert("重量必须填写!");
+                                return;
+                            }
+
+                            eip.get("/Pack/PackTask/EditPackHead", eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Pack/PackTask/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+</script>

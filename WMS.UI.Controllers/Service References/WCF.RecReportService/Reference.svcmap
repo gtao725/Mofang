@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0be9e2d9-e4a0-4022-b7da-13ea7474dc13" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/RecReportService/RecReportService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RecReportService3.xsd" MetadataType="Schema" ID="26b9e8e2-335f-4d89-b8f0-4750378ce489" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RecReportService.xsd" MetadataType="Schema" ID="a54ea8ad-c611-4952-94b2-388f7ca546f8" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RecReportService1.xsd" MetadataType="Schema" ID="f8dcc931-aa11-48e6-a512-28e62a1ae071" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RecReportService2.xsd" MetadataType="Schema" ID="fb56ae23-eb70-43c6-9386-26e55aecf96a" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd0" />
+    <MetadataFile FileName="RecReportService.wsdl" MetadataType="Wsdl" ID="2c1133bf-adc0-46de-96ef-59bb7a80a240" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?wsdl" />
+    <MetadataFile FileName="RecReportService31.xsd" MetadataType="Schema" ID="3ba0b4ce-8de7-430a-97cf-0309d0cca8ea" SourceId="1" SourceUrl="http://localhost:45936/RecReportService/RecReportService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

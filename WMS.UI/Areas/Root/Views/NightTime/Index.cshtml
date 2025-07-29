@@ -1,0 +1,160 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        
+    </div>
+    <table id="grid"></table>
+</div>
+ 
+<div id='form22' style="display:none">
+    <input type="text" left="140" name="txt_nightTimeBegin" hint="夜班开始时间" /><span left="70" hint="格式:08:00"></span>
+    <input type="text" left="140" name="txt_nightTimeEnd" hint="夜班结束时间" /><span left="70" hint="格式:10:00"></span>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/NightTime/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增夜班区间", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增夜班区间", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/root/NightTime/AddNightTime", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+
+                                                         $("[name=txt_nightTimeBegin]").val("");
+                                                         $("[name=txt_nightTimeEnd]").val("");
+                                                         $("[name=txt_nightTimeBegin]").focus();
+
+                                                         eip.datagrid.load("/root/NightTime/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_nightTimeBegin]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelNightTime(this)' title='删除' ></a>";
+
+                        return retHtml;
+                    },
+
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                var url = "/root/NightTime/NightTimeEdit?Id=" + Id;
+                             
+                                eip.get(url, eip.para.create($("input,select", $("#grid"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/root/NightTime/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "夜班开始时间": {
+                    editor: { type: "text", name: "edit_nightTimeBegin" }
+                },
+                "夜班结束时间": {
+                    editor: { type: "text", name: "edit_nightTimeEnd" }
+                }
+
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+   
+    //删除
+    function DelNightTime(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+        var Description = row["夜班开始时间"] + "-" + row["夜班结束时间"];
+
+        $.eipMsg.confirm("确定删除夜班区间：" + Description + "吗？", function () {
+            eip.get("/root/NightTime/NightTimedel?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/NightTime/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+   
+
+</script>

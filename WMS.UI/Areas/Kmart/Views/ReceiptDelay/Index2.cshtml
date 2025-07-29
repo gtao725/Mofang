@@ -1,0 +1,155 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+     
+        <input type="text" left="90" name="ReceiptId" hint="收货批次号" />
+        <input type="text" name="TruckNumber" hint="车牌号" />
+        <input type="text" name="PhoneNumber" hint="手机号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="收货状态" name="status"><option></option><option value='未释放'>未释放</option><option value='未收货'>未收货</option><option value='正在收货'>正在收货</option><option value='暂停收货'>暂停收货</option><option value='完成收货'>完成收货</option></select>
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="创建人" name="createUser"><option value='当前用户' selected>当前用户</option><option></option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Kmart/ReceiptExcept/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "新增收货登记", icon: "add", click: function () {
+                            dlg = eip.dialog.create("新增收货登记", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                               , 500, 430)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                addReg();
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $("[name=txt_WhClient]").focus();
+
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [""],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+                "收货批次号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"ReceiptRegisterDetail(this)\" >" + row["收货批次号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "未释放") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"AddReceiptRegisterDetail('" + row["收货批次号"] + "','" + row["客户ID"] + "','" + row["客户名"] + "','" + row["车牌号"] + "')\" title='添加进仓单' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditReceiptRegisterDetail(this)' title='修改明细' ></a>";
+                        }
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改库区及车牌' ></a>";
+
+                        if (row["状态"] == "未释放" || row["状态"] == "未收货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelReceiptRegister(this)' title='删除收货批次号' ></a>";
+                        }
+                        if (row["状态"] == "未收货" && row["类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='RollbackReceiptId(this)' title='撤销释放' ></a>";
+                        }
+                        if (row["状态"] != "完成收货" && row["状态"] != "未释放" && row["类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='打印收货操作单' ></a>";
+                        }
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptIdSmall(this)' title='打印热敏收货小票' ></a>";
+
+                        if (row["状态"] != "完成收货" && row["状态"] != "未释放" && row["类型"] == "直装") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintDSReceiptId(this)' title='打印直装操作单' ></a>";
+                        }
+                        return retHtml;
+                        //},
+                        //editor: {
+                        //    type: "func", func: function (row) {
+                        //        var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                        //        "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                        //        btn.click(function () {
+
+                        //            var ReceiptId = row["收货批次号"];     //得到ID
+                        //            var LocationId = $("[name=edit_recZone]").val();
+                        //            var TruckNumber = $("[name=edit_truckNumber]").val();
+
+                        //            if ($("[name=edit_recZone]").val() == "") {
+                        //                $.eipMsg.alert("请先选择收货区域！");
+                        //                return;
+                        //            }
+
+                        //            eip.get("/Kmart/ReceiptExcept/EditReceiptRegister?ReceiptId=" + ReceiptId + "&LocationId=" + eip.utf8(LocationId) + "&TruckNumber=" + eip.utf8(TruckNumber) + "&Phone=" + eip.utf8($("[name=edit_phone]").val()) + "&edit_GreenPassFlag=" + eip.utf8($("[name=edit_GreenPassFlag]").val()), null, function (jsonObj) {
+                        //                $.procAjaxData(jsonObj, function () {
+                        //                    eip.datagrid.load("/Kmart/ReceiptExcept/List?ReceiptType=Com", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        //                }, function () { });
+                        //            })
+
+                        //        });
+                        //        return btn;
+                        //    }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+        });
+    });
+
+   
+
+ 
+
+ 
+</script>

@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" />
+        <input type="text" left="90" name="hu_id" hint="托盘号" />
+        请注意：完成收货的批次才能修改
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            if ($("[name=receipt_id]", $("#layout")).val() == "") {
+                                $.eipMsg.alert("请输入收货批次号!");
+                                return;
+                            }
+                            eip.datagrid.load("/InBound/EditInBoundAltItemStyleByHu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }, {
+                        text: "确认修改", icon: "save", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               EditDetailClientCode();
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["仓库"],
+            checkbox: function (row) {
+                if (row["状态"] == "完成收货") {
+                    return "<input type=checkbox name=check_to  value=\"" + row["SO号"] + "\"  poNumber=\"" + row["PO号"] + "\"  itemNumber=\"" + row["款号"] + "\"  huId=\"" + row["托盘号"] + "\" style1=\"" + row["属性1"] + "\"  style2=\"" + row["属性2"] + "\"  style3=\"" + row["属性3"] + "\"  >";
+                }
+            }
+        });
+
+        $("[name=receipt_id]").focus();
+
+    });
+
+    //修改款号
+    function EditDetailClientCode() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'soNumber', value: $(this).val() });
+            arr_list.push({ name: 'poNumber', value: $(this).attr("poNumber") });
+            arr_list.push({ name: 'itemNumber', value: $(this).attr("itemNumber") });
+            arr_list.push({ name: 'huId', value: $(this).attr("huId") });
+
+            arr_list.push({ name: 'style1', value: $(this).attr("style1") });
+            arr_list.push({ name: 'style2', value: $(this).attr("style2") });
+            arr_list.push({ name: 'style3', value: $(this).attr("style3") });
+        })
+
+        var val1 = $("[name=receipt_id]").val();
+
+
+        var dlg = eip.dialog.create("修改款号属性", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + val1 + "</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_style1\" value=\"\" hint=\"修改为\" /><span  hint=\"\">请填写属性1</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_style2\" value=\"\" hint=\"修改为\" /><span  hint=\"\">请填写属性2</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_style3\" value=\"\" hint=\"修改为\" /><span  hint=\"\">请填写属性3</span>"
+
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=check_to]:checked", $("#grid")).length > 1) {
+                                $.eipMsg.alert("修改款号属性时只能选择一行修改！");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定修改款号属性吗？", function () {
+                                eip.post("/InBound/EditInBoundAltItemStyleByHu/EditDetailAltItemNumber?receiptId=" + val1 + "&edit_style1=" + eip.utf8($("[name=edit_style1]").val()) + "&edit_style2=" + eip.utf8($("[name=edit_style2]").val()) + "&edit_style3=" + eip.utf8($("[name=edit_style3]").val()), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/InBound/EditInBoundAltItemStyleByHu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_style1]").focus();
+    }
+
+</script>

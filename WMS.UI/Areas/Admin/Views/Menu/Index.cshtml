@@ -1,0 +1,274 @@
+﻿@model WMS.UI.Controllers.Model.AdminModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="menu_nameCN" hint="菜单中文名" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["MenuNameCN"], "parentId", "父级菜单", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_menu_nameCN, new { @left = "140" })
+    <input type="text" left="140" name="txt_url" hint="菜单Url" />
+    @Html.EipInputFor(model => model.txt_icon, new { @left = "140" })
+    <input type="text" left="140" name="txt_menuOrderBy" hint="菜单排序" value="0" />
+
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["MenuNameCN"], "txt_MenuNameCN", "父级菜单", "", "left='140' ")
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增菜单", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增菜单", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+
+                                 @*+ "<input type=\"text\" left=\"140\" name=\"txt_menu_name\" hint=\"菜单英文简称\" />"
+                                 + "<input type=\"text\" left=\"140\" name=\"txt_menu_nameCN\" hint=\"菜单中文名\" />"
+                                 + "<input type=\"text\" left=\"140\" name=\"txt_url\" hint=\"菜单Url\" />"
+                                 + "<input type=\"text\" left=\"140\" name=\"txt_icon\" hint=\"菜单图标\" />"
+                                 + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["MenuNameCN"], "txt_MenuNameCN","父级菜单","", "left='140' ")"*@
+                                 + "</div></div>", 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/Menu/AddMenu", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_menu_name]").val("");
+                                                         $("[name=txt_menu_nameCN]").val("");
+                                                         $("[name=txt_url]").val("");
+                                                         $("[name=txt_icon]").val("");
+                                                         $("[name=txt_parentId]").val("");
+                                                         eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             $("[name=txt_menu_name]").focus();
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            hiddencolumns: ["权限ID", "父级菜单ID", "修改人", "修改时间"],
+            //lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑菜单' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='WhMenuDel(this)' title='删除菜单' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='MenuPowerManager(this)' title='菜单对应权限管理' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到用户ID
+                                var whCode = row["仓库"];
+                                eip.get("/admin/Menu/WhMenuEdit?Id=" + Id + "&WhCode=" + eip.utf8(whCode) + "&MenuName=" + eip.utf8($("[name=edit_menuName]").val()) + "&MenuNameCN=" + eip.utf8($("[name=edit_menuNameCN]").val()) + "&MenuUrl=" + eip.utf8($("[name=edit_menuUrl]").val()) + "&MenuIcon=" + eip.utf8($("[name=edit_menuIcon]").val()) + "&MenuSort=" + eip.utf8($("[name=edit_menuSort]").val()) + "&MenuParentId=" + eip.utf8($("[name=edit_parentId]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "菜单英文简称": {
+                    editor: { type: "text", name: "edit_menuName" }
+                },
+                "菜单中文名": {
+                    editor: { type: "text", name: "edit_menuNameCN" }
+                },
+                "Url地址": {
+                    editor: { type: "text", name: "edit_menuUrl" }
+                },
+                "菜单图标": {
+                    editor: { type: "text", name: "edit_menuIcon" }
+                },
+                "菜单排序": {
+                    editor: { type: "text", name: "edit_menuSort" }
+                },
+                "父级菜单": {
+                    editor: {
+                        type: 'select', field: "父级菜单ID", html: function (row) {
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["MenuNameCN"], "edit_parentId")");
+                            // var select = eip.form.createOptions($('<select></select>'), page.select.ORG_ID);
+                            //请尽量把执行函数写在此处，而不是单独声明
+                            //  return select.change(function () {
+                            //      alert($(this).val());
+                            //   });
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=menu_nameCN]").focus();
+    });
+
+    //删除菜单
+    function WhMenuDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到菜单ID
+
+        $.eipMsg.confirm("确定删除菜单：" + row["菜单英文简称"] + '，菜单中文名：' + row["菜单中文名"] + "吗？", function () {
+            eip.get("/admin/Menu/WhMenuDelById?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //菜单对应权限管理
+    function MenuPowerManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var MenuId = row["操作"];
+        var dlg_Pos = eip.dialog.create("菜单对应权限管理———当前菜单：" + row["菜单中文名"], "<div id=layout_Pow>"
+                                + "<div region=\"north\" id=\"form_Pow\" style=\"height:65px;padding:5px;\"><input type=\"hidden\" name=\"Hid_PId\" value=\"" + row["操作"] + "\">权限名：<input type=\"text\" name=\"txt_power_name\" value=\"\">权限类型：<input type=\"text\" name=\"txt_power_type\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"权限列表\">"
+                                + "<table id=grid_Pow_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前菜单已有权限\">"
+                                + "<table id=grid_Pow_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pow_set"),
+            hiddencolumns: ["Id", "创建人", "创建时间", "修改人", "修改时间"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["Id"] + "-" + row["权限名"] + " >";   //得到权限ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pow_get"),
+            hiddencolumns: ["创建人", "创建时间", "修改人", "修改时间"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"WhMenuUpdateById(this,'" + MenuId + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pow'), [{
+            obj: $('#form_Pow'),
+            buttons: [
+                 {
+                     text: "查询", icon: "search", click: function () {
+                         eip.datagrid.load("/admin/Menu/WhMenuUnselected?MenuId=" + MenuId + "&PowerName=" + eip.utf8($("[name=txt_power_name]").val()) + "&PowerType=" + eip.utf8($("[name=txt_power_type]").val()), $("#grid_Pow_set"), eip.para.create($("input,select", $("#form_Pow"))));
+                     }
+                 },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length == 0) {
+                               $.eipMsg.alert("请先选择权限！");
+                               return;
+                           }
+                           if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length > 1) {
+                               $.eipMsg.alert("一个菜单只能对应一个权限！");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid_Pow_set")));
+                           para = eip.para.extend(para, [{ name: "MenuId", value: MenuId }]);
+
+                           eip.post("/admin/Menu/WhMenuAddPower", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   eip.datagrid.load("/admin/Menu/WhMenuUnselected?MenuId=" + MenuId + "&PowerName=null&PowerType=null", $("#grid_Pow_set"), null);
+                                   //查询当前菜单已选择的权限
+                                   eip.datagrid.load("/admin/Menu/WhMenuSelected?MenuId=" + MenuId, $("#grid_Pow_get"), null);
+                                   eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                               }, function () { });
+                           }, null, true)
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        $("[name=txt_power_name]").focus();
+        //查询当前菜单未选择的权限
+        eip.datagrid.load("/admin/Menu/WhMenuUnselected?MenuId=" + MenuId + "&PowerName=null&PowerType=null", $("#grid_Pow_set"), null);
+        //查询当前菜单已选择的权限
+        eip.datagrid.load("/admin/Menu/WhMenuSelected?MenuId=" + MenuId, $("#grid_Pow_get"), null);
+    }
+
+    //取消菜单的某个权限
+    function WhMenuUpdateById(obj, MenuId) {
+        $.eipMsg.confirm("确定取消该权限吗？", function () {
+            eip.get("/admin/Menu/WhMenuUpdateById?Id=" + MenuId, eip.para.create($("input,select", $("#layout_Pos"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/Menu/WhMenuUnselected?MenuId=" + MenuId + "&PowerName=null&PowerType=null", $("#grid_Pow_set"), null);
+                    //查询当前权限已选择的控制
+                    eip.datagrid.load("/admin/Menu/WhMenuSelected?MenuId=" + MenuId, $("#grid_Pow_get"), null);
+
+                    eip.datagrid.load("/admin/Menu/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+    }
+
+</script>

@@ -1,0 +1,153 @@
+﻿@model WMS.UI.Controllers.Model.AddInVentoryModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", " left=\"90\" ")
+        <input type="text" left="90" name="hu_id" hint="托盘号" />
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" />
+        <input type="text" left="90" name="so_number" hint="SO号" />
+        <input type="text" left="90" name="customer_po" hint="PO号" />
+        <select left="90" name="holdReason" hint="是否冻结"><option></option><option value="0">否</option><option value="1">是</option></select>
+        <input type="text" left="90" name="locationId" hint="库位" />
+        <select left="90" name="locationTypeId" hint="库位类型"><option value="0"></option><option value="1">正常库位</option><option value="2">收货门区</option><option value="3">备货门区</option><option value="5">货损库位</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form55' style="display:none">
+    <input type="text" left="140" name="txt_ReceiptId" hint="收货批次号" />
+    @Html.EipGetSelectFor(model => model.txt_ClientCode, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140" })
+    <input type="text" left="140" cle="y" name="txt_SoNumber" hint="SO号" />
+    <input type="text" left="140" cle="y" name="txt_CustomerPoNumber" hint="客户PO" />
+    @Html.EipInputFor(model => model.txt_HuId, new { @left = "140", @cle = "y" })
+    @Html.EipInputFor(model => model.txt_Location, new { @left = "140" })
+    <input type="text" left="140" cle="y" name="txt_AltItemNumber" hint="款号" onchange="cleanSelUnit()" />
+    <span left="" hint="">
+        <a href="#" class="easyui-linkbutton" onclick="onkeyGetUnitName();">&nbsp;&nbsp;获取单位&nbsp;&nbsp;</a>
+    </span>
+    <select left="140" name="sel_unitName" hint="单位："><option value="0"></option></select>
+
+    @Html.EipInputFor(model => model.txt_Qty, new { @left = "80", @cle = "y" })
+    <input type="text" left="60" name="txt_Length" hint="长" />
+    <input type="text" left="80" name="txt_LotNumber1" hint="Lot1" />
+    <input type="text" left="60" name="txt_Width" hint="宽" />
+    <input type="text" left="80" name="txt_LotNumber2" hint="Lot2" />
+    <input type="text" left="60" name="txt_Height" hint="高" />
+    <input type="text" left="80" name="txt_LotDate" hint="LotDate" class='easyui-validatebox' data-options='validType:[&#39;datetime&#39;]' datetime='Y' />
+    <input type="text" left="60" name="txt_Weight" hint="重量" />
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_AddInVentory/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增库存", icon: "add", click:
+                         function () {
+                             var dlg_hold = eip.dialog.create("新增库存", "<div id=layout5 ><div form='Y' id='form5'>"
+                                  + $("#form55").html()
+                                  + "</div></div>", 500, 450)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout5'), [{
+                                 obj: $('#form5'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=txt_AltItemNumber]", $("#form5")).val() == "") {
+                                                     $.eipMsg.alert("请输入款号!");
+                                                     return;
+                                                 }
+                                                 if ($("[name=sel_unitName]", $("#form5")).text() == "") {
+                                                     $.eipMsg.alert("请【获取单位】后选择单位!");
+                                                     return;
+                                                 }
+                                                 if (!$("#form5").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 var unitName = $("[name=sel_unitName]").find("option:selected").text();
+                                                 var clientCode = $("[name=txt_ClientCode]").find("option:selected").text();
+
+                                                 eip.post("/Warehouse/C_AddInVentory/AddInventory?unitName=" + unitName + "&clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("input[cle=y]").val("");
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg_hold);
+                                           }
+                                    }
+                                 ]
+                             }])
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "HuMasterId", "仓库", "类型", "状态"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+
+    function cleanSelUnit() {
+        $("[name=sel_unitName]", $("#form5")).html("");
+    }
+
+    //通过输入的款号属性 得到单位
+    function onkeyGetUnitName() {
+        if ($("[name=txt_ClientCode]", $("#form5")).val() == "") {
+            $.eipMsg.alert("请选择客户!");
+            return;
+        }
+
+        if ($("[name=txt_AltItemNumber]", $("#form5")).val() != "") {
+            eip.post("/Warehouse/C_AddInVentory/GetUnitSelList", eip.para.create($("input,select,textarea", $("#form5"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=sel_unitName]", $("#form5")), val, true);
+                }
+            })
+        }
+    }
+
+
+</script>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c08e13d7-8a3f-4601-82bb-0cbc170dc68c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/OutBoundService/OutBoundService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OutBoundService.xsd" MetadataType="Schema" ID="fc8563c3-f749-4880-a283-958cf774c514" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd4" />
+    <MetadataFile FileName="OutBoundService1.xsd" MetadataType="Schema" ID="3aa0ee33-67f4-4565-a9cb-4e4b2fd06d8d" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OutBoundService2.xsd" MetadataType="Schema" ID="820c5e67-87b3-4c53-9391-ed049a4f35f2" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OutBoundService3.xsd" MetadataType="Schema" ID="3995ad11-29d2-4225-a1e1-9275c35bd7d0" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OutBoundService.wsdl" MetadataType="Wsdl" ID="864198b5-691d-45d0-862c-46df56c88b2d" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?wsdl" />
+    <MetadataFile FileName="OutBoundService4.xsd" MetadataType="Schema" ID="f12b71f2-aa5e-47d7-b25b-49527d84ce00" SourceId="1" SourceUrl="http://localhost:45936/OutBoundService/OutBoundService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

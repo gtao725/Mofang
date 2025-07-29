@@ -1,0 +1,494 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>
+            )ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" name="altItemNumber" hint="款号" />
+        <select left="110" name="handFlag" hint="包装时输入数量"><option value=""></option><option value="是">是</option><option value="否">否</option></select>
+        <select left="110" name="scanFlag" hint="包装时采集SN"><option value=""></option><option value="是">是</option><option value="否">否</option></select>
+        <select left="90" name="sel_unitName" hint="客户单位"><option value=""></option><option value="LP">按托</option><option value="CTN">按箱</option><option value="EA">按件</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        eip.form.createOptions($("[name=userStatus]"), [{ val: "Active" }, { val: "UnActive" }])
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/Item/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "批量导入款号", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/Item/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          eip.datagrid.load("/Root/Item/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '客户名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '款号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '属性1',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '属性2',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '属性3',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '单位',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+                     ,
+                     {
+                         text: "批量导入款号品名", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/Item/importsItemName', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          eip.datagrid.load("/Root/Item/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '客户名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '款号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '品名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+                     ,
+                     {
+                         text: "批量导入款号OMS", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/Item/importsextendoms', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          eip.datagrid.load("/Root/Item/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '客户',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '款号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '品名',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '描述',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //不允许空值
+                                          optional: false //该列是必填项
+                                      },
+                                      {
+                                          column: '客户款号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: 'EAN',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '重量(kg)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '长(cm)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '宽(cm)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '高(cm)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '箱规(件/箱)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: 'Category',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '客户自定义类型',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '包装类型',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '类别',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '单位',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '尺码',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '款式',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '颜色',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '材质',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '鞋盒编码',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '原产国',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '是否送装(1/0)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '包装时输入数量(1/0)',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '属性1',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '属性2',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      },
+                                      {
+                                          column: '属性3',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是可选
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["客户ID", "HandFlag", "ScanFlag"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑信息' ></a>";
+                        //retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='AddUnit(this)' title='添加单位1' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='showUnit(this)' title='添加单位' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+
+                                var Id = row["操作"];
+
+                                var para = [{ name: "edit_ean", value: $("[name=edit_ean]").val() }, { name: "edit_description", value: $("[name=edit_description]").val() }, { name: "edit_handFlag", value: $("[name=edit_handFlag]").val() }, { name: "edit_scanFlag", value: $("[name=edit_scanFlag]").val() }, { name: "edit_scanRule", value: $("[name=edit_scanRule]").val() }, { name: "Id", value: Id }, { name: "edit_unitName", value: $("[name=edit_unitName]").val() }];
+
+                                eip.get("/Root/Item/EditItemMaster", para, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/Root/Item/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "EAN": {
+                    editor: { type: "text", name: "edit_ean" }
+                },
+                "描述": {
+                    editor: { type: "text", name: "edit_description" }
+                },
+                "包装时输入数量": {
+                    editor: {
+                        type: 'select', field: "HandFlag", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_handFlag'></select>"), [{ val: "0", name: "否" }, { val: "1", name: "是" }], true));
+                        }
+                    }
+                },
+                "包装时采集SN": {
+                    editor: {
+                        type: 'select', field: "ScanFlag", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_scanFlag'></select>"), [{ val: "0", name: "否" }, { val: "1", name: "是" }], true));
+                        }
+                    }
+                },
+                "采集SN长度": {
+                    editor: { type: "text", name: "edit_scanRule" }
+                },
+                "客户单位": {
+                    editor: {
+                        type: 'select', field: "客户单位", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_unitName'></select>"), [{ val: "LP", name: "按托" }, { val: "CTN", name: "按箱" }, { val: "EA", name: "按件" }], true));
+                        }
+                    }
+                }
+            }
+        });
+
+    });
+
+
+    function AddUnit(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg_Pos = eip.dialog.create("新增单位", "<div id=layout1 ><div form='Y' id='form2'>"
+
+                                   + "<input type=\"text\" left=\"140\" disabled  name=\"txt_ItemId\" value=\"" + row["操作"] + "\" hint=\"款号ID\" />"
+                                   + "<input type=\"text\" left=\"140\"  disabled name=\"txt_AltItemNumber\" value=\"" + row["款号"] + "\" hint=\"客户款号\" />"
+                                  + "<input type=\"text\" left=\"140\" name=\"txt_unitname\" hint=\"单位名称\" />"
+                                     + "<input type=\"text\" left=\"140\" name=\"txt_proportion\" hint=\"数量比例\" />"
+                                + "</div></div>", 500, 200)
+        //窗体工具栏按钮 begin
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            //if (!$("#form2").form('validate')) {
+                            //    return false;
+                            //}
+
+                            eip.get("/Root/Unit/AddUnit", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    $("[name=txt_unitname]").val("");
+                                    $("[name=txt_proportion]").val("");
+                                    eip.datagrid.load("/Root/Unit/List", $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg_Pos);
+                      }
+               }
+            ]
+        }])
+    }
+
+    //单位管理
+    function showUnit(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg_Pos = eip.dialog.create("款号单位管理———当前款号：" + row["款号"], "<div id=layout_Pos>"
+                                + "<div region=\"north\" id=\"form_Pos\" style=\"height:65px;padding:5px;\">"
+                                + "<input type=\"hidden\" name=\"txt_ItemId\" value=\"" + row["操作"] + "\">款号：<input type=\"text\" name=\"AltItemNumber\" value=\"" + row["款号"] + "\"></div>"
+                                + "<div region=\"west\" style=\"width:100%;overflow-x:hidden;\" title=\"单位\">"
+                                + "<table id=grid_Pos_set></table></div>"
+
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+
+        });
+
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click: function () {
+                        eip.datagrid.load("/root/Unit/List", $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+                    }
+                },
+                {
+                    text: "新增单位", icon: "add", click: function () {
+                        AddUnit(obj);
+                    }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        eip.datagrid.load("/root/Unit/List", $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+
+    }
+
+</script>

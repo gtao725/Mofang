@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+
+        <input type="text" name="load" hint="Load" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="释放状态" name="Status0"><option></option><option value='未释放'>未释放</option><option value='已释放'>已释放</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="备货状态" name="Status1"><option></option><option value='未备货'>未备货</option><option value='正在备货'>正在备货</option><option value='完成备货'>完成备货</option></select>
+
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_EditProcessName/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["客户Id"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["备货状态"] == "未备货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetailClientCode(this)' title='修改流程' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            }
+
+        });
+
+        $("[name=ReceiptId]").focus();
+
+    });
+
+    //修改流程
+    function EditDetailClientCode(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var val1 = row["Load号"];
+        var val2 = row["所选流程"];
+        var clientId = row["客户Id"];
+
+        var dlg = eip.dialog.create("修改流程", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"Load号：\">" + val1 + "</span>"
+                                    + "<span left=\"140\" hint=\"原出货流程：\">" + val2 + "</span>"
+                                     + "  <select left=\"140\" name=\"sel_flowName\" hint=\"出货流程：\"><option value=\"\"></option></select>"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            var clientCode = $("[name=sel_flowName]").find("option:selected").text();
+                            if (clientCode == "") {
+                                $.eipMsg.alert("请先选择流程名!");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定修改流程吗？", function () {
+                                var clientCode = $("[name=sel_flowName]").find("option:selected").text();
+
+                                eip.get("/Warehouse/C_EditProcessName/EditProcessName?processName=" + eip.utf8(clientCode) + "&processId=" + $("[name=sel_flowName]").val() + "&number=" + val1 + "&type=OutBound", null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+
+                                        eip.datagrid.load("/Warehouse/C_EditProcessName/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                    }, function () { });
+                                })
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        eip.post("/Warehouse/C_EditProcessName/GetFlowNameList1?clientId=" + clientId, eip.para.create($("input,select,textarea", $("#form_Detail"))), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowName]", $("#layout1")), val, true);
+            }
+        })
+
+    }
+
+</script>

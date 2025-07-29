@@ -1,0 +1,181 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <select left="110" class="easyui-vhuo'xia'alidatebox" hint="仓库审核状态" name="checkStatus2"><option></option><option value='未审核'>未审核</option><option value='已审核'>已审核</option></select>
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户名", "", "")
+        <input type="text" left="110" name="number" hint="Load号" />
+        <input type="text" name="number2" hint="集装箱号" />
+        <input type="text" name="userCode" hint="员工工号" />
+        <input type="hidden" name="userName" hint="" value="@ViewBag.userName" />
+        <input type="text" name="BeginCreateDate" hint="装箱时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select left="110" class="easyui-vhuo'xia'alidatebox" hint="客服备注" name="KRemark1"><option></option><option value='有'>有</option><option value='无'>无</option></select>
+
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/OutCFSPhotoC/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "照片ID": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["照片ID"] != "0" && row["照片ID"] != null) {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick='picView(this)'>" + row["照片ID"] + "</span>";
+                        }
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-redo' plain=true onclick='pic_upload_in(this)' title='上传照片' ></a>";
+                        if (row["照片ID"] != "0" && row["照片ID"] != null) {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditTCR(this)' title='备注' ></a>";
+
+                        }
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=number]").focus();
+    });
+
+    //上传照片
+    function pic_upload_in(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["Load号"]
+        var number2 = row["集装箱号"]
+        var Id = row["操作"];
+        if (phototId == 0) {
+            phototId = "";
+        }
+
+        var username1 = $("[name=userName]").val();
+
+        eip.picUploadEip(phototId, '@ViewBag.PhotoSaveAddress', 'ElectronicDocument', "http://@Html.Raw(ViewBag.WMSUrl)/Root/OutCFSPhotoC/OutCFSPhotoCComplete?user=" +username1 +"&number=" + number + "&number2=" + number2+"&Id=" + Id+"&whCode=@Html.Raw(ViewBag.whCode)", "出货照片上传", 'Load号：' + number + '集装箱号：' + number2, 'N', '@ViewBag.PhotoServerAddress')
+    }
+
+    //上传关闭后方法
+    function picUploadEipReturn() {
+        eip.datagrid.load("/Root/OutCFSPhotoC/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    }
+
+    //照片查看
+    function picView(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var phototId = row["照片ID"]
+        var number = row["Load号"]
+        var number2 = row["集装箱号"]
+        var Id = row["操作"];
+
+        var username1 = $("[name=userName]").val();
+
+        var uploadHtml = "<a href='http://@Html.Raw(ViewBag.WMSUrl)/Root/OutCFSPhotoC/OutCFSPhotoCShenheComplete?user=" +
+            username1
+        +"&number=" + number + "&number2=" + number2 + "&whCode=@Html.Raw(ViewBag.whCode)&photoid=" + phototId + "&Id=" + Id + "' >仓库审核</a>";
+
+        eip.picViewEip(phototId, number2, '照片查看', uploadHtml, '', '@ViewBag.PhotoServerAddress');
+    }
+
+    //审核后方法
+    function picViewEipReturn() {
+        eip.datagrid.load("/Root/OutCFSPhotoC/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+    }
+
+    //处理TCR
+    function EditTCR(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var dlg = eip.dialog.create("备注", "<div id=layout6 ><div form='Y' id='form6'>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"Load号\">" + row["Load号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"集装箱号\">" + row["集装箱号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"照片ID\">" + row["照片ID"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_Kremark1\" value=\"" + row["仓库备注"] + "\" hint=\"仓库备注\" />"
+
+                                    + "</div></div>", 520, 450)
+
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            eip.get("/Root/OutCFSPhotoC/PhotoMasterEdit?id=" + id, eip.para.create($("input,select", $("#layout6"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+
+                                    eip.datagrid.load("/Root/OutCFSPhotoC/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_Kremark1]").focus();
+    }
+
+    function deletePhoto(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        var LoadId = row["Load号"];
+        var PhotoId = row["照片ID"];
+        eip.get("/Root/OutCFSPhotoC/PhotoMasterDelete?id=" + id + "&LoadId=" + LoadId + "&PhotoId=" + PhotoId, null, function (jsonObj) {
+            eip.datagrid.load("/Root/OutCFSPhotoC/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+        });
+    }
+
+</script>

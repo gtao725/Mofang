@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9354FE6E-C43B-45F0-BD11-43DF01E2A5CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS.BLL</RootNamespace>
+    <AssemblyName>WMS.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\WMS.WCFServices\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helper\BLLHelper.cs" />
+    <Compile Include="DalAction\Base\BaseBLL.cs" />
+    <Compile Include="DalAction\BLLService\BLLService.cs">
+      <DependentUpon>BLLService.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Helper\FlowHelper.cs" />
+    <Compile Include="Managers\ApiBusiness\ApiBusiness.cs" />
+    <Compile Include="Managers\BLLServiceExtend\BLLServiceExtend.cs" />
+    <Compile Include="Managers\AdminManager\AdminManager.cs" />
+    <Compile Include="Managers\EipManager\BsInBoundManager.cs" />
+    <Compile Include="Managers\EipManager\BsOutBoundManager.cs" />
+    <Compile Include="Managers\EipManager\EipInBound.cs" />
+    <Compile Include="Managers\EipManager\EclInBoundManager.cs" />
+    <Compile Include="Managers\EipManager\EclOutBoundManager.cs" />
+    <Compile Include="Managers\GMSManager\GMSManager.cs" />
+    <Compile Include="Managers\GrnManager\Grn.cs" />
+    <Compile Include="Managers\GrnManager\GrnWeb.cs" />
+    <Compile Include="Managers\InBoundManager\InBoundOrderManager.cs" />
+    <Compile Include="Managers\InBoundManager\RegInBoundOrderManager.cs" />
+    <Compile Include="Managers\InBoundManager\TruckManager.cs" />
+    <Compile Include="Managers\InVentoryManager\InVentoryManager.cs" />
+    <Compile Include="Managers\InVentoryManager\InventoryWinceManager.cs" />
+    <Compile Include="Managers\InVentoryManager\InventoryHelper.cs" />
+    <Compile Include="Managers\OutBoundManager\InterceptManager.cs" />
+    <Compile Include="Managers\OutBoundManager\LoadManager.cs" />
+    <Compile Include="Managers\OutBoundManager\OutBoundOrderManager.cs" />
+    <Compile Include="Managers\OutBoundManager\PickWinceManager.cs" />
+    <Compile Include="Managers\OutBoundManager\PackWinceManager.cs" />
+    <Compile Include="Managers\OutBoundManager\PackTaskManager.cs" />
+    <Compile Include="Managers\OutBoundManager\ShipHelper.cs" />
+    <Compile Include="Managers\OutBoundManager\ReleaseLoadManager.cs" />
+    <Compile Include="Managers\OutBoundManager\ShipLoadManager.cs" />
+    <Compile Include="Managers\OutBoundManager\LoadWinceManger.cs" />
+    <Compile Include="Managers\OutBoundManager\ShipWinceManger.cs" />
+    <Compile Include="Managers\OutBoundManager\SortTaskWinceManager.cs" />
+    <Compile Include="Managers\OutBoundManager\SortTaskManager.cs" />
+    <Compile Include="Managers\OutBoundManager\TransferTaskWinceManager.cs" />
+    <Compile Include="Managers\OutBoundManager\TransferTaskManager.cs" />
+    <Compile Include="Managers\OuterManager\RecOuterManager.cs" />
+    <Compile Include="Managers\RecManager\RecHelper.cs" />
+    <Compile Include="Managers\RecManager\RecManager.cs" />
+    <Compile Include="Managers\RecManager\RecWinceManager.cs" />
+    <Compile Include="Managers\RecReportManager\RecReportManager.cs" />
+    <Compile Include="Managers\RootManager\RootManager.cs" />
+    <Compile Include="Managers\UserManager\UserManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MODEL_MSSQL\MODEL_MSSQL.csproj">
+      <Project>{7da3a2ef-6b45-4dba-8ab6-90e89f803287}</Project>
+      <Name>MODEL_MSSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.BLLClass\WMS.BLLClass.csproj">
+      <Project>{f9efd309-0335-4be3-8e81-6ce41be77e25}</Project>
+      <Name>WMS.BLLClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.DAL\WMS.DAL.csproj">
+      <Project>{3c24f792-4ee6-4328-9a6e-ef627a9e406d}</Project>
+      <Name>WMS.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.DI\WMS.DI.csproj">
+      <Project>{3842087b-8bf1-4694-81f1-7792d1785df8}</Project>
+      <Name>WMS.DI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.Express\WMS.Express.csproj">
+      <Project>{deba7b85-6c59-4e6a-a5f3-bb5352db287b}</Project>
+      <Name>WMS.Express</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.IBLL\WMS.IBLL.csproj">
+      <Project>{19650d41-33cd-48cb-8aa0-632085075680}</Project>
+      <Name>WMS.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WMS.IDAL\WMS.IDAL.csproj">
+      <Project>{50d1c1ef-d0ab-4fb2-891b-505b26dcfc76}</Project>
+      <Name>WMS.IDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DalAction\BLLService\BLLService.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BLLService.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

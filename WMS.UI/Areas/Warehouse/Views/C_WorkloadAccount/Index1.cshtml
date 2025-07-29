@@ -1,0 +1,294 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="receipt_id" hint="Load号" />
+        <input type="text" left="90" name="UserCode" hint="工号" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WorktTypeList"], "WorktType", "工作类型", "", " left=\"90\"")
+        <input type="text" name="BeginCreateDate" left="90" hint="出货时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form44' style="display:none">
+    <input type="text" left="140" name="add_receipt_id" hint="Load号" />
+    <input type="text" left="140" name="add_UserCode" hint="工号" />
+
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WorktTypeList1"], "add_WorktType", "工作类型", "", " left=\"140\"")
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                    {
+                        text: "批量修改工人", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要修改的工人信息!");
+                                   return;
+                               }
+
+                               EditDetailUserCode();
+
+                           }
+                    },
+                    {
+                        text: "批量删除工人", icon: "save", click:
+                           function () {
+
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择需要删除的工人信息!");
+                                   return;
+                               }
+
+                               DelDetailUserCode();
+
+                           }
+                    },
+                     {
+                         text: "新增工人", icon: "add", click: function () {
+                             var dlgadd = eip.dialog.create("新增工人", "<div id=layout4 ><div form='Y' id='form4' >" + $("#form44").html() + "</div></div>"
+                                , 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout4'), [{
+                                 obj: $('#form4'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if ($("[name=add_receipt_id]", $("#layout4")).val() == "") {
+                                                     $.eipMsg.alert("Load号必须填写!");
+                                                     $("[name=add_receipt_id]").focus();
+                                                     return;
+                                                 }
+                                                 if ($("[name=add_UserCode]", $("#layout4")).val() == "") {
+                                                     $.eipMsg.alert("工人工号必须填写!");
+                                                     $("[name=add_UserCode]").focus();
+                                                     return;
+                                                 }
+                                                 if ($("[name=add_WorktType]", $("#layout4")).val() == "") {
+                                                     $.eipMsg.alert("工作类型必须选择!");
+                                                     $("[name=add_WorktType]").focus();
+                                                     return;
+                                                 }
+
+                                                 eip.get("/Warehouse/C_WorkloadAccount/AddDetail1", eip.para.create($("input,select", $("#layout4"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=add_UserCode]", $("#layout4")).val("");
+                                                         eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlgadd);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                         }
+                     }
+
+                ]
+
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            checkbox: function (row) {
+                if (row["工作类型"] != "理货员") {
+                    return "<input type=checkbox name=check_to value=" + row["工号"] + " receiptId=\"" + row["Load号"] + "\" workType=\"" + row["工作类型"] + "\" >";
+                }
+            },
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改' ></a>";
+                        if (row["工作类型"] != "理货员") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelDetail(this)' title='删除' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=receipt_id]").focus();
+    });
+
+    //批量修改工人
+    function EditDetailUserCode() {
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'userCode', value: $(this).val() });
+            arr_list.push({ name: 'receiptId', value: $(this).attr("receiptId") });
+            arr_list.push({ name: 'workType', value: $(this).attr("workType") });
+
+        })
+
+        var dlg = eip.dialog.create("批量修改工人", "<div id=layout1 ><div form='Y' id='form2'>"
+                                + "<input type=\"text\" left=\"140\" name=\"edit_userCode\" value=\"\" hint=\"工号修改为\" /><span  hint=\"\">请填写工号</span>"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_userCode]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("工人工号必须填写!");
+                                $("[name=edit_userCode]").focus();
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定批量修改工人工作量吗？", function () {
+
+                                eip.post("/Warehouse/C_WorkloadAccount/EditDetailUserCode1List?edit_userCode=" + $("[name=edit_userCode]", $("#layout1")).val(), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_userCode]").focus();
+    }
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var s = "";
+        if (row["工作类型"] == "理货员") {
+            s += "<input type=\"text\" left=\"140\" name=\"edit_cbm1\" value=\"" + row["立方"] + "\" hint=\"立方修改为\" /><span  hint=\"\">请填写立方</span>";
+            s += "<input type=\"text\" left=\"140\" name=\"edit_baQty1\" value=\"" + row["把数"] + "\" hint=\"把数修改为\" /><span  hint=\"\">请填写把数</span>";
+        }
+        var dlg = eip.dialog.create("修改出货工作量", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"Load号\">" + row["Load号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"工号\">" + row["工号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"员工姓名\">" + row["员工姓名"] + "</span>"
+                                    + "<span left=\"140\" hint=\"工作类型\">" + row["工作类型"] + "</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_userCode1\" value=\"\" hint=\"工号修改为\" /><span  hint=\"\">请填写工号</span>" + s
+                                    + "</div></div>", 500, 400)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_userCode1]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("工人工号必须填写!");
+                                $("[name=edit_userCode1]").focus();
+                                return;
+                            }
+
+                            eip.get("/Warehouse/C_WorkloadAccount/EditDetail1?userCode=" + row["工号"] + "&receiptId=" + row["Load号"] + "&workType=" + eip.utf8(row["工作类型"]) + "&edit_userCode=" + $("[name=edit_userCode1]", $("#layout1")).val() + "&edit_cbm=" + $("[name=edit_cbm1]", $("#layout1")).val() + "&edit_baqty=" + $("[name=edit_baQty1]", $("#layout1")).val(), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                }, function () { });
+                            }, null, true)
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_userCode1]").focus();
+    }
+
+    //批量删除工人
+    function DelDetailUserCode() {
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'userCode', value: $(this).val() });
+            arr_list.push({ name: 'receiptId', value: $(this).attr("receiptId") });
+            arr_list.push({ name: 'workType', value: $(this).attr("workType") });
+
+        })
+
+        $.eipMsg.confirm("确定批量删除工人工作量吗？", function () {
+
+            eip.post("/Warehouse/C_WorkloadAccount/DelDetailUserCode1", arr_list, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        })
+
+    }
+
+    //删除工人
+    function DelDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除这行工人工作量吗？", function () {
+            eip.get("/Warehouse/C_WorkloadAccount/DelDetail1?userCode=" + row["工号"] + "&receiptId=" + row["Load号"] + "&workType=" + eip.utf8(row["工作类型"]), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_WorkloadAccount/List1", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+
+                }, function () { });
+            }, null, true)
+        })
+    }
+
+</script>

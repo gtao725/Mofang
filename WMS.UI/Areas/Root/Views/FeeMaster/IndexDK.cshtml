@@ -1,0 +1,312 @@
+﻿@model WMS.UI.Controllers.Model.ReceiptModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" left="90" name="FeeNumber" hint="系统编号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="类型" name="type"><option value='现场操作'>现场操作</option></select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="状态" name="status"><option></option><option value='未预收款'>未预收款</option><option value='已预收款'>已预收款</option><option value='未结算'>未结算</option><option value='完成'>完成</option><option value='已作废'>已作废</option></select>
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="创建人" name="createUser"><option></option></select>
+        <textarea name="soNumber" left="60" hint="SO号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140", @seq = "1", @onchange = "onChangeGetFlowName()", @onkeypress = "onkeynext(this)" })
+    <input type="text" name="txt_SoNumber" hint="SO号" seq="2" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_Description" hint="备注" seq="3" left="140" onkeypress="onkeyCheck()" />
+    <select left="140" name="txt_recZone" hint="收货区域"><option value=""></option></select>
+
+</div>
+
+<div id='form88' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient1, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "150", @seq1 = "1", @onchange = "onChangeGetFlowName1()", @onkeypress = "onkeynext1(this)" })
+    <input type="text" name="txt_ReceiptId1" hint="收货批次号*" seq1="2" left="150" onkeypress="onkeynext1(this)" />
+    <input type="text" name="txt_LuruFee1" hint="收货现场操作费(无需含税)*" seq1="3" left="150" onkeypress="onkeynext1(this)" />
+    <input type="text" name="txt_Description1" hint="备注" seq1="4" left="150" onkeypress="onkeyCheck1()" />
+    <select left="150" name="txt_recZone1" hint="收货区域"><option value=""></option></select>
+
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+    ////--------------------------------------------道口夜班录入现场收货特殊费用(换纸箱等)-------------------------------
+
+    var dlg;
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                            eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                     , {
+                         text: "新增现场收货特殊费用", icon: "add", click: function () {
+                             dlg = eip.dialog.create("新增现场收货特殊费用", "<div id=layout8 ><div form='Y' id='form8' >" + $("#form88").html() + "</div></div>"
+                                , 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout8'), [{
+                                 obj: $('#form8'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 addReg1();
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+                             $("[name=txt_WhClient1]").focus();
+
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+                "系统编号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"showFeeDetail(this)\" >" + row["系统编号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+ 
+
+                        if (row["状态"] == "草稿") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelFeeMaster(this)' title='删除费用' ></a>";
+                        }
+
+                        if (row["状态"] == "草稿" && row["类型"] == "TCR") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='EditFeeMasterStatus(this)' title='确认完成' ></a>";
+                        }
+
+                        if (row["状态"] == "未预收款") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='EditFeeMasterStatus1(this)' title='撤销' ></a>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+        });
+
+
+        $("[name=soNumber]").css("height", "25px").css("width", "185px");
+        $("[name=soNumber]").parent().css("height", "30px").css("width", "280px");
+    });
+    
+
+    //通过选择的客户得到收货门区
+    function onChangeGetFlowName() {
+        if ($("[name=txt_WhClient]", $("#layout1")).val() != "") {
+            eip.post("/Root/FeeMaster/GetRecZoneNameList", eip.para.create($("input,select,textarea", $("#layout1"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone]"), val, true);
+                }
+            })
+        }
+    }
+
+    function onChangeGetFlowName1() {
+        if ($("[name=txt_WhClient1]", $("#layout8")).val() != "") {
+            eip.post("/Root/FeeMaster/GetRecZoneNameList?txt_WhClient=" + $("[name=txt_WhClient1]", $("#layout8")).val(), eip.para.create($("input,select,textarea", $("#layout8"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone1]"), val, true);
+                }
+            })
+        }
+    }
+
+ 
+
+    //费用明细列表
+    function showFeeDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var obj = row["系统编号"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("费用明细列表",
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "<input type=hidden name=hid_receiptId value='" + obj + "'><span left=\"80\" hint=\"系统编号：\">" + obj + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 200,
+            hiddencolumns: ["操作"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Root/FeeMaster/FeeDetailList?feeNumber=" + obj, $("#grid_detail_detailSearch"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+    }
+
+    //删除费用
+    function DelFeeMaster(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["系统编号"];
+
+        $.eipMsg.confirm("确定删除编号：" + ReceiptId + "下的费用信息吗？系统将记录本次操作！", function () {
+            eip.get("/Root/FeeMaster/DelFeeMaster?feeNumber=" + ReceiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+ 
+
+    //撤销确认完成
+    function EditFeeMasterStatus1(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["系统编号"];
+        var id = row["操作"];
+
+        $.eipMsg.confirm("确认撤销订单：" + ReceiptId + "吗？撤销后将无法预收款！", function () {
+            eip.get("/Root/FeeMaster/EditFeeMasterStatus1?id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                    eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg();
+        }
+    }
+
+    function onkeynext1(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq1")) + 1;
+            $("input[seq1=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck1() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg1();
+        }
+    }
+
+
+    //新增TCR收货特殊操作费用
+    function addReg1() {
+        if (!$("#form8").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=txt_ReceiptId1]", $("#layout8")).val() == "") {
+            $.eipMsg.alert("收货批次号不能为空!");
+            return;
+        }
+
+        if ($("[name=txt_LuruFee1]", $("#layout8")).val() == "") {
+            $.eipMsg.alert("特殊操作费用不能为空!");
+            return;
+        }
+
+        var clientCode = $("[name=txt_WhClient1]", $("#layout8")).find("option:selected").text();
+        eip.get("/Root/FeeMaster/AddFeeMasterSpecialRec?clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout8"))), function (jsonObj) {
+            if (jsonObj == "Y") {
+                eip.dialog.close(dlg);
+                var clientCode = $("[name=WhClientId]").find("option:selected").text();
+                eip.datagrid.load("/Root/FeeMaster/List?clientCode=" + eip.utf8(clientCode), $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+            } else {
+                $.eipMsg.alert(jsonObj);
+            }
+
+        })
+    }
+
+
+</script>

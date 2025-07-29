@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ output extension=".cs"#>
+ <#
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this, 1);
+MetadataTools ef = new MetadataTools(this);
+string inputFile = @"..\..\..\MODEL_MSSQL\Model_MsSql.edmx";
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile);
+string namespaceName = code.VsNamespaceSuggestion();
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MODEL_MSSQL;
+using WMS.IBLL;
+
+namespace WMS.BLL
+{
+<#
+
+
+foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
+{
+#>
+	public partial class <#=entity.Name#>Service : BaseBLL<<#=entity.Name#>>,I<#=entity.Name#>Service
+    {
+	  public override void Setidal()
+        {
+            idal = BLLHelper.GetDal().I<#=entity.Name#>DAL;
+        }
+
+	   public override int DeleteById(int id) {
+          idal.DeleteBy(u => u.Id == id);
+		  return idal.SaveChanges();
+      }
+
+	   public override int DeleteByListId(List<int> delId) {
+           idal.DeleteBy(u => delId.Contains(u.Id));
+           return idal.SaveChanges();
+       }
+
+	      public <#=entity.Name#> Select(int id)
+       {
+           return idal.SelectBy(u => u.Id == id).First();
+       }
+    }
+
+<#}#>
+
+}

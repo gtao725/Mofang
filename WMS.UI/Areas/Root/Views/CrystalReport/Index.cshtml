@@ -1,0 +1,167 @@
+﻿@model WMS.UI.Controllers.Model.ClientFlowRuleModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="140" name="TemplateName" hint="水晶报表文件名" />
+        <input type="text" left="140" name="Description" hint="中文描述" />
+        <select name="sel_type" left="140" hint="类型" class='easyui-validatebox' ><option value=""></option><option value="In">收货</option><option value="InDS">收货直装</option><option value="Rec">收货凭证</option><option value="Out">出货</option></select>
+
+    </div>
+    <table id="grid"></table>
+</div>
+ 
+<div id='form22' style="display:none">
+    <input type="text" left="140" name="txt_Url" hint="Url路径" />
+    <input type="text" left="140" name="txt_TemplateName" hint="水晶报表文件名" />
+    <input type="text" left="140" name="txt_Description" hint="中文描述" />
+    <select name="txt_type" left="140" hint="类型" class='easyui-validatebox'><option value=""></option><option value="In">收货</option><option value="InDS">收货直装</option><option value="Rec">收货凭证</option><option value="Out">出货</option></select>
+
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/CrystalReport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增水晶报表单据", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增水晶报表单据", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/root/CrystalReport/AddCrystalReport", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_FlowName]").val("");
+
+                                                         eip.datagrid.load("/root/CrystalReport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_FlowName]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelCrystallReport(this)' title='删除' ></a>";
+
+                        return retHtml;
+                    },
+
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                var url = "/root/CrystalReport/CrystalReportEdit?Id=" + Id;
+                             
+                                eip.get(url, eip.para.create($("input,select", $("#grid"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/root/CrystalReport/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "Url路径": {
+                    editor: { type: "text", name: "edit_url" }
+                },
+                "水晶报表文件名": {
+                    editor: { type: "text", name: "edit_TemplateName" }
+                },
+                "中文描述": {
+                    editor: { type: "text", name: "edit_Description" }
+                } 
+            
+
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=flowName]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+   
+    //删除收货批次
+    function DelCrystallReport(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];
+        var Description = row["中文描述"];
+
+        $.eipMsg.confirm("确定删除该单据：" + Description + "吗？", function () {
+            eip.get("/root/CrystalReport/CrystallReportdel?Id=" + Id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/CrystalReport/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+   
+
+</script>

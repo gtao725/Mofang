@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "WhClientId", "客户名", "", "")
+        <input type="text" name="HuId" hint="托盘" />
+        <input type="text" left="90" name="ReceiptId" hint="收货批次号" />
+     
+        <input type="text" name="PoNumber" hint="PO" />
+        <input type="text" name="ALtItemNumber" hint="款号" />
+        <input type="text" name="LotNumber1" hint="Lot1" />
+
+        <input type="text" name="locationId" hint="库位" />
+        <select left="90" name="holdReason" hint="是否冻结"><option></option><option value="0" >否</option><option value="1">是</option></select>
+
+        <textarea name="so_number" left="60" hint="SO号"></textarea>
+        <input type="text" left="100" name="so_like" hint="SO号模糊匹配" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/InventoryReport/InventoryOutOfTimeList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            sorts: { "收货时间": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+
+            }
+        });
+
+        $("[name=so_number]").css("height", "45px").css("width", "185px");
+        $("[name=so_number]").parent().css("height", "50px").css("width", "280px");
+
+    });
+
+</script>

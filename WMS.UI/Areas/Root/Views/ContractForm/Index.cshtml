@@ -1,0 +1,324 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+
+        <input type="text" name="txt_contractName" hint="合同名称" />
+        <select left="90" class="easyui-vhuo'xia'alidatebox" hint="类型" name="sel_type"><option value=''></option><option value='卸货'>卸货</option><option value='卸货附加'>卸货附加</option></select>
+        <input type="text" name="txt_chargeName" hint="科目名称" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "批量导入收货合同信息", icon: 'imports', click:
+                          function () {
+                              eip.imports({
+                                  url: '/Root/ContractForm/imports', //若后台函数名为 imports，url就可以不传了
+                                  doFunc: function (jsonObj) {
+                                      $.procAjaxData(jsonObj, function () {
+                                          eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                      }, function () { })
+                                  },
+                                  columns: [
+                                      {
+                                          column: '合同名称',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '仓库',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '类型',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '名称',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '车型',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '白晚班',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '重量阶梯数值起',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '重量阶梯数值止',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '立方阶梯数值起',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '立方阶梯数值止',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      }
+                                      ,
+                                      {
+                                          column: '是否月结',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '描述',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '计费单位',
+                                          type: "string",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '单价',
+                                          type: "number",
+                                          width: 100,
+                                          empty: false, //允许空值
+                                          optional: false //该列是否可选
+                                      },
+                                      {
+                                          column: '系数',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '最大金额',
+                                          type: "number",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '择大组号',
+                                          type: "string",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '有效时间起',
+                                          type: "date",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      },
+                                      {
+                                          column: '有效时间止',
+                                          type: "date",
+                                          width: 100,
+                                          empty: true, //允许空值
+                                          optional: true //该列是否可选
+                                      }
+                                  ]
+                              });
+                          }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='编辑信息' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='ContractFormDeleteAll(this)' title='合同整票删除' ></a>";
+                        return retHtml;
+                       }
+                //        ,
+                //    editor: {
+                //        type: "func", func: function (row) {
+                //            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                //            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                //            btn.click(function () {
+
+                //                var Id = row["操作"];
+
+                //                var para = [{ name: "edit_ladderNumberBegin", value: $("[name=edit_ladderNumberBegin]").val() }, { name: "edit_ladderNumberEnd", value: $("[name=edit_ladderNumberEnd]").val() }, { name: "edit_price", value: $("[name=edit_price]").val() }, { name: "edit_maxPrice", value: $("[name=edit_maxPrice]").val() }];
+
+                //                eip.get("/Root/ContractForm/EditContractForm?Id=" + Id, para, function (jsonObj) {
+                //                    $.procAjaxData(jsonObj, function () {
+                //                        eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                //                    }, function () { });
+                //                })
+
+                //            });
+                //            return btn;
+                //        }
+                //    }
+                //},
+                //"阶梯数起": {
+                //    editor: { type: "text", name: "edit_ladderNumberBegin" }
+                //},
+                //"阶梯数止": {
+                //    editor: { type: "text", name: "edit_ladderNumberEnd" }
+                //},
+                //"单价": {
+                //    editor: { type: "text", name: "edit_price" }
+                //},
+                //"最大金额": {
+                //    editor: { type: "text", name: "edit_maxPrice" }
+                }
+            }
+        });
+
+    });
+
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg = eip.dialog.create("修改合同明细", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"合同名称\">" + row["合同名称"] + "</span>"
+                                    + "<span left=\"140\" hint=\"收费名称\">" + row["名称"] + "</span>"
+                                    + "<span left=\"140\" hint=\"车型\">" + row["车型"] + "</span>"
+                                    + "<span left=\"140\" hint=\"班次\">" + row["白晚班"] + "</span>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_ladderNumberBegin\" id=\"edit_ladderNumberBegin\" value=\"" + (row["重量阶梯数值起"] == null ? "" : row["重量阶梯数值起"]) + "\"  hint=\"重量阶梯数值起\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_ladderNumberEnd\" id=\"edit_ladderNumberEnd\" value=\"" + (row["重量阶梯数值止"] == null ? "" : row["重量阶梯数值止"]) + "\"  hint=\"重量阶梯数值止\" />"
+
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_ladderNumberBeginCBM\" id=\"edit_ladderNumberBeginCBM\" value=\"" + (row["立方阶梯数值起"] == null ? "" : row["立方阶梯数值起"]) + "\"  hint=\"立方阶梯数值起\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_ladderNumberEndCBM\" id=\"edit_ladderNumberEndCBM\" value=\"" + (row["立方阶梯数值止"] == null ? "" : row["立方阶梯数值止"]) + "\"  hint=\"立方阶梯数值止\" />"
+
+                                   + "<input type=\"text\" left=\"140\" name=\"edit_price\" value=\"" + row["单价"] + "\" hint=\"单价\" />"
+                                   + "<input type=\"text\" left=\"140\" name=\"edit_radio\" value=\"" + (row["系数"] == null ? "1" : row["系数"]) + "\" hint=\"系数\" />"
+                                   + "<input type=\"text\" left=\"140\" name=\"edit_MaxPriceTotal\" value=\"" + (row["最大金额"] == null ? "0" : row["最大金额"]) + "\" hint=\"最大金额\" />"
+                                   + "<input type=\"text\" left=\"140\" name=\"edit_ActiveDateBegin\" value=\"" + row["有效时间起"] + "\" hint=\"有效时间起\" />"
+                                   + "<input type=\"text\" left=\"140\" name=\"edit_ActiveDateEnd\" value=\"" + row["有效时间止"] + "\" hint=\"有效时间止\" />"
+
+                                    + "</div></div>", 500, 460)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_price]").val() == "") {
+                                $.eipMsg.alert("单价不能为空！");
+                                return;
+                            }
+
+                            var Id = row["操作"];
+
+                            var para = [{ name: "edit_ladderNumberBegin", value: $("[name=edit_ladderNumberBegin]").val() }, { name: "edit_ladderNumberEnd", value: $("[name=edit_ladderNumberEnd]").val() }, { name: "edit_ladderNumberBeginCBM", value: $("[name=edit_ladderNumberBeginCBM]").val() }, { name: "edit_ladderNumberEndCBM", value: $("[name=edit_ladderNumberEndCBM]").val() }, { name: "edit_price", value: $("[name=edit_price]").val() }, { name: "edit_maxPrice", value: $("[name=edit_maxPrice]").val() }, { name: "edit_radio", value: $("[name=edit_radio]").val() }, { name: "edit_ActiveDateBegin", value: $("[name=edit_ActiveDateBegin]").val() }, { name: "edit_ActiveDateEnd", value: $("[name=edit_ActiveDateEnd]").val() }];
+
+                            eip.get("/Root/ContractForm/EditContractForm?Id=" + Id, para, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    eip.dialog.close(dlg);
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+    }
+
+    //删除
+    function ContractFormDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除此条明细吗？", function () {
+            eip.get("/Root/ContractForm/ContractFormDel?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //删除
+    function ContractFormDeleteAll(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除合同名称下的所有明细吗？", function () {
+            eip.get("/Root/ContractForm/ContractFormDeleteAll?ContractName=" + eip.utf8(row["合同名称"]), null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Root/ContractForm/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        })
+    }
+
+</script>

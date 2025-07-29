@@ -1,0 +1,259 @@
+﻿@model WMS.UI.Controllers.Model.LoadCreateRuleModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="RuleName" hint="规则名" />
+        <select left="90" name="Status" hint="状态"><option value=""></option><option value="启用">启用</option><option value="未启用">未启用</option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_RuleName, new { @left = "140" })
+    <input left="140" type="text" name="txt_Description" hint="规则备注" />
+    <input left="140" type="text" name="txt_OrderQty" hint="Load上限订单数" />
+    <input left="140" type="text" name="txt_Qty" hint="Load上限总个数" />
+    <select class="easyui-validatebox" data-options="required:true " hint="出库方式" left="140" missingMessage="出库方式不能为空!" name="txt_shipMode"><option></option><option value='集装箱'>集装箱</option><option value='货厢'>货厢</option><option value='快递'>快递</option></select>
+    <select left="140" name="txt_Status" hint="状态"><option value="Active">启用</option><option value="UnActive">未启用</option></select>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/root/LoadCreateRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增生成规则", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增生成规则", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 + "</div></div>", 500, 300)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/root/LoadCreateRule/LoadCreateRuleAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_RuleName]").val("");
+
+                                                         eip.datagrid.load("/root/LoadCreateRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_RuleName]").focus();
+                         }
+                     }
+                     //,{
+                     //    text: "自动生成Load", icon: "save", click: function () {
+
+                     //        $.eipMsg.confirm("确定开始自动生成Load吗？", function () {
+                     //            eip.get("/root/LoadCreateRule/BeginLoadCreate", null, function (jsonObj) {
+                     //                $.procAjaxData(jsonObj, function () {
+
+                     //                }, function () { });
+                     //            })
+                     //        });
+                     //    }
+                     //}
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑明细' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick=\"LoadCreateRuleManager(this)\" title='生成规则配置流程' ></a>";
+
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+
+                                eip.get("/root/LoadCreateRule/LoadCreateRuleEdit?Id=" + Id + "&edit_Qty=" + $("[name=edit_Qty]").val() + "&edit_OrderQty=" + $("[name=edit_OrderQty]").val() + "&edit_Description=" + eip.utf8($("[name=edit_Description]").val()) + "&edit_Status=" + $("[name=edit_Status]").val() + "&edit_RuleName=" + eip.utf8($("[name=edit_RuleName]").val()), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/root/LoadCreateRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "规则名": {
+                    editor: { type: "text", name: "edit_RuleName" }
+                },
+                "上限订单数": {
+                    editor: { type: "text", name: "edit_OrderQty" }
+                },
+                "上限总个数": {
+                    editor: { type: "text", name: "edit_Qty" }
+                },
+                "规则备注": {
+                    editor: { type: "text", name: "edit_Description" }
+                },
+                "状态": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_Status'></select>"), [{ val: "Active", text: "启用" }, { val: "UnActive", text: "未启用" }], true));
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=RuleName]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+    });
+
+    //生成规则配置流程
+    function LoadCreateRuleManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var ruleId = row["操作"];
+        var dlg_Pos = eip.dialog.create("生成规则配置流程———当前规则：" + row["规则名"], "<div id=layout_Pos>"
+                                + "<div region=\"north\" id=\"form_Pos\" style=\"height:65px;padding:5px;\">"
+                                + "<input type=\"hidden\" name=\"Hid_PId\" value=\"" + row["操作"] + "\">出货流程名：<input type=\"text\" name=\"txt_outFlowName\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"出货流程列表\">"
+                                + "<table id=grid_Pos_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前规则已有流程\">"
+                                + "<table id=grid_Pos_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pos_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pos value='" + row["Id"] + "' >";   //得到流程ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pos_get"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"R_LoadRule_FlowHeadDel(this,'" + ruleId + "')\" title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pos'), [{
+            obj: $('#form_Pos'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click: function () {
+                        eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameUnselected?Id=" + row["操作"] + "&outFlowName=" + eip.utf8($("[name=txt_outFlowName]").val()), $("#grid_Pos_set"), eip.para.create($("input,select", $("#form_Pos"))));
+                    }
+                },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pos]:checked", $("#grid_Pos_set")).length == 0) {
+                               $.eipMsg.alert("请先选择代理!");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pos]:checked", $("#grid_Pos_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_PId", value: $("[name=Hid_PId]", $("#form_Pos")).val() }]);
+
+                           eip.post("/root/LoadCreateRule/R_LoadRule_FlowHeadListAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+
+                                   eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameUnselected?Id=" + row["操作"] + "&outFlowName=null", $("#grid_Pos_set"), null);
+                                   eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameSelected?Id=" + row["操作"], $("#grid_Pos_get"), null);
+
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameUnselected?Id=" + row["操作"] + "&outFlowName=null", $("#grid_Pos_set"), null);
+        eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameSelected?Id=" + row["操作"], $("#grid_Pos_get"), null);
+
+    }
+
+    //取消
+    function R_LoadRule_FlowHeadDel(obj, ruleId) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定取消该出货流程吗？", function () {
+            eip.get("/root/LoadCreateRule/R_LoadRule_FlowHeadDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameUnselected?Id=" + ruleId + "&outFlowName=null", $("#grid_Pos_set"), null);
+                    eip.datagrid.load("/root/LoadCreateRule/LoadCreateFlowNameSelected?Id=" + ruleId, $("#grid_Pos_get"), null);
+
+                }, function () { });
+            })
+        });
+    }
+
+
+</script>

@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" /> 
+        <input type="text" left="40" name="so_number" hint="SO" />
+        请注意：完成收货的批次才能修改
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            if ($("[name=receipt_id]", $("#layout")).val() == "") {
+                                $.eipMsg.alert("请输入收货批次号!");
+                                return;
+                            }
+                            eip.datagrid.load("/InBound/EditInBoundSoNumber/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }, {
+                        text: "确认修改", icon: "save", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先选择信息!");
+                                   return;
+                               }
+
+                               EditDetailClientCode();
+
+                           }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["仓库"],
+            checkbox: function (row) {
+                if (row["状态"] == "完成收货") {
+                    return "<input type=checkbox name=check_to  value=\"" + row["SO号"] + "\"   >";
+                }
+            }
+        });
+
+        $("[name=receipt_id]").focus();
+
+    });
+
+    //修改客户名
+    function EditDetailClientCode() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'soNumber', value: $(this).val() });
+        })
+
+        var val1 = $("[name=receipt_id]").val();
+
+        var dlg = eip.dialog.create("修改SO", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + val1 + "</span>"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_SoNumber\" value=\"\" hint=\"修改为\" /><span  hint=\"\">请填写SO号</span>"
+                                    + "</div></div>", 500, 230)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            var clientCode = $("[name=edit_SoNumber]").val();
+                            if (clientCode=="") {
+                                $.eipMsg.alert("请先填写SO号!");
+                                return;
+                            }
+
+                            $.eipMsg.confirm("确定修改SO号吗？", function () { 
+                                eip.post("/InBound/EditInBoundSoNumber/EditDetailSoNumber?receiptId=" + val1 + "&edit_SoNumber=" + $("[name=edit_SoNumber]").val(), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/InBound/EditInBoundSoNumber/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+        $("[name=edit_SoNumber]").focus();
+    }
+
+</script>

@@ -1,0 +1,159 @@
+﻿@model WMS.UI.Controllers.Model.MenuTreeModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/eip.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/button.css">
+    <script type="text/javascript" src="/share/includes/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/share/includes/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share/includes/common.js"></script>
+    <script type="text/javascript" src="/share/includes/calendar2_utf8.js"></script>
+    <script type="text/javascript" src="/share/includes/eip.js"></script>
+    <script type="text/javascript" src="/share/includes/highcharts.js"></script>
+    <title>魔方 v1.0</title>
+
+    <style>
+        #divModal {
+            BACKGROUND-COLOR: #ECE9D8;
+            FILTER: alpha(opacity=0);
+            opacity: 0;
+            LEFT: 0px;
+            POSITION: absolute;
+            TOP: 0px;
+        }
+
+        xmp {
+            width: 1px;
+            overflow: hidden;
+            text-overflow: clip;
+            white-space: nowrap;
+            clear: none;
+            float: none;
+            line-height: 0px;
+            display: inline;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div style="height:480px; overflow-y:scroll;">
+
+        <table style="width:95%; margin-top:5px; margin-left:30px;bottom:0px;padding:0px; ">
+
+            <tr><td align="left" style="font-size:14px; width:20%"><a style="cursor:pointer; text-decoration:none; " href="highcharts1"><b>库位使用情况统计</b></a></td></tr>
+            <tr><td align="left" style="font-size:14px; width:20%"><a style="cursor:pointer; text-decoration:none; " href="highcharts"> <b>库存情况统计</b></a></td></tr>
+            <tr><td align="left" style="font-size:14px; width:20%"><a style="cursor:pointer; text-decoration:none; " href="highcharts2"> <b>客户库存情况统计</b></a></td></tr>
+
+        </table>
+        <table width="70%" align="center">
+            <tr><td align="center"><div id="container" style=" margin:0px auto; width 70%; height 300px; "></div></td></tr>
+        </table>
+        <br>
+        <br><br><br><br>
+
+
+
+        <table width="70%" align="center">
+            <tr><td align="center"><div id="container" style=" margin:0px auto; width 70%; height 300px; "></div></td></tr>
+        </table>
+        <br>
+        <table align='center' width='500px' border=1 cellspacing=0 cellpadding=0 bordercolor=#000000 align="center" style='border-collapse:collapse;table-layout:fixed;'>
+            <tr>
+                <td width='33%' align='center' height='25'><b style='font-family: Verdana; '>WHS_Chamber</b></td>
+                <td width='33%' align='center'><b>Actual_Stock</b></td>
+                <td width='34%' align='center'><b>Alert_level</b></td>
+                @Html.Raw(ViewData["Htmldetail"])
+        </table>
+        <br><br><br><br>
+    </div>
+
+
+
+    <table id="datatable" style="display:none">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Actual Stock</th>
+                <th>Alert level</th>
+            </tr>
+        </thead>
+        <tbody>
+            @Html.Raw(ViewData["Htmldetail"])
+
+        </tbody>
+    </table>
+
+
+
+
+    <script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            Highcharts.visualize = function (table, options) {
+                options.xAxis.categories = [];
+                $('tbody th', table).each(function (i) {
+                    options.xAxis.categories.push(this.innerHTML);
+                });
+                options.series = [];
+                $('tr', table).each(function (i) {
+                    var tr = this;
+
+                    $('th, td', tr).each(function (j) {
+                        if (j > 0) { // skip first column
+                            if (i == 0) { // get the name and init the series
+                                options.series[j - 1] = {
+                                    name: this.innerHTML,
+                                    data: []
+                                };
+                            } else { // add values
+                                options.series[j - 1].data.push(parseFloat(this.innerHTML));
+                            }
+                        }
+                    });
+                });
+
+                var chart = new Highcharts.Chart(options);
+            }
+
+            var table = document.getElementById('datatable'),
+        options = {
+            chart: {
+                renderTo: 'container',
+                type: 'column'
+            },
+            title: {
+                text: '库存情况统计 -- per Chamber'
+            },
+            xAxis: {
+            },
+            yAxis: {
+                title: {
+                    text: 'Ocean East'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        this.y + ' ' + this.x.toLowerCase();
+                }
+            }
+        };
+
+            Highcharts.visualize(table, options);
+        });
+
+    });
+    </script>
+
+
+
+</body>
+</html>

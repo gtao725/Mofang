@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5d6df7f1-c8b0-429e-947f-6174a7637241" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/RecService/RecService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RecService.wsdl" MetadataType="Wsdl" ID="6825bb9d-ee08-43d4-9244-585b63e4d554" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?wsdl" />
+    <MetadataFile FileName="RecService4.xsd" MetadataType="Schema" ID="9c8c4269-7129-4041-a1aa-62bf5369207b" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?xsd=xsd4" />
+    <MetadataFile FileName="RecService.xsd" MetadataType="Schema" ID="96f95a7b-dab9-4051-b38c-e846a6ece41b" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?xsd=xsd3" />
+    <MetadataFile FileName="RecService1.xsd" MetadataType="Schema" ID="b58504ca-5e11-4f0c-a672-4868b195bf60" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?xsd=xsd2" />
+    <MetadataFile FileName="RecService2.xsd" MetadataType="Schema" ID="731dd955-2ac4-48cd-bb12-fd6129cf564c" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?xsd=xsd1" />
+    <MetadataFile FileName="RecService3.xsd" MetadataType="Schema" ID="f0f24160-6be3-4a16-a767-474db0066fc4" SourceId="1" SourceUrl="http://localhost:45936/RecService/RecService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

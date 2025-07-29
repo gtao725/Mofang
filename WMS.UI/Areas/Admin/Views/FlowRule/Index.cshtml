@@ -1,0 +1,196 @@
+﻿@model WMS.UI.Controllers.Model.FlowRuleModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="text" name="functionName" hint="流程名" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_id, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_functionName, new { @left = "140" })
+    @Html.EipInputFor(model => model.txt_StatusName, new { @left = "140" })
+    <input type="text" left="140" name="txt_description" hint="流程说明" />
+    <input type="text" left="140" name="txt_groupId" hint="组号" />
+    <select left="140" name="txt_functionFlag" hint="是否功能"><option value="0">否</option><option value="1" selected>是</option></select>
+    <select left="140" name="txt_requiredFlag" hint="是否必填"><option value="0">否</option><option value="1" selected>是</option></select>
+    <input type="text" left="140" name="txt_relyId" hint="依赖ID" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["FlowNameSelect"], "txt_businessObjectGroupId", "对应流程", "", "left='140' ")
+    <input type="text" left="140" name="txt_selectRuleDescription" hint="选择功能描述" />
+    <select left="140" name="txt_rollbackFlag" hint="可否回滚"><option value="0">否</option><option value="1" selected>是</option></select>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/FlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增流程规则对象", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增流程规则对象", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                 , 500, 400)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/FlowRule/AddFlorRule", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.datagrid.load("/admin/FlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 }, null, true)
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                             $("[name=txt_id]").focus();
+                         }
+                     }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["RollbackFlag", "对应流程ID"],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='修改' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"FlowRuleDel(this)\" title='删除' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];
+
+                                var para = [{ name: "edit_Id", value: $("[name=edit_Id]").val() }, { name: "edit_FunctionName", value: $("[name=edit_FunctionName]").val() }, { name: "edit_StatusName", value: $("[name=edit_StatusName]").val() }, { name: "edit_Description", value: $("[name=edit_Description]").val() }, { name: "edit_GroupId", value: $("[name=edit_GroupId]").val() }, { name: "edit_FunctionFlag", value: $("[name=edit_FunctionFlag]").val() }, { name: "edit_RequiredFlag", value: $("[name=edit_RequiredFlag]").val() }, { name: "edit_RelyId", value: $("[name=edit_RelyId]").val() }, { name: "edit_BusinessObjectGroupId", value: $("[name=edit_BusinessObjectGroupId]").val() }, { name: "edit_SelectRuleDescription", value: $("[name=edit_SelectRuleDescription]").val() }, { name: "edit_RollbackFlag", value: $("[name=edit_RollbackFlag]").val() }, { name: "Id", value: Id }];
+
+                                eip.get("/admin/FlowRule/EditFlorRule", para, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/admin/FlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "流程ID": {
+                    editor: { type: "text", name: "edit_Id" }
+                },
+                "流程名": {
+                    editor: { type: "text", name: "edit_FunctionName" }
+                },
+                "状态名": {
+                    editor: { type: "text", name: "edit_StatusName" }
+                },
+                "流程说明": {
+                    editor: { type: "text", name: "edit_Description" }
+                },
+                "组号": {
+                    editor: { type: "text", name: "edit_GroupId" }
+                },
+                "是否功能": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_FunctionFlag'></select>"), [{ val: "0", name: "否" }, { val: "1", name: "是" }], true));
+                        }
+                    }
+                },
+                "是否必填": {
+                    editor: {
+                        type: 'select', html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_RequiredFlag'></select>"), [{ val: "0", name: "否" }, { val: "1", name: "是" }], true));
+                        }
+                    }
+                },
+                "依赖ID": {
+                    editor: { type: "text", name: "edit_RelyId" }
+                },
+                "对应RF流程": {
+                    editor: {
+                        type: 'select', field: "对应流程ID", html: function (row) {
+                            return $("@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["FlowNameSelect"], "edit_BusinessObjectGroupId")");
+                        }
+                    }
+                },
+                "选择功能描述": {
+                    editor: { type: "text", name: "edit_SelectRuleDescription" }
+                },
+                "可否回滚": {
+                    editor: {
+                        type: 'select', field: "RollbackFlag", html: function (row) {
+                            return $(eip.form.createOptions($("<select name='edit_RollbackFlag'></select>"), [{ val: "0", name: "否" }, { val: "1", name: "是" }], true));
+                        }
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+        $("[name=functionName]").focus();
+
+    });
+
+    //删除业务对象
+    function FlowRuleDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var id = row["操作"];
+        $.eipMsg.confirm("确定删除该流程规则吗？", function () {
+            eip.get("/admin/FlowRule/FlowRuleDel?Id=" + id, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/FlowRule/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                }, function () { });
+            })
+        });
+
+
+    }
+
+
+</script>

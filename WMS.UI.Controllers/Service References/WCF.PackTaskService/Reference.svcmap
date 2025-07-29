@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="e5fbc356-03ee-4a8a-9f76-77a7b1f814a7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/PackTaskService/PackTaskService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PackTaskService.xsd" MetadataType="Schema" ID="852e8aeb-2039-43d5-92db-4993569adce9" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PackTaskService5.xsd" MetadataType="Schema" ID="b0b4dcb4-34a3-457a-8b50-7eff68da6b5b" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd5" />
+    <MetadataFile FileName="PackTaskService1.xsd" MetadataType="Schema" ID="3d4a9356-b8e8-4c43-97e0-e78753dfd06e" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PackTaskService2.xsd" MetadataType="Schema" ID="582caee7-5df0-475c-8389-59219295a929" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PackTaskService.wsdl" MetadataType="Wsdl" ID="f67bada7-87fc-4ff8-b7ec-44c227e546b1" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?wsdl" />
+    <MetadataFile FileName="PackTaskService3.xsd" MetadataType="Schema" ID="76cdab7b-6f3f-4ffb-b22e-03c9cf7e5a86" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PackTaskService4.xsd" MetadataType="Schema" ID="7a8cb798-5927-4f65-9bea-45e4c7988d8f" SourceId="1" SourceUrl="http://localhost:45936/PackTaskService/PackTaskService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

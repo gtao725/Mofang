@@ -1,0 +1,234 @@
+﻿@model WMS.UI.Controllers.Model.AdminModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        <input type="text" name="power_name" hint="权限名" />
+        <input type="text" name="power_type" hint="权限类型" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<div id='form22' style="display:none">
+    @Html.EipInputFor(model => model.txt_powername, new { @left = "140" })
+    <input type="text" left="140" name="txt_description" hint="说明" />
+    @Html.EipInputFor(model => model.txt_powertype, new { @left = "140" })
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/admin/Power/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    },
+                     {
+                         text: "新增权限", icon: "add", click:
+                         function () {
+                             var dlg = eip.dialog.create("新增权限", "<div id=layout1 ><div form='Y' id='form2'>"
+                                 + $("#form22").html()
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_powername\" hint=\"权限名\" /><br/>"
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_description\" hint=\"说明\" /><br/>"
+                                 //+ "<input type=\"text\" left=\"140\" name=\"txt_powertype\" hint=\"权限类型\" /><br/>"
+
+                                 + "</div></div>", 500, 200)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+                                                 eip.get("/admin/Power/AddPower", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         $("[name=txt_powername]").val("");
+                                                         $("[name=txt_description]").val("");
+                                                         $("[name=txt_powertype]").val("");
+                                                         eip.datagrid.load("/admin/Power/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+
+                             $("[name=txt_powername]").focus();
+                         }
+                     },
+                      {
+                          text: "权限控制同步", icon: "reload", click: function () {
+                              eip.get("/admin/Power/Sync", null, function (jsonObj) {
+                                  $.procAjaxData(jsonObj, function () {
+
+                                  }, function () { });
+                              })
+                          }
+                      }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: ["公司ID","修改人", "修改时间"],
+             
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑权限' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-editor' plain=true onclick='PowerManager(this)' title='权限管理' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                var Id = row["操作"];     //得到ID
+                                var whCode = row["仓库"];
+                                eip.get("/admin/Power/WhPowerEdit?Id=" + Id + "&WhCode=" + eip.utf8(whCode) + "&PowerName=" + eip.utf8($("[name=edit_powerName]").val()) + "&Description=" + eip.utf8(($("[name=edit_description]").val())) + "&PowerType=" + eip.utf8(($("[name=edit_powerType]").val())), null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/admin/Power/List", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                                    }, function () { });
+                                })
+
+                            });
+                            return btn;
+                        }
+                    }
+                },
+                "说明": {
+                    editor: { type: "text", name: "edit_description" }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+
+        $("[name=power_name]").focus();
+    });
+
+    //权限管理
+    function PowerManager(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        //alert(row["Id"])
+        var dlg_Pos = eip.dialog.create("权限管理———当前权限：" + row["权限名"], "<div id=layout_Pow>"
+                                + "<div region=\"north\" id=\"form_Pow\" style=\"height:65px;padding:5px;\"><input type=\"hidden\" name=\"Hid_PId\" value=\"" + row["操作"] + "\"><input type=\"hidden\" name=\"Hid_PosName\" value=\"" + row["权限名"] + "\">域名：<input type=\"text\" name=\"txt_area\" value=\"\"></div>"
+                                + "<div region=\"west\" style=\"width:48%;overflow-x:hidden;\" title=\"权限控制列表\">"
+                                + "<table id=grid_Pow_set></table></div>"
+                                + " <div region=\"center\" style=\"width:52%;overflow-x:hidden;\" title=\"当前权限已有控制\">"
+                                + "<table id=grid_Pow_get></table></div>"
+                                + "</div>", 1000, 500)
+        eip.datagrid.create({
+            obj: $("#grid_Pow_set"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID", "ParentId", "传值类型", "PowerId", "权限名", "说明"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_Pow value=" + row["Id"] + " >";   //得到控制ID
+            }
+        });
+        eip.datagrid.create({
+            obj: $("#grid_Pow_get"),
+            pagesize: 200,
+            hiddencolumns: ["Id", "公司ID", "ParentId", "传值类型", "PowerId", "权限名", "说明"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='WhPowerMVCDel(this)' title='取消' ></a>";
+                        return retHtml;
+                    }
+                }
+            }
+        });
+        eip.layout.create($('#layout_Pow'), [{
+            obj: $('#form_Pow'),
+            buttons: [
+                 {
+                     text: "查询", icon: "search", click: function () {
+                         eip.datagrid.load("/admin/Power/WhPowerList?PowerId=" + eip.utf8(row["操作"]) + "&AreaName=" + eip.utf8($("[name=txt_area]").val()), $("#grid_Pow_set"), eip.para.create($("input,select", $("#form_Pow"))));
+                     }
+                 },
+                {
+                    text: "保存", icon: "save", click:
+                       function () {
+                           if ($("[name=chx_Pow]:checked", $("#grid_Pow_set")).length == 0) {
+                               $.eipMsg.alert("请先选择控制！");
+                               return;
+                           }
+                           var para = eip.para.create($("input[name=chx_Pow]:checked", $("#grid_Pow_set")));
+                           para = eip.para.extend(para, [{ name: "Hid_PId", value: $("[name=Hid_PId]", $("#form_Pow")).val() }, { name: "Hid_PosName", value: $("[name=Hid_PosName]", $("#form_Pow")).val() }]);
+
+                           eip.post("/admin/Power/WhPowerMVCListAdd", para, function (jsonObj) {
+                               $.procAjaxData(jsonObj, function () {
+                                   //查询未选择的所有权限
+                                   eip.datagrid.load("/admin/Power/WhPowerMVCUnselected?PowerId=" + eip.utf8(row["操作"]) + "&PowType=null", $("#grid_Pow_set"), null);
+                                   //查询出职位已有权限
+                                   eip.datagrid.load("/admin/Power/WhPoweMVCSelected?PowerId=" + eip.utf8(row["操作"]), $("#grid_Pow_get"), null);
+                               }, function () { });
+                           })
+                       }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                       function () {
+                           eip.dialog.close(dlg_Pos);
+                       }
+                }
+            ]
+        }])
+
+        $("[name=txt_area]").focus();
+        //查询当前权限未选择的控制
+        eip.datagrid.load("/admin/Power/WhPowerMVCUnselected?PowerId=" + eip.utf8(row["操作"]) + "&AreaName=null", $("#grid_Pow_set"), null);
+        //查询当前权限已选择的控制
+        eip.datagrid.load("/admin/Power/WhPoweMVCSelected?PowerId=" + eip.utf8(row["操作"]), $("#grid_Pow_get"), null);
+    }
+
+    //取消权限的某个控制
+    function WhPowerMVCDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["Id"];     //得到用户职位关系ID
+
+        $.eipMsg.confirm("确定取消该控制吗？", function () {
+            eip.get("/admin/Power/WhPowerMVCDel?Id=" + Id, eip.para.create($("input,select", $("#layout_Pos"))), function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/admin/Power/WhPowerMVCUnselected?PowerId=" + eip.utf8(row["PowerId"]) + "&AreaName=null", $("#grid_Pow_set"), null);
+                    //查询当前权限已选择的控制
+                    eip.datagrid.load("/admin/Power/WhPoweMVCSelected?PowerId=" + eip.utf8(row["PowerId"]), $("#grid_Pow_get"), null);
+                }, function () { });
+            })
+        });
+    }
+
+</script>

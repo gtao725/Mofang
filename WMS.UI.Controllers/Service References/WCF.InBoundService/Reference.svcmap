@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="390f6d16-52b0-4bb5-a7fa-3f9107ada21f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:45936/InBoundService/InBoundService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="InBoundService.wsdl" MetadataType="Wsdl" ID="ef3bcd61-6699-41dd-8a9f-215335b2e5a2" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?wsdl" />
+    <MetadataFile FileName="InBoundService.xsd" MetadataType="Schema" ID="22e2392b-431a-4167-9c03-a08fd9f76e9c" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd0" />
+    <MetadataFile FileName="InBoundService1.xsd" MetadataType="Schema" ID="20701606-6f25-4647-a43b-f5f466776e93" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd1" />
+    <MetadataFile FileName="InBoundService2.xsd" MetadataType="Schema" ID="44da00d0-d938-47b3-b7f7-0281bfb47fd1" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd2" />
+    <MetadataFile FileName="InBoundService3.xsd" MetadataType="Schema" ID="2460c9db-d85b-440b-b3c6-94248d2c73c8" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd3" />
+    <MetadataFile FileName="InBoundService31.xsd" MetadataType="Schema" ID="0dc3b37b-72fa-4267-be92-86117dd7913b" SourceId="1" SourceUrl="http://localhost:45936/InBoundService/InBoundService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

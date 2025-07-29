@@ -1,0 +1,244 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "clientCode", "客户名", "", "")
+        <input type="text" name="load" hint="Load号" />
+        <input type="text" left="90" name="poNumber" hint="系统出库单号" />
+        <input type="text" left="90" name="customerOutPoNumber" hint="客户出库单号" />
+        <input type="text" left="90" name="altcustomerOutPoNumber" hint="平台单号" />
+
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(-3).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/PackTaskList", $("#grid"), eip.para.create($("input,select", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""],
+            columns: {
+                "Load": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"PackDetailList(this)\" >" + row["Load"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "客户出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "正在包装" || row["状态"] == "完成包装") {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick=\"PackHeadList(this)\" >" + row["客户出库单号"] + "</span>";
+                        } else {
+                            retHtml += "<span >" + row["客户出库单号"] + "</span>";
+                        }
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["客户名"] == "Merrell" || row["客户名"] == "Acco") {
+
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='print1(this)' title='包装明细' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='print2(this)' title=包装明细与款号' ></a>";
+
+                        }
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+    });
+
+    //查看包装明细ByLoad
+    function PackDetailList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var val = row["Load"];
+
+        var dlg_Pos = eip.dialog.create("包装明细—Load：" + val,
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+             +"<input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+             + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""],
+            columns: {
+                "客户出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "正在包装" || row["状态"] == "完成包装") {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick=\"PackScanNumberList(this)\" >" + row["客户出库单号"] + "</span>";
+                        } else {
+                            retHtml += "<span  >" + row["客户出库单号"] + "</span>";
+                        }
+
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/PackDetailList1?LoadId=" + val, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+
+    }
+
+    //查看包装明细By客户出库单号
+    function PackHeadList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadId = row["Load"];
+        var val = row["客户出库单号"];
+
+        var dlg_Pos1 = eip.dialog.create("包装明细—客户出库单号：" + val,
+             "<div id=layout_Detail1><div form=\"Y\" id=\"form_Detail1\">"
+              + "<input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+             + "<table id=\"grid_detail1\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail1"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""],
+            columns: {
+                "客户出库单号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "正在包装" || row["状态"] == "完成包装") {
+                            retHtml += "<span style='color:blue;cursor:pointer' onclick=\"PackScanNumberList(this)\" >" + row["客户出库单号"] + "</span>";
+                        } else {
+                            retHtml += "<span >" + row["客户出库单号"] + "</span>";
+                        }
+                        return retHtml;
+                    }
+                } 
+            }
+        });
+
+        eip.layout.create($('#layout_Detail1'), [{
+            obj: $('#form_Detail1'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos1);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/PackHeadList?customerPoNumber=" + val + "&LoadId=" + loadId, $("#grid_detail1"), eip.para.create($("input,select", $("#layout_Detail1"))));
+    }
+
+    //查看包装明细By客户出库单号
+    function PackScanNumberList(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var loadId = row["Load"];
+        var val = row["客户出库单号"];
+
+        var dlg_Pos2 = eip.dialog.create("包装明细—客户出库单号：" + val,
+             "<div id=layout_Detail2><div form=\"Y\" id=\"form_Detail2\">"
+              +"<input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+             + "<table id=\"grid_detail2\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail2"),
+            pagesize: 200,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: [""]
+
+        });
+
+        eip.layout.create($('#layout_Detail2'), [{
+            obj: $('#form_Detail2'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos2);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/OutReport/PackScanNumberList?customerPoNumber=" + val + "&LoadId=" + loadId, $("#grid_detail2"), eip.para.create($("input,select", $("#layout_Detail2"))));
+    }
+
+    //打印出货操作单
+    function print1(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["客户出库单号"];
+        window.open("http://10.88.88.90/net/oms/MerrellOutPrint.aspx?actionType=print_pcik_noitem_WWW&outnumber=" + Id);
+    }
+
+    //打印出货操作单
+    function print2(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["客户出库单号"];
+        window.open("http://10.88.88.90/net/oms/MerrellOutPrint.aspx?actionType=print_pcik_WWW&outnumber=" + Id);
+    }
+
+</script>

@@ -1,0 +1,5 @@
+D:\work2022\wms\WMS.WCFServices\bin\WMS.DI.dll
+D:\work2022\wms\WMS.WCFServices\bin\WMS.DI.pdb
+D:\work2022\wms\WMS.DI\obj\Debug\WMS.DI.dll
+D:\work2022\wms\WMS.DI\obj\Debug\WMS.DI.pdb
+D:\work2022\WMS\WMS.DI\obj\Debug\WMS.DI.csprojResolveAssemblyReference.cache

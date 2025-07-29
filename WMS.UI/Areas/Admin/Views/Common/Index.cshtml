@@ -1,0 +1,397 @@
+﻿@model WMS.UI.Controllers.Model.MenuTreeModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/eip.css">
+    <link rel="stylesheet" type="text/css" href="/share/includes/button.css">
+    <script type="text/javascript" src="/share/includes/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/share/includes/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share/includes/common.js"></script>
+    <script type="text/javascript" src="/share/includes/calendar2_utf8.js"></script>
+    <script type="text/javascript" src="/share/includes/eip.js"></script>
+    <title>魔方 v1.0</title>
+</head>
+<body class="easyui-layout">
+    <div id="layoutNorth" region="north" border=false style="height:30px;background-color:#eaf2ff;padding-left:1px;padding:0px;">
+        <span style="padding-right:20px;background-color:#eaf2ff;width:180px;height:26px; display:inline-block;vertical-align:middle; " ><img src="~/Share/images/LOGO2.jpg"  /></span>
+
+        @*@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["aa"],"aaaa","测试","6", "style='width:90px;'")*@
+        @*@Html.EipInput(model => model.AdminName, new { @class = "easyui-validatebox"})*@
+
+        <span style="padding-right:20px;background-color:#eaf2ff;">
+            @foreach (var son in Model.children)
+            {
+                <a href="#" class="easyui-linkbutton" plain="true" name="Menus" id="Menu_@son.id" iconCls="@son.iconCls" onclick="CreateMenu(@son.id)">@son.text</a>
+            }
+        </span>
+        <span style="float:right; padding-right:20px;">
+            <a href="#" class="easyui-linkbutton"  style="font-weight:bold;" plain="true" iconCls="icon-blank">@ViewData["whName"]  @ViewData["userNameCN"]</a>
+            <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-help" onclick="UserUpdatePwd()">修改密码</a>
+            <a href="#" class="easyui-linkbutton" plain="true" iconCls="pic_23" onclick="ExitSys()">退出系统</a>
+        </span>
+    </div>
+    <div region="west" split="true" title="魔方仓储管理" iconCls="pic_11" style="width:200px;padding:0px;padding-left:0px;padding-top:0px;">
+        <div id="menu_table">   </div>
+    </div>
+    <div region="center" border=false style="background-color:#EBEBEB;padding:0px">
+        <div id="tt" class="easyui-tabs" tools="#tab-tools" plain=false fit="true" border=true></div>
+        <div id="tab-tools" border=false>
+            <a href="#" class="easyui-linkbutton" plain="true" title="刷新当前页面" iconCls="icon-reload" onclick="Load()"></a>
+            <a href="#" class="easyui-linkbutton" plain="true" title="新窗口" iconCls="icon-tab" onclick="CopyTab()"></a>
+            <a href="default.aspx" class="easyui-linkbutton" plain="true" title="返回主菜单" iconCls="icon-undo"></a>
+            <a href=# class=easyui-linkbutton plain=true title=复制网址 iconCls=icon-scissors onclick=CopyUrl()></a>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+
+
+        //AddTab("测试",""
+        $(function () {
+
+        
+   
+            //var para = [{name:"aa",value:"11"}]
+            //eip.get("/common/test", para, function (jsonObj) {
+            //    alert(jsonObj)
+            //   // $.procAjaxData(jsonObj);
+
+            //})
+            //eip.form.createOptions($("select[hint=来源类型]"), [{ val: "11", display: "审核中" }, { val: "22", display: "已关闭" }]);
+
+
+            @if (@Model.children.Count > 0) {
+                <text>
+            CreateMenu(@Model.children[0].id)
+            </text>
+            }
+            AddTab("仓库统计", "/Admin/Common/highcharts");
+            if("@ViewData["ifPWUnActive"]"=="Y" ){
+
+                UserUpdatePwd();
+
+            }
+        })
+        function changeWhcompany(obj) {
+
+            eip.get("/common/changeWhcompany?changeWhcompany=" + obj.value, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                });
+
+            })
+        }
+
+        function CreateMenu(id) {
+
+            //字体加粗取消
+            $("[name=Menus]").css({ "font-weight": "400" });
+            //字体加粗
+            $("#Menu_" + id).css({ "font-weight": "bold" });
+            $("#menu_table").accordion({ //初始化accordion
+                fit: true,
+                border: false
+            });
+            ClearMenu($("#menu_table"));
+            $.post("/admin/common/GetTree", { "id": id }, //获取第一层目录
+                  function (data) {
+                      if (data == "0") {
+                          $.eipMsg.alert("登陆失效!", function () { window.location = "/Admin/admin/Index"; })
+                      } else {
+
+                          $.each(data, function (i, e) {
+                              $('#menu_table').accordion('add', {
+                                  title: e.text,
+                                  content: "<ul id='tree" + e.id + "' ></ul>",
+                                  selected: false,
+                                  iconCls: e.iconCls//e.Icon
+                              });
+                              if (e.children) {
+                                  AddMenu(e.children, e.id)
+                              }
+                          })
+                      }
+                  }, "json");
+            $.parser.parse("#menu_table");
+        }
+
+
+        function AddMenu(children, id) {
+
+            $("#tree" + id).tree({
+                data: children,
+                onBeforeExpand: function (node, param) {
+                    $("#tree" + id).tree('options').url = "/admin/common/GetTree?id=" + node.id;
+                },
+                onClick: function (node) {
+                    if (node.state == 'closed') {
+                        $(this).tree('expand', node.target);
+                    } else if (node.state == 'open') {
+                        // ClearMenu();
+                        var tabTitle = node.text;
+                        var url = node.attributes;
+                        var icon = node.iconCls;
+                        AddTab(tabTitle, url, $("#tree" + id));
+                    }
+                }
+            });
+        }
+
+
+
+        function ClearMenu(obj) {
+            var pp = obj.accordion('panels');
+            if (pp) {
+                $.each(pp, function (i, n) {
+                    if (n) {
+                        var t = n.panel('options').title;
+                        obj.accordion('remove', t);
+                    }
+                });
+            }
+            pp = obj.accordion('getSelected');
+            if (pp) {
+                // alert(pp.panel('options').title)
+                var title = pp.panel('options').title;
+                obj.accordion('remove', title);
+            }
+            if (obj.accordion('panels').length > 0)
+                ClearMenu(obj);
+        }
+
+
+
+        function locationUrl() {
+            var locationUrl = window.location.href
+            var aa = locationUrl.split("//")[0]
+            var bb = locationUrl.split("//")[1]
+            if (bb.indexOf("/") != -1) {
+                return locationUrl.split("//")[0] + "//" + bb.split("/")[0]
+            } else
+                return locationUrl;
+        }
+        function AddTab(title, url, obj) {
+
+            if ($('#tt').tabs('exists', title)) {
+                $('#tt').tabs('select', title);
+                iframe = $("[eip_tab_frame='" + title + "']")[0];
+                iframe.src = locationUrl() + url;
+            } else {
+                var iframeHeight = $("#tt").height() - 33.4
+                var content = '<table eip_tab_table="' + title + '" width="100%" height="100%" cellspacing="0" cellpadding="0"><tr height=30><td><img src="/Share/images/loading.gif" style="margin-left:10px"></td></tr><tr><td><iframe name=iframepage eip_tab_frame="' + title + '" onreadystatechange=Completed(this)  scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:' + iframeHeight + 'px;padding:0px;border:0px solid #fff !important;border:2px solid #C3DAF9;"></iframe></td></tr></table>';
+                $('#tt').tabs('add', {
+                    title: title,
+                    content: content,
+                    closable: true
+                });
+                $('#tt').tabs({
+                    onBeforeClose: function (title) {
+                        obj.find('.tree-node-selected').removeClass('tree-node-selected');
+                        return true;
+                    }
+                });
+
+
+                $('#tt').tabs('select', title);
+                iframe = $("iframe[eip_tab_frame='" + title + "']")[0];
+                if (iframe.attachEvent) {
+                    iframe.attachEvent("onload", function () {
+                        $("table[eip_tab_table='" + title + "']>tbody>tr:eq(0)").hide();
+                    });
+                } else {
+                    iframe.onload = function () {
+                        $("table[eip_tab_table='" + title + "']>tbody>tr:eq(0)").hide();
+                    };
+                }
+            }
+        }
+        function SelectTab(title, url) {
+            if ($('#tt').tabs('exists', title)) {
+                $('#tt').tabs('select', title);
+            } else {
+                AddTab(title, url)
+            }
+        }
+        function CloseTab(title) {
+            if (!title) title = GetCurrTabName();
+            if ($('#tt').tabs('exists', title))
+                $('#tt').tabs('close', title);
+        }
+        function Completed(obj) {
+            if (obj.readyState == "complete")
+                $(obj).prev().hide();
+        }
+        function GetTabTitle(url) {
+            ftitle = "";
+            $("div[onclick*='AddTab(']").each(function () {
+                if ($(this).attr("onclick").toLowerCase().search(url.toLowerCase()) > -1) {
+                    ftitle = this.innerText;
+                    return false;
+                }
+            });
+            return ftitle;
+        }
+        function Load() {
+            tabTitle = $('#tt').tabs('getSelected').panel('options').title;
+            iframe = $("[eip_tab_frame='" + tabTitle + "']")[0];
+            if (iframe == undefined) return;
+            iframe.contentWindow.location.reload();
+        }
+        function CopyTab() {
+            var tabTitle, idx = 0, cIdx;
+            var win = GetTabWindow(GetCurrTabName());
+            if (!win) return;
+            var tabs = $('#tt').tabs('tabs');
+            var orgTitle = win.document.title;
+            for (var i = 0; i < tabs.length; i++) {
+                tabTitle = tabs[i].panel('options').title;
+                if (tabTitle.substr(0, orgTitle.length) == orgTitle) {
+                    cIdx = tabTitle.substr(orgTitle.length + 1);
+                    if (!isNaN(cIdx))
+                        if (parseInt(cIdx, 10) > idx)
+                            idx = parseInt(cIdx, 10);
+                }
+            }
+            AddTab(orgTitle + "-" + (idx + 1), win.location.href);
+        }
+        function GetTabWindow(title) {
+            iframe = $("[eip_tab_frame='" + title + "']")[0];
+            if (iframe == undefined) return;
+            return iframe.contentWindow;
+        }
+
+        function GetCurrTabName() {
+            return $('#tt').tabs('getSelected').panel('options').title;
+        }
+        function ShowHideMenu() {
+            var panel = $("body").layout("panel", "north");
+            var height = parseInt(panel.panel("options").height, 10);
+            panel.panel("resize", { height: height == 85 ? 1 : 85 });
+
+            $("body").layout("resize");
+        }
+        function CopyUrl() {
+            tabTitle = $('#tt').tabs('getSelected').panel('options').title;
+            iframe = $("[eip_tab_frame='" + tabTitle + "']")[0];
+            if (iframe == undefined) return
+            if (window.clipboardData)
+                window.clipboardData.setData("Text", iframe.contentWindow.location.href);
+            else alert("本浏览器不支持");
+        }
+        $(function () {
+           // AddTab("魔方测试", "/Admin/Power/Index");
+            if (window.addEventListener)
+                window.addEventListener('message', function (event) {
+                    var msg = event.data;
+                    switch (msg.action) {
+                        case "addtab":
+                            AddTab(msg.data.title, msg.data.url);
+                            break;
+                        case "closetab":
+                            CloseTab(msg.data.title);
+                            break;
+                            //case 'getini':
+                            //    SendMessage(event.source, msg.action, $.extend(userInis, newIni), msg.id);
+                            //    break;
+                            //case 'newini':
+                            //    newIni[msg.data.key] = msg.data.value;
+                            //    break;
+                            //case 'login':
+                            //    var f = document.getElementById("loginForm");
+                            //    if (f.login_password.value == "123456")
+                            //        location.href = "default.aspx?editPwdAlert=Y";
+                            //    else if ($('#loginDialog').data("ifReload"))
+                            //        location.reload();
+                            //    else {
+                            //        alert(Lang("登录成功！"));
+                            //        $('#loginDialog').dialog('close');
+                            //    }
+                            //    break;
+                            //case 'logout':
+                            //    location.reload();
+                            //    break;
+                            //case 'MenuHide':
+                            //    MenuHide();
+                            //    break;
+                            //case 'updatesession':
+                            //    $('#updatesessionIf').remove();
+                            //    break;
+                            //case 'window_open':
+                            //    window.open(msg.data.url);
+                            //    break;
+                        default:
+                            if (msg.tabname) {
+                                var win = GetTabWindow(Lang(msg.tabname));
+                                SendMessage(win, msg.action, msg.data);
+                            }
+                            break;
+                    }
+
+                });
+        })
+
+
+        function UserUpdatePwd() {
+            var options = {
+                "width": 450,
+                "height": 240,
+                "closable":false
+
+            };
+
+
+            var dlg = eip.dialog.create("修改密码", "<div id=UpdatePwd><div form='Y' id='form_Pwd'>"
+                                 + "<input type=\"password\" left=\"140\" name=\"txt_pwd\" hint=\"旧密码\" /><br/>"
+                                 + "<input type=\"password\" left=\"140\" name=\"txt_new_pwd\" hint=\"新密码\" /><br/>"
+                                 + "<input type=\"password\" left=\"140\" name=\"txt_new_pwd_aga\" hint=\"新密码确认\" /><br/>"
+                                 + "</div></div>", 450, 240,options)
+
+
+            //窗体工具栏按钮 begin
+            eip.layout.create($('#UpdatePwd'), [{
+                obj: $('#form_Pwd'),
+                buttons: [
+                    {
+                        text: "确认修改", icon: "save", click:
+                            function () {
+                                eip.get("/admin/admin/UserUpdatePwd", eip.para.create($("input,select", $("#UpdatePwd"))), function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                    }, function () { });
+                                })
+                            }
+
+                    },
+                    {
+                            text: "关闭", icon: "no", click:
+                            function () {
+                                if("@ViewData["ifPWUnActive"]"=="N")
+                                    eip.dialog.close(dlg);
+                                else
+                                    alert("密码超过一个月,请修改密码!");
+                            }
+
+                    }
+                ]
+            }])
+            $("[name=txt_pwd]").focus();
+        }
+
+        function ExitSys() {
+            eip.get("/admin/admin/ExitSys", null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                }, function () { });
+            })
+        }
+
+    </script>
+
+</body>
+</html>

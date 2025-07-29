@@ -1,0 +1,70 @@
+﻿@model WMS.Report.Controllers.Model.Load_StatusModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        
+        <textarea name="ContainerNumber" left="5" hint="集装箱号码"></textarea>
+        @Html.EipInputFor(model => model.OutDateBegin, new { @left = "100", @value = DateTime.Now.AddDays(0).ToString("yyyy-MM-dd") })
+        @Html.EipInputFor(model => model.OutDateEnd, new { @left = "100", @value = DateTime.Now.ToString("yyyy-MM-dd") })
+        
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WeightFlag"], "WeightFlag", "称重", "", "")
+    </div>
+    <table id="grid"></table>
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/Load_StatusList", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            // sorts: { "ReceiptDate": "DESC", "托盘号": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            //  hiddencolumns: ["ReceiptDate"],
+            //showOrderBtns: true,
+            //lockcolumns: 2,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        return retHtml;
+                    }
+                },
+                dofunc: function (grid, trs) {
+                    //for (i in trs)  //列 格式化增加颜色显示
+                    //    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+                }
+            }
+        });
+
+
+
+        $("[name=ContainerNumber]").css("height", "45px").css("width", "185px");
+        $("[name=ContainerNumber]").parent().css("height", "50px").css("width", "340px");
+    });
+
+</script>

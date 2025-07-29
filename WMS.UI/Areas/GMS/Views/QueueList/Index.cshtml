@@ -1,0 +1,633 @@
+﻿@model WMS.UI.Controllers.Model.RecModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        <input type="text" name="TruckNumber" hint="车牌号：" />
+        <input type="text" name="PhoneNumber" hint="手机号：" />
+        <input type="text" name="ReceiptId" hint="收货批次号：" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="收货状态" name="ReStatus">
+            <option></option>
+            <option value='U'>未收货</option>
+            <option value='A'>正在收货</option>
+            <option value='C'>完成收货</option>
+        </select>
+        <select class="easyui-vhuo'xia'alidatebox" hint="车辆状态" name="TruckStatus">
+            <option></option>
+            <option value='1'>排队中</option>
+            <option value='2'>等待入库</option>
+            <option value='3'>入库超时锁定</option>
+            <option value='4'>已入库</option>
+            <option value='5'>离库</option>
+        </select>
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户", "", "left='80' ")
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneParentSelect"], "UnloadingArea", "卸货区", "", "left='80' ")
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+    </div>
+    <table id="grid"></table>
+</div>
+<div id='form22' style="display:none">
+    <input type="text" name="txt_TruckNumber" hint="车牌号" seq="1" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_PhoneNumber" hint="手机号" seq="2" left="140" onkeypress="onkeynext(this)" />
+    <select left="140" name="txt_TruckLength" hint="车长">
+        <option value="小于17米">小于17米</option>
+        <option value="大于17米">大于17米</option>
+    </select>
+    <select left="140" name="txt_GreenPassFlag" hint="绿色通道">
+        <option value="0">否</option>
+        <option value="1">是</option>
+    </select>
+</div>
+<div id='form33' style="display:none">
+    <input type="text" name="txt_ReceiptId" hint="收货批次号" seq="1" left="140" onkeypress="onkeynext(this)" />
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["ZoneParentSelect"], "txt_UnloadingArea", "卸货区", "", "left='140' ")
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_ClientCode", "客户", "", "left='140' ")
+    <input type="text" name="txt_Qty" hint="数量" seq="4" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_CBM" hint="立方" seq="5" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_Weight" hint="重量" seq="6" left="140" onkeypress="onkeynext(this)" />
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="货物类型" name="txt_GoodsType">
+        <option></option>
+        <option value='托盘货'>托盘货</option>
+        <option value='箱货'>箱货</option>
+        <option value='挂衣'>挂衣</option>
+        <option value='布卷'>布卷</option>
+    </select>
+    <select left="140" name="txt_OverSizeFlag" hint="超规货物">
+        <option value="0">否</option>
+        <option value="1">是</option>
+    </select>
+    <select left="140" name="txt_NoticeFlag" hint="是否通知">
+        <option value="0">否</option>
+        <option value="1">是</option>
+    </select>
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["BookChannel"], "txt_BookChannel", "预约通道", "", "left='140' ")
+    <input type="text" name="txt_RegisterDate" left="140" hint="登记时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd HH:mm:ss")" />
+</div>
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    var dlg;
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                        }
+                    },
+                    {
+                        text: "新增排队车辆", icon: "add", click: function () {
+                            dlg = eip.dialog.create("新增排队车辆", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                , 400, 200)
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                addTruckQueueHead();
+                                            }
+                                    },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                            function () {
+                                                eip.dialog.close(dlg);
+                                            }
+                                    }
+                                ]
+                            }])
+                            //end
+                            $(function () {
+                                $('select.easyui-validatebox').validatebox('disableValidation')
+                            });
+                            $("[name=TruckNumber]").focus();
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            sort: true,
+            sorts: { "卸货区": "ASC", "seq": "ASC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            ajaxType: 'post',
+            hiddencolumns: ["HeadId", "WhCode"],
+            showExcelExport: true,//显示汇出按钮
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        //if ((row["业务确认状态"] != "1" || row["状态"] == "排队中") && row["卸货区"] + "" != "" && row["卸货区"] != null) {
+                        //    retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='ReleaseTruck(this)' title='放车' ></a>";
+                        //}
+                        if (row["HeadId"] != null && row["HeadId"] + "" != "") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-search' plain=true onclick='TruckDetail(this)' title='查看明细' ></a>";
+                        }
+                        if (row["车辆状态"] != "离库") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='deleteTruckInfo(this)' title='删除' ></a>";
+                        }
+                        if (row["车辆状态"] != "离库") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick='openAddTruckQueueDetail(this)' title='添加明细' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='openEditTruckQueueHeader(this)' title='修改' ></a>";
+                        }
+                        if (row["车辆状态"] == "等待入库") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-ok' plain=true onclick='getInGate(this)' title='入库' ></a>";
+                        }
+                        if (row["车辆状态"] == "已入库" && row["业务确认状态"] == "1") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-clear' plain=true onclick='leaveGate(this)' title='离库' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=packNumber]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+    //修改表头
+    function openEditTruckQueueHeader(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr);
+        var Id = row["操作"];
+        var dlg = eip.dialog.create("修改车辆信息", "<div id=layout4 ><div form='Y' id='form4'>"
+            + "<input type=\"text\" left=\"140\" name=\"edit_TruckNumber\" value=\"" + row["车牌号码"] + "\" hint=\"车牌号\" />"
+            + "<input type=\"text\" left=\"140\" name=\"edit_PhoneNumber\" value=\"" + row["司机手机号码"] + "\" hint=\"手机号\" />"
+            + "<select left=\"140\" name=\"edit_TruckLength\" id=\"edit_TruckLength\" hint=\"车长\"><option value=\"小于17米\" >小于17米</option><option value=\"大于17米\" >大于17米</option></select>"
+            + "<select left=\"140\" name=\"edit_BookOrigin\" id=\"edit_BookOrigin\" hint=\"预约来源\"><option value=\"EDI\" >EDI</option><option value=\"USER\" >USER</option></select>"
+            + " <select left=\"140\" name=\"edit_GreenPassFlag\" hint=\"绿色通道\">< option value = \"0\" > 否</option ><option value=\"1\">是</option></select > "
+            + "</div></div>", 400, 186);
+        var selectTruckLength = document.getElementById('edit_TruckLength');
+        selectTruckLength.value = row["车长"];
+        var selectBookOrigin = document.getElementById('edit_BookOrigin');
+        selectBookOrigin.value = row["预约来源"];
+        eip.layout.create($('#layout4'), [{
+            obj: $('#form4'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=edit_TruckNumber]").val() == "") {
+                                $.eipMsg.alert("请先输入车牌号码！");
+                                return;
+                            }
+                            if (checkModbile($("[name=edit_PhoneNumber]", $("#form4")).val()) == false) {
+                                $.eipMsg.alert("手机号格式不正确!");
+                                return;
+                            }
+                            eip.get("/GMS/QueueList/UpdateTruckQueueHeader?Id=" + Id, eip.para.create($("input,select", $("#layout4"))), function (jsonObj) {
+                                $.eipMsg.alert(jsonObj);
+                                eip.dialog.close(dlg);
+                                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                            });
+                        }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg);
+                        }
+                }
+            ]
+        }]);
+    }
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+        }
+    }
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg();
+        }
+    }
+    //JS使用正则表达式校验电话号码
+    function checkModbile(mobile) {
+        var re = /^1[3,4,5,6,7,8,9][0-9]{9}$/;
+        var result = re.test(mobile);
+        if (!result) {
+            return false;//若手机号码格式不正确则返回false
+        }
+        return true;
+    }
+    //新增排队明细信息
+    function openAddTruckQueueDetail(obj) {
+        var tr = eip.datagrid.getTr(obj);
+        var row = eip.datagrid.getData(tr);
+        var Id = row["操作"];
+        dlg = eip.dialog.create("新增排队车辆明细信息", "<div id=layout2 ><div form='Y' id='form3' >" + $("#form33").html() + "</div></div>"
+            , 580, 240)
+        //窗体工具栏按钮 begin
+        eip.layout.create($('#layout2'), [{
+            obj: $('#form3'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            addTruckQueueDetail(Id);
+                        }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg);
+                        }
+                }
+            ]
+        }])
+        //end
+        $(function () {
+            $('select.easyui-validatebox').validatebox('disableValidation');
+        });
+    }
+    function addTruckQueueDetail(Id) {
+        if (!$("#form3").form('validate')) {
+            return false;
+        }
+        if ($("[name=txt_UnloadingArea]", $("#form3")).val() == "") {
+            $.eipMsg.alert("卸货区不能为空!");
+            return;
+        }
+        if ($("[name=txt_ClientCode]", $("#form3")).val() == "") {
+            $.eipMsg.alert("客户不能为空!");
+            return;
+        }
+        if ($("[name=txt_RegisterDate]", $("#form3")).val() == "") {
+            $.eipMsg.alert("登记时间不能为空!");
+            return;
+        }
+        var reg = /^[1-9][0-9]*([\.][0-9]{1,5})?$/;;
+        if ($("[name=txt_Qty]", $("#form3")).val()!= "") {
+            if (!reg.test($("[name=txt_Qty]", $("#form3")).val())) {
+                $.eipMsg.alert("数量必须为数字！");
+                ($("[name=txt_Qty]"), $("#form3")).focus();
+                return;
+            }
+        }
+        if ($("[name=txt_CBM]", $("#form3")).val() != "") {
+            if (!reg.test($("[name=txt_CBM]", $("#form3")).val())) {
+                $.eipMsg.alert("立方必须为数字！");
+                ($("[name=txt_CBM]"), $("#form3")).focus();
+                return;
+            }
+        }
+        if ($("[name=txt_Weight]", $("#form3")).val() != "") {
+            if (!reg.test($("[name=txt_Weight]", $("#form3")).val())) {
+                $.eipMsg.alert("重量必须为数字！");
+                ($("[name=txt_Weight]"), $("#form3")).focus();
+                return;
+            }
+        }
+        eip.get("/GMS/QueueList/AddTruckQueueDetail?Id=" + Id, eip.para.create($("input,select", $("#layout2"))), function (jsonObj) {
+            $.eipMsg.alert(jsonObj);
+            eip.dialog.close(dlg);
+            eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+        });
+    }
+    //新增排队表头信息
+    function addTruckQueueHead() {
+        if (!$("#form2").form('validate')) {
+            return false;
+        }
+        if ($("[name=txt_TruckNumber]", $("#form2")).val() == "") {
+            $.eipMsg.alert("车牌号不能为空!");
+            return;
+        }
+        if (checkModbile($("[name=txt_PhoneNumber]", $("#form2")).val()) == false) {
+            $.eipMsg.alert("手机号格式不正确!");
+            return;
+        }
+        eip.get("/GMS/QueueList/AddTruckQueueHead", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+            $.eipMsg.alert(jsonObj);
+            eip.dialog.close(dlg);
+            eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+        });
+    }
+    //删除排队车辆信息
+    function deleteTruckInfo(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var TruckNumber = row["车牌号码"];
+        var Id = row["操作"];
+        $.eipMsg.confirm("确定删除车牌号为：" + row["车牌号码"] + "的车辆信息吗？", function () {
+            eip.get("/GMS/QueueList/DeleteTruckInfo?TruckNumber=" + TruckNumber + "&Id=" + Id, null, function (jsonObj) {
+                $.eipMsg.alert(jsonObj);
+                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+            })
+        })
+    }
+    //删除排队车辆明细
+    function deleteTruckDetail(obj) {
+        var tr = eip.datagrid.getTr(obj);
+        var row = eip.datagrid.getData(tr);
+        var Id = row["操作"];
+        $.eipMsg.confirm("确定该条明细信息吗？", function () {
+            eip.get("/GMS/QueueList/DeleteTruckDetail?Id=" + Id, null, function (jsonObj) {
+                $.eipMsg.alert(jsonObj);
+                eip.datagrid.load("/Reports/GMSReport/GMSDetailList?HeadId=" + Id, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+            })
+        })
+    }
+    //入库
+    function getInGate(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var TruckNumber = row["车牌号码"];
+        var WhCode = row["WhCode"];
+        $.eipMsg.confirm("确定让车牌号为：" + row["车牌号码"] + "的车辆进仓吗？", function () {
+            eip.get("/GMS/QueueList/getInGate?TruckNumber=" + TruckNumber + "&WhCode=" + WhCode, null, function (jsonObj) {
+                $.eipMsg.alert(jsonObj);
+                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+            })
+        })
+    }
+    //离库
+    function leaveGate(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var TruckNumber = row["车牌号码"];
+        var WhCode = row["WhCode"];
+        $.eipMsg.confirm("车牌号为：" + row["车牌号码"] + "的车辆确定离库吗？", function () {
+            eip.get("/GMS/QueueList/leaveGate?TruckNumber=" + TruckNumber + "&WhCode=" + WhCode, null, function (jsonObj) {
+                $.eipMsg.alert(jsonObj);
+                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+            })
+        })
+    }
+    //查看明细
+    function TruckDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg_Pos = eip.dialog.create("查看车辆明细，车牌号码：" + row["车牌号码"],
+             "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\"><input type=\"hidden\" name=\"whCode\" value=\"@ViewBag.whCode\" />"
+             + "</div>"
+            + "<table id=\"grid_detail\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["HeadId"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["确认状态"] != "1") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='deleteTruckDetail(this)' title='删除' ></a>";
+                        }
+                        if (row["状态"] == "排队中" && (row["预约来源"] == "USER" || row["预约来源"] == "EDI")) {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='openEditTruckQueueDetail(this)' title='修改' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/Reports/GMSReport/GMSDetailList?HeadId=" + row["操作"], $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+    }
+    //放车
+    function ReleaseTruck(obj) {
+        var tr = eip.datagrid.getTr(obj);
+        var row = eip.datagrid.getData(tr);
+        var TruckNumber = row["车牌号码"];
+        var UnloadingArea = row["卸货区"];
+        var WhCode = row["WhCode"];
+        var seq = row["seq"];
+        $.eipMsg.confirm("确定要放车牌号为：" + TruckNumber + "的车吗？", function () {
+            eip.post("/GMS/QueueList/GetSmallLoadAreaList?UnloadingArea=" + UnloadingArea, null, function (val) {
+                if (val != "") { //小库区有值
+                    if (seq + "" != "1") {
+                        var dlg = eip.dialog.create("信息维护", "<div id=layout5 ><div form='Y' id='form5'>"
+                            + "<input type=\"text\" left=\"70\" name=\"JumpingRemark\" value=\"\" hint=\"插队原因\" />"
+                            + "<select left=\"70\" id=\"smallloadArea\" name=\"smallloadArea\" hint=\"卸货小库区\" ></select>"
+                            + "</div></div>", 240, 150)
+                        eip.layout.create($('#layout5'), [{
+                            obj: $('#form5'),
+                            buttons: [
+                                {
+                                    text: "保存", icon: "save", click:
+                                        function () {
+                                            if ($("[name=JumpingRemark]", $("#form5")).val() == "") {
+                                                $.eipMsg.alert("插队原因必填!");
+                                                return;
+                                            }
+                                            if ($("[name=smallloadArea]", $("#form5")).val() == "") {
+                                                $.eipMsg.alert("卸货小库区必填!");
+                                                return;
+                                            }
+                                            eip.get("/GMS/QueueList/ReleaseTruck?TruckNumber=" + TruckNumber + "&UnloadingArea=" + UnloadingArea + "&WhCode=" + WhCode + "&Id=" + row["操作"], eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                eip.dialog.close(dlg);
+                                                $.eipMsg.alert(jsonObj);
+                                                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                                            });
+                                        }
+                                },
+                                {
+                                    text: "关闭窗口", icon: "no", click:
+                                        function () {
+                                            eip.dialog.close(dlg);
+                                        }
+                                }
+                            ]
+                        }])
+                    } else {
+                        var dlg = eip.dialog.create("信息维护", "<div id=layout5 ><div form='Y' id='form5'>"
+                            + "<select left=\"70\" id=\"smallloadArea\" name=\"smallloadArea\" hint=\"卸货小库区\" ></select>"
+                            + "</div></div>", 240, 100)
+                        eip.layout.create($('#layout5'), [{
+                            obj: $('#form5'),
+                            buttons: [
+                                {
+                                    text: "保存", icon: "save", click:
+                                        function () {
+                                            if ($("[name=smallloadArea]", $("#form5")).val() == "") {
+                                                $.eipMsg.alert("卸货小库区必填!");
+                                                return;
+                                            }
+                                            eip.get("/GMS/QueueList/ReleaseTruck?TruckNumber=" + TruckNumber + "&UnloadingArea=" + UnloadingArea + "&WhCode=" + WhCode + "&Id=" + row["操作"], eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                eip.dialog.close(dlg);
+                                                $.eipMsg.alert(jsonObj);
+                                                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                                            });
+                                        }
+                                },
+                                {
+                                    text: "关闭窗口", icon: "no", click:
+                                        function () {
+                                            eip.dialog.close(dlg);
+                                        }
+                                }
+                            ]
+                        }])
+                    }
+                    //eip.post("/GMS/QueueList/GetSmallLoadAreaList?UnloadingArea=" + UnloadingArea, null, function (val) {
+                    //    if (val != "") {
+                    //        eip.form.createOptions($("[name=smallloadArea]"), val, true);
+                    //        $("[name=smallloadArea]", $("#layout5")).val();
+                    //    }
+                    //});
+                    eip.form.createOptions($("[name=smallloadArea]"), val, true);
+                    $("[name=smallloadArea]", $("#layout5")).val();
+                } else {//没有小库区
+                    if (seq + "" != "1") {
+                        var dlg = eip.dialog.create("信息维护", "<div id=layout5 ><div form='Y' id='form5'>"
+                            + "<input type=\"text\" left=\"70\" name=\"JumpingRemark\" value=\"\" hint=\"插队原因\" />"
+                            //+ "<select left=\"70\" id=\"smallloadArea\" name=\"smallloadArea\" hint=\"卸货小库区\" ></select>"
+                            + "</div></div>", 240, 150)
+                        eip.layout.create($('#layout5'), [{
+                            obj: $('#form5'),
+                            buttons: [
+                                {
+                                    text: "保存", icon: "save", click:
+                                        function () {
+                                            if ($("[name=JumpingRemark]", $("#form5")).val() == "") {
+                                                $.eipMsg.alert("插队原因必填!");
+                                                return;
+                                            }
+                                            //if ($("[name=smallloadArea]", $("#form5")).val() == "") {
+                                            //    $.eipMsg.alert("卸货小库区必填!");
+                                            //    return;
+                                            //}
+                                            eip.get("/GMS/QueueList/ReleaseTruck?TruckNumber=" + TruckNumber + "&UnloadingArea=" + UnloadingArea + "&WhCode=" + WhCode + "&Id=" + row["操作"], eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                                                eip.dialog.close(dlg);
+                                                $.eipMsg.alert(jsonObj);
+                                                eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                                            });
+                                        }
+                                },
+                                {
+                                    text: "关闭窗口", icon: "no", click:
+                                        function () {
+                                            eip.dialog.close(dlg);
+                                        }
+                                }
+                            ]
+                        }])
+                    } else {
+                        eip.get("/GMS/QueueList/ReleaseTruck?TruckNumber=" + TruckNumber + "&UnloadingArea=" + UnloadingArea + "&WhCode=" + WhCode + "&Id=" + row["操作"], eip.para.create($("input,select", $("#layout5"))), function (jsonObj) {
+                            //eip.dialog.close(dlg);
+                            $.eipMsg.alert(jsonObj);
+                            eip.datagrid.load("/Reports/GMSReport/GMSList", $("#grid"), eip.para.create($("input,select", $("#layout"))));
+                        });
+                    }
+                }
+                
+            });//eip.postGetSmallLoadAreaList
+        });
+    }
+    //修改明细
+    function openEditTruckQueueDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr);
+        var Id = row["操作"];
+        var HeadId = row["HeadId"];
+        var dlg = eip.dialog.create("修改排队车辆明细信息", "<div id=layout6 ><div form='Y' id='form6'>"
+            + "<input type=\"text\" left=\"140\" name=\"edit_ReceiptId\" value=\"" + row["收货批次号码"] + "\" hint=\"收货批次号\" />"
+            + "<select left=\"140\" name=\"edit_UnloadingArea\" id=\"edit_UnloadingArea\" hint=\"卸货区\"></select>"
+            + "<select left=\"140\" name=\"edit_ClientCode\" id=\"edit_ClientCode\" hint=\"客户\"></select>"
+            + "<input type=\"text\" left=\"140\" name=\"edit_Qty\" value=\"" + row["数量"] + "\" hint=\"数量\" />"
+            + "<input type=\"text\" left=\"140\" name=\"edit_CBM\" value=\"" + row["立方"] + "\" hint=\"立方\" />"
+            + "<input type=\"text\" left=\"140\" name=\"edit_Weight\" value=\"" + row["重量"] + "\" hint=\"重量\" />"
+            + "<select left=\"140\" name=\"edit_GoodsType\" id=\"edit_GoodsType\" hint=\"货物类型\"><option value=\"\" ></option><option value=\"托盘货\" >托盘货</option><option value=\"箱货\" >箱货</option><option value=\"挂衣\" >挂衣</option><option value=\"布卷\" >布卷</option></select>"
+            + "<input type=\"text\" left=\"140\" name=\"edit_RegisterDate\" date=\"Y\" value=\"" + row["登记时间"] + "\" hint=\"登记时间\" />"
+            + "<select left=\"140\" name=\"edit_BkIsValid\" id =\"edit_BkIsValid\" hint=\"是否有效预约\"><option value=\"0\" >否</option><option value=\"1\" >是</option></select>"
+            + "<select left=\"140\" name=\"edit_OverSizeFlag\" id =\"edit_OverSizeFlag\" hint=\"超规货物\"><option value=\"0\" >否</option><option value=\"1\" >是</option></select>"
+            + "<select left=\"140\" name=\"edit_NoticeFlag\" id =\"edit_NoticeFlag\" hint=\"是否通知\"><option value=\"0\" >否</option><option value=\"1\" >是</option></select>"
+            + "<select left=\"140\" name=\"edit_BookOrigin\" id=\"edit_BookOrigin\" hint=\"预约来源\"><option value=\"EDI\" >EDI</option><option value=\"USER\" >USER</option></select>"
+            + "</div></div>", 580, 250);
+        var selectGoodsType = document.getElementById('edit_GoodsType');
+        selectGoodsType.value = row["货物类型"];
+        var selectBookOrigin = document.getElementById('edit_BookOrigin');
+        selectBookOrigin.value = row["预约来源"];
+        var selectBkIsValid = document.getElementById('edit_BkIsValid');
+        if (row["是否有效预约"] == undefined || row["是否有效预约"] == null || row["是否有效预约"]=="") {
+            selectBkIsValid.value = "0";
+        }else{
+            selectBkIsValid.value = row["是否有效预约"];
+        }
+        var selectOverSizeFlag = document.getElementById('edit_OverSizeFlag');
+        selectOverSizeFlag.value = row["是否超规"];
+        var selectNoticeFlag = document.getElementById('edit_NoticeFlag');
+        selectNoticeFlag.value = row["是否通知"];
+        eip.layout.create($('#layout6'), [{
+            obj: $('#form6'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=edit_UnloadingArea]", $("#form6")).val() == "") {
+                                $.eipMsg.alert("卸货区不能为空！");
+                                return;
+                            }
+                            if ($("[name=edit_ClientCode]", $("#form6")).val() == "") {
+                                $.eipMsg.alert("客户不能为空！");
+                                return;
+                            }
+                            eip.get("/GMS/QueueList/UpdateTruckQueueDetail?Id=" + Id, eip.para.create($("input,select", $("#layout6"))), function (jsonObj) {
+                                $.eipMsg.alert(jsonObj);
+                                eip.dialog.close(dlg);
+                                eip.datagrid.load("/Reports/GMSReport/GMSDetailList?HeadId=" + HeadId, $("#grid_detail"), eip.para.create($("input,select", $("#layout_Detail"))));
+                            });
+                        }
+                },
+                {
+                    text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg);
+                        }
+                }
+            ]
+        }]);
+        eip.post("/InBound/RegInBoundOrder/GetRecZoneNameList1", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_UnloadingArea]"), val, true);
+                $("[name=edit_UnloadingArea]", $("#layout6")).val(row["卸货区"]);
+            }
+        });
+        eip.post("/GMS/QueueList/GetClientList", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_ClientCode]"), val, true);
+                $("[name=edit_ClientCode]", $("#layout6")).val(row["客户"]);
+            }
+        });
+    }
+</script>

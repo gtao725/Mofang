@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        <input type="hidden" name="whCode" value="@ViewBag.whCode" />
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["clientCode"], "ClientCode", "客户名", "", "")
+        <input type="text" name="load" hint="Load" />
+
+        <input type="text" name="BeginShipDate" hint="封箱时间" date='Y' />
+        <input type="text" name="EndShipDate" left="20" hint="-" date='Y' />
+        <input type="text" name="BeginCreateDate" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <textarea name="ContainerNumber" left="60" hint="集装箱号"></textarea>
+        <textarea name="SealNumber" left="60" hint="封号"></textarea>
+        <textarea name="SoNumber" left="60" hint="SO号"></textarea>
+        <textarea name="PoNumber" left="60" hint="PO"></textarea>
+        <textarea name="ItemNumber" left="60" hint="SKU"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Reports/OutReport/Load1List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            ajaxType: 'post',    //load时，ajax请求类型
+            sort: true,
+            sorts: { "Load": "DESC" },  //排序栏位：{'料号':'DESC','组织':'ASC'}
+            showExcelExport: true,//显示汇出按钮
+            hiddencolumns: ["操作"],
+            columns: {
+                 
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=ContainerNumber]").css("height", "45px").css("width", "185px");
+        $("[name=ContainerNumber]").parent().css("height", "50px").css("width", "280px");
+
+        $("[name=SealNumber]").css("height", "45px").css("width", "185px");
+        $("[name=SealNumber]").parent().css("height", "50px").css("width", "280px");
+
+        $("[name=SoNumber]").css("height", "45px").css("width", "185px");
+        $("[name=SoNumber]").parent().css("height", "50px").css("width", "280px");
+
+        $("[name=PoNumber]").css("height", "45px").css("width", "185px");
+        $("[name=PoNumber]").parent().css("height", "50px").css("width", "280px");
+
+        $("[name=ItemNumber]").css("height", "45px").css("width", "185px");
+        $("[name=ItemNumber]").parent().css("height", "50px").css("width", "280px");
+    });
+
+
+    
+</script>

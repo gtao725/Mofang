@@ -1,0 +1,397 @@
+﻿@{
+    Layout = "../../../../Views/head.cshtml";
+}
+<div id=layout>
+
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", " left=\"90\"")
+
+        <input type="text" left="90" name="receipt_id" hint="收货批次号" />
+        <select left="90" name="typeSelect" hint="库存类型"><option></option><option value="M">在库</option><option value="R">收货中</option><option value="O">出货中</option></select>
+        <select left="90" name="holdReason" hint="货物状态"><option></option><option value="0">正常</option><option value="1">冻结</option></select>
+        <select left="90" name="locationTypeId" hint="库位状态"><option value="0"></option><option value="1">正常库位</option><option value="2">收货门区</option><option value="3">备货门区</option><option value="5">货损库位</option><option value="6">异常库位</option></select>
+
+        <input type="text" left="90" name="locationId" hint="库位" />
+        <input type="text" left="90" name="locationId1" hint="库位模糊匹配" />
+
+        <input type="text" left="100" name="so_like" hint="SO号模糊匹配" />
+        <input type="text" left="90" name="lotNumber1" hint="Lot1" />
+        <input type="text" left="90" name="lotNumber2" hint="Lot2" />
+        <input type="text" left="90" name="lotDate" hint="LotDate" />
+
+        <input type="text" name="BeginReceiptDate" left="90" hint="收货时间" date='Y' />
+        <input type="text" name="EndReceiptDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+
+        <textarea name="so_number" left="60" hint="SO号"></textarea>
+        <textarea name="customer_po" left="60" hint="PO号"></textarea>
+        <textarea name="altItemNumber" left="60" hint="款号"></textarea>
+        <textarea name="style1" left="60" hint="属性1"></textarea>
+        <textarea name="hu_id" left="60" hint="托盘号"></textarea>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                        }
+                    }, {
+                        text: "批量解冻托盘", icon: "save", click:
+                           function () {
+                               if ($("[name=check_to]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先查询后勾选托盘信息!");
+                                   return;
+                               }
+
+                               BatchRelieveHuId();
+
+                           }
+                    }, {
+                        text: "异常库位批量上架", icon: "save", click:
+                           function () {
+                               if ($("[name=check_toABLocation]:checked", $("#grid")).length == 0) {
+                                   $.eipMsg.alert("请先查询后勾选需上架的异常库位信息!");
+                                   return;
+                               }
+
+
+
+                               BatchPutHuIdABLocation();
+
+                           }
+                    }
+
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["HuMasterId", "仓库", "客户ID", "类型", "状态"],
+            //showOrderBtns: true,
+            checkbox: function (row) {
+                if (row["状态"] == "H" && row["库位状态"] == "正常库位") {
+                    return "<input type=checkbox name=check_to   value=\"" + row["托盘"] + "\"  HuDetailId=\"" + row["操作"] + "\"  HuStatus=\"" + row["状态"] + "\" >";
+                }
+            },
+            checkbox: function (row) {
+                if (row["库位状态"] == "异常库位") {
+                    return "<input type=checkbox name=check_toABLocation   value=\"" + row["客户"] + "\"  ItemNumber=\"" + row["款号"] + "\"  LotNumber1=\"" + row["Lot1"] + "\"   LotNumber2=\"" + row["Lot2"] + "\"  LotDate=\"" + row["lotDate"] + "\" HuDetailId=\"" + row["操作"] + "\"   >";
+                }
+            },
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "A" && row["库存类型"] != "出货中" && row["库位状态"] != "备货门区" && row["锁定数量"] == "") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改信息' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-warning' plain=true onclick='FrozenHuId(this)' title='冻结托盘' ></a>";
+                        }
+
+                        if (row["状态"] == "A" && row["库存类型"] != "出货中" && row["库位状态"] != "备货门区" && row["锁定数量"] == "" && row["库位状态"] != "异常库位") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-redo' plain=true onclick='EditDetail1(this)' title='移库' ></a>";
+                        }
+
+                        if (row["状态"] == "H" && row["库存类型"] != "出货中") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-reload' plain=true onclick='RelieveHuId(this)' title='解冻托盘' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=so_number]").css("height", "30px").css("width", "185px");
+        $("[name=so_number]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=hu_id]").css("height", "30px").css("width", "185px");
+        $("[name=hu_id]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=customer_po]").css("height", "30px").css("width", "185px");
+        $("[name=customer_po]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=altItemNumber]").css("height", "30px").css("width", "185px");
+        $("[name=altItemNumber]").parent().css("height", "35px").css("width", "280px");
+
+        $("[name=style1]").css("height", "30px").css("width", "185px");
+        $("[name=style1]").parent().css("height", "35px").css("width", "280px");
+
+    });
+
+    //修改库存明细
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg = eip.dialog.create("修改库存信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"收货批次号：\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"SO号：\">" + row["SO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"PO号：\">" + row["PO号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"款号：\">" + row["款号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"托盘：\">" + row["托盘"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"edit_DetailId\" value=\"" + row["操作"] + "\"  />"
+                                     + "<input type=\"hidden\" left=\"1\" name=\"edit_MasterId\" value=\"" + row["HuMasterId"] + "\"  />"
+
+                                    + "<span left=\"140\" hint=\"库位：\">" + row["库位"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"edit_location\" value=\"" + row["库位"] + "\"  />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_qty\" value=\"" + row["库存数量"] + "\" hint=\"库存数量：\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_length\" value=\"" + row["长"] + "\" hint=\"长：\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_width\" value=\"" + row["宽"] + "\" hint=\"宽：\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_height\" value=\"" + row["高"] + "\" hint=\"高：\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_weight\" value=\"" + row["重量"] + "\" hint=\"重量：\" />"
+
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_Lot1\" value=\"" + row["Lot1"] + "\" hint=\"Lot1：\" />"
+                                      + "<input type=\"text\" left=\"140\" name=\"edit_Lot2\" value=\"" + row["Lot2"] + "\" hint=\"Lot2：\" />"
+                                      + "<input type=\"text\" left=\"140\" name=\"edit_LotDate\" date=\"Y\" value=\"" + row["lotDate"] + "\" hint=\"LotDate：\" />"
+                                    + "</div></div>", 500, 470)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=edit_location]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("请输入库位!");
+                                return;
+                            }
+                            if ($("[name=edit_qty]", $("#layout1")).val() == "") {
+                                $.eipMsg.alert("请输入库存数量!");
+                                return;
+                            }
+
+                            eip.get("/Warehouse/C_InVentoryQuestion/EditDetail", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                                }, function () { });
+                            }, null, true)
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_qty]").focus();
+    }
+
+    //移库
+    function EditDetail1(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg = eip.dialog.create("移库", "<div id=layout11 ><div form='Y' id='form22'>"
+                                    + "<span left=\"140\" hint=\"托盘：\">" + row["托盘"] + "</span>"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"old_huId\" value=\"" + row["托盘"] + "\"  />"
+                                    + "<input type=\"hidden\" left=\"1\" name=\"old_location\" value=\"" + row["库位"] + "\"  />"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_location\" value=\"" + row["库位"] + "\" hint=\"库位：\" />"
+
+                                    + "</div></div>", 500, 200)
+
+        eip.layout.create($('#layout11'), [{
+            obj: $('#form22'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            if ($("[name=edit_location]", $("#layout11")).val() == "") {
+                                $.eipMsg.alert("请输入库位!");
+                                return;
+                            }
+
+                            eip.get("/Warehouse/C_InVentoryQuestion/EditDetail1", eip.para.create($("input,select", $("#layout11"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                                }, function () { });
+                            }, null, true)
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_location]").focus();
+    }
+
+    //冻结托盘
+    function FrozenHuId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var dlg_add = eip.dialog.create("冻结托盘", "<div id=layout5 ><div form='Y' id='form5'>"
+                                + "<span hint=\"托盘号：\">" + row["托盘"] + "</span>"
+                                + "</div> <table id=\"gridFrozen\"></table></div>", 660, 350)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "确认冻结", icon: "save", click:
+                        function () {
+
+                            if ($("[name=chx_holdResoan]:checked", $("#gridFrozen")).length == 0) {
+                                $.eipMsg.alert("必须选择一个客户异常原因！");
+                                return;
+                            }
+
+                            var holdId = "";
+                            var holdReason = "";
+                            $("[name=chx_holdResoan]:checked", $("#gridFrozen")).each(function () {
+                                holdId = $(this).val(),
+                                holdReason += $(this).attr("holdReasonArr") + ",";
+                            })
+
+                            var HuId = row["托盘"];     //得到ID
+
+                            eip.get("/Warehouse/C_InVentoryQuestion/FrozenHuId?HuId=" + HuId + "&holdId=" + holdId + "&holdReason=" + eip.utf8(holdReason), null, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                                    eip.dialog.close(dlg_add);
+                                }, function () { });
+                            }, null, true)
+
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg_add);
+                      }
+               }
+            ]
+        }])
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#gridFrozen"),
+            pagesize: 200,
+            hiddencolumns: ["客户ID", "仓库", "操作"],
+            checkbox: function (row) {
+                return "<input type=checkbox name=chx_holdResoan value=" + row["操作"] + " holdReasonArr=\"" + row["异常原因"] + "\" >";
+            },
+            muledit: false,
+            columns: {
+
+            }
+        });
+
+        eip.datagrid.load("/Warehouse/C_InVentoryQuestion/HoldMasterListByRec?clientId=" + row["客户ID"], $("#gridFrozen"), eip.para.create($("input,select", $("#form5"))));
+    }
+
+    //解冻托盘
+    function RelieveHuId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var HuId = row["托盘"];
+        $.eipMsg.confirm("确定解冻该托盘吗？", function () {
+            eip.get("/Warehouse/C_InVentoryQuestion/RelieveHuId?HuId=" + HuId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        });
+    }
+
+    //批量解冻托盘
+    function BatchRelieveHuId() {
+
+        var arr_list = [];
+        $("[name=check_to]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'HuId', value: $(this).val() });
+            arr_list.push({ name: 'HuStatus', value: $(this).attr("HuStatus") });
+        })
+
+        $.eipMsg.confirm("确定批量解冻托盘吗？", function () {
+
+            eip.post("/Warehouse/C_InVentoryQuestion/BatchRelieveHuId", arr_list, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                }, function () { });
+            }, null, true)
+        })
+
+    }
+
+    //异常库位批量上架
+    function BatchPutHuIdABLocation() {
+
+        var arr_list = [];
+        $("[name=check_toABLocation]:checked", $("#grid")).each(function () {
+            arr_list.push({ name: 'ClientCode', value: $(this).val() });
+            arr_list.push({ name: 'ItemNumber', value: $(this).attr("ItemNumber") });
+            arr_list.push({ name: 'HuDetailId', value: $(this).attr("HuDetailId") });
+            arr_list.push({ name: 'LotNumber1', value: $(this).attr("LotNumber1") });
+            arr_list.push({ name: 'LotNumber2', value: $(this).attr("LotNumber2") });
+            arr_list.push({ name: 'LotDate', value: $(this).attr("LotDate") });
+        })
+
+        var dlg = eip.dialog.create("异常库位批量上架", "<div id=layout7 ><div form='Y' id='form7'>"
+
+                                  + "<input type=\"text\" left=\"140\" name=\"BatchPutHuId_location\" value=\"\" hint=\"正常库位：\" />"
+                                  + "</div></div>", 400, 110)
+
+        eip.layout.create($('#layout7'), [{
+            obj: $('#form7'),
+            buttons: [
+                {
+                    text: "确认上架", icon: "save", click:
+                        function () {
+
+                            $.eipMsg.confirm("确定异常库位批量上架吗(仅允许单一客户单一款号单一Lot)？", function () {
+                                eip.post("/Warehouse/C_InVentoryQuestion/BatchPutHuIdABLocation?BatchPutHuId_location=" + eip.utf8($("[name=BatchPutHuId_location]").val()), arr_list, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.dialog.close(dlg);
+                                        eip.datagrid.load("/Warehouse/C_InVentoryQuestion/List", $("#grid"), eip.para.create($("input,select,textarea", $("#form1"))));
+                                    }, function () { });
+                                }, null, true)
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=BatchPutHuId_location]").focus();
+
+    }
+
+</script>

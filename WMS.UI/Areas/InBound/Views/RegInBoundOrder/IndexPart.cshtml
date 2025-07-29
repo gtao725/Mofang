@@ -1,0 +1,771 @@
+﻿@model WMS.UI.Controllers.Model.ReceiptPartModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "WhClientId", "客户名", "", "")
+        <input type="text" left="90" name="ReceiptId" hint="收货批次号" />
+        <input type="text" name="TruckNumber" hint="车牌号" />
+        <input type="text" name="PhoneNumber" hint="手机号" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="收货状态" name="status"><option></option><option value='未释放'>未释放</option><option value='未收货'>未收货</option><option value='正在收货'>正在收货</option><option value='暂停收货'>暂停收货</option><option value='完成收货'>完成收货</option></select>
+        <input type="text" name="BeginCreateDate" left="90" hint="创建时间" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <input type="text" name="EndCreateDate" left="20" hint="-" date='Y' value="@DateTime.Now.AddDays(0).ToString("yyyy-MM-dd")" />
+        <select class="easyui-vhuo'xia'alidatebox" hint="创建人" name="createUser"><option value='当前用户' selected>当前用户</option><option></option></select>
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelectFor(model => model.txt_WhClient, (IEnumerable<SelectListItem>)ViewData["WhClientList"], new { @left = "140", @seq = "1", @onchange = "onChangeGetFlowName()", @onkeypress = "onkeynext(this)" })
+    <input type="text" name="txt_TruckNumber" hint="车牌号" seq="2" left="140" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_PhoneNumber" hint="手机号" seq="3" left="140" onkeypress="onkeynext(this)" />
+
+    <input type="text" name="txt_TruckCount" hint="车辆数量" seq="4" left="140" value="1" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_DNCount" hint="DN数" seq="5" left="140" value="1" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_FaxInCount" hint="传真-收份数" seq="6" left="140" value="0" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_FaxOutCount" hint="传真-发份数" seq="7" left="140" value="0" onkeypress="onkeynext(this)" />
+    <input type="text" name="txt_BillCount" hint="联单数" seq="8" left="140" value="0" onkeypress="onkeyCheck()" />
+
+    <select left="140" name="txt_GreenPassFlag" hint="快速通道">
+        <option value="0"></option>
+        <option value="1">是</option>
+    </select>
+    <select left="140" class="easyui-vhuo'xia'alidatebox" hint="货物类型" name="txt_GoodType"><option value=''></option><option value='托盘货'>托盘货</option><option value='箱货'>箱货</option><option value='挂衣'>挂衣</option><option value='布卷'>布卷</option></select>
+    <select left="140" name="txt_recZone" hint="收货区域"><option value=""></option></select>
+
+    @Html.EipInputFor(model => model.txt_ArriveDate, new { @left = "140", @value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") })
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    var dlg;
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    }
+                    , {
+                        text: "新增收货登记(非整出)", icon: "add", click: function () {
+                            dlg = eip.dialog.create("新增收货登记(非整出)", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                              , 500, 430)
+
+                            //窗体工具栏按钮 begin
+                            eip.layout.create($('#layout1'), [{
+                                obj: $('#form2'),
+                                buttons: [
+                                    {
+                                        text: "保存", icon: "save", click:
+                                            function () {
+                                                addReg();
+                                            }
+                                    },
+                                   {
+                                       text: "关闭窗口", icon: "no", click:
+                                          function () {
+                                              eip.dialog.close(dlg);
+                                          }
+                                   }
+                                ]
+                            }])
+                            //end
+                            $("[name=txt_WhClient]").focus();
+
+                        }
+                    }
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 50,
+            hiddencolumns: ["仓库", "修改人", "修改时间", "客户ID", "GreenPassFlag"],
+            //showOrderBtns: true,
+            muledit: false,
+
+            columns: {
+                "收货批次号": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<span style='color:blue;cursor:pointer' onclick=\"ReceiptRegisterDetail(this)\" >" + row["收货批次号"] + "</span>";
+                        return retHtml;
+                    }
+                },
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "未释放") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-add' plain=true onclick=\"AddReceiptRegisterDetail('" + row["收货批次号"] + "','" + row["客户ID"] + "','" + row["客户名"] + "','" + row["车牌号"] + "')\" title='添加进仓单' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditReceiptRegisterDetail(this)' title='修改明细' ></a>";
+                        }
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)'  title='修改库区及车牌' ></a>";
+
+                        if (row["状态"] == "未释放" || row["状态"] == "未收货") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelReceiptRegister(this)' title='删除收货批次号' ></a>";
+                        }
+                        if (row["状态"] == "未收货" && row["类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-undo' plain=true onclick='RollbackReceiptId(this)' title='撤销释放' ></a>";
+                        }
+                        if (row["状态"] != "完成收货" && row["状态"] != "未释放" && row["类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='打印收货操作单' ></a>";
+                        }
+                        if (row["状态"] != "完成收货" && row["状态"] != "未释放" && row["类型"] == "直装") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintDSReceiptId(this)' title='打印直装操作单' ></a>";
+                        }
+                        return retHtml;
+                    }
+                    //,editor: {
+                    //    type: "func", func: function (row) {
+                    //        var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                    //        "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                    //        btn.click(function () {
+
+                    //            var ReceiptId = row["收货批次号"];     //得到ID
+                    //            var LocationId = $("[name=edit_recZone]").val();
+                    //            var TruckNumber = $("[name=edit_truckNumber]").val();
+
+                    //            if ($("[name=edit_recZone]").val() == "") {
+                    //                $.eipMsg.alert("请先选择收货区域！");
+                    //                return;
+                    //            }
+
+                    //            eip.get("/InBound/RegInBoundOrder/EditReceiptRegister?ReceiptId=" + ReceiptId + "&LocationId=" + eip.utf8(LocationId) + "&TruckNumber=" + eip.utf8(TruckNumber) + "&Phone=" + eip.utf8($("[name=edit_phone]").val()) + "&edit_GreenPassFlag=" + eip.utf8($("[name=edit_GreenPassFlag]").val()), null, function (jsonObj) {
+                    //                $.procAjaxData(jsonObj, function () {
+                    //                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                    //                }, function () { });
+                    //            })
+
+                    //        });
+                    //        return btn;
+                    //    }
+                    //}
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+        });
+    });
+
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var GreenPassFlag = row["GreenPassFlag"];
+        var recZone = row["收货区域"];
+        var truckCount = row["车辆数量"] == 0 ? 1 : row["车辆数量"];
+        var dnCount = row["DN数"] == 0 ? 1 : row["DN数"];
+        var status = row["状态"];
+        var goodType = row["货物类型"];
+
+        var dlg = eip.dialog.create("修改收货登记信息", "<div id=layout5 ><div form='Y' id='form5'>"
+                                    + "<span left=\"140\" hint=\"收货批次号\">" + row["收货批次号"] + "</span>"
+                                    + "<span left=\"140\" hint=\"客户名\">" + row["客户名"] + "</span>"
+
+                                    + "<select left=\"140\" name=\"edit_recZone\" id=\"edit_recZone\" hint=\"收货区域\"></select>"
+                                    + "<select left=\"140\" name=\"edit_GreenPassFlag\" id=\"edit_GreenPassFlag\" hint=\"快速通道\"><option value=\"0\" ></option><option value=\"1\" >是</option></select>"
+
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_cbm\" value=\"" + row["原登记立方"] + "\" hint=\"原登记立方\" />"
+
+                                    + "<select left=\"140\" name=\"edit_GoodType\" id=\"edit_GoodType\" hint=\"货物类型\"><option value=\"\" ></option><option value=\"托盘货\" >托盘货</option><option value=\"箱货\" >箱货</option><option value=\"挂衣\" >挂衣</option><option value=\"布卷\" >布卷</option></select>"
+
+                                     + "<input type=\"text\" left=\"140\" name=\"edit_truckNumber\" value=\"" + row["车牌号"] + "\" hint=\"车牌号\" />"
+                                       + "<input type=\"text\" left=\"140\" name=\"edit_phone\" value=\"" + row["手机号"] + "\" hint=\"手机号\" />"
+
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_TruckCount\" value=\"" + truckCount + "\" hint=\"车辆数量\" />"
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_DNCount\" value=\"" + dnCount + "\" hint=\"DN数\" />"
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_FaxInCount\" value=\"" + row["传真收份数"] + "\" hint=\"传真收份数\" />"
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_FaxOutCount\" value=\"" + row["传真发份数"] + "\" hint=\"传真发份数\" />"
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_BillCount\" value=\"" + row["联单数"] + "\" hint=\"联单数\" />"
+                                        + "<input type=\"text\" left=\"140\" name=\"edit_ResetCount\" value=\"" + row["排队重置次数"] + "\" readonly=\"readonly\" hint=\"排队重置次数\" />"
+
+                                    + "</div></div>", 500, 470)
+
+        eip.layout.create($('#layout5'), [{
+            obj: $('#form5'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+
+                            if ($("[name=edit_recZone]").val() == "") {
+                                $.eipMsg.alert("请先选择收货区域！");
+                                return;
+                            }
+
+                            var ReceiptId = row["收货批次号"];     //得到ID
+                            var LocationId = $("[name=edit_recZone]").val();
+                            var TruckNumber = $("[name=edit_truckNumber]").val();
+                            var Phone = $("[name=edit_phone]").val();
+                            var GreenPassFlag = $("[name=edit_GreenPassFlag]").val();
+
+                            var TruckCount = $("[name=edit_TruckCount]").val();
+                            var DNCount = $("[name=edit_DNCount]").val();
+                            var FaxInCount = $("[name=edit_FaxInCount]").val();
+                            var FaxOutCount = $("[name=edit_FaxOutCount]").val();
+                            var BillCount = $("[name=edit_BillCount]").val();
+                            var ResetCount = $("[name=edit_ResetCount]").val();
+
+                            var GoodType = $("[name=edit_GoodType]").val();
+                            var CBM = $("[name=edit_cbm]").val();
+
+                            $("[name=edit_GreenPassFlag]").removeAttr("disabled");
+
+                            eip.get("/InBound/RegInBoundOrder/EditReceiptRegister?ReceiptId=" + ReceiptId + "&LocationId=" + eip.utf8(LocationId) + "&TruckNumber=" + eip.utf8(TruckNumber) + "&Phone=" + eip.utf8(Phone) + "&GreenPassFlag=" + eip.utf8(GreenPassFlag) + "&TruckCount=" + TruckCount + "&FaxInCount=" + FaxInCount + "&FaxOutCount=" + FaxOutCount + "&BillCount=" + BillCount + "&ResetCount=" + ResetCount + "&DNCount=" + DNCount + "&GoodType=" + eip.utf8(GoodType) + "&CBM=" + CBM, null, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                                }, function () { });
+                            })
+
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        eip.post("/InBound/RegInBoundOrder/GetRecZoneNameList1", null, function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=edit_recZone]"), val, true);
+                $("[name=edit_recZone]", $("#layout5")).val(recZone);
+            }
+        });
+
+        $("[name=edit_GreenPassFlag]", $("#layout5")).val(GreenPassFlag);
+        $("[name=edit_GoodType]", $("#layout5")).val(goodType);
+
+        if (status == "完成收货") {
+            $("[name=edit_GreenPassFlag]").attr("disabled", "true");
+
+            //$("[name=edit_TruckCount]").attr("disabled", "true");
+            //$("[name=edit_DNCount]").attr("disabled", "true");
+            //$("[name=edit_FaxInCount]").attr("disabled", "true");
+            //$("[name=edit_FaxOutCount]").attr("disabled", "true");
+            //$("[name=edit_BillCount]").attr("disabled", "true");
+            //$("[name=edit_ResetCount]").attr("disabled", "true");
+        }
+
+    }
+
+    //通过选择的客户得到收货门区
+    function onChangeGetFlowName() {
+        if ($("[name=txt_WhClient]", $("#layout1")).val() != "") {
+            eip.post("/InBound/RegInBoundOrder/GetRecZoneNameList", eip.para.create($("input,select,textarea", $("#layout1"))), function (val) {
+                if (val != "") {
+                    eip.form.createOptions($("[name=txt_recZone]"), val, true);
+                } else {
+                    $("[name=txt_recZone]").html("<option></option>");
+                }
+            })
+        }
+
+        var time2 = new Date().Format("yyyy-MM-dd HH:mm:ss");
+        $("[name=txt_ArriveDate]").val(time2);
+    }
+
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    function addReg() {
+        if (!$("#form2").form('validate')) {
+            return false;
+        }
+
+        if ($("[name=txt_recZone]").val() == "") {
+            $.eipMsg.alert("收货区域不能为空!");
+            return;
+        }
+
+        var clientCode = $("[name=txt_WhClient]").find("option:selected").text();
+        eip.get("/InBound/RegInBoundOrder/AddReceiptRegister?ReceiptType=DC&clientCode=" + eip.utf8(clientCode), eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+            $.procAjaxData(jsonObj, function () {
+                eip.dialog.close(dlg);
+                AddReceiptRegisterDetail(jsonObj.Data["ReceiptId"], jsonObj.Data["ClientId"], jsonObj.Data["ClientCode"], jsonObj.Data["TruckNumber"]);    //显示添加进仓单
+                eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+            })
+        })
+    }
+
+    //收货批次明细列表
+    function ReceiptRegisterDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var obj = row["收货批次号"];
+
+        var dlg_Pos_detailSearch = eip.dialog.create("收货批次明细列表",
+            "<div id=layout_Detail_detailSearch><div form=\"Y\" id=\"form_Detail_detailSearch\">"
+            + "<input type=hidden name=hid_receiptId value='" + obj + "'><span left=\"80\" hint=\"收货批次号：\">" + obj + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_detailSearch\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_detailSearch"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "预录明细ID"]
+        });
+
+        eip.layout.create($('#layout_Detail_detailSearch'), [{
+            obj: $('#form_Detail_detailSearch'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_detailSearch);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailListCom?ReceiptId=" + obj, $("#grid_detail_detailSearch"), eip.para.create($("input,select", $("#layout_Detail_detailSearch"))));
+    }
+
+    //删除收货批次
+    function DelReceiptRegister(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var ReceiptId = row["收货批次号"];
+
+        $.eipMsg.confirm("确定删除收货批次号：" + ReceiptId + "吗？系统将记录本次操作！", function () {
+            eip.get("/InBound/RegInBoundOrder/DelReceiptRegister?ReceiptId=" + ReceiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+    var dlg_Pos
+    //添加进仓单
+    function AddReceiptRegisterDetail(obj, obj1, obj2, obj3) {
+        dlg_Pos = eip.dialog.create("添加进仓单(非整出)",
+           "<div id=layout_Detail><div form=\"Y\" id=\"form_Detail\">"
+           + "<textarea hint=\"PO：\" left=\"50\" name=\"po_area\" ></textarea>"
+           + "<textarea hint=\"SKU：\" left=\"50\" name=\"sku_area\" ></textarea>"
+           + "<span left=\"80\" hint=\"客户名：\">" + obj2 + "</span><input type=\"hidden\" name=\"Hid_clientId\" value=\"" + obj1 + "\">"
+           + "<select left=\"80\" name=\"sel_flowName\" hint=\"流程名：\"><option value=\"0\"></option></select>"
+           + "</div>"
+           + "<table id=\"grid_detail\"></table></div>", 1100, 600)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail"),
+            pagesize: 200,
+            hiddencolumns: ["操作", "客户ID", "流程ID", "POId", "ItemId", "单位ID"]
+            , checkbox: function (row) {
+                return "<input type=checkbox name=check_to idarr=\"" + row["操作"] + "\" poarr=\"" + row["PO号"] + "\" skuarr=\"" + row["款号"] + "\" poIdarr=\"" + row["POId"] + "\" itemIdarr=\"" + row["ItemId"] + "\"  unitIdarr=\"" + row["单位ID"] + "\" unitNamearr=\"" + row["单位名称"] + "\" proarr=\"" + row["流程ID"] + "\"  proNamearr=\"" + row["流程名称"] + "\" value=\"" + row["可登记数量"] + "\" >";
+            }
+        });
+
+        eip.layout.create($('#layout_Detail'), [{
+            obj: $('#form_Detail'),
+            buttons: [
+                {
+                    text: "查询", icon: "search", click:
+                       function () {
+                           eip.datagrid.load("/InBound/RegInBoundOrder/List_DC", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+                       }
+                },
+                 {
+                     text: "确认添加", icon: "ok", click:
+                        function () {
+                            if ($("[name=check_to]:checked", $("#grid_detail")).length == 0) {
+                                $.eipMsg.alert("请先勾选进仓单信息!");
+                                return;
+                            }
+
+                            var arr_list = [];
+                            $("[name=check_to]:checked", $("#grid_detail")).each(function () {
+                                arr_list.push({ name: 'idarr', value: $(this).attr("idarr") });
+                                arr_list.push({ name: 'poarr', value: $(this).attr("poarr") });
+                                arr_list.push({ name: 'skuarr', value: $(this).attr("skuarr") });
+                                arr_list.push({ name: 'poIdarr', value: $(this).attr("poIdarr") });
+                                arr_list.push({ name: 'itemIdarr', value: $(this).attr("itemIdarr") });
+                                arr_list.push({ name: 'unitIdarr', value: $(this).attr("unitIdarr") });
+                                arr_list.push({ name: 'unitNamearr', value: $(this).attr("unitNamearr") });
+                                arr_list.push({ name: 'qtyarr', value: $(this).val() });
+                                arr_list.push({ name: 'proarr', value: $(this).attr("proarr") });
+                                arr_list.push({ name: 'proNamearr', value: $(this).attr("proNamearr") });
+                            })
+
+                            eip.post("/InBound/RegInBoundOrder/AddReceiptRegisterDetail?ReceiptId=" + obj, arr_list, function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.datagrid.load("/InBound/RegInBoundOrder/List_DC", $("#grid_detail"), eip.para.create($("input,select,textarea", $("#form_Detail"))));
+
+                                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                }, function () { });
+                            })
+                        }
+                 },
+                 {
+                     text: "查看已登记明细", icon: "search", click:
+                         function () {
+                             ReleaseReceipt(obj, obj3);
+                         }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos);
+                        }
+                 }
+            ]
+        }])
+        $("[name=add_WhClientId]", $("#form_Detail")).find("option[value=" + obj1 + "]").attr("selected", true);
+
+        $("[name=po_area]").focus();
+        $("[name=po_area]").css("height", "55px").css("width", "185px");
+        $("[name=po_area]").parent().css("height", "60px").css("width", "240px");
+
+        $("[name=sku_area]").css("height", "55px").css("width", "185px");
+        $("[name=sku_area]").parent().css("height", "60px").css("width", "240px");
+
+        eip.hint.fit($("#layout_Detail"));
+
+        eip.post("/InBound/RegInBoundOrder/GetFlowNameSelList", eip.para.create($("input,select,textarea", $("#form_Detail"))), function (val) {
+            if (val != "") {
+                eip.form.createOptions($("[name=sel_flowName]"), val, false);
+            }
+        })
+    }
+
+    //编辑收货批次明细
+    function EditReceiptRegisterDetail(obj1) {
+        var tr = eip.datagrid.getTr(obj1)
+        var row = eip.datagrid.getData(tr)
+        var obj = row["收货批次号"];
+        var status = row["状态"];
+
+        var dlg_Pos_edit = eip.dialog.create("编辑收货批次明细",
+            "<div id=layout_Detail_edit><div form=\"Y\" id=\"form_Detail_edit\">"
+            + "<input type=hidden name=hid_receiptId value='" + obj + "'><span left=\"80\" hint=\"收货批次号：\">" + obj + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_edit\"></table></div>", 900, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_edit"),
+            pagesize: 200,
+            hiddencolumns: ["预录明细ID"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (status == "未释放") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑数量' ></a>";
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='DelReceiptRegisterDetail(this)' title='删除明细' ></a>";
+                        }
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                if (row["登记数量"] < $("[name=edit_qty]").val()) {
+                                    $.eipMsg.alert("修改的数量必须小于原登记数量!", function () { $("[name=edit_qty]").focus(); });
+                                    return;
+                                }
+                                var Id = row["操作"];     //得到ID
+                                var InOrderDetailId = row["预录明细ID"];
+                                var regQty = row["登记数量"];
+                                eip.get("/InBound/RegInBoundOrder/EditReceiptRegisterDetail?id=" + Id + "&inOrderDetailId=" + InOrderDetailId + "&regQty=" + regQty + "&editQty=" + $("[name=edit_qty]").val() + "&receiptId=" + obj, null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailPartList?ReceiptId=" + obj, $("#grid_detail_edit"), eip.para.create($("input,select", $("#layout_Detail_edit"))));
+                                    }, function () { });
+                                })
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "登记数量": {
+                    editor: { type: "text", name: "edit_qty" }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_edit'), [{
+            obj: $('#form_Detail_edit'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_edit);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailPartList?ReceiptId=" + obj, $("#grid_detail_edit"), eip.para.create($("input,select", $("#layout_Detail_edit"))));
+    }
+
+    function onkeynext(obj) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+
+            var s = parseInt($(obj).attr("seq")) + 1;
+            $("input[seq=" + s + "]").focus();
+
+        }
+    }
+
+    function onkeyCheck() {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addReg();
+        }
+    }
+
+    //删除收货登记明细
+    function DelReceiptRegisterDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到登记ID
+        var InOrderDetailId = row["预录明细ID"];
+        var RegQty = row["登记数量"];
+        var ReceiptId = $("[name=hid_receiptId]").val();
+
+        $.eipMsg.confirm("确定删除这条明细吗？", function () {
+            eip.get("/InBound/RegInBoundOrder/DelReceiptRegisterDetail?id=" + Id + "&inOrderDetailId=" + InOrderDetailId + "&regQty=" + RegQty + "&receiptId=" + ReceiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+                    eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailPartList?ReceiptId=" + ReceiptId, $("#grid_detail_edit"), eip.para.create($("input,select", $("#layout_Detail_edit"))));
+                }, function () { });
+            })
+        })
+    }
+
+    //删除收货登记明细
+    function DelReceiptRegisterDetail1(obj, receiptId) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["操作"];     //得到登记ID
+        var InOrderDetailId = row["预录明细ID"];
+        var RegQty = row["登记数量"];
+
+        $.eipMsg.confirm("确定删除这条明细吗？", function () {
+            eip.get("/InBound/RegInBoundOrder/DelReceiptRegisterDetail?id=" + Id + "&inOrderDetailId=" + InOrderDetailId + "&regQty=" + RegQty + "&receiptId=" + ReceiptId, null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailListCom?ReceiptId=" + receiptId, $("#grid_detail_Rea"), eip.para.create($("input,select", $("#layout_Detail_Rea"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+    var dlg_Pos_Rea
+    //释放收货批次
+    function ReleaseReceipt(obj, obj1) {
+        dlg_Pos_Rea = eip.dialog.create("当前已登记的收货信息",
+            "<div id=layout_Detail_Rea><div form=\"Y\" id=\"form_Detail_Rea\">"
+            + "<span left=\"80\" hint=\"收货批次号：\">" + obj + "</span>"
+            + "<span left=\"80\" hint=\"车牌号：\">" + obj1 + "</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_Rea\"></table></div>", 960, 500)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_Rea"),
+            pagesize: 200,
+            hiddencolumns: ["预录明细ID"],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='eip.datagrid.edit(this)' title='编辑数量' ></a>";
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick=\"DelReceiptRegisterDetail1(this,'" + obj + "')\" title='删除明细' ></a>";
+                        return retHtml;
+                    },
+                    editor: {
+                        type: "func", func: function (row) {
+                            var btn = $("<a href='#' id='saveButton' title='保存' class='easyui-linkbutton' plain='true' iconCls='icon-save'></a>" +
+                            "<a href='#' id='cancelButton' title='取消' class='easyui-linkbutton' plain='true' onclick=\"eip.datagrid.reset($(this).closest('tr'))\" iconCls='icon-remove'></a>");
+                            btn.click(function () {
+                                if (row["登记数量"] < $("[name=edit_qty]").val()) {
+                                    $.eipMsg.alert("修改的数量必须小于原登记数量!", function () { $("[name=edit_qty]").focus(); });
+                                    return;
+                                }
+                                var Id = row["操作"];     //得到ID
+                                var InOrderDetailId = row["预录明细ID"];
+                                var regQty = row["登记数量"];
+                                eip.get("/InBound/RegInBoundOrder/EditReceiptRegisterDetail?id=" + Id + "&inOrderDetailId=" + InOrderDetailId + "&regQty=" + regQty + "&editQty=" + $("[name=edit_qty]").val() + "&receiptId=" + obj, null, function (jsonObj) {
+                                    $.procAjaxData(jsonObj, function () {
+                                        eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailListCom?ReceiptId=" + obj, $("#grid_detail_Rea"), eip.para.create($("input,select", $("#layout_Detail_Rea"))));
+
+                                    }, function () { });
+                                })
+                            });
+                            return btn;
+                        }
+                    }
+
+                },
+                "登记数量": {
+                    editor: { type: "text", name: "edit_qty" }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_Rea'), [{
+            obj: $('#form_Detail_Rea'),
+            buttons: [
+                 {
+                     text: "确认释放收货批次", icon: "ok", click:
+                        function () {
+                            eip.post("/InBound/RegInBoundOrder/ReleaseReceipt?receiptId=" + obj, null, function (val) {
+                                if (val.split("$")[0] == "Y") {
+                                    $.eipMsg.show("请注意，该票包含直装！<br />将释放出多个批次号！", function () {
+                                        //成功后 弹出结果列表
+                                        ConfirmReleaseReceipt(val.split("$")[1], obj);
+
+                                        eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                    }, 20000)
+                                }
+                                else if (val.split("$")[0] == "Y1") {
+                                    ConfirmReleaseReceipt(val.split("$")[1], obj);
+
+                                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                } else {
+                                    $.eipMsg.alert(val);
+                                }
+                            })
+                        }
+                 },
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+
+                            eip.dialog.close(dlg_Pos_Rea);
+                        }
+                 }
+            ]
+        }]);
+
+        eip.datagrid.load("/InBound/RegInBoundOrder/ReceiptRegisterDetailListCom?ReceiptId=" + obj, $("#grid_detail_Rea"), eip.para.create($("input,select", $("#layout_Detail_Rea"))));
+    }
+
+    //成功释放收货批次
+    function ConfirmReleaseReceipt(obj, obj1) {
+        var dlg_Pos_ConRea = eip.dialog.create("释放成功",
+            "<div id=layout_Detail_ConRea><div form=\"Y\" id=\"form_Detail_ConRea\">"
+            + "<span left=\"80\" hint=\"本次释放出：\">" + obj + "个收货批次</span>"
+            + "</div>"
+            + "<table id=\"grid_detail_ConRea\"></table></div>", 700, 400)
+
+        eip.datagrid.create({
+            obj: $("#grid_detail_ConRea"),
+            pagesize: 200,
+            hiddencolumns: [],
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+                        if (row["状态"] == "未收货" && row["类型"] == "普通") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintReceiptId(this)' title='打印收货操作单' ></a>";
+                        }
+                        if (row["状态"] == "未收货" && row["类型"] == "直装") {
+                            retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-print' plain=true onclick='PrintDSReceiptId(this)' title='打印直装操作单' ></a>";
+                        }
+                        return retHtml;
+                    }
+                }
+            }
+        });
+
+        eip.layout.create($('#layout_Detail_ConRea'), [{
+            obj: $('#form_Detail_ConRea'),
+            buttons: [
+                 {
+                     text: "关闭窗口", icon: "no", click:
+                        function () {
+                            eip.dialog.close(dlg_Pos_ConRea);
+                            if (dlg_Pos_Rea) eip.dialog.close(dlg_Pos_Rea);
+
+                            if (dlg_Pos) {
+                                eip.dialog.close(dlg_Pos);
+                            }
+                        }
+                 }
+            ]
+        }]);
+        eip.datagrid.load("/InBound/RegInBoundOrder/DSReceiptRegisterList?receiptId=" + obj1, $("#grid_detail_ConRea"), eip.para.create($("input,select", $("#layout_Detail_ConRea"))));
+    }
+
+    //撤销释放
+    function RollbackReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确认撤销释放收货批次号：" + row["收货批次号"] + "吗？", function () {
+            eip.get("/InBound/RegInBoundOrder/RollbackReceiptId?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/InBound/RegInBoundOrder/List?ReceiptType=DC", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            }, null, true)
+        })
+    }
+
+    //打印收货操作单
+    function PrintReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["收货批次号"];
+        eip.get("/InBound/RegInBoundOrder/PrintReceiptId?ReceiptId=" + Id, null, function (val) {
+
+            window.open(val + "?id=" + Id+ "&whCode=" + eip.utf8(@ViewBag.whCode));
+
+        })
+    }
+
+    //打印直装收货操作单
+    function PrintDSReceiptId(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+        var Id = row["收货批次号"];
+        eip.get("/InBound/RegInBoundOrder/PrintReceiptId?ReceiptId=" + Id, null, function (val) {
+
+            window.open(val + "?id=" + Id+ "&whCode=" + eip.utf8(@ViewBag.whCode));
+
+        })
+    }
+
+</script>

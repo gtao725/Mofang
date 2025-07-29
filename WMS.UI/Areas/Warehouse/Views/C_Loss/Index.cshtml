@@ -1,0 +1,191 @@
+﻿@model WMS.UI.Controllers.Model.LossModel
+@{
+    Layout = "../../../../Views/head.cshtml";
+}
+
+<div id=layout>
+    <div form="Y" id="form1">
+
+        @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "ClientCode", "客户名", "", "")
+        <input type="text" left="90" name="LossCode" hint="耗材Code" />
+
+    </div>
+    <table id="grid"></table>
+</div>
+
+
+<div id='form22' style="display:none">
+    @Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "txt_ClientCode", "客户名", "", "left=\"140\"")
+    @Html.EipInputFor(model => model.txt_LossCode, new { @left = "140" })
+    <input type="text" left="140" name="txt_LossDescription" hint="耗材类型" />
+    @Html.EipInputFor(model => model.txt_Qty, new { @left = "140" })
+    <input type="text" left="140" name="txt_Length" hint="长" />
+    <input type="text" left="140" name="txt_Width" hint="宽" />
+    <input type="text" left="140" name="txt_Height" hint="高" />
+    <input type="text" left="140" name="txt_Weight" hint="重量" />
+    <select class="easyui-vhuo'xia'alidatebox" hint="工作台耗材扫描" name="txt_WorkLevel"><option value="0">扫描耗材及称重</option><option value='2'>仅扫描耗材</option><option value='1'>不扫描耗材及称重(需OMS导入耗材重量)</option></select>
+
+</div>
+
+
+<script type="text/javascript" src="/share/includes/eip.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //页面布局
+        var layout = eip.layout.create(
+            $("#layout"),
+            [{
+                obj: $('#form1'),
+                buttons: [
+                    {
+                        text: "查询", icon: "search", click: function () {
+                            eip.datagrid.load("/Warehouse/C_Loss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                        }
+                    },
+                     {
+                         text: "新增耗材", icon: "add", click: function () {
+                             var dlg = eip.dialog.create("新增耗材", "<div id=layout1 ><div form='Y' id='form2' >" + $("#form22").html() + "</div></div>"
+                                , 500, 400)
+
+                             //窗体工具栏按钮 begin
+                             eip.layout.create($('#layout1'), [{
+                                 obj: $('#form2'),
+                                 buttons: [
+                                     {
+                                         text: "保存", icon: "save", click:
+                                             function () {
+                                                 if (!$("#form2").form('validate')) {
+                                                     return false;
+                                                 }
+
+
+                                                 if ($("[name=txt_ClientCode]", $("#form2")).val() == "") {
+                                                     $.eipMsg.alert("请先选择客户名！");
+                                                     return;
+                                                 }
+
+                                                 eip.get("/Warehouse/C_Loss/LossAdd", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                                     $.procAjaxData(jsonObj, function () {
+                                                         eip.dialog.close(dlg);
+                                                         eip.datagrid.load("/Warehouse/C_Loss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                                                     }, function () { });
+                                                 })
+                                             }
+                                     },
+                                    {
+                                        text: "关闭窗口", icon: "no", click:
+                                           function () {
+                                               eip.dialog.close(dlg);
+                                           }
+                                    }
+                                 ]
+                             }])
+                             //end
+
+                         }
+                     }
+
+                ]
+            }]);
+
+        //客制化
+        eip.datagrid.create({
+            obj: $("#grid"),
+            pagesize: 200,
+            hiddencolumns: [],
+            //showOrderBtns: true,
+            muledit: false,
+            columns: {
+                "操作": {
+                    formatter: function (row) {
+                        var retHtml = " ";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-edit' plain=true onclick='EditDetail(this)' title='修改信息' ></a>";
+
+                        retHtml += "<a href=# class=easyui-linkbutton iconCls='icon-cancel' plain=true onclick='LossDel(this)' title='删除' ></a>";
+
+                        return retHtml;
+                    }
+                }
+            },
+            dofunc: function (grid, trs) {
+                for (i in trs)  //列 格式化增加颜色显示
+                    $("td[field=UserNameCN],td[field=PassWord]", trs[i]).css('color', 'blue');
+            },
+            //lock:锁定，不可隐藏的栏位；hide：可以隐藏的栏位（show和hide只能设一个）；
+            setup: { lock: ['UserNameCN'] }
+
+        });
+
+        $("[name=agent_name]").focus();
+        //开始查询list
+        //eip.toolbar.getBtn(layout, '查询').click();
+
+    });
+
+    //删除补货任务
+    function LossDel(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        $.eipMsg.confirm("确定删除耗材：" + row["耗材Code"] + "吗？", function () {
+            eip.get("/Warehouse/C_Loss/LossDel?Id=" + row["操作"], null, function (jsonObj) {
+                $.procAjaxData(jsonObj, function () {
+
+                    eip.datagrid.load("/Warehouse/C_Loss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+
+                }, function () { });
+            })
+        })
+    }
+
+
+    function EditDetail(obj) {
+        var tr = eip.datagrid.getTr(obj)
+        var row = eip.datagrid.getData(tr)
+
+        var dlg = eip.dialog.create("修改耗材信息", "<div id=layout1 ><div form='Y' id='form2'>"
+                                    + "<span left=\"140\" hint=\"耗材Code：\">" + row["耗材Code"] + "</span>"
+                                    + "<input type=\"hidden\" name=\"edit_Id\" value=\"" + row["操作"] + "\"  />"
+                                    + "@Html.EipGetSelect((IEnumerable<SelectListItem>)ViewData["WhClientList"], "edit_clientCode", "客户名", " ", " left='140' ",true)"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_lossDescription\" value=\"" + row["耗材类型"] + "\" hint=\"耗材类型\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_qty\" value=\"" + row["库存数量"] + "\" hint=\"库存数量\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_length\" value=\"" + row["长"] + "\" hint=\"长\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_width\" value=\"" + row["宽"] + "\" hint=\"宽\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_height\" value=\"" + row["高"] + "\" hint=\"高\" />"
+                                    + "<input type=\"text\" left=\"140\" name=\"edit_weight\" value=\"" + row["重量"] + "\" hint=\"重量\" />"
+                                    + "<select left=\"140\" name=\"edit_WorkLevel\" hint=\"工作台耗材扫描\"><option value=\"0\" >扫描耗材及称重</option><option value=\"2\" >仅扫描耗材</option><option value=\"1\" >不扫描耗材及称重(需OMS导入耗材重量)</option></select>"
+                                    + "</div></div>", 500, 450)
+
+        eip.layout.create($('#layout1'), [{
+            obj: $('#form2'),
+            buttons: [
+                {
+                    text: "保存", icon: "save", click:
+                        function () {
+                            eip.get("/Warehouse/C_Loss/EditDetail", eip.para.create($("input,select", $("#layout1"))), function (jsonObj) {
+                                $.procAjaxData(jsonObj, function () {
+                                    eip.dialog.close(dlg);
+                                    eip.datagrid.load("/Warehouse/C_Loss/List", $("#grid"), eip.para.create($("input,select,textarea", $("#layout"))));
+                                }, function () { });
+                            })
+                        }
+                },
+               {
+                   text: "关闭窗口", icon: "no", click:
+                      function () {
+                          eip.dialog.close(dlg);
+                      }
+               }
+            ]
+        }])
+
+        $("[name=edit_clientCode]", $("#form2")).val(row["客户名"]);
+        $("[name=edit_WorkLevel]", $("#form2")).val(row["工作台耗材扫描"]);
+    }
+
+
+
+</script>

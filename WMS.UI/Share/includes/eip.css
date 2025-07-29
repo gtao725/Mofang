@@ -1,0 +1,158 @@
+﻿A.blue:active
+{
+    COLOR: blue;
+    TEXT-DECORATION: none
+}
+A.blue:visited
+{
+    COLOR: blue;
+    TEXT-DECORATION: none
+}
+A.blue:hover
+{
+    COLOR: #FF9900;
+    TEXT-DECORATION: none;
+}
+A.blue:link
+{
+    COLOR: blue;
+    TEXT-DECORATION: none
+}
+
+span.link
+{
+    cursor:pointer;
+    TEXT-DECORATION: underline
+}
+span.link:hover
+{
+    COLOR: blue;
+    TEXT-DECORATION: none;
+}
+
+input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=search], input[type=tel], input[type=number], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=color], select, textarea {
+  height: 16px;
+  border: 1px solid #999999;
+  background: #fff;
+  color: black;
+  -webkit-transition: all linear .2s;
+  transition: all linear .2s;
+}
+input[type=radio],input[type=checkbox]{
+    vertical-align:-3px;
+}
+
+input:focus{
+	border: 1px solid #7EADD9;
+	background: #F5FBFE;
+}
+
+select{
+  height: 20px;
+}
+
+div.hint
+{
+    float:left;
+    border:1px solid #f5f5f5;
+    background:#f5f5f5;
+    margin:1px;
+    height:25px;
+    line-height:25px;
+    overflow:hidden;
+}
+div.hint-blue
+{
+    background:#e7f0ff;
+    border:1px solid #e7f0ff;
+}
+div.hint-yellow
+{
+    background:#FCF8E3;
+    border:1px solid #FCF8E3;
+}
+div.hint-title-c
+{
+    text-align:right;
+    float:left; 
+    margin-right:4px;  
+    overflow:hidden; 
+}
+span.hint-title
+{
+    white-space:nowrap;
+    color:gray;
+    text-align:right;
+    display:inline-block;
+    
+}
+
+.datagrid-htable > tbody > tr > td,.datagrid-btable > tbody > tr > td,.datagrid-ftable > tbody > tr > td {
+    padding-left:3px;
+    padding-right:3px;   
+}
+td.datagrid-wrap{
+    word-break:break-all;
+    overflow:auto;
+    white-space:normal;
+    text-overflow:inherit;
+}
+.datagrid-nowrap{
+	white-space:nowrap;
+	overflow:hidden;
+	height:29px;
+}
+td.combox{
+	white-space:nowrap;
+	overflow:hidden;
+    padding:4px;
+    border-color: #ccc;
+    border-width: 0 1px 1px 0;
+    border-style: dotted;
+}
+tr.combox-selected{
+    background: #ffe48d;
+}
+
+td.datagrid-action{
+    width:22px;
+    text-align:center;
+    height:25px;
+}
+.eipgrid-row-selected td {
+    word-break:break-all;
+    overflow:auto;
+    white-space:normal;
+    text-overflow:inherit;
+    height:auto;
+    padding:2px;
+    background: #ffe48d;
+}
+td.datagrid-asc{
+    border-bottom:2px solid #214994;
+    height:24px;
+}
+td.datagrid-desc{
+    border-top:2px solid #214994;
+    height:24px;
+}
+td.datagrid-nosort{
+    border-bottom:2px solid #efefef;
+    height:24px;
+}
+div.datagrid-title{
+    font-weight:bold;
+    margin-top:2px;
+    overflow:hidden;
+}
+div.datagrid-title-filter{
+    float:right;
+    height:22px;
+}
+.eip-separator {
+    display:inline-block;
+    height: 20px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    margin: 3px 1px;
+}
